@@ -1,0 +1,23 @@
+{% extends "djbootmin/base.html" %}
+{% block extra_style %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css">
+<!-- print CSS -->
+<link href="https://www.carthage.edu/themes/shared/css/print.css" rel="stylesheet">
+<link href="/static/djsani/css/dashboard.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block extra_javascript %}
+<script>
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+});
+</script>
+{% endblock %}
+{% block body_tag %}{% endblock %}
+{% block navbar-header %}{% endblock %}
+{% block navbar-top-links %}{% endblock %}
+{% block navbar-sidenav %}{% endblock %}
+{% block content %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block logout %}{% endblock %}
