@@ -27,13 +27,6 @@ class Operation(models.Model):
         "Date Updated", auto_now=True
     )
 
-    # Basic Proposal Elements
-    proposal_type = models.CharField(
-        "What type of proposal submission is this?",
-        max_length=128,
-        choices=PROPOSAL_TYPE_CHOICES,
-    )
-
     # status
 
     # supervisor/chair has submitted the form for approval

@@ -36,7 +36,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(__file__)
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATIC_URL = '/static/djpersonnel/'
-ROOT_URL = '/djpersonnel/'
+ROOT_URL = '/apps/personnel/'
 MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
 STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
 MEDIA_URL = '{}assets/'.format(STATIC_URL)
@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djpersonnel.core',
-    'djpersonnel.myapp',
+    'djpersonnel.paf',
     # needed for template tags
     'djtools',
 ]

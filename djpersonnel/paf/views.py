@@ -4,9 +4,15 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.paf.forms import OperationForm
+
 from djtools.utils.mail import send_mail
+from djzbar.decorators.auth import portal_auth_required
 
 
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def paf_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]

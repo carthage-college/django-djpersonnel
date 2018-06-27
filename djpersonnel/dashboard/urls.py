@@ -1,24 +1,14 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 from djskeletor.dashboard import views
 
+
 urlpatterns = [
-    # paf detail
+    # personnel action form
     url(
-        r'^paf/(?P<pid>\d+)/display/$',
-        views.display, name='paf_operation_display'
+        r'^paf/', include('djpersonnel.dashboard.paf.urls')
     ),
-    # paf update
-    url(
-        r'^paf/(?P<pid>\d+)/update/$',
-        views.display, name='paf_update'
-    ),
-    # paf search for operations
-    url(
-        r'^paf/search/$',
-        views.paf_search, name='paf_search'
-    ),
-    # home listing display
+    # dashboard home listing display
     url(
         r'^$',
         views.home, name='home'
