@@ -13,7 +13,7 @@ from djzbar.decorators.auth import portal_auth_required
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def paf_form(request):
+def form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
@@ -21,9 +21,9 @@ def paf_form(request):
     BCC = settings.MANAGERS
 
     if request.method=='POST':
-        form = OperationForm(request.POST, request.FILES)
-        if form.is_valid():
-            data = form.save()
+        form_op = OperationForm(request.POST, request.FILES)
+        if form_op.is_valid():
+            data = form_op.save()
             email = settings.DEFAULT_FROM_EMAIL
             if data.email:
                 email = data.email
@@ -37,8 +37,48 @@ def paf_form(request):
                 reverse_lazy('paf_success')
             )
     else:
-        form = OperationForm()
+        form_op = OperationForm()
 
     return render(
-        request, 'paf/form.html', {'form': form,}
+        request, 'paf/form.html', {'form': form_op,}
+    )
+
+
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def list(request):
+    return render(
+        request, 'paf/list.html', {}
+    )
+
+
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def display(request, pid):
+    return render(
+        request, 'paf/display.html', {}
+    )
+
+
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def update(request, pid):
+    return render(
+        request, 'paf/update.html', {}
+    )
+
+
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def search(request):
+    return render(
+        request, 'paf/search.html', {}
     )

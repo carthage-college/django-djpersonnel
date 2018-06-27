@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djpersonnel.core',
+    'djpersonnel.dashboard',
     'djpersonnel.paf',
     # needed for template tags
     'djtools',
