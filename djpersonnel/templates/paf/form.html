@@ -1,40 +1,23 @@
-{% extends "base.html" %}
+{% extends "minimal.html" %}
+{% load bootstrap4 %}
 {% block title %}
-    MyApp &mdash; DJ Skeletor &mdash;
+    Personnel Action Form &mdash; Human Resources &mdash;
     Carthage College
 {% endblock %}
-{% block left_nav %}
-    {% include "myapp/left_nav.html" %}
-{% endblock %}
-{% block sidebar %}
-    {% include "myapp/side_bar.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        DJ Skeletor
-        <span id="secondary-dropdown"></span>
-    </h1>
-{% endblock %}
 {% block content %}
-<div class="forms-container large-8 medium-10 small-12">
+<h1 id="page_title">
+    Personnel Action Form
+    <span id="secondary-dropdown"></span>
+</h1>
+<div class="row">
+  <div class="forms-container col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
     {% include "includes/required_text.html" %}
     {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" id="profile">
+    <form method="post" action=".">
         {% csrf_token %}
-        {% for field in form.hidden_fields %}
-            {% include "form_field.inc.html" %}
-        {% endfor %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
+        {% bootstrap_form form %}
+        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
     </form>
-</div>
-<div class="column2 large-4 medium-6 small-12">
-    {% include "myapp/help_text.html" %}
+  </div>
 </div>
 {% endblock %}
