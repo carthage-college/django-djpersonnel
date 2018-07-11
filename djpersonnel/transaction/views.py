@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
-from djpersonnel.paf.forms import OperationForm
+from djpersonnel.transaction.forms import OperationForm
 
 from djtools.utils.mail import send_mail
 from djzbar.decorators.auth import portal_auth_required
@@ -31,16 +31,16 @@ def form(request):
                 data.user.first_name, data.user.last_name
             )
             send_mail(
-                request,TO_LIST, subject, email,'paf/email.html', data, BCC
+                request,TO_LIST, subject, email,'transaction/email.html', data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy('paf_success')
+                reverse_lazy('transaction_success')
             )
     else:
         form_op = OperationForm()
 
     return render(
-        request, 'paf/form.html', {'form': form_op,}
+        request, 'transaction/form.html', {'form': form_op,}
     )
 
 
@@ -50,7 +50,7 @@ def form(request):
 )
 def list(request):
     return render(
-        request, 'paf/list.html', {}
+        request, 'transaction/list.html', {}
     )
 
 
@@ -60,7 +60,7 @@ def list(request):
 )
 def display(request, pid):
     return render(
-        request, 'paf/display.html', {}
+        request, 'transaction/display.html', {}
     )
 
 
@@ -70,7 +70,7 @@ def display(request, pid):
 )
 def update(request, pid):
     return render(
-        request, 'paf/update.html', {}
+        request, 'transaction/update.html', {}
     )
 
 
@@ -80,5 +80,5 @@ def update(request, pid):
 )
 def search(request):
     return render(
-        request, 'paf/search.html', {}
+        request, 'transaction/search.html', {}
     )

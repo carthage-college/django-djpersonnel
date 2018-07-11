@@ -44,9 +44,13 @@ urlpatterns = [
     url(
         r'^admin/', include(admin.site.urls)
     ),
-    # personnel action form
+    # personnel transaction form
     url(
-        r'^paf/', include('djpersonnel.paf.urls')
+        r'^transaction/', include('djpersonnel.transaction.urls')
+    ),
+    # personnel requisition form
+    url(
+        r'^requisition/', include('djpersonnel.requisition.urls')
     ),
     # dashboard
     url(

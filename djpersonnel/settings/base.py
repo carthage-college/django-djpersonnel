@@ -73,7 +73,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djpersonnel.core',
     'djpersonnel.dashboard',
-    'djpersonnel.paf',
+    'djpersonnel.transaction',
+    'djpersonnel.requisition',
     # needed for template tags
     'djtools',
 ]

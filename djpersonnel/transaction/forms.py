@@ -2,7 +2,7 @@
 
 from django import forms
 
-from djpersonnel.paf.models import Operation
+from djpersonnel.action.models import Operation
 
 class OperationForm(forms.ModelForm):
 
