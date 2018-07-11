@@ -21,23 +21,23 @@ urlpatterns = [
     ),
     url(
         r'^accounts/logout/$',auth_views.logout,
-        {'next_page': reverse_lazy("auth_loggedout")},
-        name="auth_logout"
+        {'next_page': reverse_lazy('auth_loggedout')},
+        name='auth_logout'
     ),
     url(
         r'^accounts/loggedout/$', loggedout,
         {'template_name': 'accounts/logged_out.html'},
-        name="auth_loggedout"
+        name='auth_loggedout'
     ),
     url(
         r'^accounts/$',
-        RedirectView.as_view(url=reverse_lazy("auth_login"))
+        RedirectView.as_view(url=reverse_lazy('auth_login'))
     ),
     url(
         r'^denied/$',
         TemplateView.as_view(
-            template_name="denied.html"
-        ), name="access_denied"
+            template_name='denied.html'
+        ), name='access_denied'
     ),
 
     # django admin
