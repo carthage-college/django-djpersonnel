@@ -11,13 +11,13 @@ class Operation(models.Model):
     created_by = models.ForeignKey(
         User,
         verbose_name="Created by",
-        related_name='operation_created_by',
+        related_name='prf_operation_created_by',
         editable=False
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
-        related_name='operation_updated_by',
+        related_name='prf_operation_updated_by',
         editable=False, null=True, blank=True
     )
     created_at = models.DateTimeField(
