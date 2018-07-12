@@ -200,6 +200,10 @@ BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
 BOOTSTRAP4 = {
     'required_css_class': 'required',
 }
+# apps
+PAF_EMAIL_LIST=[]
+# tests
+
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
 LOG_FILENAME = LOG_FILEPATH + 'debug.log'
