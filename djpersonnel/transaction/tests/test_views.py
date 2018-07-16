@@ -7,7 +7,7 @@ from django.test import TestCase
 from django.http import HttpRequest
 from django.core.urlresolvers import reverse
 
-from djpersonnel.transaction.views import form
+from djpersonnel.transaction.views import form_home
 
 from djtools.utils.logging import seperator
 from djzbar.utils.informix import get_session
@@ -19,17 +19,16 @@ class TransactionOperationTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_form_resolve(self):
+    def test_form_returns_correct_html(self):
         print("\n")
         print("test form view")
         seperator()
-
-        found = resolve(reverse('transaction_form'))
-        self.assertEqual(found.func, form)
-
-    def test_form_returns_correct_html(self):
-        request = HttpRequest()
-        response = form(request)
+        #request = HttpRequest()
+        #response = form_home(request)
+        response = self.client.get(reverse('transaction_form'))
+        self.assertTemplateUsed(response, 'transaction/form.html')
         html = response.content.decode('utf8')
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
-        #self.assertTrue(html.endswith('</html>'))
+        self.assertTrue(html.strip().endswith('</html>'))
+
+

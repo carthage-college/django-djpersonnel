@@ -13,7 +13,7 @@ from djzbar.decorators.auth import portal_auth_required
     #session_var='DJPERSONNEL_AUTH',
     #redirect_url=reverse_lazy('access_denied')
 #)
-def form(request):
+def form_home(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
@@ -21,9 +21,9 @@ def form(request):
     BCC = settings.MANAGERS
 
     if request.method=='POST':
-        form_op = OperationForm(request.POST, request.FILES)
-        if form_op.is_valid():
-            data = form_op.save()
+        form = OperationForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.save()
             email = settings.DEFAULT_FROM_EMAIL
             if data.email:
                 email = data.email
@@ -37,10 +37,10 @@ def form(request):
                 reverse_lazy('transaction_success')
             )
     else:
-        form_op = OperationForm()
+        form = OperationForm()
 
     return render(
-        request, 'transaction/form.html', {'form': form_op,}
+        request, 'transaction/form.html', {'form': form,}
     )
 
 

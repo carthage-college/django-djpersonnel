@@ -8,7 +8,7 @@ urlpatterns = [
     # transaction form
     url(
         r'^$',
-        views.form, name='transaction_form'
+        views.form_home, name='transaction_form'
     ),
     url(
         r'^success/$',

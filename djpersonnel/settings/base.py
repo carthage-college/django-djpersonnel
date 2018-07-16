@@ -203,6 +203,11 @@ BOOTSTRAP4 = {
 # apps
 PAF_EMAIL_LIST=[]
 # tests
+TEST_USERNAME = ''
+TEST_PASSWORD = ''
+TEST_EMAIL = ''
+TEST_STUDENT_ID = 0
+TEST_STUDENT_LASTNAME = ''
 
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
