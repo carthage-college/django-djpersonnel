@@ -41,7 +41,7 @@ STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
 MEDIA_URL = '{}assets/'.format(STATIC_URL)
 UPLOADS_DIR = '{}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{}files/'.format(MEDIA_URL)
-ROOT_URLCONF = 'djpersonnel.core.urls'
+ROOT_URLCONF = 'djpersonnel.urls'
 WSGI_APPLICATION = 'djpersonnel.wsgi.application'
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'djpersonnel.core',
     'djpersonnel.dashboard',
     'djpersonnel.transaction',
     'djpersonnel.requisition',
