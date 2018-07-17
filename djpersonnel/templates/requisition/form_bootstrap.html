@@ -1,0 +1,158 @@
+{% extends "minimal.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Personnel Requisition Form &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-12 well well-sm">
+            <div class="card-title">
+                <h2 class="text-center">Position Requisition Form</h2>
+            </div>
+            <form action="." method="post" class="form" role="form">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-text">
+                        Instructions: This form must be completed prior to recruiting or hiring for a new or replacement position. The Hiring Manager/Dean should complete this form.
+                        Attach a job description, sign, and obtain all appropriate approvals and send to Human Resources to begin the recruiting process.
+                    </div>
+                    <div class="card-body">
+                        <fieldset class="scheduler-border">
+                            <div class="form-group row">
+                                <div class="col-xs-6 col-lg-6">
+                                    <label for="{{ form.account_number.id_for_label }}">Account Number</label>
+                                    <input type="text" class="form-control" id="{{ form.account_number.label_tag }}" name="account_number" placeholder="Enter Account Number" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-xs-6 col-lg-6">
+                                    <label for="{{ form.position_title.id_for_label }}">Position Title</label>
+                                    <input type="text" class="form-control" name="position_title" id="{{ form.position_title.label_tag }}" placeholder="Enter Position Title" required />
+                                </div>
+                                <div class="col-xs-6 col-lg-6">
+                                    <label for="{{ form.department_name.id_for_label }}">Department Name</label>
+                                    <input type="text" class="form-control" name="department_name" id="{{ form.department_name.label_tag }}" placeholder="Enter Department Name" required />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="scheduler-border">
+                            <div class="form-group row">
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="panel-heading">Check One:</div>
+                                    <input type="checkbox" class="form-check" id="{{ form.replacement_for.label_tag }}" name="replacement_for" value="1" /> <label for="{{ form.replacement_for.id_for_label }}">Replacement for (name):</label><br />
+                                     <label for="{{ form.replacement_name.id_for_label }}">If 'Replacement', please provide name</label>
+                                    <input type="text" class="form-control" name="replacement_name" id="{{ form.replacement_name.label_tag }}" placeholder="Enter Replacement for (name)" /><br />
+                                    <input type="checkbox" class="form-check" id="{{ form.new_position.label_tag }}" name="new_position" value="1" /> <label for="{{ form.new_position.id_for_label }}">New Position</label>
+                                </div>
+
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="panel-heading">Check One:</div>
+                                    <div class="panel-heading">Is this a budgeted position?</div>
+                                    <input type="radio" class="form-check" id="{{ form.budgeted_position.label_tag }}" name="budgeted_position" value="1" /> <label for="{{ form.budgeted_position.id_for_label }}">Yes</label><br />
+                                    <input type="radio" class="form-check" id="id_budgeted_position" name="budgeted_position" value="0" /> <label for="id_budgeted_position">No</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="scheduler-border">
+                        <div class="form-group row">
+                            <div class="panel-heading">Job Salary Range (consult Human Resources)</div>
+                            <div class="col-xs-4 col-md-4">
+                                <label for="{{ form.min_salary_range.id_for_label }}">Minimum</label>
+                                <input type="number" class="form-control" name="min_salary_range" id="{{ form.min_salary_range.label_tag }}" title="List the minimum salary range for this position" step="0.01" placeholder="Enter Minimum Salary Range" />
+                                <small class="form-text text-muted">List the minimum salary range for this position</small>
+                            </div>
+                            <div class="col-xs-4 col-md-4">
+                                <label for="{{ form.mid_salary_range.id_for_label }}">Midpoint</label>
+                                <input type="number" class="form-control" name="mid_salary_range" id="{{ form.mid_salary_range.label_tag }}" title="List the midpoint salary range for this position" step="0.01" placeholder="Enter Midpoint  Salary Range" />
+                                <small class="form-text text-muted">List the midpoint salary range for this position</small>
+                            </div>
+                            <div class="col-xs-4 col-md-4">
+                                <label for="{{ form.max_salary_range.id_for_label }}">Maximum</label>
+                                <input type="number" class="form-control" name="max_salary_range" id="{{ form.max_salary_range.label_tag }}" title="List the maximum salary range for this position" step="0.01" placeholder="Enter Maximum  Salary Range" />
+                                <small class="form-text text-muted">List the maximum salary range for this position</small>
+                            </div>
+                        </div>
+                        </fieldset>
+                        <fieldset class="scheduler-border">
+                        <div class="form-group row">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.position_open_date.id_for_label }}">Date Position is Open</label>
+                                <input type="date" class="form-control" id="{{ form.position_open_date.label_tag }}" name="position_open_date">
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.expected_start_date.id_for_label }}">Expected Start Date</label>
+                                <input type="date" class="form-control" id="{{ form.expected_start_date.label_tag }}" name="expected_start_date">
+                            </div>
+                        </div>
+                        </fieldset>
+                        <fieldset class="scheduler-border">
+                        <div class="form-group row">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.hours_per_week.id_for_label }}">Hours per Week</label>
+                                <input type="text" class="form-control" name="hours_per_week" id="{{ form.hours_per_week.label_tag }}" placeholder="Enter Hours per Week" />
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.weekly_schedule.id_for_label }}">Weekly Schedule for hourly positions</label>
+                                <input type="text" class="form-control" name="weekly_schedule" id="{{ form.weekly_schedule.label_tag }}" placeholder="Enter Weekly Schedule" required />
+                            </div>
+                        </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Approvals</div>
+                    <div class="panel-body">
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.hiring_mgr_name.id_for_label }}">Hiring Manager/Dean</label>
+                                <input type="text" class="form-control" id="{{ form.hiring_mgr_name.label_tag }}" name="hiring_mgr_name" placeholder="Enter Hiring Manager/Dean Name" />
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.hiring_mgr_date.id_for_label }}">Date</label>
+                                <input type="date" class="form-control" id="{{ form.hiring_mgr_date.label_tag }}" name="hiring_mgr_date">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.vp_provost_name.id_for_label }}">VP/Provost</label>
+                                <input type="text" class="form-control" id="{{ form.vp_provost_name.label_tag }}" name="vp_provost_name" placeholder="Enter VP/Provost Name" />
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.vp_provost_date.id_for_label }}">Date</label>
+                                <input type="date" class="form-control" id="{{ form.vp_provost_date.label_tag }}" name="vp_provost_date">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.cfo_name.id_for_label }}">CFO</label>
+                                <input type="text" class="form-control" id="{{ form.cfo_name.label_tag }}" name="cfo_name" placeholder="Enter CFO Name" />
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.cfo_date.id_for_label }}">Date</label>
+                                <input type="date" class="form-control" id="{{ form.cfo_date.label_tag }}" name="cfo_date">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.hr_name.id_for_label }}">HR Department</label>
+                                <input type="text" class="form-control" id="{{ form.hr_name.label_tag }}" name="hr_name" placeholder="Enter HR Department Name" />
+                            </div>
+                            <div class="col-xs-6 col-lg-6">
+                                <label for="{{ form.hr_date.id_for_label }}">Date</label>
+                                <input type="date" class="form-control" id="{{ form.hr_date.label_tag }}" name="hr_date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-12 col-md-12 text-center">
+                        <button class="btn btn-primary" style="width:200px;" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
