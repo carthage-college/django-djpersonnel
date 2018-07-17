@@ -21,7 +21,7 @@ sys.path.append('/data2/django_1.11/')
 sys.path.append('/data2/django_projects/')
 sys.path.append('/data2/django_third/')
 # django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djskeletor.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djpersonnel.settings.staging')
 os.environ.setdefault('PYTHON_EGG_CACHE', '/var/cache/python/.python-eggs')
 os.environ.setdefault('TZ', 'America/Chicago')
 # informix
