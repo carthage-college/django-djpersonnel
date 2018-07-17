@@ -116,6 +116,27 @@ class Operation(models.Model):
     hiring_mgr_date = models.DateField(
         "HR Manager Signed Date"
     )
+    vp_provost_name = models.CharField(
+        "VP/Provost Name",
+        max_length=128
+    )
+    vp_provost_date = models.DateField(
+        "VP/Provost Signed Date"
+    )
+    cfo_name = models.CharField(
+        "CFO Name",
+        max_length=128
+    )
+    cfo_date = models.DateField(
+        "CFO Signed Date"
+    )
+    hr_name = models.CharField(
+        "HR Name",
+        max_length=128
+    )
+    hr_date = models.DateField(
+        "HR Signed Date"
+    )
     comments = models.TextField(
         null=True,
         blank=True,
