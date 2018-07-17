@@ -95,7 +95,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            '/data2/django_templates/djkorra/',
+            #'/data2/django_templates/djkorra/',
             '/data2/django_templates/djbootmin/',
             '/data2/django_templates/djcher/',
             '/data2/django_templates/django-djskins/',
@@ -206,7 +206,7 @@ TEST_PASSWORD = ''
 TEST_EMAIL = ''
 TEST_STUDENT_ID = 0
 TEST_STUDENT_LASTNAME = ''
-
+TEST_CREATED_AT_DATE = ''
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
 LOG_FILENAME = LOG_FILEPATH + 'debug.log'
