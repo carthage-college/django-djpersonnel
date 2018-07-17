@@ -35,9 +35,7 @@ urlpatterns = [
     ),
     url(
         r'^denied/$',
-        TemplateView.as_view(
-            template_name='denied.html'
-        ), name='access_denied'
+        TemplateView.as_view(template_name='denied.html'), name='access_denied'
     ),
 
     # django admin
@@ -49,9 +47,9 @@ urlpatterns = [
         r'^transaction/', include('djpersonnel.transaction.urls')
     ),
     # personnel requisition form
-    #url(
-        #r'^requisition/', include('djpersonnel.requisition.urls')
-    #),
+    url(
+        r'^requisition/', include('djpersonnel.requisition.urls')
+    ),
     # dashboard
     url(
         r'^dashboard/', include('djpersonnel.dashboard.urls')
