@@ -1,7 +1,6 @@
 """
-Django settings for project.
+Django base settings for project.
 """
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -13,14 +12,14 @@ from djzbar.settings import INFORMIX_ODBC
 # Debug
 DEBUG = False
 INFORMIX_DEBUG = 'debug'
+# include html5 form attributes in input fields
+REQUIRED_ATTRIBUTE = True
 ADMINS = (
     ('', ''),
 )
 MANAGERS = ADMINS
-
 SECRET_KEY = ''
 ALLOWED_HOSTS = []
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/Chicago'
 SITE_ID = 1
