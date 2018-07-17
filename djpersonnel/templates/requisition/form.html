@@ -1,0 +1,22 @@
+{% extends "minimal.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Personnel Requisition Form &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block content %}
+<h1 id="page_title">
+    Personnel Requisition Form
+    <span id="secondary-dropdown"></span>
+</h1>
+<div class="row">
+  <div class="forms-container col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+    </form>
+  </div>
+</div>
+{% endblock %}
