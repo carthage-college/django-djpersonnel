@@ -1,7 +1,6 @@
 """
-Django settings for project.
+Django base settings for project.
 """
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -13,14 +12,14 @@ from djzbar.settings import INFORMIX_ODBC
 # Debug
 DEBUG = False
 INFORMIX_DEBUG = 'debug'
+# include html5 form attributes in input fields
+REQUIRED_ATTRIBUTE = True
 ADMINS = (
     ('', ''),
 )
 MANAGERS = ADMINS
-
 SECRET_KEY = ''
 ALLOWED_HOSTS = []
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/Chicago'
 SITE_ID = 1
@@ -42,7 +41,7 @@ STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
 MEDIA_URL = '{}assets/'.format(STATIC_URL)
 UPLOADS_DIR = '{}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{}files/'.format(MEDIA_URL)
-ROOT_URLCONF = 'djpersonnel.core.urls'
+ROOT_URLCONF = 'djpersonnel.urls'
 WSGI_APPLICATION = 'djpersonnel.wsgi.application'
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
@@ -71,7 +70,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'djpersonnel.core',
     'djpersonnel.dashboard',
     'djpersonnel.transaction',
     'djpersonnel.requisition',
@@ -97,7 +95,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            '/data2/django_templates/djkorra/',
+            #'/data2/django_templates/djkorra/',
             '/data2/django_templates/djbootmin/',
             '/data2/django_templates/djcher/',
             '/data2/django_templates/django-djskins/',
@@ -208,7 +206,7 @@ TEST_PASSWORD = ''
 TEST_EMAIL = ''
 TEST_STUDENT_ID = 0
 TEST_STUDENT_LASTNAME = ''
-
+TEST_CREATED_AT_DATE = ''
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
 LOG_FILENAME = LOG_FILEPATH + 'debug.log'

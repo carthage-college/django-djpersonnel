@@ -29,15 +29,12 @@ class TransactionModelsTestCase(TestCase):
     #@skip('skip to the lieu')
     def test_operation(self):
 
+        # create
         obj = Operation.objects.create(
             created_by = self.user, updated_by = self.user,
             start_date = self.start_date,
             title = 'test operation', comments = 'hello world'
         )
-        obj.save()
-
-        obj.title = 'test update operation object'
-        obj.save_submit = True
         obj.save()
 
         objects = Operation.objects.all()
@@ -46,4 +43,10 @@ class TransactionModelsTestCase(TestCase):
         op = Operation.objects.get(created_by=self.user)
         self.assertTrue(op.id == obj.id)
 
+        # update
+        obj.title = 'test update operation object'
+        obj.save_submit = True
+        obj.save()
+
+        # delete
         Operation.objects.filter(start_date__year=self.year).delete()
