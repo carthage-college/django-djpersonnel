@@ -12,13 +12,14 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='prf_operation_created_by',
-        editable=False
+        #editable=False
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='prf_operation_updated_by',
-        editable=False, null=True, blank=True
+        #editable=False,
+        null=True, blank=True
     )
     created_at = models.DateTimeField(
         "Date Created", auto_now_add=True
@@ -110,11 +111,11 @@ class Operation(models.Model):
         max_length=50
     )
     hiring_mgr_name = models.CharField(
-        "HR Manager Name",
+        "Hiring Manager Name",
         max_length=128
     )
     hiring_mgr_date = models.DateField(
-        "HR Manager Signed Date"
+        "Hiring Manager Signed Date"
     )
     vp_provost_name = models.CharField(
         "VP/Provost Name",
