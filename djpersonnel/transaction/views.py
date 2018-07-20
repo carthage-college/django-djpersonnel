@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from djpersonnel.transaction.forms import OperationForm
 
 from djtools.utils.mail import send_mail
+
 from djzbar.decorators.auth import portal_auth_required
 
 
@@ -21,20 +22,19 @@ def form_home(request):
     BCC = settings.MANAGERS
 
     if request.method=='POST':
-        form = OperationForm(request.POST, request.FILES)
+        form = OperationForm(request.POST)
         if form.is_valid():
             data = form.save()
-            email = settings.DEFAULT_FROM_EMAIL
-            if data.email:
-                email = data.email
-            subject = "[Submit] {} {}".format(
-                data.user.first_name, data.user.last_name
+            email = data.created_by.email
+            subject = "[PAF Submission] {}, {}".format(
+                data.created_by.last_name, data.created_by.first_name
             )
             send_mail(
-                request,TO_LIST, subject, email,'transaction/email.html', data, BCC
+                request, TO_LIST, subject, email,'transaction/email.html',
+                data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy('transaction_success')
+                reverse_lazy('transaction_form_success')
             )
     else:
         form = OperationForm()

@@ -9,4 +9,11 @@ urlpatterns = [
     url(
         r'^$', views.form_home, name='requisition_form'
     ),
+    url(
+        r'^success/$',
+        TemplateView.as_view(
+            template_name='requisition/success.html'
+        ),
+        name='requisition_form_success'
+    ),
 ]

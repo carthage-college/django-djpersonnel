@@ -5,6 +5,8 @@ from django.shortcuts import render
 
 from djpersonnel.requisition.forms import OperationForm
 
+from djtools.utils.mail import send_mail
+
 
 def form_home(request):
     if settings.DEBUG:
@@ -17,16 +19,16 @@ def form_home(request):
         form = OperationForm(request.POST)
         if form.is_valid():
             data = form.save()
-            email = data.user.email
+            email = data.created_by.email
             subject = "[PRF Submission] {}, {}".format(
-                data.user.last_name, data.user.first_name
+                data.created_by.last_name, data.created_by.first_name
             )
             send_mail(
                 request, TO_LIST, subject, email,'requisition/email.html',
                 data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy('requisition_success')
+                reverse_lazy('requisition_form_success')
             )
     else:
         form = OperationForm()

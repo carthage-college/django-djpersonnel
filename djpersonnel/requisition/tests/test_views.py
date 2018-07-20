@@ -24,6 +24,14 @@ class RequisitionViewsTestCase(TestCase):
         response = self.client.get(earl, follow=True)
         self.assertEqual(response.status_code, 200)
 
+        # attempt to sign in with client login method
+        #login = self.client.login(
+            #username=self.user.username, password=self.user.password
+        #)
+        #self.assertTrue(login)
+        #response = self.client.get(earl)
+        #self.assertEqual(response.status_code, 200)
+
         json_data = open(
             '{}/fixtures/requisition_operation.json'.format(settings.ROOT_DIR)
         ).read()
@@ -32,11 +40,7 @@ class RequisitionViewsTestCase(TestCase):
         requi = self.client.post(earl, data[0]['fields'])
         print(requi)
 
-        # attempt to sign in with client login method
-        #login = self.client.login(
-            #username=self.user.username, password=self.user.password
-        #)
-        #self.assertTrue(login)
-        #response = self.client.get(earl)
-        #self.assertEqual(response.status_code, 200)
+        op = Operation.objects.get(created_by = self.user)
+        print(op.__dict__)
+
 
