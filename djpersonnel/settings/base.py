@@ -32,7 +32,7 @@ SERVER_URL = ''
 API_URL = '{}/{}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{}'.format(SERVER_URL)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT_DIR = os.path.dirname(__file__)
+ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATIC_URL = '/static/djpersonnel/'
 ROOT_URL = '/apps/personnel/'
@@ -200,6 +200,7 @@ BOOTSTRAP4 = {
 }
 # apps
 PAF_EMAIL_LIST=[]
+PRF_EMAIL_LIST=[]
 # tests
 TEST_USERNAME = ''
 TEST_PASSWORD = ''

@@ -69,8 +69,7 @@ class Operation(models.Model):
     replacement_name = models.CharField(
         "If 'Replacement', please provide name",
         max_length=128,
-        null=True,
-        blank=True
+        null=True, blank=True
     )
     new_position = models.BooleanField(
         default=False
@@ -139,8 +138,7 @@ class Operation(models.Model):
         "HR Signed Date"
     )
     comments = models.TextField(
-        null=True,
-        blank=True,
+        null=True, blank=True,
         help_text="Provide any additional comments if need be"
     )
 

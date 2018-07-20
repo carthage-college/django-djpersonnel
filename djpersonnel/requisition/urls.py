@@ -7,7 +7,6 @@ from djpersonnel.requisition import views
 urlpatterns = [
     # requisition form
     url(
-        r'^$',
-        views.form_home, name='requisition_form_home'
+        r'^$', views.form_home, name='requisition_form'
     ),
 ]

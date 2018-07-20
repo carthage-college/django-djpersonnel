@@ -1,0 +1,158 @@
+{% extends "minimal.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Personnel Requisition Form &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="col-md-12 offset-md-1 card bg-dark">
+        <div class="card-title">
+            <h3 class="text-center text-white">Position Requisition Form</h3>
+        </div>
+        <div class="card-header bg-secondary text-white">
+            Instructions: This form must be completed prior to recruiting or hiring for a new or replacement position. The Hiring Manager/Dean should complete this form.
+            Attach a job description, sign, and obtain all appropriate approvals and send to Human Resources to begin the recruiting process.
+        </div>
+        <div class="card-body bg-light">
+            <form action="." method="post" class="form" role="form">
+                {% csrf_token %}
+                <div class="form-row mt-4">
+                    <div class="col-sm-12 pb-3">
+                        <label for="{{ form.account_number.id_for_label }}">Account #</label>
+                        <input type="text" class="form-control" id="{{ form.account_number.id_for_label }}" name="account_number" value="{{ form.account_number.value|default_if_none:'' }}" placeholder="XXXXXXXXXXXXXXXX" oninvalid="this.setCustomValidity('Enter Account Number Here')"
+    oninput="this.setCustomValidity('')" required />
+                        {% if form.account_number.errors %}
+                            <small class="text-danger">Please correct the error{{ form.account_number }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.position_title.id_for_label }}">Position Title</label>
+                        <input type="text" class="form-control" name="position_title" id="{{ form.position_title.id_for_label }}" value="{{ form.position_title.value|default_if_none:'' }}" placeholder="Enter Position Title" required oninvalid="this.setCustomValidity('Enter Position Title')"
+    oninput="this.setCustomValidity('')" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.department_name.id_for_label }}">Department Name</label>
+                        <input type="text" class="form-control" name="department_name" id="{{ form.department_name.id_for_label }}" value="{{ form.department_name.value|default_if_none:'' }}" placeholder="Enter Department Name" required />
+                    </div>
+
+                    <div class="col-md-6 pb-3">
+                        <label>Check One</label>
+                        <div class="form-group small">
+                            <div class="form-check form-check-inline">
+                                <label for="{{ form.replacement_for.id_for_label }}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="{{ form.replacement_for.id_for_label }}" name="replacement_for" value="{{ form.replacement_for.value|default_if_none:'' }}"> Replacement for (name):
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{ form.replacement_name.id_for_label }}">If 'Replacement', please provide name</label>
+                                <input type="text" class="form-control" name="replacement_name" id="{{ form.replacement_name.id_for_label }}" value="{{ form.replacement_name.value|default_if_none:'' }}" placeholder="Enter Replacement Name" /><br />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label for="{{ form.new_position.id_for_label }}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="{{ form.new_position.id_for_label }}" name="new_position" value="{{ form.new_position.value }}" /> New Position
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label>Check if applicable</label>
+                        <div class="form-group small">
+                            <div class="form-check form-check-inline">
+                                <label for="{{ form.budgeted_position.id_for_label }}_1" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="{{ form.budgeted_position.id_for_label }}_1" name="budgeted_position" value="1"{% if form.budgeted_position.value == True %} checked{% endif %}> Is this a budgeted position?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 pb-3">
+                        <h6>Job Salary Range (consult Human Resources)</h6>
+                    </div>
+                    <div class="col-sm-4 pb-3">
+                        <label for="{{ form.min_salary_range.id_for_label }}">Minimum</label>
+                        <input type="number" class="form-control" name="min_salary_range" id="{{ form.min_salary_range.id_for_label }}" value="{{ form.min_salary_range.value|default_if_none:'' }}" title="List the minimum salary range for this position" step="0.01" placeholder="Enter Minimum Salary Range" />
+                        <small class="form-text text-muted">List the minimum salary range for this position</small>
+                    </div>
+                    <div class="col-sm-4 pb-3">
+                        <label for="{{ form.mid_salary_range.id_for_label }}">Midpoint</label>
+                        <input type="number" class="form-control" name="mid_salary_range" id="{{ form.mid_salary_range.id_for_label }}" value="{{ form.mid_salary_range.value|default_if_none:'' }}" title="List the midpoint salary range for this position" step="0.01" placeholder="Enter Midpoint  Salary Range" />
+                        <small class="form-text text-muted">List the midpoint salary range for this position</small>
+                    </div>
+                    <div class="col-sm-4 pb-3">
+                        <label for="{{ form.max_salary_range.id_for_label }}">Maximum</label>
+                        <input type="number" class="form-control" name="max_salary_range" id="{{ form.max_salary_range.id_for_label }}" value="{{ form.max_salary_range.value|default_if_none:'' }}" title="List the maximum salary range for this position" step="0.01" placeholder="Enter Maximum  Salary Range" />
+                        <small class="form-text text-muted">List the maximum salary range for this position</small>
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.position_open_date.id_for_label }}">Date Position is Open</label>
+                        <input type="date" class="form-control" id="{{ form.position_open_date.id_for_label }}" name="position_open_date" value="{{ form.position_open_date.value }}">
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.expected_start_date.id_for_label }}">Expected Start Date</label>
+                        <input type="date" class="form-control" id="{{ form.expected_start_date.id_for_label }}" name="expected_start_date" value="{{ form.expected_start_date.value }}">
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hours_per_week.id_for_label }}">Hours per Week</label>
+                        <input type="text" class="form-control" name="hours_per_week" id="{{ form.hours_per_week.id_for_label }}" value="{{ form.hours_per_week.value|default_if_none:'' }}" placeholder="Enter Hours per Week" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.weekly_schedule.id_for_label }}">Weekly Schedule for hourly positions</label>
+                        <input type="text" class="form-control" name="weekly_schedule" id="{{ form.weekly_schedule.id_for_label }}" value="{{ form.weekly_schedule.value|default_if_none:'' }}" placeholder="Enter Weekly Schedule" required />
+                    </div>
+
+                    <div class="col-sm-12 pb-3">
+                        <h6>Approvals</h6>
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hiring_mgr_name.id_for_label }}">Hiring Manager/Dean</label>
+                        <input type="text" class="form-control" id="{{ form.hiring_mgr_name.id_for_label }}" name="hiring_mgr_name" value="{{ form.hiring_mgr_name.value|default_if_none:'' }}" placeholder="Enter Hiring Manager/Dean Name" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hiring_mgr_date.id_for_label }}">Date</label>
+                        <input type="date" class="form-control" id="{{ form.hiring_mgr_date.id_for_label }}" name="hiring_mgr_date" value="{{ form.hiring_mgr_date.value }}">
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.vp_provost_name.id_for_label }}">VP/Provost</label>
+                        <input type="text" class="form-control" id="{{ form.vp_provost_name.id_for_label }}" name="vp_provost_name" value="{{ form.vp_provost_name.value|default_if_none:'' }}" placeholder="Enter VP/Provost Name" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.vp_provost_date.id_for_label }}">Date</label>
+                        <input type="date" class="form-control" id="{{ form.vp_provost_date.id_for_label }}" name="vp_provost_date" value="{{ form.vp_provost_date.value }}">
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.cfo_name.id_for_label }}">CFO</label>
+                        <input type="text" class="form-control" id="{{ form.cfo_name.id_for_label }}" name="cfo_name" value="{{ form.cfo_name.value|default_if_none:'' }}" placeholder="Enter CFO Name" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.cfo_date.id_for_label }}">Date</label>
+                        <input type="date" class="form-control" id="{{ form.cfo_date.id_for_label }}" name="cfo_date" value="{{ form.cfo_date.value }}">
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hr_name.id_for_label }}">HR Department</label>
+                        <input type="text" class="form-control" id="{{ form.hr_name.id_for_label }}" name="hr_name" value="{{ form.hr_name.value|default_if_none:'' }}" placeholder="Enter HR Department Name" />
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hr_date.id_for_label }}">Date</label>
+                        <input type="date" class="form-control" id="{{ form.hr_date.id_for_label }}" name="hr_date" value="{{ form.hr_date.value }}">
+                    </div>
+
+                    <div class="col-12 pb-3 text-center">
+                        <button class="btn btn-primary" style="width:200px;" type="submit">Submit</button>
+                    </div>
+
+                </div>
+                <!-- end form row -->
+            </form>
+            <!-- end form -->
+        </div>
+        <!-- end card body -->
+    </div>
+    <!-- end card -->
+</div>
+<!-- end container -->
+{% endblock %}
