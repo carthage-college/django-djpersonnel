@@ -19,17 +19,16 @@
                 <div class="form-row mt-4">
                     <div class="col-sm-12 pb-3">
                         <label for="{{ form.account_number.id_for_label }}">Account #</label>
-                        <input type="text" class="form-control" id="{{ form.account_number.id_for_label }}" name="account_number" value="{{ form.account_number.value|default_if_none:'' }}" placeholder="XXXXXXXXXXXXXXXX">
-                        {% if messages %}
-                            {% for message in messages %}
-                                <small class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">List the midpoint salary range for this position</small>
-                            {% endfor %}
+                        <input type="text" class="form-control" id="{{ form.account_number.id_for_label }}" name="account_number" value="{{ form.account_number.value|default_if_none:'' }}" placeholder="XXXXXXXXXXXXXXXX" oninvalid="this.setCustomValidity('Enter Account Number Here')"
+    oninput="this.setCustomValidity('')" required />
+                        {% if form.account_number.errors %}
+                            <small class="text-danger">Please correct the error{{ form.account_number }}</small>
                         {% endif %}
                     </div>
-
                     <div class="col-sm-6 pb-3">
                         <label for="{{ form.position_title.id_for_label }}">Position Title</label>
-                        <input type="text" class="form-control" name="position_title" id="{{ form.position_title.id_for_label }}" value="{{ form.position_title.value|default_if_none:'' }}" placeholder="Enter Position Title" required />
+                        <input type="text" class="form-control" name="position_title" id="{{ form.position_title.id_for_label }}" value="{{ form.position_title.value|default_if_none:'' }}" placeholder="Enter Position Title" required oninvalid="this.setCustomValidity('Enter Position Title')"
+    oninput="this.setCustomValidity('')" />
                     </div>
                     <div class="col-sm-6 pb-3">
                         <label for="{{ form.department_name.id_for_label }}">Department Name</label>
@@ -72,7 +71,7 @@
                     <div class="col-sm-4 pb-3">
                         <label for="{{ form.min_salary_range.id_for_label }}">Minimum</label>
                         <input type="number" class="form-control" name="min_salary_range" id="{{ form.min_salary_range.id_for_label }}" value="{{ form.min_salary_range.value|default_if_none:'' }}" title="List the minimum salary range for this position" step="0.01" placeholder="Enter Minimum Salary Range" />
-                        <small class="text-danger">List the minimum salary range for this position</small>
+                        <small class="form-text text-muted">List the minimum salary range for this position</small>
                     </div>
                     <div class="col-sm-4 pb-3">
                         <label for="{{ form.mid_salary_range.id_for_label }}">Midpoint</label>
