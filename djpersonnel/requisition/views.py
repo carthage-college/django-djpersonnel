@@ -10,24 +10,23 @@ def form_home(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
-        TO_LIST = [settings.PAF_EMAIL_LIST,]
+        TO_LIST = [settings.PRF_EMAIL_LIST,]
     BCC = settings.MANAGERS
 
     if request.method=='POST':
         form = OperationForm(request.POST)
         if form.is_valid():
             data = form.save()
-            email = settings.DEFAULT_FROM_EMAIL
-            if data.email:
-                email = data.email
-            subject = "[Submit] {} {}".format(
-                data.user.first_name, data.user.last_name
+            email = data.user.email
+            subject = "[PRF Submission] {}, {}".format(
+                data.user.last_name, data.user.first_name
             )
             send_mail(
-                request,TO_LIST, subject, email,'transaction/email.html', data, BCC
+                request, TO_LIST, subject, email,'requisition/email.html',
+                data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy('transaction_success')
+                reverse_lazy('requisition_success')
             )
     else:
         form = OperationForm()
