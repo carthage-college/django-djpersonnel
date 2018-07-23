@@ -12,13 +12,14 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='paf_operation_created_by',
-        editable=False
+        #editable=False
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='paf_operation_updated_by',
-        editable=False, null=True, blank=True
+        #editable=False,
+        null=True, blank=True
     )
     created_at = models.DateTimeField(
         "Date Created", auto_now_add=True
@@ -50,7 +51,7 @@ class Operation(models.Model):
     opened = models.BooleanField(default=False)
 
     # form fields
-    start_date = models.DateField("Position tart date")
+    start_date = models.DateField("Position start date")
     title = models.CharField(
         max_length=128
     )
@@ -67,8 +68,10 @@ class Operation(models.Model):
         """
         Default data for display
         """
-        return self.created_by.username
+        return "{}: submitted by {}, {}".format(
+            self.title, self.created_by.last_name,self.created_by.first_name
+        )
 
     @models.permalink
     def get_absolute_url(self):
-        return ('operation_detail', [str(self.id)])
+        return ('transaction_detail', [str(self.id)])

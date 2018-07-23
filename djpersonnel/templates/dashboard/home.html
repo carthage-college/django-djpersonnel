@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% block title %}
+    Personnel Transaction Form Submissions &mdash;
+    Human Resources &mdash; Carthage College
+{% endblock %}
 {% block extra_style %}
 {{block.super}}
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
@@ -50,30 +54,15 @@ $(function() {
 });
 </script>
 {% endblock %}
+{% block body_tag %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block navbar-header %}
-<a href="{% url 'dashboard_home' %}" class="mr-sm-3 mr-lg-3"><i class="fa fa-home fa-2x"></i></a>
-<a class="navbar-brand"
-    href="{{root_url}}">
-    LIS
-</a>
+<a href="{% url 'dashboard_home' %}" class="mr-sm-3 mr-lg-3">
+  <i class="fa fa-home fa-2x"></i></a>
+<a class="navbar-brand" href="{{root_url}}">Human Resources</a>
 {% endblock %}
 {% block navbar-top-links %}
   <ul class="navbar-nav ml-auto">
-    <!--
-    <li class="nav-item">
-      <form class="form-inline my-2 my-lg-0 mr-sm-3 mr-lg-3" action="{# url 'search_advanced' #}" method="post">
-        {% csrf_token %}
-        <div class="input-group">
-          <input class="form-control" name="student" placeholder="Last name or ID..." type="text">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">
-              <i class="fa fa-search"></i>
-            </button>
-          </span>
-        </div>
-      </form>
-    </li>
-    -->
     <li class="dropdown user-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-user"></i> {{user.first_name|default:"Dashboard"}}
@@ -142,10 +131,7 @@ $(function() {
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                Provisioning batch process data
-                [<small>
-                    <span class="minor">Lavender rows are failed jobs</span>
-                </small>]
+                Personnel Transaction Form Submissions
             </h1>
         </div>
         <!-- /.col-lg-12 -->
@@ -176,8 +162,8 @@ $(function() {
                   <h2>Results</h2>
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body" id="provisioning-data-panel">
-                  {% include "dashboard/provisioning_data.inc.html" %}
+                <div class="panel-body" id="transaction-data-panel">
+                  {% include "dashboard/transaction_data.inc.html" %}
                 </div>
                 <!-- /.panel-body -->
             </div>

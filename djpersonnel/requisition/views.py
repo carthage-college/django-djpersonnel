@@ -5,9 +5,14 @@ from django.shortcuts import render
 
 from djpersonnel.requisition.forms import OperationForm
 
+from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.mail import send_mail
 
 
+#@portal_auth_required(
+    #session_var='DJPERSONNEL_AUTH',
+    #redirect_url=reverse_lazy('access_denied')
+#)
 def form_home(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
