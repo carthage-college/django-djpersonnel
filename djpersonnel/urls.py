@@ -53,5 +53,9 @@ urlpatterns = [
     # dashboard
     url(
         r'^dashboard/', include('djpersonnel.dashboard.urls')
+    ),
+    # redirect home to dashboard
+    url(
+        r'^$', RedirectView.as_view(url=reverse_lazy('dashboard_home'))
     )
 ]
