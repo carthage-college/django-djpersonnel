@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="col-md-12 offset-md-1 card bg-dark">
+    <div class="col-md-12 card bg-dark">
         <div class="card-title">
             <h3 class="text-center text-white">Position Requisition Form</h3>
         </div>
@@ -13,19 +13,28 @@
             Instructions: This form must be completed prior to recruiting or hiring for a new or replacement position.
             The hiring manager should complete this form, upload the current job description, and electronically submit.
             This form will then be automatically routed for the proper approval(s). After the final signature is received,
-            the hiring manager will receive notification via email indicating approval, and the job will be posted.
+            the hiring manager will receive notification via email indicating approval, and the job will be posted. default = {% django_debug %}
+            kjkjkj
         </div>
         <div class="card-body bg-light">
             <form action="." method="post" class="form" role="form">
                 {% csrf_token %}
                 <div class="form-row mt-4">
-                    <div class="col-sm-12 pb-3">
-                        <label for="{{ form.account_number.id_for_label }}"{% if form.account_number.errors %} class="text-danger"{% endif %}>Account #</label>
-                        <input type="text" class="form-control{% if form.account_number.errors %} is-invalid{% endif %}" id="{{ form.account_number.id_for_label }}" name="account_number" value="{{ form.account_number.value|default_if_none:'' }}" placeholder="XXXXXXXXXXXXXXXX">
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hiring_mgr_name.id_for_label }}"{% if form.hiring_mgr_name.errors %} class="text-danger"{% endif %}>Hiring Manager Name</label>
+                        <input type="text" class="form-control{% if form.hiring_mgr_name.errors %} is-invalid{% endif %}" name="hiring_mgr_name" id="{{ form.hiring_mgr_name.id_for_label }}" value="{{ form.hiring_mgr_name.value|default_if_none:'' }}" placeholder="Enter Hiring Manager Name"{% if not django_debug %} required{% endif %}>
                         <small class="text-danger">
-                            {{ form.account_number.errors|join:", "}}
+                            {{ form.hiring_mgr_name.errors|join:", "}}
                         </small>
                     </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="{{ form.hiring_mgr_ccid.id_for_label }}"{% if form.hiring_mgr_ccid.errors %} class="text-danger"{% endif %}>Hiring Manager ID</label>
+                        <input type="text" class="form-control{% if form.hiring_mgr_ccid.errors %} is-invalid{% endif %}" name="hiring_mgr_ccid" id="{{ form.hiring_mgr_ccid.id_for_label }}" value="{{ form.hiring_mgr_date.value|default_if_none:'' }}" placeholder="Enter Hiring Manager ID">
+                        <small class="text-danger">
+                            {{ form.hiring_mgr_ccid.errors|join:", "}}
+                        </small>
+                    </div>
+
                     <div class="col-sm-6 pb-3">
                         <label for="{{ form.position_title.id_for_label }}"{% if form.position_title.errors %} class="text-danger"{% endif %}>Position Title</label>
                         <input type="text" class="form-control{% if form.position_title.errors %} is-invalid{% endif %}" name="position_title" id="{{ form.position_title.id_for_label }}" value="{{ form.position_title.value|default_if_none:'' }}" placeholder="Enter Position Title">
@@ -97,7 +106,7 @@
                     </div>
 
                     <div class="col-sm-6 pb-3">
-                        <label for="{{ form.position_open_date.id_for_label }}"{% if form.position_open_date.errors %} class="text-danger"{% endif %}>Date Position is Open</label>
+                        <label for="{{ form.position_open_date.id_for_label }}"{% if form.position_open_date.errors %} class="text-danger"{% endif %}>Date Position is open/available</label>
                         <input type="date" class="form-control{% if form.position_open_date.errors %} is-invalid{% endif %}" name="position_open_date" id="{{ form.position_open_date.id_for_label }}" value="{{ form.position_open_date.value }}">
                         <small class="text-danger">
                             {{ form.position_open_date.errors|join:", "}}
@@ -118,75 +127,14 @@
                             {{ form.hours_per_week.errors|join:", "}}
                         </small>
                     </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.weekly_schedule.id_for_label }}"{% if form.hours_per_week.errors %} class="text-danger"{% endif %}>Weekly Schedule for hourly positions</label>
-                        <input type="text" class="form-control{% if form.weekly_schedule.errors %} is-invalid{% endif %}" name="hours_per_week" id="{{ form.weekly_schedule.id_for_label }}" value="{{ form.weekly_schedule.value|default_if_none:'' }}" placeholder="Enter Weekly Schedule">
-                        <small class="text-danger">
-                            {{ form.weekly_schedule.errors|join:", "}}
-                        </small>
-                    </div>
-
                     <div class="col-sm-12 pb-3">
-                        <h6>Approvals</h6>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.hiring_mgr_name.id_for_label }}"{% if form.hiring_mgr_name.errors %} class="text-danger"{% endif %}>Hiring Manager/Dean</label>
-                        <input type="text" class="form-control{% if form.hiring_mgr_name.errors %} is-invalid{% endif %}" name="hiring_mgr_name" id="{{ form.hiring_mgr_name.id_for_label }}" value="{{ form.hiring_mgr_name.value|default_if_none:'' }}" placeholder="Enter Hiring Manager/Dean Name">
-                        <small class="text-danger">
-                            {{ form.hiring_mgr_name.errors|join:", "}}
-                        </small>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.hiring_mgr_date.id_for_label }}"{% if form.hiring_mgr_date.errors %} class="text-danger"{% endif %}>Date</label>
-                        <input type="date" class="form-control{% if form.hiring_mgr_date.errors %} is-invalid{% endif %}" name="hiring_mgr_date" id="{{ form.hiring_mgr_date.id_for_label }}" value="{{ form.hiring_mgr_date.value }}">
-                        <small class="text-danger">
-                            {{ form.hiring_mgr_date.errors|join:", "}}
-                        </small>
-                    </div>
-
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.vp_provost_name.id_for_label }}"{% if form.vp_provost_name.errors %} class="text-danger"{% endif %}>VP</label>
-                        <input type="text" class="form-control{% if form.vp_provost_name.errors %} is-invalid{% endif %}" name="vp_provost_name" id="{{ form.vp_provost_name.id_for_label }}" value="{{ form.vp_provost_name.value|default_if_none:'' }}" placeholder="Enter VP/Provost Name">
-                        <small class="text-danger">
-                            {{ form.vp_provost_name.errors|join:", "}}
-                        </small>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.vp_provost_date.id_for_label }}"{% if form.vp_provost_date.errors %} class="text-danger"{% endif %}>Date</label>
-                        <input type="date" class="form-control{% if form.vp_provost_date.errors %} is-invalid{% endif %}" name="vp_provost_date" id="{{ form.vp_provost_date.id_for_label }}" value="{{ form.vp_provost_date.value }}">
-                        <small class="text-danger">
-                            {{ form.vp_provost_date.errors|join:", "}}
-                        </small>
-                    </div>
-
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.cfo_name.id_for_label }}"{% if form.cfo_name.errors %} class="text-danger"{% endif %}>CFO</label>
-                        <input type="text" class="form-control{% if form.cfo_name.errors %} is-invalid{% endif %}" name="cfo_name" id="{{ form.cfo_name.id_for_label }}" value="{{ form.cfo_name.value|default_if_none:'' }}" placeholder="Enter CFO Name">
-                        <small class="text-danger">
-                            {{ form.cfo_name.errors|join:", "}}
-                        </small>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.cfo_date.id_for_label }}"{% if form.cfo_date.errors %} class="text-danger"{% endif %}>Date</label>
-                        <input type="date" class="form-control{% if form.cfo_date.errors %} is-invalid{% endif %}" name="expected_start_date" id="{{ form.cfo_date.id_for_label }}" value="{{ form.cfo_date.value }}">
-                        <small class="text-danger">
-                            {{ form.cfo_date.errors|join:", "}}
-                        </small>
-                    </div>
-
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.hr_name.id_for_label }}"{% if form.hr_name.errors %} class="text-danger"{% endif %}>HR Department</label>
-                        <input type="text" class="form-control{% if form.hr_name.errors %} is-invalid{% endif %}" name="hr_name" id="{{ form.hr_name.id_for_label }}" value="{{ form.hr_name.value|default_if_none:'' }}" placeholder="Enter HR Department Name">
-                        <small class="text-danger">
-                            {{ form.hr_name.errors|join:", "}}
-                        </small>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="{{ form.hr_date.id_for_label }}"{% if form.hr_date.errors %} class="text-danger"{% endif %}>Date</label>
-                        <input type="date" class="form-control{% if form.hr_date.errors %} is-invalid{% endif %}" name="hr_date" id="{{ form.hr_date.id_for_label }}" value="{{ form.hr_date.value }}">
-                        <small class="text-danger">
-                            {{ form.hr_date.errors|join:", "}}
-                        </small>
+                        <p>
+                            Please note: If an employee is regularly scheduled for 40 hours or more per week they would
+                            be considered full-time and benefits eligible.  If an employee is regularly scheduled for
+                            30 hours or more per week they would be considered part-time and benefits eligible. If an
+                            employee is regularly scheduled for less than 30 hours per week they would be considered
+                            part-time and not benefits eligible.
+                        </p>
                     </div>
 
                     <div class="col-12 pb-3 text-center">
