@@ -3,6 +3,11 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
+SALARY_CHOICES = (
+    ('Exempt', 'Exempt (Salary)'),
+    ('Non-exempt', 'Non-exempt (Hourly)')
+)
+
 
 class Operation(models.Model):
     """
@@ -31,37 +36,35 @@ class Operation(models.Model):
     # status
 
     # supervisor/chair has submitted the form for approval
-    save_submit = models.BooleanField(default=False)
-    # Division Dean or VP of Area
-    level4 = models.BooleanField(default=False)
-    # VP for Business (CFO)
+    # VP
     level3 = models.BooleanField(default=False)
-    # HR
+    level3_date = models.DateField(
+        "VP Signed Date"
+    )
+    # VP for Business (CFO)
     level2 = models.BooleanField(default=False)
-    # Payroll
+    level2_date = models.DateField(
+        "CFO Signed Date"
+    )
+    # HR
     level1 = models.BooleanField(default=False)
+    level1_date = models.DateField(
+        "HR Signed Date"
+    )
     # anyone in the workflow can decline the operation
     decline = models.BooleanField(default=False)
     # set to True when levels are completed.
     # post_save signal sends email to Supervisor.
     email_approved = models.BooleanField(default=False)
-    # no longer active but might be used later
-    closed = models.BooleanField(default=False)
-    # signifies that it has been reopened
-    opened = models.BooleanField(default=False)
 
     # form fields
     position_title = models.CharField(
         "Position Title",
-        max_length=128
+        max_length=128,
     )
     department_name = models.CharField(
         "Department Name",
-        max_length=128
-    )
-    account_number = models.CharField(
-        "Account Number",
-        max_length=30
+        max_length=128,
     )
     replacement_for = models.BooleanField(
         default=False
@@ -69,7 +72,6 @@ class Operation(models.Model):
     replacement_name = models.CharField(
         "If 'Replacement', please provide name",
         max_length=128,
-        null=True, blank=True
     )
     new_position = models.BooleanField(
         default=False
@@ -105,40 +107,13 @@ class Operation(models.Model):
         "Hours per Week",
         max_length=25
     )
-    weekly_schedule = models.CharField(
-        "Weekly Schedule for hourly positions",
-        max_length=50
+    post_position_by_date = models.DateField(
+        "Human Resources to post this position by",
     )
-    hiring_mgr_name = models.CharField(
-        "Hiring Manager Name",
-        max_length=128
-    )
-    hiring_mgr_date = models.DateField(
-        "Hiring Manager Signed Date"
-    )
-    vp_provost_name = models.CharField(
-        "VP/Provost Name",
-        max_length=128
-    )
-    vp_provost_date = models.DateField(
-        "VP/Provost Signed Date"
-    )
-    cfo_name = models.CharField(
-        "CFO Name",
-        max_length=128
-    )
-    cfo_date = models.DateField(
-        "CFO Signed Date"
-    )
-    hr_name = models.CharField(
-        "HR Name",
-        max_length=128
-    )
-    hr_date = models.DateField(
-        "HR Signed Date"
-    )
+    salary_type = models.CharField(max_length=16, choices=SALARY_CHOICES)
     comments = models.TextField(
-        null=True, blank=True,
+        null=True,
+        blank=True,
         help_text="Provide any additional comments if need be"
     )
 
