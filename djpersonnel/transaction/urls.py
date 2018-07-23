@@ -17,10 +17,13 @@ urlpatterns = [
         ),
         name='transaction_success'
     ),
+    #
+    # dashboard URLs
+    #
     # transaction detail
     url(
-        r'^(?P<aid>\d+)/display/$',
-        views.display, name='transaction_display'
+        r'^(?P<aid>\d+)/detail/$',
+        views.display, name='transaction_detail'
     ),
     # transaction update
     url(
@@ -31,10 +34,5 @@ urlpatterns = [
     url(
         r'^search/$',
         views.search, name='transaction_search'
-    ),
-    # listing display
-    url(
-        r'list/^$',
-        views.list, name='transaction_list'
     ),
 ]

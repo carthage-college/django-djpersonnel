@@ -1,0 +1,53 @@
+<div class="table-responsive">
+  <div class="card-body" style="margin-bottom:20px">
+    <table class="dataTable display table-bordered table-hover" id="provisioning-data">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>
+                  <i class="fa fa-calendar-o green blue-tooltip" data-toggle="tooltip"
+                    data-placement="top" aria-hidden="true"
+                    title="Hover over the date to see comments"></i>
+                    Created at
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for o in objects %}
+            <tr>
+                <td>
+                  <a href="{{ o.get_absolute_url }}">
+                    {{o.title}}
+                  </a>
+                </td>
+                <td>
+                  {{o.created_by.last_name}}
+                </td>
+                <td>
+                  {{o.created_by.first_name}}
+                </td>
+                <td title="{{o.comments}}">
+                  {{o.created_at}}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Title</th>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>
+                  <i class="fa fa-calendar-o green blue-tooltip" data-toggle="tooltip"
+                    data-placement="top" aria-hidden="true"
+                    title="Hover over the date to see comments"></i>
+                    Created at
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+  </div>
+</div>
+<!-- /.table-responsive -->
