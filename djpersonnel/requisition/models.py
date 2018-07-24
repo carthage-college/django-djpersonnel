@@ -17,13 +17,13 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='prf_operation_created_by',
-        #editable=False
+        editable=False
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='prf_operation_updated_by',
-        #editable=False,
+        editable=False,
         null=True, blank=True
     )
     created_at = models.DateTimeField(
@@ -39,17 +39,20 @@ class Operation(models.Model):
     # VP
     level3 = models.BooleanField(default=False)
     level3_date = models.DateField(
-        "VP Signed Date"
+        "VP Signed Date",
+        null=True, blank=True
     )
     # VP for Business (CFO)
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
-        "CFO Signed Date"
+        "CFO Signed Date",
+        null=True, blank=True
     )
     # HR
     level1 = models.BooleanField(default=False)
     level1_date = models.DateField(
-        "HR Signed Date"
+        "HR Signed Date",
+        null=True, blank=True
     )
     # anyone in the workflow can decline the operation
     decline = models.BooleanField(default=False)
@@ -109,11 +112,13 @@ class Operation(models.Model):
     )
     post_position_by_date = models.DateField(
         "Human Resources to post this position by",
+        default=None
     )
-    salary_type = models.CharField(max_length=16, choices=SALARY_CHOICES)
+    salary_type = models.CharField(
+        max_length=16, choices=SALARY_CHOICES,
+    )
     comments = models.TextField(
-        null=True,
-        blank=True,
+        null=True, blank=True,
         help_text="Provide any additional comments if need be"
     )
 
