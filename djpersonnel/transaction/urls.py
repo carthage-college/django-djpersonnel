@@ -22,17 +22,12 @@ urlpatterns = [
     #
     # transaction detail
     url(
-        r'^(?P<aid>\d+)/detail/$',
-        views.display, name='transaction_detail'
+        r'^(?P<tid>\d+)/display/$',
+        views.display, name='transaction_display'
     ),
     # transaction update
     url(
         r'^(?P<aid>\d+)/update/$',
         views.update, name='transaction_update'
-    ),
-    # transaction search for operations
-    url(
-        r'^search/$',
-        views.search, name='transaction_search'
     ),
 ]
