@@ -1,0 +1,13 @@
+{% extends "dashboard/home.html" %}
+{% block title %}
+    Transaction Data Display &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block content %}
+<h1>Transaction Data</h1>
+<div class="row">
+  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+    <h2>Job Title: {{data.title}}</h2>
+    {{data}}
+  </div>
+</div>
+{% endblock %}

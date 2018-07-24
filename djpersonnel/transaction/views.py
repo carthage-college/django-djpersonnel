@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from djpersonnel.transaction.models import Operation
 from djpersonnel.transaction.forms import OperationForm
 
 from djtools.utils.mail import send_mail
@@ -48,19 +49,10 @@ def form_home(request):
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def list(request):
+def display(request, tid):
+    data = get_object_or_404(Operation, id=tid)
     return render(
-        request, 'transaction/list.html', {}
-    )
-
-
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
-)
-def display(request, pid):
-    return render(
-        request, 'transaction/display.html', {}
+        request, 'transaction/display.html', {'data':data}
     )
 
 
@@ -71,14 +63,4 @@ def display(request, pid):
 def update(request, pid):
     return render(
         request, 'transaction/update.html', {}
-    )
-
-
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
-)
-def search(request):
-    return render(
-        request, 'transaction/search.html', {}
     )
