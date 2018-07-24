@@ -2,12 +2,12 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
+from djtools.fields import BINARY_CHOICES
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (Salary)'),
     ('Non-exempt', 'Non-exempt (Hourly)')
 )
-
 
 class Operation(models.Model):
     """
@@ -69,18 +69,26 @@ class Operation(models.Model):
         "Department Name",
         max_length=128,
     )
-    replacement_for = models.BooleanField(
-        default=False
+    new_position = models.CharField(
+        "Is this a new position?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+        null=True, blank=True
     )
+    # NOTE: if 'No', provide the replacement name
     replacement_name = models.CharField(
         "If 'Replacement', please provide name",
         max_length=128,
+        null=True, blank=True
     )
-    new_position = models.BooleanField(
-        default=False
+    salary_type = models.CharField(
+        max_length=16,
+        choices=SALARY_CHOICES,
     )
-    budgeted_position = models.BooleanField(
-        default=False
+    budgeted_position = models.CharField(
+        "Is this a new position?",
+        max_length=4,
+        choices=BINARY_CHOICES,
     )
     min_salary_range = models.DecimalField(
         "Minimum Salary Range",
@@ -111,15 +119,32 @@ class Operation(models.Model):
         max_length=25
     )
     post_position_by_date = models.DateField(
-        "Human Resources to post this position by",
-        default=None
+        "Human Resources to post this position by"
     )
-    salary_type = models.CharField(
-        max_length=16, choices=SALARY_CHOICES,
+    applicant_system = models.CharField(
+        """
+        Other than myself, I would like the following individuals 
+        to have access to the applications in applicant pro system:
+        """,
+        max_length=4,
+        choices=BINARY_CHOICES,
     )
-    comments = models.TextField(
-        null=True, blank=True,
-        help_text="Provide any additional comments if need be"
+    applicant_system__other = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The following individuals need to have access to the applications in applicant pro system"
+    )
+    speciality_sites = models.CharField(
+        """
+        I would like to post to a speciality site that is not part of the base package.
+        """,
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
+    speciality_sites__other = models.TextField(
+        null=True,
+        blank=True,
+        help_text="I would like to post to a speciality site that is not part of the base package"
     )
 
     class Meta:
