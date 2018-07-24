@@ -57,13 +57,13 @@
                     <div class="col-md-6 pb-3">
                         <div class="form-group">
                             <label>Is this a new position?</label>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check">
                                 <label for="{{ form.new_position.id_for_label }}_yes" class="form-check-label">
                                 <input class="form-check-input" type="radio" name="new_position" id="{{ form.new_position.id_for_label }}_yes" onclick="javascript:noCheck();" value="{{ form.new_position.value }}"> Yes
                                 </label>
                             </div>
 
-                            <div class="form-check form-check-inline">
+                            <div class="form-check">
                                 <label for="{{ form.new_position.id_for_label }}_no" class="form-check-label">
                                 <input class="form-check-input" type="radio" name="new_position" id="{{ form.new_position.id_for_label }}_no" onclick="javascript:noCheck();" value="{{ form.new_position.value }}"> No
                                 </label>
@@ -79,23 +79,28 @@
                     <div class="col-md-6 pb-3">
                         <div class="form-group">
                             <label>This position is:</label>
-                            <div class="form-check form-check-inline">
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                  <option value="Exempt">Exempt (Salary)</option>
-                                  <option value="Non-exempt">Non-exempt (Hourly)</option>
-                                </select>
-                            </div>
-
-                            <label>Is this a budgeted position?</label>
-                            <div class="form-check form-check-inline">
-                                <label for="{{ form.new_position.id_for_label }}_yes" class="form-check-label">
-                                <input class="form-check-input" type="radio" name="new_position" id="{{ form.new_position.id_for_label }}_yes" value="{{ form.new_position.value }}"> Yes
+                            <div class="form-check">
+                                <label for="{{ form.salary_type.id_for_label }}_exempt" class="form-check-label">
+                                <input class="form-check-input" type="radio" name="salary_type" id="{{ form.salary_type.id_for_label }}_exempt" value="{{ form.salary_type.value }}"> Exempt (Salary)
                                 </label>
                             </div>
 
-                            <div class="form-check form-check-inline">
-                                <label for="{{ form.new_position.id_for_label }}_no" class="form-check-label">
-                                <input class="form-check-input" type="radio" name="new_position" id="{{ form.new_position.id_for_label }}_no" value="{{ form.new_position.value }}"> No
+                            <div class="form-check">
+                                <label for="{{ form.salary_type.id_for_label }}_nonexempt" class="form-check-label">
+                                <input class="form-check-input" type="radio" name="salary_type" id="{{ form.salary_type.id_for_label }}_nonexempt" value="{{ form.salary_type.value }}"> Non-exempt (Hourly)
+                                </label>
+                            </div>
+
+                            <label>Is this a budgeted position?</label>
+                            <div class="form-check">
+                                <label for="{{ form.budgeted_position.id_for_label }}_yes" class="form-check-label">
+                                <input class="form-check-input" type="radio" name="budgeted_position" id="{{ form.budgeted_position.id_for_label }}_yes" value="{{ form.budgeted_position.value }}"> Yes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label for="{{ form.budgeted_position.id_for_label }}_no" class="form-check-label">
+                                <input class="form-check-input" type="radio" name="budgeted_position" id="{{ form.budgeted_position.id_for_label }}_no" value="{{ form.budgeted_position.value }}"> No
                                 </label>
                             </div>
                         </div>
