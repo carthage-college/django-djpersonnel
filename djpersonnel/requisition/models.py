@@ -123,28 +123,34 @@ class Operation(models.Model):
     )
     applicant_system = models.CharField(
         """
-        Other than myself, I would like the following individuals 
-        to have access to the applications in applicant pro system:
+        Would you like any others to have access to the
+        applications in the Applicant Pro system?
         """,
-        max_length=4,
+        max_length=4, default='No',
         choices=BINARY_CHOICES,
     )
-    applicant_system__other = models.TextField(
-        null=True,
-        blank=True,
-        help_text="The following individuals need to have access to the applications in applicant pro system"
+    applicant_system_people = models.TextField(
+        null=True, blank=True,
+        help_text="""
+            The following individuals need to have access to the applications
+            in Applicant Pro system
+        """
     )
     speciality_sites = models.CharField(
         """
-        I would like to post to a speciality site that is not part of the base package.
+        I would like to post to a speciality site that is not part
+        of the base package.
         """,
-        max_length=4,
+        max_length=4, default='No',
         choices=BINARY_CHOICES,
     )
-    speciality_sites__other = models.TextField(
-        null=True,
-        blank=True,
-        help_text="I would like to post to a speciality site that is not part of the base package"
+    speciality_sites_urls = models.TextField(
+        "URLs",
+        null=True, blank=True,
+        help_text="""
+            Please provide the URL(s) of the sites to which you would like
+            to submit this job position
+        """
     )
 
     class Meta:
