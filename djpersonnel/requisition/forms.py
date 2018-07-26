@@ -30,10 +30,11 @@ class OperationForm(forms.ModelForm):
             'decline','email_approved'
         ]
 
+
     def clean_replacement_name(self):
 
-        if self.cleaned_data.get('new_position') == "No" \
-          and not self.cleaned_data.get('replacement_name'):
+        cd = self.cleaned_data
+        if cd.get('new_position') == 'No' and not cd.get('replacement_name'):
             raise forms.ValidationError("You must provide a replacement name.")
 
-        return self.cleaned_data['replacement_name']
+        return cd['replacement_name']
