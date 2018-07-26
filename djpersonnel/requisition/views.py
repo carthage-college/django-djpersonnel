@@ -21,7 +21,7 @@ def form_home(request):
     BCC = settings.MANAGERS
 
     if request.method=='POST':
-        form = OperationForm(request.POST)
+        form = OperationForm(request.POST, label_suffix='')
         if form.is_valid():
             data = form.save()
             email = data.created_by.email
@@ -36,8 +36,9 @@ def form_home(request):
                 reverse_lazy('requisition_form_success')
             )
     else:
-        form = OperationForm()
+        form = OperationForm(label_suffix='')
 
     return render(
         request, 'requisition/form_bootstrap.html', {'form': form,}
+        #request, 'requisition/form.html', {'form': form,}
     )
