@@ -252,17 +252,7 @@ LOGGING = {
         }
     },
     'loggers': {
-        '': {
-            'handlers':['logfile'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'djpersonnel': {
-            'handlers':['logfile'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'djpersonnel.core': {
+        'debug_logger': {
             'handlers':['logfile'],
             'propagate': True,
             'level':'DEBUG',
