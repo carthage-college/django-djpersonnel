@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 from djtools.fields import BINARY_CHOICES
 
 SALARY_CHOICES = (
-    ('Exempt', 'Exempt (Salary)'),
-    ('Non-exempt', 'Non-exempt (Hourly)')
+    ('Exempt', 'Exempt (salary)'),
+    ('Non-exempt', 'Non-exempt (hourly)')
 )
+
 
 class Operation(models.Model):
     """
@@ -82,6 +83,7 @@ class Operation(models.Model):
         null=True, blank=True
     )
     salary_type = models.CharField(
+        "This position is",
         max_length=16,
         choices=SALARY_CHOICES,
     )
@@ -119,7 +121,7 @@ class Operation(models.Model):
         max_length=25
     )
     post_position_by_date = models.DateField(
-        "Human Resources to post this position by"
+        "Human Resources should publish this position by the following date:"
     )
     applicant_system = models.CharField(
         """
