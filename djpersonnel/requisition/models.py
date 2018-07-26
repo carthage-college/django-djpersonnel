@@ -88,7 +88,7 @@ class Operation(models.Model):
         choices=SALARY_CHOICES,
     )
     budgeted_position = models.CharField(
-        "Is this a new position?",
+        "Is this a budgeted position?",
         max_length=4,
         choices=BINARY_CHOICES,
     )
@@ -111,13 +111,13 @@ class Operation(models.Model):
         help_text="List the maximum salary range for this position"
     )
     position_open_date = models.DateField(
-        "Position Open Date"
+        "Date Position is open/available"
     )
     expected_start_date = models.DateField(
         "Expected Start Date"
     )
     hours_per_week = models.CharField(
-        "Hours per Week",
+        "How many hours per week will this position work?",
         max_length=25
     )
     post_position_by_date = models.DateField(
@@ -128,31 +128,26 @@ class Operation(models.Model):
         Would you like any others to have access to the
         applications in the Applicant Pro system?
         """,
-        max_length=4, default='No',
+        max_length=4,
         choices=BINARY_CHOICES,
     )
     applicant_system_people = models.TextField(
         null=True, blank=True,
-        help_text="""
-            The following individuals need to have access to the applications
-            in Applicant Pro system
-        """
+        help_text="Enter each individual's name, one per line"
     )
     speciality_sites = models.CharField(
         """
-        I would like to post to a speciality site that is not part
-        of the base package.
+        Would you like to post to a speciality site that is not part
+        of the base package?
         """,
-        max_length=4, default='No',
+        max_length=4,
         choices=BINARY_CHOICES,
     )
     speciality_sites_urls = models.TextField(
         "URLs",
         null=True, blank=True,
-        help_text="""
-            Please provide the URL(s) of the sites to which you would like
-            to submit this job position
-        """
+        help_text=("Please provide the URL(s) of the sites to which "
+            "you would like to submit this job position")
     )
 
     class Meta:
