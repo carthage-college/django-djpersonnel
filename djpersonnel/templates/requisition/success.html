@@ -1,5 +1,27 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}PRF Form &mdash; Carthage College{% endblock %}
 {% block content %}
-    <h2>Success</h2>
+<div class="container">
+  <div class="col-md-12 card bg-dark">
+    <div class="card-title">
+      <h3 class="text-center text-white">Position Requisition Form</h3>
+    </div>
+    <div class="card-header bg-secondary text-white">
+      <h2>Success</h2>
+    </div>
+    <div class="card-body bg-light">
+      {% get_lw_content as success blurbs 2622 %}
+      {{success.body|safe}}
+      <ul>
+        <li>
+          <a href="{% url 'requisition_form' %}">Submit another</a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard_home' %}">Personnel Dashboard</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 {% endblock %}

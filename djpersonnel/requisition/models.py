@@ -82,15 +82,19 @@ class Operation(models.Model):
         max_length=128,
         null=True, blank=True
     )
+    budgeted_position = models.CharField(
+        "Is this a budgeted position?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
     salary_type = models.CharField(
         "This position is",
         max_length=16,
         choices=SALARY_CHOICES,
     )
-    budgeted_position = models.CharField(
-        "Is this a budgeted position?",
-        max_length=4,
-        choices=BINARY_CHOICES,
+    hours_per_week = models.CharField(
+        "How many hours per week will this position work?",
+        max_length=25
     )
     min_salary_range = models.DecimalField(
         "Minimum Salary Range",
@@ -111,17 +115,14 @@ class Operation(models.Model):
         help_text="List the maximum salary range for this position"
     )
     position_open_date = models.DateField(
-        "Date Position is open/available"
+        "Open/available Date"
     )
     expected_start_date = models.DateField(
         "Expected Start Date"
     )
-    hours_per_week = models.CharField(
-        "How many hours per week will this position work?",
-        max_length=25
-    )
-    post_position_by_date = models.DateField(
-        "Human Resources should publish this position by the following date:"
+    publication_date = models.DateField(
+        help_text=("Human Resources should publish this position "
+            "by the following date")
     )
     applicant_system = models.CharField(
         """

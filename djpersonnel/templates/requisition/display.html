@@ -1,40 +1,18 @@
 {% extends "minimal.html" %}
 {% load bootstrap4 %}
+{% load model_helpers %}
 {% block title %}
-    Personnel Requisition Form &mdash; Human Resources &mdash; Carthage College
+    PRF Display &mdash;
+    Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
 <script type="text/javascript">
-  function toggleCheck(domRadio, domInput) {
-    if (document.getElementById(domRadio).checked) {
-      document.getElementById(domInput).style.display = 'inherit';
-    } else {
-      document.getElementById(domInput).style.display = 'none';
-    }
-  }
-  /* jquery code */
   $(function() {
-    {% if form.new_position.value == 'No' %}
-    $("#replacement").removeClass("hyde");
-    {% endif %}
-    {% if form.salary_type.value == 'Salary' %}
-    $("#hours_per_week").removeClass("hyde");
-    {% endif %}
-    {% if form.applicant_system.value == 'Yes' %}
-    $("#applicant_system_people").removeClass("hyde");
-    {% endif %}
-    {% if form.speciality_sites.value == 'Yes' %}
-    $("#speciality_sites_urls").removeClass("hyde");
-    {% endif %}
   });
 </script>
 {% endblock %}
 {% block extra_style %}
 <style>
-  .hyde {display:none;}
-  label { margin-bottom: .25em; }
-  label h5 {font-weight:545;font-size: 1.2rem;margin-bottom:0;}
-  .form-check-label {font-size: .9em;}
 </style>
 {% endblock %}
 {% block content %}
@@ -43,56 +21,15 @@
     <div class="card-title">
       <h3 class="text-center text-white">Position Requisition Form</h3>
     </div>
-    <div class="card-header bg-secondary text-white">
-      <strong>Instructions:</strong>
-      This form must be completed prior to recruiting
-      or hiring for a new or replacement position.
-      The hiring manager should complete this form, upload the current
-      job description, and electronically submit.
-      This form will then be automatically routed for the proper
-      approval(s). After the final signature is received,
-      the hiring manager will receive notification via email
-      indicating approval, and the job will be posted.
-    </div>
     <div class="card-body bg-light">
-      <form action="." method="post" class="form" role="form">
-        {% csrf_token %}
         <div class="form-row mt-4">
           <div class="col-sm-6 pb-2 pr-5">
-            <label for="{{form.position_title.id_for_label}}"
-              {% if form.position_title.errors %}
-                class="text-danger"
-              {% endif %}>
-              <h5>{{form.position_title.label}}</h5>
-            </label>
-            <input type="text" class="form-control
-              {% if form.position_title.errors %} is-invalid{% endif %}"
-              name="position_title"
-              id="{{form.position_title.id_for_label}}"
-              value="{{form.position_title.value|default_if_none:''}}"
-              placeholder="Enter Position Title"
-              {% if not django_debug %} required{% endif %}>
-            <small class="text-danger">
-              {{form.position_title.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'position_title' %}</h5>
+            <p>{{data.position_title}}</p>
           </div>
           <div class="col-sm-6 pb-2">
-            <label for="{{form.department_name.id_for_label}}"
-              {% if form.department_name.errors %}
-                class="text-danger"
-              {% endif %}>
-              <h5>{{form.department_name.label}}</h5>
-            </label>
-            <input type="text" class="form-control
-              {% if form.department_name.errors %} is-invalid{% endif %}"
-              name="department_name"
-              id="{{form.department_name.id_for_label}}"
-              value="{{form.department_name.value|default_if_none:''}}"
-              placeholder="Enter Department Name"
-              {% if not django_debug %} required{% endif %}>
-            <small class="text-danger">
-              {{form.department_name.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'department_name' %}</h5>
+            <p>{{data.department_name}}</p>
           </div>
           <div class="col-md-6 pb-1 pr-5">
             <div class="form-group">
@@ -446,11 +383,6 @@
                 costs associated with posting positions to specialty sites.
               </small>
             </div>
-          </div>
-          <div class="col-12 pb-2 text-center">
-            <button class="btn btn-primary" style="width:200px;" type="submit">
-              Submit
-            </button>
           </div>
         </div>
         <!-- end form row -->

@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from djpersonnel.requisition.models import Operation
 from djpersonnel.requisition.forms import OperationForm
 
 from djzbar.decorators.auth import portal_auth_required
@@ -23,7 +24,11 @@ def form_home(request):
     if request.method=='POST':
         form = OperationForm(request.POST, label_suffix='')
         if form.is_valid():
-            data = form.save()
+            data = form.save(commit=False)
+            user = request.user
+            data.created_by = user
+            data.updated_by = user
+            data.save()
             email = data.created_by.email
             subject = "[PRF Submission] {}, {}".format(
                 data.created_by.last_name, data.created_by.first_name
@@ -42,3 +47,24 @@ def form_home(request):
         request, 'requisition/form_bootstrap.html', {'form': form,}
         #request, 'requisition/form.html', {'form': form,}
     )
+
+#@portal_auth_required(
+    #session_var='DJPERSONNEL_AUTH',
+    #redirect_url=reverse_lazy('access_denied')
+#)
+def display(request, rid):
+    data = get_object_or_404(Operation, id=rid)
+    return render(
+        request, 'requisition/display.html', {'data':data}
+    )
+
+
+#@portal_auth_required(
+    #session_var='DJPERSONNEL_AUTH',
+    #redirect_url=reverse_lazy('access_denied')
+#)
+def update(request, pid):
+    return render(
+        request, 'requisition/update.html', {}
+    )
+

@@ -16,4 +16,17 @@ urlpatterns = [
         ),
         name='requisition_form_success'
     ),
+    #
+    # dashboard URLs
+    #
+    # transaction detail
+    url(
+        r'^(?P<rid>\d+)/display/$',
+        views.display, name='requisition_display'
+    ),
+    # transaction update
+    url(
+        r'^(?P<aid>\d+)/update/$',
+        views.update, name='requisition_update'
+    ),
 ]
