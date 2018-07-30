@@ -17,6 +17,9 @@
     {% if form.new_position.value == 'No' %}
     $("#replacement").removeClass("hyde");
     {% endif %}
+    {% if form.budgeted_position.value == 'Yes' %}
+    $("#account_number").removeClass("hyde");
+    {% endif %}
     {% if form.salary_type.value == 'Salary' %}
     $("#hours_per_week").removeClass("hyde");
     {% endif %}
@@ -151,7 +154,7 @@
             </div>
             <!-- /.form-group -->
           </div>
-          <div class="col-md-6 pb-1">
+          <div class="col-md-3 pb-1">
             <div class="form-group">
               <label for="id_{{form.budgeted_position.name}}_0"
                 {% if form.budgeted_position.errors %}
@@ -164,6 +167,7 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
                     type="radio" name="budgeted_position"
+                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     id="id_{{form.budgeted_position.name}}_0"
                     {% if form.budgeted_position.value == 'Yes' %}
                       checked
@@ -176,6 +180,7 @@
                   class="form-check-label">
                   <input class="form-check-input" value="No"
                     type="radio" name="budgeted_position"
+                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     id="id_{{form.budgeted_position.name}}_1"
                     {% if form.budgeted_position.value == 'No' %}
                       checked
@@ -226,6 +231,26 @@
               <small class="text-danger">
                 {{form.salary_type.errors|join:", "}}
               </small>
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <div class="col-md-3 pb-1">
+            <div class="form-group">
+              <!-- Hidden unless "Yes" is selected -->
+              <div class="form-check hyde" id="account_number">
+                <label for="{{form.account_number.id_for_label}}"
+                  {% if form.account_number.errors %}class="text-danger"{% endif %}>
+                  <h5>Account number</h5>
+                </label>
+                <input type="text" name="account_number"
+                  class="form-control{% if form.account_number.errors %} is-invalid{% endif %}"
+                  id="{{form.account_number.id_for_label}}"
+                  value="{{form.account_number.value|default_if_none:''}}"
+                  placeholder="Enter Account Number">
+                <small class="text-danger">
+                  {{form.account_number.errors|join:", "}}
+                </small>
+              </div>
             </div>
             <!-- /.form-group -->
           </div>
@@ -458,6 +483,9 @@
       <!-- end form -->
     </div>
     <!-- end card body -->
+    <div class="card-footer text-muted">
+    Carthage College
+  </div>
   </div>
   <!-- end card -->
 </div>

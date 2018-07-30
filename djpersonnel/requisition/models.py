@@ -86,11 +86,18 @@ class Operation(models.Model):
         "Is this a budgeted position?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     salary_type = models.CharField(
         "This position is",
         max_length=16,
         choices=SALARY_CHOICES,
+    )
+    # NOTE: if 'Yes', provide the account number to charge
+    account_number = models.CharField(
+        "Please provide account number",
+        max_length=30,
+        null=True, blank=True
     )
     hours_per_week = models.CharField(
         "How many hours per week will this position work?",
