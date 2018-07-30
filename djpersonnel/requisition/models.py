@@ -92,6 +92,12 @@ class Operation(models.Model):
         max_length=16,
         choices=SALARY_CHOICES,
     )
+    # NOTE: if 'Yes', provide the account number to charge
+    account_number = models.CharField(
+        "Please provide account number",
+        max_length=30,
+        null=True, blank=True
+    )
     hours_per_week = models.CharField(
         "How many hours per week will this position work?",
         max_length=25
