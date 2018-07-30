@@ -86,6 +86,7 @@ class Operation(models.Model):
         "Is this a budgeted position?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     salary_type = models.CharField(
         "This position is",
