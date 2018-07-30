@@ -43,7 +43,7 @@ class Operation(models.Model):
         "VP Signed Date",
         null=True, blank=True
     )
-    # VP for Business (CFO)
+    # CFO
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
         "CFO Signed Date",
@@ -155,12 +155,17 @@ class Operation(models.Model):
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
 
+
     def __unicode__(self):
         """
         Default data for display
         """
-        return self.created_by.username
+        return "{}: submitted by {}, {}".format(
+            self.position_title, self.created_by.last_name,
+            self.created_by.first_name
+        )
 
     @models.permalink
     def get_absolute_url(self):
-        return ('operation_detail', [str(self.id)])
+        return ('requisition_detail', [str(self.id)])
+
