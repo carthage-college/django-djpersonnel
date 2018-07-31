@@ -86,7 +86,6 @@ class Operation(models.Model):
         "Is this a budgeted position?",
         max_length=4,
         choices=BINARY_CHOICES,
-        null=True, blank=True
     )
     salary_type = models.CharField(
         "This position is",
@@ -99,9 +98,11 @@ class Operation(models.Model):
         max_length=30,
         null=True, blank=True
     )
+    # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position will work
     hours_per_week = models.CharField(
         "How many hours per week will this position work?",
-        max_length=25
+        max_length=25,
+        null=True, blank=True
     )
     min_salary_range = models.DecimalField(
         "Minimum Salary Range",

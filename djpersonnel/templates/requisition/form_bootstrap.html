@@ -157,9 +157,7 @@
           <div class="col-md-3 pb-1">
             <div class="form-group">
               <label for="id_{{form.budgeted_position.name}}_0"
-                {% if form.budgeted_position.errors %}
-                  class="text-danger"
-                {% endif %}>
+                {% if form.budgeted_position.errors %}class="text-danger"{% endif %}>
                 <h5>{{form.budgeted_position.label}}</h5>
               </label>
               <div class="form-check">
@@ -167,8 +165,8 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
                     type="radio" name="budgeted_position"
-                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     id="id_{{form.budgeted_position.name}}_0"
+                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     {% if form.budgeted_position.value == 'Yes' %}
                       checked
                     {% endif %}>
@@ -180,8 +178,8 @@
                   class="form-check-label">
                   <input class="form-check-input" value="No"
                     type="radio" name="budgeted_position"
-                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     id="id_{{form.budgeted_position.name}}_1"
+                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     {% if form.budgeted_position.value == 'No' %}
                       checked
                     {% endif %}>
