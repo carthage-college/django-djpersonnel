@@ -36,10 +36,10 @@ class Operation(models.Model):
 
     # supervisor/chair has submitted the form for approval
 
-    # VP
+    # VP/Dean
     level3 = models.BooleanField(default=False)
     level3_date = models.DateField(
-        "VP Signed Date",
+        "VP/Dean Signed Date",
         null=True, blank=True
     )
     # CFO
@@ -162,7 +162,6 @@ class Operation(models.Model):
     class Meta:
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
-
 
     def __unicode__(self):
         """
