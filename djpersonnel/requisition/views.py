@@ -10,10 +10,10 @@ from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.mail import send_mail
 
 
-#@portal_auth_required(
-    #session_var='DJPERSONNEL_AUTH',
-    #redirect_url=reverse_lazy('access_denied')
-#)
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def form_home(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
@@ -48,10 +48,10 @@ def form_home(request):
         #request, 'requisition/form.html', {'form': form,}
     )
 
-#@portal_auth_required(
-    #session_var='DJPERSONNEL_AUTH',
-    #redirect_url=reverse_lazy('access_denied')
-#)
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def display(request, rid):
     data = get_object_or_404(Operation, id=rid)
     return render(
@@ -59,10 +59,10 @@ def display(request, rid):
     )
 
 
-#@portal_auth_required(
-    #session_var='DJPERSONNEL_AUTH',
-    #redirect_url=reverse_lazy('access_denied')
-#)
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def update(request, pid):
     return render(
         request, 'requisition/update.html', {}
