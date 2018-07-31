@@ -18,17 +18,17 @@
             data-placement="top" aria-hidden="true"
             title="Send email to hiring manager"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="VP or Dean approval"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="CFO approval"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
@@ -45,7 +45,7 @@
           <a href="{% url 'requisition_display' r.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
           title="View Personnel Requisition">{{r.position_title}}</a>
-          [
+            <div class="float-right">
             {% if r.new_position == "Yes" %}
             <i class="fa fa-user-plus green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
@@ -55,20 +55,20 @@
               data-placement="top" aria-hidden="true"
               title="This position replaces '{{r.replacement_name}}'"></i>
             {% endif %}
-          ]
+            </div>
         </td>
         <td>
           {{r.department_name}}
           {% if r.budgeted_position == "Yes" %}
-            [
-            <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
+            <div class="float-right">
+              <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
               title="This position is budgeted for account #{{r.account_number}}"></i>
-            ]
+            </div>
           {% endif %}
         </td>
         <td><a href="mailto:{{r.created_by.email}}">{{r.created_by}}</a></td>
-        <td>
+        <td class="text-center">
           {% if r.level3 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
@@ -79,7 +79,7 @@
             title="Division Dean or VP has NOT approved this PRF"></i>
           {% endif %}
         </td>
-        <td>
+        <td class="text-center">
           {% if r.level2 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
@@ -90,7 +90,7 @@
             title="CFO has NOT approved this PRF"></i>
           {% endif %}
         </td>
-        <td>
+        <td class="text-center">
           {% if r.level1 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
@@ -125,17 +125,17 @@
             data-placement="top" aria-hidden="true"
             title="Send email to hiring manager"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="VP or Dean approval"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="CFO approval"></i>
         </th>
-        <th style="text-align:center;">
+        <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
