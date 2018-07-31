@@ -201,6 +201,7 @@ BOOTSTRAP4 = {
 # apps
 PAF_EMAIL_LIST=[]
 PRF_EMAIL_LIST=[]
+HR_GROUP='Human Resources'
 # tests
 TEST_USERNAME = ''
 TEST_PASSWORD = ''
