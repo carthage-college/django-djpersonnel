@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Personnel Transaction Form Submissions &mdash;
+    Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+    rel="stylesheet" type="text/css">
+<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
+    rel="stylesheet" type="text/css">
+<link href="/static/djsani/css/dashboard.css" rel="stylesheet" type="text/css">
+<link href="/static/djsani/css/main.css" rel="stylesheet" type="text/css">
+<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+    rel="stylesheet" type="text/css">
+{% endblock %}
+{% block extra_javascript %}
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+    type="text/javascript" charset="utf-8" language="javascript"></script>
+<script>
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+  /*  Initialise the DataTables: */
+  var table = $('#provisioning-data').DataTable({
+      buttons: [
+          'csv', 'excel'
+      ],
+      dom: 'lfrBtip',
+      "order": [[ 1, "asc" ]],
+      "lengthMenu": [
+          [100, 250, 500, 1000, 2000, -1],
+          [100, 250, 500, 1000, 2000, "All"]
+      ]
+  });
+  $("#id_created_at").addClass('col-3');
+  $("#id_created_at").datepicker({
+      firstDay:1,appendText:" (format yyyy-mm-dd)",
+      changeFirstDay:false,dateFormat:"yy-mm-dd",
+      showOn:"both",
+      buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+      buttonImageOnly:true
+  });
+});
+</script>
+{% endblock %}
+{% block body_tag %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block navbar-header %}
+<a href="{% url 'dashboard_home' %}" class="mr-sm-3 mr-lg-3">
+  <i class="fa fa-home fa-2x"></i></a>
+<a class="navbar-brand" href="{{root_url}}">Human Resources</a>
+{% endblock %}
+{% block navbar-top-links %}
+  <ul class="navbar-nav ml-auto">
+    <li class="dropdown user-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user"></i> {{user.first_name|default:"Dashboard"}}
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="divider"></li>
+            <li>
+                {% if user.is_anonymous %}
+                <a href="{% url 'auth_login' %}">
+                    <i class="fa fa-sign-in"></i> Sign In
+                </a>
+                {% else %}
+                <a href="{% url 'auth_logout' %}">
+                    <i class="fa fa-sign-out"></i> Sign Out
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </li>
+  </ul>
+{% endblock navbar-top-links %}
+{% block navbar-sidenav %}
+<ul class="navbar-nav navbar-sidenav">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+    <a class="nav-link" href="{% url 'dashboard_home' %}">
+      <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
+      <span class="nav-link-text">Dashboard</span>
+    </a>
+  </li>
+  {% if user.is_superuser %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Administration">
+    <a class="nav-link" href="{% url 'admin:index' %}">
+      <i class="fa fa-fw fa fa-cog" aria-hidden="true"></i>
+      <span class="nav-link-text">Administration</span>
+    </a>
+  </li>
+  {% endif %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Personnel Requisiton Form (PRF)">
+    <a class="nav-link" href="{% url 'requisition_form' %}">
+      <i class="fa fa-fw fa fa-user-plus" aria-hidden="true"></i>
+      <span class="nav-link-text">PRF</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Personnel Action Form (PAF)">
+    <a class="nav-link" href="{% url 'transaction_form' %}">
+      <i class="fa fa-fw fa fa-clipboard" aria-hidden="true"></i>
+      <span class="nav-link-text">PAF</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Carthage Home">
+    <a class="nav-link" href="https://www.carthage.edu/">
+      <i class="fa fa-fw fa fa-home" aria-hidden="true"></i>
+      <span class="nav-link-text">Carthage Home</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My.Carthage">
+    <a class="nav-link" href="https://my.carthage.edu/">
+      <i class="fa fa-fw fa fa-lemon-o" aria-hidden="true"></i>
+      <span class="nav-link-text">My.Carthage</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-center" data-toggle="tooltip" data-placement="right" title="Expand Menu" id="sidenavToggler">
+      <i class="fa fa-fw fa-angle-double-left" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+<ul class="navbar-nav sidenav-toggler">
+  <li class="nav-item">
+    <a class="nav-link text-center">
+      <i class="fa fa-fw"></i>
+    </a>
+  </li>
+</ul>
+{% endblock navbar-sidenav %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Personnel Transaction Form Submissions
+            </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>Search by date</h2>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    {% include "includes/required_text.html" %}
+                    {% include "includes/errors_text.html" %}
+                    <form method="post" action=".">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                    </form>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            {% if objects %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>Results</h2>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body" id="transaction-data-panel">
+                  {% include "dashboard/transaction_data.inc.html" %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            {% endif %}
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+{% endblock content %}
+{% block footer %}{% endblock %}

@@ -1,56 +1,12 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
 {% block title %}
     Personnel Transaction Form Submissions &mdash;
     Human Resources &mdash; Carthage College
 {% endblock %}
-{% block extra_style %}
-{{block.super}}
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
-    rel="stylesheet" type="text/css">
-<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
-    rel="stylesheet" type="text/css">
-<link href="/static/djsani/css/dashboard.css" rel="stylesheet" type="text/css">
-<link href="/static/djsani/css/main.css" rel="stylesheet" type="text/css">
-<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-    rel="stylesheet" type="text/css">
-{% endblock %}
 {% block extra_javascript %}
-<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
-<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
-    type="text/javascript" charset="utf-8" language="javascript"></script>
 <script>
 $(function() {
   $("body").toggleClass("sidenav-toggled");
-  /*  Initialise the DataTables: */
-  var table = $('#provisioning-data').DataTable({
-      buttons: [
-          'csv', 'excel'
-      ],
-      dom: 'lfrBtip',
-      "order": [[ 1, "asc" ]],
-      "lengthMenu": [
-          [100, 250, 500, 1000, 2000, -1],
-          [100, 250, 500, 1000, 2000, "All"]
-      ]
-  });
-  $("#id_created_at").addClass('col-3');
-  $("#id_created_at").datepicker({
-      firstDay:1,appendText:" (format yyyy-mm-dd)",
-      changeFirstDay:false,dateFormat:"yy-mm-dd",
-      showOn:"both",
-      buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
-      buttonImageOnly:true
-  });
 });
 </script>
 {% endblock %}
@@ -101,6 +57,18 @@ $(function() {
     </a>
   </li>
   {% endif %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Personnel Requisiton Form (PRF)">
+    <a class="nav-link" href="{% url 'requisition_form' %}">
+      <i class="fa fa-fw fa fa-user-plus" aria-hidden="true"></i>
+      <span class="nav-link-text">PRF</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Personnel Action Form (PAF)">
+    <a class="nav-link" href="{% url 'transaction_form' %}">
+      <i class="fa fa-fw fa fa-clipboard" aria-hidden="true"></i>
+      <span class="nav-link-text">PAF</span>
+    </a>
+  </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Carthage Home">
     <a class="nav-link" href="https://www.carthage.edu/">
       <i class="fa fa-fw fa fa-home" aria-hidden="true"></i>
@@ -128,50 +96,20 @@ $(function() {
 </ul>
 {% endblock navbar-sidenav %}
 {% block content %}
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Personnel Transaction Form Submissions
-            </h1>
-        </div>
-        <!-- /.col-lg-12 -->
+<div class="row">
+  {% if requisitions %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <h3>Personnel Requisition Form (PRF)</h3>
+      {% include "dashboard/requisition_data.inc.html" %}
     </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h2>Search by date</h2>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    {% include "includes/required_text.html" %}
-                    {% include "includes/errors_text.html" %}
-                    <form method="post" action=".">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
-                    </form>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            {% if objects %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h2>Results</h2>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body" id="transaction-data-panel">
-                  {% include "dashboard/transaction_data.inc.html" %}
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            {% endif %}
-        </div>
-        <!-- /.col-lg-12 -->
+  {% endif %}
+  {% if transactions %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <h3>Personnel Action Form (PAF)</h3>
+      {% include "dashboard/transaction_data.inc.html" %}
     </div>
-    <!-- /.row -->
+  {% endif %}
+</div>
+<!-- /.row -->
 {% endblock content %}
 {% block footer %}{% endblock %}

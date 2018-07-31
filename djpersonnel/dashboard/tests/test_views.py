@@ -27,5 +27,4 @@ class DashboardViewsTestCase(TestCase):
             created_at__gte = self.created_at_date
         ).all()
 
-        print("length of objects")
-        print(objects.count())
+        self.assertGreaterEqual(objects.count(), 1)

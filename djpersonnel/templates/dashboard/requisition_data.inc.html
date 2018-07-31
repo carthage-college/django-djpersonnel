@@ -1,0 +1,65 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover display">
+    <thead>
+      <tr>
+        <th>
+          Position Title
+          <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Personnel Requisition"></i> /
+          <i class="fa fa-print green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Print Personnel Requisition"></i>
+        </th>
+        <th>Department</th>
+        <th>
+          Submitted by
+          <i class="fa fa-envelope-o green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Send email to hiring manager"></i>
+        </th>
+        <th>Publication Date</th>
+        <th>Open Date</th>
+        <th>Start Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in requisitions %}
+        <tr>
+          <td>
+            <a href="{% url 'requisition_display' r.id %}" data-toggle="tooltip"
+            data-placement="top" class="blue-tooltip"
+            title="View Personnel Requisition">{{r.position_title}}</a>
+          </td>
+          <td>{{r.department}}</td>
+          <td>{{r.publication_date}}</td>
+          <td>{{r.position_open_date}}</td>
+          <td>{{r.expected_start_date}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>
+          Position Title
+          <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Personnel Requisition"></i> /
+          <i class="fa fa-print green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Print Personnel Requisition"></i>
+        </th>
+        <th>Department</th>
+        <th>
+          Submitted by
+          <i class="fa fa-envelope-o green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Send email to hiring manager"></i>
+        </th>
+        <th>Publication Date</th>
+        <th>Open Date</th>
+        <th>Start Date</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
