@@ -34,9 +34,8 @@ class Operation(models.Model):
         "Date Updated", auto_now=True
     )
 
-    # status
-
     # supervisor/chair has submitted the form for approval
+
     # VP
     level3 = models.BooleanField(default=False)
     level3_date = models.DateField(
@@ -87,18 +86,19 @@ class Operation(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
     )
-    salary_type = models.CharField(
-        "This position is",
-        max_length=16,
-        choices=SALARY_CHOICES,
-    )
     # NOTE: if 'Yes', provide the account number to charge
     account_number = models.CharField(
         "Please provide account number",
         max_length=30,
         null=True, blank=True
     )
-    # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position will work
+    salary_type = models.CharField(
+        "This position is",
+        max_length=16,
+        choices=SALARY_CHOICES,
+    )
+    # NOTE: if 'Non Exempt (hourly)', provide the hours per week
+    # this position will work
     hours_per_week = models.CharField(
         "How many hours per week will this position work?",
         max_length=25,
