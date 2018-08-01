@@ -88,7 +88,7 @@ class Operation(models.Model):
     )
     # NOTE: if 'Yes', provide the account number to charge
     account_number = models.CharField(
-        "Please provide account number",
+        "Account number",
         max_length=30,
         null=True, blank=True
     )
