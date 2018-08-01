@@ -38,3 +38,23 @@ class OperationForm(forms.ModelForm):
             raise forms.ValidationError("You must provide a replacement name.")
 
         return cd['replacement_name']
+
+    def clean_applicant_system_people(self):
+
+        cd = self.cleaned_data
+        if cd.get('applicant_system') == 'Yes' and \
+          not cd.get('applicant_system_people'):
+            raise forms.ValidationError(("You must provide the names of those "
+                "who will have access to the Applicant Pro system."))
+
+        return cd['applicant_system_people']
+
+    def clean_speciality_sites_urls(self):
+
+        cd = self.cleaned_data
+        if cd.get('speciality_sites') == 'Yes' and \
+          not cd.get('speciality_sites_urls'):
+            raise forms.ValidationError(("You must provide the URL(s) for "
+                "the speciality site(s)."))
+
+        return cd['speciality_sites_urls']
