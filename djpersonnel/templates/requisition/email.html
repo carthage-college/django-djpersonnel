@@ -1,8 +1,7 @@
+{% load model_helpers %}
 <pre style="font-size:1.5em;">
-Name: {{data.user.first_name}}
-E-mail: {{data.user.email}}
-Comments: {{data.comments}}
+Name: {{data.created_by.first_name}}
+E-mail: {{data.created_by.email}}
+{% field_name data 'position_title' %}: {{data.position_title}}
+{% field_name data 'department_name' %}: {{data.department_name}}
 </pre>
-{% if data.status %}
-<pre style="font-size:1.5em;">{{data.status}}</pre>
-{% endif %}
