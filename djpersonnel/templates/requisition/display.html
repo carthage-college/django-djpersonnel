@@ -13,6 +13,9 @@
 {% endblock %}
 {% block extra_style %}
 <style>
+  .hyde {display:none;}
+  label { margin-bottom: .20em; }
+  label h5 {font-weight:545;font-size: 1.2rem;margin-bottom:0;}
 </style>
 {% endblock %}
 {% block content %}
@@ -33,355 +36,102 @@
           </div>
           <div class="col-md-6 pb-1 pr-5">
             <div class="form-group">
-              <label for="id_{{form.new_position.name}}_0"
-                {% if form.new_position.errors %}
-                  class="text-danger"
-                {% endif %}>
-                <h5>{{form.new_position.label}}</h5>
-              </label>
-              <div class="form-check">
-                <label for="id_{{form.new_position.name}}_0"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Yes"
-                    type="radio" name="new_position"
-                    id="id_{{form.new_position.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.new_position.name}}_1','replacement');"
-                    {% if form.new_position.value == 'Yes' %}
-                      checked
-                    {% endif %}>
-                    Yes
-                </label>
-              </div>
-              <div class="form-check">
-                <label for="id_{{form.new_position.name}}_1"
-                  class="form-check-label">
-                  <input class="form-check-input" value="No"
-                    type="radio" name="new_position"
-                    id="id_{{form.new_position.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.new_position.name}}_1','replacement');"
-                    {% if form.new_position.value == 'No' %}
-                      checked
-                    {% endif %}>
-                    No
-                </label>
-              </div>
-              {% if form.new_position.errors %}
-              <small class="text-danger">
-                Please choose "Yes" or "No"
-              </small>
-              {% endif %}
+              <h5>{% field_name data 'new_position' %}</h5>
+              <p>{{data.new_position}}</p>
               <!-- Hidden unless "No" is selected -->
-              <div class="form-check hyde" id="replacement">
-                <label for="{{form.replacement_name.id_for_label}}"
-                  {% if form.replacement_name.errors %}class="text-danger"{% endif %}>
-                  <h5>If 'Replacement', please provide name</h5>
-                </label>
-                <input type="text" name="replacement_name"
-                  class="form-control{% if form.replacement_name.errors %} is-invalid{% endif %}"
-                  id="{{form.replacement_name.id_for_label}}"
-                  value="{{form.replacement_name.value|default_if_none:''}}"
-                  placeholder="Enter Replacement Name">
-                <small class="text-danger">
-                  {{form.replacement_name.errors|join:", "}}
-                </small>
+              <div class="form-check {% if data.new_position == 'Yes' %}hyde{% endif %}" id="replacement">
+                  <h5>{% field_name data 'replacement_name' %}</h5>
+                  <p>{{data.replacement_name}}</p>
               </div>
             </div>
             <!-- /.form-group -->
           </div>
-          <div class="col-md-6 pb-1">
+          <div class="col-md-3 pb-1">
             <div class="form-group">
-              <label for="id_{{form.budgeted_position.name}}_0"
-                {% if form.budgeted_position.errors %}
-                  class="text-danger"
-                {% endif %}>
-                <h5>{{form.budgeted_position.label}}</h5>
-              </label>
-              <div class="form-check">
-                <label for="id_{{form.budgeted_position.name}}_0"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Yes"
-                    type="radio" name="budgeted_position"
-                    id="id_{{form.budgeted_position.name}}_0"
-                    {% if form.budgeted_position.value == 'Yes' %}
-                      checked
-                    {% endif %}>
-                    Yes
-                </label>
-              </div>
-              <div class="form-check">
-                <label for="id_{{form.budgeted_position.name}}_1"
-                  class="form-check-label">
-                  <input class="form-check-input" value="No"
-                    type="radio" name="budgeted_position"
-                    id="id_{{form.budgeted_position.name}}_1"
-                    {% if form.budgeted_position.value == 'No' %}
-                      checked
-                    {% endif %}>
-                    No
-                </label>
-              </div>
-              {% if form.budgeted_position.errors %}
-              <small class="text-danger">
-                Please choose "Yes" or "No"
-              </small>
-              {% endif %}
+              <h5>{% field_name data 'budgeted_position' %}</h5>
+              <p>{{data.budgeted_position}}</p>
             </div>
             <!-- /.form-group -->
             <div class="form-group">
-              <label for="id_{{form.salary_type.name}}_0"
-                {% if form.salary_type.errors %}
-                  class="text-danger"
-                {% endif %}>
-                <h5>{{form.salary_type.label}}</h5>
-              </label>
-              <div class="form-check">
-                <label for="id_{{form.salary_type.name}}_0"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Exempt"
-                    type="radio" name="salary_type"
-                    onclick="javascript:toggleCheck('id_{{form.salary_type.name}}_1','hours_per_week');"
-                    id="id_{{form.salary_type.name}}_0"
-                    {% if form.salary_type.value == 'Exempt' %}
-                      checked
-                    {% endif %}>
-                    Exempt (salary)
-                </label>
+                <h5>{% field_name data 'salary_type' %}</h5>
+                <p>{{data.salary_type}}</p>
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <div class="col-md-3 pb-1">
+            <div class="form-group">
+              <!-- Hidden unless "Yes" is selected -->
+              <div class="form-check {% if data.budgeted_position == 'No' %} hyde{% endif %}" id="account_number">
+                  <h5>{% field_name data 'account_number' %}</h5>
+                  <p>{{data.account_number}}</p>
               </div>
-              <div class="form-check">
-                <label for="id_{{form.salary_type.name}}_1"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Non-exempt"
-                    type="radio" name="salary_type"
-                    onclick="javascript:toggleCheck('id_{{form.salary_type.name}}_1','hours_per_week');"
-                    id="id_{{form.salary_type.name}}_1"
-                    {% if form.salary_type.value == 'Non-exempt' %}
-                      checked
-                    {% endif %}>
-                    Non-exempt (hourly)
-                </label>
-              </div>
-              <small class="text-danger">
-                {{form.salary_type.errors|join:", "}}
-              </small>
             </div>
             <!-- /.form-group -->
           </div>
           <!-- Hidden unless "Salary" is selected -->
-          <div class="hyde pb-4" id="hours_per_week">
-          <div class="col-sm-12">
-            <label for="{{form.hours_per_week.id_for_label}}"
-            {% if form.hours_per_week.errors %} class="text-danger"{% endif %}>
-              <h5>{{form.hours_per_week.label}}</h5>
-            </label>
-            <p>
-              <strong>Please note:</strong>
-              If an employee is regularly scheduled
-              for 40 hours or more per week they would
-              be considered full-time and benefits eligible.
-              If an employee is regularly scheduled for
-              30 hours or more per week they would be considered
-              part-time and benefits eligible. If an
-              employee is regularly scheduled for less than 30
-              hours per week they would be considered part-time
-              and not benefits eligible.
-            </p>
-            <input type="text" name="hours_per_week"
-              class="form-control{% if form.hours_per_week.errors %} is-invalid{% endif %}"
-              id="{{form.hours_per_week.id_for_label}}"
-              value="{{form.hours_per_week.value|default_if_none:''}}"
-              placeholder="Enter Hours per Week"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.hours_per_week.errors|join:", "}}
-            </small>
-          </div>
+          <div class="{% if data.budgeted_position == 'Non-exempt' %} hyde{% endif %} pb-4" id="hours_per_week">
+            <div class="col-sm-12">
+                <h5>{% field_name data 'hours_per_week' %}</h5>
+              <p>
+                <strong>Please note:</strong>
+                If an employee is regularly scheduled
+                for 40 hours or more per week they would
+                be considered full-time and benefits eligible.
+                If an employee is regularly scheduled for
+                30 hours or more per week they would be considered
+                part-time and benefits eligible. If an
+                employee is regularly scheduled for less than 30
+                hours per week they would be considered part-time
+                and not benefits eligible.
+              </p>
+              <p>{{data.hours_per_week}}</p>
+            </div>
           </div>
           <div class="col-sm-12 pb-1">
             <h5>Job Salary Range (consult Human Resources)</h5>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.min_salary_range.id_for_label}}"
-            {% if form.min_salary_range.errors %}class="text-danger"{% endif %}>
-              Minimum
-            </label>
-            <input type="number" name="min_salary_range" step="0.01"
-              class="form-control{% if form.min_salary_range.errors %} is-invalid{% endif %}"
-              id="{{form.min_salary_range.id_for_label}}"
-              value="{{form.min_salary_range.value|default_if_none:''}}"
-              title="{{form.min_salary_range.help_text}}"
-              placeholder="Enter Minimum Salary Range"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.min_salary_range.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'min_salary_range' %}</h5>
+            <p>{{data.min_salary_range}}</p>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.mid_salary_range.id_for_label}}"
-            {% if form.mid_salary_range.errors %}class="text-danger"{% endif %}>
-              Midpoint
-            </label>
-            <input type="number" name="mid_salary_range" step="0.01"
-              class="form-control{% if form.mid_salary_range.errors %} is-invalid{% endif %}"
-              id="{{form.mid_salary_range.id_for_label}}"
-              value="{{form.mid_salary_range.value|default_if_none:''}}"
-              title="{{form.mid_salary_range.help_text}}"
-              placeholder="Enter Midpoint Salary Range"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.mid_salary_range.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'mid_salary_range' %}</h5>
+            <p>{{data.mid_salary_range}}</p>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.max_salary_range.id_for_label}}"
-            {% if form.max_salary_range.errors %}class="text-danger"{% endif %}>
-              Maximum
-            </label>
-            <input type="number" name="max_salary_range" step="0.01"
-              class="form-control{% if form.max_salary_range.errors %} is-invalid{% endif %}"
-              id="{{form.max_salary_range.id_for_label}}"
-              value="{{form.max_salary_range.value|default_if_none:''}}"
-              title="{{form.max_salary_range.help_text}}"
-              placeholder="Enter Maximum Salary Range"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.max_salary_range.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'max_salary_range' %}</h5>
+            <p>{{data.max_salary_range}}</p>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.position_open_date.id_for_label}}"
-            {% if form.position_open_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.position_open_date.label}}</h5>
-            </label>
-            <input type="date" name="position_open_date"
-              class="form-control{% if form.position_open_date.errors %} is-invalid{% endif %}"
-              id="{{form.position_open_date.id_for_label}}"
-              value="{{form.position_open_date.value|default:''}}"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.position_open_date.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'position_open_date' %}</h5>
+            <p>{{data.position_open_date}}</p>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.expected_start_date.id_for_label}}"
-            {% if form.expected_start_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.expected_start_date.label}}</h5>
-            </label>
-            <input type="date" name="expected_start_date"
-              class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
-              id="{{form.expected_start_date.id_for_label}}"
-              value="{{form.expected_start_date.value|default:''}}"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.expected_start_date.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'expected_start_date' %}</h5>
+            <p>{{data.expected_start_date}}</p>
           </div>
           <div class="col-sm-4 pb-3">
-            <label for="{{form.publication_date.id_for_label}}"
-            {% if form.publication_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.publication_date.label}}</h5>
-            </label>
-            <input type="date" name="publication_date"
-              class="form-control{% if form.publication_date.errors %} is-invalid{% endif %}"
-              id="{{form.publication_date.id_for_label}}"
-              value="{{form.publication_date.value|default:''}}"
-              title="{{form.publication_date.help_text}}"
-              {% if not django_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.publication_date.errors|join:", "}}
-            </small>
+            <h5>{% field_name data 'publication_date' %}</h5>
+            <p>{{data.publication_date}}</p>
           </div>
           <div class="col-sm-12 pb-2">
-            <label for="id_{{form.applicant_system.name}}_0"
-              {% if form.applicant_system.errors %}
-                class="text-danger"
-              {% endif %}>
-              <h5>{{form.applicant_system.label}}</h5>
-            </label>
+            <h5>{% field_name data 'applicant_system' %}</h5>
             <div class="form-check form-check-inline">
-              <div class="form-check">
-                <label for="id_{{form.applicant_system.name}}_0"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Yes"
-                    type="radio" name="applicant_system"
-                    id="id_{{form.applicant_system.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.applicant_system.name}}_0','applicant_system_people');"
-                    {% if form.applicant_system.value == 'Yes' %}
-                      checked
-                    {% endif %}>
-                    Yes
-                </label>
-              </div>
-            </div>
-            <div class="form-check form-check-inline">
-              <div class="form-check">
-                <label for="id_{{form.applicant_system.name}}_1"
-                  class="form-check-label">
-                  <input class="form-check-input" value="No"
-                    type="radio" name="applicant_system"
-                    id="id_{{form.applicant_system.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.applicant_system.name}}_0','applicant_system_people');"
-                    {% if form.applicant_system.value == 'No' %}
-                      checked
-                    {% endif %}>
-                    No
-                </label>
-              </div>
+              <p>{{data.applicant_system}}</p>
             </div>
             <!-- Hidden unless "Yes" is selected -->
-            <div class="form-check hyde" id="applicant_system_people">
-              <textarea class="form-control" rows="2"
-                id="id_applicant_system_people" name="applicant_system_people"
-                placeholder="{{form.applicant_system_people.help_text}}"
-              >{{form.applicant_system_people.value|default_if_none:''}}</textarea>
+            <div class="form-check {% if data.applicant_system == 'No' %}hyde{% endif %}" id="applicant_system_people">
+              <p>{{data.applicant_system_people}}</p>
             </div>
           </div>
           <div class="col-sm-12 pb-2">
-            <label for="id_{{form.speciality_sites.name}}_0"
-              {% if form.speciality_sites.errors %}
-                class="text-danger"
-              {% endif %}>
-              <h5>{{form.speciality_sites.label}}</h5>
-            </label>
+            <h5>{% field_name data 'speciality_sites' %}</h5>
             <div class="form-check form-check-inline">
-              <div class="form-check">
-                <label for="id_{{form.speciality_sites.name}}_0"
-                  class="form-check-label">
-                  <input class="form-check-input" value="Yes"
-                    type="radio" name="speciality_sites"
-                    id="id_{{form.speciality_sites.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.speciality_sites.name}}_0','speciality_sites_urls');"
-                    {% if form.speciality_sites.value == 'Yes' %}
-                      checked
-                    {% endif %}>
-                    Yes
-                </label>
-              </div>
-            </div>
-            <div class="form-check form-check-inline">
-              <div class="form-check">
-                <label for="id_{{form.speciality_sites.name}}_1"
-                  class="form-check-label">
-                  <input class="form-check-input" value="No"
-                    type="radio" name="speciality_sites"
-                    id="id_{{form.speciality_sites.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.speciality_sites.name}}_0','speciality_sites_urls');"
-                    {% if form.speciality_sites.value == 'No' %}
-                      checked
-                    {% endif %}>
-                    No
-                </label>
-              </div>
+              <p>{{data.speciality_sites}}</p>
             </div>
             <!-- Hidden unless "Yes" is selected -->
-            <div class="form-check hyde" id="speciality_sites_urls">
-              <textarea class="form-control" rows="2"
-                id="id_speciality_sites_urls" name="speciality_sites_urls"
-                placeholder="{{form.speciality_sites_urls.help_text}}"
-               >{{form.speciality_sites_urls.value|default_if_none:''}}</textarea>
-              <small class="text-danger">
-                Please note departments will be charged for any
-                costs associated with posting positions to specialty sites.
-              </small>
+            <div class="form-check {% if data.speciality_sites == 'No' %}hyde{% endif %}" id="speciality_sites_urls">
+              <p>{{data.speciality_sites_urls}}</p>
             </div>
           </div>
         </div>
@@ -390,6 +140,9 @@
       <!-- end form -->
     </div>
     <!-- end card body -->
+    <div class="card-footer text-muted">
+      Carthage College
+    </div>
   </div>
   <!-- end card -->
 </div>
