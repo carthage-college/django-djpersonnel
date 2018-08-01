@@ -415,10 +415,14 @@
             </div>
             <!-- Hidden unless "Yes" is selected -->
             <div class="form-check hyde" id="applicant_system_people">
-              <textarea class="form-control" rows="2"
+              <textarea rows="2"
+                class="form-control{% if form.applicant_system_people.errors %} is-invalid{% endif %}"
                 id="id_applicant_system_people" name="applicant_system_people"
                 placeholder="{{form.applicant_system_people.help_text}}"
               >{{form.applicant_system_people.value|default_if_none:''}}</textarea>
+              <small class="text-danger">
+                {{form.applicant_system_people.errors|join:", "}}
+              </small>
             </div>
           </div>
           <div class="col-sm-12 pb-2">
@@ -460,12 +464,17 @@
             </div>
             <!-- Hidden unless "Yes" is selected -->
             <div class="form-check hyde" id="speciality_sites_urls">
-              <textarea class="form-control" rows="2"
+              <textarea rows="2"
+                class="form-control{% if form.speciality_sites_urls.errors %} is-invalid{% endif %}"
                 id="id_speciality_sites_urls" name="speciality_sites_urls"
                 placeholder="{{form.speciality_sites_urls.help_text}}"
                >{{form.speciality_sites_urls.value|default_if_none:''}}</textarea>
               <small class="text-danger">
-                Please note departments will be charged for any
+                {{form.speciality_sites_urls.errors|join:", "}}
+              </small>
+              <small class="text-danger">
+                <strong>Please note:</strong>
+                departments will be charged for any
                 costs associated with posting positions to specialty sites.
               </small>
             </div>
