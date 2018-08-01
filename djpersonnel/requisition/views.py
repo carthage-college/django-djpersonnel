@@ -26,7 +26,7 @@ def form_home(request):
             data.updated_by = user
             data.save()
             # send email or display it for dev
-            template = 'requisition/email.html',
+            template = 'requisition/email.html'
             if not settings.DEBUG:
                 # email distribution list and bcc parameters
                 bcc = settings.PRF_EMAIL_LIST
