@@ -28,27 +28,32 @@ class Operation(models.Model):
         "Date Updated", auto_now=True
     )
 
-    # status
+    # supervisor/chair has submitted the form and
+    # the following are status levels for various approvers
 
-    # supervisor/chair has submitted the form for approval
-    save_submit = models.BooleanField(default=False)
-    # Division Dean or VP of Area
-    level4 = models.BooleanField(default=False)
-    # VP for Business (CFO)
+    # VP of Area or Provost
     level3 = models.BooleanField(default=False)
-    # HR
+    level3_date = models.DateField(
+        "VP or Area or Provost signed date",
+        null=True, blank=True
+    )
+    # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
-    # Payroll
+    level2_date = models.DateField(
+        "VPFA signed date",
+        null=True, blank=True
+    )
+    # HR
     level1 = models.BooleanField(default=False)
+    level1_date = models.DateField(
+        "HR Signed Date",
+        null=True, blank=True
+    )
     # anyone in the workflow can decline the operation
-    decline = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
     # set to True when levels are completed.
     # post_save signal sends email to Supervisor.
     email_approved = models.BooleanField(default=False)
-    # no longer active but might be used later
-    closed = models.BooleanField(default=False)
-    # signifies that it has been reopened
-    opened = models.BooleanField(default=False)
 
     # form fields
     start_date = models.DateField("Position start date")
