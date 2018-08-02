@@ -4,6 +4,8 @@ Django base settings for project.
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from datetime import datetime
+
 from djzbar.settings import INFORMIX_EARL_TEST as INFORMIX_EARL
 from djzbar.settings import JX_EARL_PROD
 from djzbar.settings import JX_EARL_TEST
