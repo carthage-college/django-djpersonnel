@@ -1,7 +1,36 @@
 {% load model_helpers %}
-<pre style="font-size:1.5em;">
-Name: {{data.created_by.first_name}}
-E-mail: {{data.created_by.email}}
-{% field_name data 'position_title' %}: {{data.position_title}}
-{% field_name data 'department_name' %}: {{data.department_name}}
-</pre>
+
+<h6>Hello,</h6>
+
+<p>
+  A new position requisition form has been submitted
+  and is awaiting your review. This form has been submitted by:
+</p>
+
+<h6>
+  {{data.created_by.first_name}}
+  {{data.created_by.last_name}}
+  (<a href="mailto:({{data.created_by.email}}"></a>)
+</h6>
+
+<dl {{dl_detail}}>
+  <dt {{dl_dt}}>{% field_name data 'position_title' %}</dt>
+  <dd {{dl_dd}}>{{data.position_title}}</dd>
+  <dt {{dl_dt}}>{% field_name data 'department_name' %}</dt>
+  <dd {{dl_dd}}>{{data.department_name}}</dd>
+</dl>
+
+<p>
+  The details of this request can be
+  <a href="{{data.proposal.get_absolute_url}}">
+      viewed here
+  </a>.
+</p>
+
+<p>
+  Please take a moment to review this submission and approve or deny.
+</p>
+
+<p>
+  Thank you!
+</p>
