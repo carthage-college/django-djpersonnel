@@ -21,12 +21,12 @@
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="VP or Dean approval"></i>
+            title="VP or Provost approval"></i>
         </th>
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="CFO approval"></i>
+            title="VPFA approval"></i>
         </th>
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
@@ -72,29 +72,29 @@
           {% if r.level3 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="Division Dean or VP has approved this PRF"></i>
+            title="VP or Provost approved this PRF on {{level3_date}}"></i>
           {% else %}
             <i class="fa fa-2x fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="Division Dean or VP has NOT approved this PRF"></i>
+            title="VP or Provost has NOT approved this PRF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if r.level2 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="CFO has approved this PRF"></i>
+            title="VPFA approved this PRF on {{level2_date}}"></i>
           {% else %}
             <i class="fa fa-2x fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="CFO has NOT approved this PRF"></i>
+            title="VPFA has NOT approved this PRF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if r.level1 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="HR have approved this PRF"></i>
+            title="HR approved this PRF on {{level1_date}}"></i>
           {% else %}
             <i class="fa fa-2x fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
@@ -128,7 +128,7 @@
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="VP or Dean approval"></i>
+            title="VP or Provost approval"></i>
         </th>
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
