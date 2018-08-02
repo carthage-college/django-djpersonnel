@@ -48,6 +48,7 @@ def form_home(request):
 
                 # send approver email to VP or Provost
                 template = 'requisition/email/approver.html'
+                # waiting for SQL that identifies staff VP
                 veep = False
                 if veep:
                     to_list = []
