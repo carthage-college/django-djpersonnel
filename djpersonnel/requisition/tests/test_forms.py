@@ -16,18 +16,16 @@ class OperationTestCase(TestCase):
         self.user = create_test_user()
         self.data = {
             'position_title': 'Bender','department_name': 'Delivery',
-            'account_number': '8675309','replacement_for': True,
-            'replacement_name': 'Kir Kroker','new_position': True,
-            'budgeted_position': True,'min_salary_range': '39000.00',
+            'account_number': '8675309', 'new_position': 'No',
+            'replacement_name': 'Kir Kroker', 'budgeted_position': 'Yes',
+            'account_number': '8675309', 'salary_type': 'Non-exempt',
+            'hours_per_week': '37.5', 'min_salary_range': '39000.00',
             'mid_salary_range': '49000.00','max_salary_range': '69000.00',
-            'position_open_date': '2018-04-20',
-            'expected_start_date': '2018-05-01','hours_per_week': '37.5',
-            'weekly_schedule': 'MTWRF','hiring_mgr_name': 'turanga leela',
-            'hiring_mgr_date': '2018-04-20','vp_provost_name': 'Amy Wong',
-            'vp_provost_date': '2018-05-01','cfo_name': 'Hubert J. Farnsworth',
-            'cfo_date': '2018-05-01','hr_name': 'Hermes Conrad',
-            'hr_date': '2018-05-01','comments': 'nice.',
-            'created_by': self.user.id
+            'position_open_date':'2018-04-20','publication_date':'2018-02-02',
+            'expected_start_date': '2018-05-01', 'applicant_system': 'Yes',
+            'applicant_system_people': 'Larry', 'speciality_sites': 'Yes',
+            'speciality_sites_urls': 'https://serverfault.com/',
+            'created_by': self.user.id,
         }
 
     def test_operation_form_valid_data(self):
@@ -37,7 +35,7 @@ class OperationTestCase(TestCase):
 
     def test_operation_form_invalid_data(self):
         data = self.data
-        data['created_by'] = 8675309
+        data['speciality_sites_urls'] = ''
         form = OperationForm(data)
         self.assertFalse(form.is_valid())
 

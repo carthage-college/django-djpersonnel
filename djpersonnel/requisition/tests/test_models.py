@@ -33,22 +33,19 @@ class RequisitionModelsTestCase(TestCase):
 
         # create
         obj = Operation.objects.create(
-            created_by = self.user, updated_by = self.user,
-            expected_start_date = self.date,
+            created_by = self.user, updated_by = self.user, new_position='No',
+            expected_start_date = self.date, salary_type = 'Non-exempt',
             position_title = 'Slacker', department_name = 'Delivery',
-            account_number = '90120', budgeted_position=True,
+            account_number = '90120', budgeted_position = True,
             min_salary_range = 39000.00, mid_salary_range = 49000.00,
             max_salary_range = 69000.00, position_open_date = self.date,
-            weekly_schedule = 'MTWRF', hiring_mgr_name = 'larry',
-            hiring_mgr_date = self.date, vp_provost_name = 'Amy Wong',
-            vp_provost_date = self.date, cfo_name = 'Hubert J. Farnsworth',
-            cfo_date = self.date, hr_name = 'Hermes Conrad',
-            hr_date = self.date, comments = 'nice.', hours_per_week = '37.5'
+            publication_date = self.date, hours_per_week = '37.5',
+            replacement_name = 'Kir Kroker'
         )
         obj.save()
 
         objects = Operation.objects.all()
-        self.assertEqual(Operation.objects.count(), 2)
+        self.assertEqual(Operation.objects.count(), 3)
 
         op = Operation.objects.filter(created_by=self.user)
         self.assertEqual(op.count(), 2)

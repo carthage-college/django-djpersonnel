@@ -7,6 +7,7 @@ from djpersonnel.requisition.models import Operation
 from djpersonnel.requisition.forms import OperationForm
 
 from djzbar.decorators.auth import portal_auth_required
+from djzbar.utils.hr import get_position
 from djtools.utils.mail import send_mail
 
 
@@ -20,26 +21,45 @@ def form_home(request):
 
         form = OperationForm(request.POST, label_suffix='')
         if form.is_valid():
+
             data = form.save(commit=False)
             user = request.user
             data.created_by = user
             data.updated_by = user
             data.save()
+
             # send email or display it for dev
-            template = 'requisition/email.html'
+            template = 'requisition/email/created_by.html'
             if not settings.DEBUG:
+
                 # email distribution list and bcc parameters
-                bcc = settings.PRF_EMAIL_LIST
-                bcc.append(settings.ADMINS[0][1])
+                bcc = [settings.ADMINS[0][1],]
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
                 # subject
                 subject = "[PRF Submission] {}, {}".format(
                     data.created_by.last_name, data.created_by.first_name
                 )
+
                 send_mail(
-                    request,to_list,subject,bcc[0],template,data,bcc
+                    request, to_list, subject, settings.PRF_EMAIL_LIST[0],
+                    template, data, bcc
                 )
+
+                # send approver email to VP or Provost
+                template = 'requisition/email/approver.html'
+                veep = False
+                if veep:
+                    to_list = []
+                else:
+                    #to_list = [get_position(settings.PROV_TPOS).email]
+                    to_list = bcc
+
+                send_mail(
+                    request, to_list, subject, data.created_by.email,
+                    template, data, bcc
+                )
+
                 return HttpResponseRedirect(
                     reverse_lazy('requisition_form_success')
                 )

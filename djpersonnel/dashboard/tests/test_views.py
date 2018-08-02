@@ -16,7 +16,7 @@ class DashboardViewsTestCase(TestCase):
     def setUp(self):
         self.created_at_date = settings.TEST_CREATED_AT_DATE
 
-    def test_transaction_created_at(self):
+    def test_transaction_search(self):
         print("\n")
         print("select all PAF transactions after a specific date")
         seperator()
