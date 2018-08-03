@@ -2,7 +2,13 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
+from djtools.fields import BINARY_CHOICES
 
+POSITION_CHOICES = (
+    ('Full-Time', 'Full-Time'),
+    ('Part-Time', 'Part-Time'),
+    ('Limited-Time', 'Limited-Time')
+)
 
 class Operation(models.Model):
     """
@@ -56,9 +62,181 @@ class Operation(models.Model):
     email_approved = models.BooleanField(default=False)
 
     # form fields
-    start_date = models.DateField("Position start date")
-    title = models.CharField(
+    employee_id_number = models.CharField(
+        verbose_name='Employee Number',
+        max_length=15
+    )
+    last_name = models.CharField(
+        verbose_name='Last Name',
+        max_length=100
+    )
+    first_name = models.CharField(
+        verbose_name='First Name',
+        max_length=75
+    )
+    middle_name = models.CharField(
+        verbose_name='Middle Name',
+        max_length=50,
+        null=True, blank=True
+    )
+    position_start_date = models.DateField(
+        verbose_name='Position start date'
+    )
+    position_end_date = models.DateField(
+        verbose_name='Position end date',
+        null=True, blank=True
+    )
+    home_address = models.CharField(
+        verbose_name='Home address',
         max_length=128
+    )
+    city = models.CharField(
+        verbose_name='City',
+        max_length=50
+    )
+    state = models.CharField(
+        verbose_name='"State',
+        max_length=2,
+        choices=STATE_CHOICES
+    )
+    postal_code = models.CharField(
+        max_length=10,
+        verbose_name='Zip Code'
+    )
+    phone = models.CharField(
+        max_length=12,
+        verbose_name='Phone Number',
+        help_text="Format: XXX-XXX-XXXX"
+    )
+    email = models.CharField(
+        max_length=128,
+        verbose_name='Email Address'
+    )
+    effective_date = models.DateField(
+        verbose_name='Effective date'
+    )
+    newhire_rehire = models.BooleanField(
+        verbose_name='New Hire_or Rehire',
+        default=False
+    )
+    onetime_payment = models.BooleanField(
+        verbose_name='Request for one-time payment',
+        default=False
+    )
+    voluntary_termination = models.BooleanField(
+        verbose_name='Termination voluntary',
+        default=False
+    )
+    involuntary_termination = models.BooleanField(
+        verbose_name='Termination involuntary',
+        default=False
+    )
+    unused_pto_payout = models.DecimalField(
+        "Unused paid time off payout",
+        decimal_places=2,
+        max_digits=16
+    )
+    position_change = models.BooleanField(
+        verbose_name='Position change',
+        default=False
+    )
+    department_change = models.BooleanField(
+        verbose_name='Department change',
+        default=False
+    )
+    compensation_change = models.BooleanField(
+        verbose_name='Compensation change',
+        default=False
+    )
+    leave_of_absence = models.BooleanField(
+        verbose_name='Leave of absence',
+        default=False
+    )
+    position_title = models.CharField(
+        "Position Title",
+        max_length=128,
+        null=True, blank=True
+    )
+    department_name = models.CharField(
+        "Department Name",
+        max_length=128,
+        null=True, blank=True
+    )
+    compensation = models.DecimalField(
+        "Pay Rate/Salary/One-time Payment",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    office_extension = models.CharField(
+        max_length=12,
+        verbose_name='Office #/Extension'
+    )
+    position_type = models.CharField(
+        "This position is",
+        max_length=16,
+        choices=POSITION_CHOICES
+    )
+    supervisor_name = models.CharField(
+        "Supervisors Name",
+        max_length=128,
+        null=True, blank=True
+    )
+    budget_account = models.CharField(
+        "Budget Account",
+        max_length=30,
+        null=True, blank=True
+    )
+    benefit_change_effective_date = models.DateField(
+        verbose_name='Benefit chenge effective date',
+        null=True, blank=True
+    )
+    supplement_life_policy_amount = models.DecimalField(
+        "Supplement Life Policy Amount",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    supplement_life_ppp_contribution = models.DecimalField(
+        "Supplement Life PPP Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    health_insurance_plan_tier = models.CharField(
+        "Health Insurance Plan and Tier",
+        max_length=30,
+        null=True, blank=True
+    )
+    cc_health_insurance_compensation_contribution = models.DecimalField(
+        "Carthage Health Insurance Compensation Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    hsa_annual_ppp_contribution = models.DecimalField(
+        "HSA Annual PPP Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    hsa_carthage_contribution = models.DecimalField(
+        "HSA Carthage Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    fsa_medical_annual_ppp_contribution = models.DecimalField(
+        "FSA Medical Annual PPP Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    fsa_dependent_care_annual_ppp_contribution = models.DecimalField(
+        "FSA Dependent Care Annual PPP Contribution",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
     )
     comments = models.TextField(
         null=True, blank=True,
@@ -77,6 +255,31 @@ class Operation(models.Model):
             self.title, self.created_by.last_name,self.created_by.first_name
         )
 
+class TransactionDocument(models.Model):
+    '''
+    Personnel Action form supporting documents
+    '''
+    # meta
+    created_at = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    operation = models.ForeignKey(
+        Operation, editable=False,
+        related_name='transaction_documents'
+    )
+    name = models.CharField(
+        "Name or short description of the file",
+        max_length=128,
+        null=True, blank=True
+    )
+    document = models.FileField(
+        "Supporting Document",
+        upload_to=upload_to_path,
+        validators=[MimetypeValidator('application/pdf')],
+        max_length=768,
+        help_text="PDF format",
+        null=True, blank=True
+    )
     @models.permalink
     def get_absolute_url(self):
         return ('transaction_detail', [str(self.id)])
