@@ -175,5 +175,5 @@ class Operation(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('requisition_detail', [str(self.id)])
+        return ('requisition_display', [str(self.id)])
 
