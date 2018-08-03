@@ -1,28 +1,33 @@
 {% load model_helpers %}
 
-<h6>Hello,</h6>
+<p>Hello,</p>
 
 <p>
   A new position requisition form has been submitted
   and is awaiting your review. This form has been submitted by:
 </p>
 
-<h6>
-  {{data.created_by.first_name}}
-  {{data.created_by.last_name}}
-  (<a href="mailto:({{data.created_by.email}}"></a>)
-</h6>
+<p>
+  <a href="mailto:{{data.created_by.email}}">
+    {{data.created_by.first_name}}
+    {{data.created_by.last_name}}
+  </a>
+</p>
 
 <dl {{dl_detail}}>
-  <dt {{dl_dt}}>{% field_name data 'position_title' %}</dt>
-  <dd {{dl_dd}}>{{data.position_title}}</dd>
-  <dt {{dl_dt}}>{% field_name data 'department_name' %}</dt>
-  <dd {{dl_dd}}>{{data.department_name}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'position_title' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.position_title}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'department_name' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.department_name}}</dd>
 </dl>
 
 <p>
   The details of this request can be
-  <a href="{{data.proposal.get_absolute_url}}">
+  <a href="https://{{server_url}}{{data.get_absolute_url}}">
       viewed here
   </a>.
 </p>
