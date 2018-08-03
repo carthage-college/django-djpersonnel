@@ -1,5 +1,34 @@
-{% extends "base.html" %}
-{% block title %}PAF Form &mdash; Carthage College{% endblock %}
+{% extends "minimal.html" %}
+{% load livewhale_api %}
+{% block title %}
+Personnel Action Form &mdash; Carthage College
+{% endblock %}
 {% block content %}
-    <h2>Success</h2>
+<div class="container">
+  <div class="col-md-12 card bg-dark">
+    <div class="card-title">
+      <h3 class="text-center text-white">
+        Personnel Action Form
+      </h3>
+    </div>
+    <div class="card-header bg-secondary text-white">
+      <h2>Success</h2>
+    </div>
+    <div class="card-body bg-light">
+      {% get_lw_content as success blurbs 2622 %}
+      {{success.body|safe}}
+      <ul>
+        <li>
+          <a href="{% url 'transacttion_form' %}">Submit another</a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard_home' %}">Personnel Dashboard</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-footer text-muted">
+      Carthage College
+    </div>
+  </div>
+</div>
 {% endblock %}
