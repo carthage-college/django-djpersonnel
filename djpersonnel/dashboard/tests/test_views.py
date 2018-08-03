@@ -8,23 +8,43 @@ from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.dashboard.forms import DateCreatedForm
 
-from djtools.utils.logging import seperator
+from djtools.utils.test import create_test_user
 
 
 class DashboardViewsTestCase(TestCase):
 
     def setUp(self):
+        self.user = create_test_user()
         self.created_at_date = settings.TEST_CREATED_AT_DATE
 
-    def test_transaction_search(self):
-        print("\n")
-        print("select all PAF transactions after a specific date")
-        seperator()
+    def test_home(self):
+
+        requisitions = Requisition.objects.filter(
+            created_by = self.user
+        )
+
+        self.assertGreaterEqual(requisition.count(), 1)
+
+        transactions = Transaction.objects.filter(
+            created_by = self.user
+        )
+
+        self.assertGreaterEqual(transactions.count(), 1)
+
+    def test_requisition_search(self):
 
         form = DateCreatedForm()
 
-        objects = Transaction.objects.filter(
+        requisitions = Requisition.objects.filter(
+            created_at__gte = self.created_at_date
+        )
+
+        self.assertGreaterEqual(requisition.count(), 1)
+
+    def test_transaction_search(self):
+
+        transactions = Transaction.objects.filter(
             created_at__gte = self.created_at_date
         ).all()
 
-        self.assertGreaterEqual(objects.count(), 1)
+        self.assertGreaterEqual(transactions.count(), 1)
