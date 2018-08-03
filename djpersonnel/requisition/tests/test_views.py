@@ -31,11 +31,6 @@ class RequisitionViewsTestCase(TestCase):
         response = self.client.get(earl)
         self.assertEqual(response.status_code, 200)
 
-        print("URL:")
-        print(response.request['PATH_INFO'])
-        print("Auth Success")
-
-
         json_data = open(
             '{}/fixtures/requisition_operation.json'.format(settings.ROOT_DIR)
         ).read()
@@ -46,7 +41,8 @@ class RequisitionViewsTestCase(TestCase):
         data['level3_date'] = ''
         requi = self.client.post(earl, data)
 
-        op = Operation.objects.get(created_by = self.user)
+        requisitions = Operation.objects.get(created_by = self.user)
+        self.assertGreaterEqual(requisitions.count(), 1)
 
     def test_email_logic(self):
 
