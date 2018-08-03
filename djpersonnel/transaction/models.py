@@ -255,6 +255,7 @@ class Operation(models.Model):
             self.title, self.created_by.last_name,self.created_by.first_name
         )
 
+
 class TransactionDocument(models.Model):
     '''
     Personnel Action form supporting documents
@@ -280,6 +281,7 @@ class TransactionDocument(models.Model):
         help_text="PDF format",
         null=True, blank=True
     )
+
     @models.permalink
     def get_absolute_url(self):
-        return ('transaction_detail', [str(self.id)])
+        return ('transaction_display', [str(self.id)])
