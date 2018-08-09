@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
-from djtools.fields import BINARY_CHOICES
+from djtools.fields import STATE_CHOICES
 
 POSITION_CHOICES = (
     ('Full-Time', 'Full-Time'),
@@ -95,7 +95,7 @@ class Operation(models.Model):
         max_length=50
     )
     state = models.CharField(
-        verbose_name='"State',
+        verbose_name='State',
         max_length=2,
         choices=STATE_CHOICES
     )
@@ -252,35 +252,10 @@ class Operation(models.Model):
         Default data for display
         """
         return "{}: submitted by {}, {}".format(
-            self.title, self.created_by.last_name,self.created_by.first_name
+            self.position_title, self.created_by.last_name,
+            self.created_by.first_name
         )
 
-
-class TransactionDocument(models.Model):
-    '''
-    Personnel Action form supporting documents
-    '''
-    # meta
-    created_at = models.DateTimeField(
-        "Date Created", auto_now_add=True
-    )
-    operation = models.ForeignKey(
-        Operation, editable=False,
-        related_name='transaction_documents'
-    )
-    name = models.CharField(
-        "Name or short description of the file",
-        max_length=128,
-        null=True, blank=True
-    )
-    document = models.FileField(
-        "Supporting Document",
-        upload_to=upload_to_path,
-        validators=[MimetypeValidator('application/pdf')],
-        max_length=768,
-        help_text="PDF format",
-        null=True, blank=True
-    )
 
     @models.permalink
     def get_absolute_url(self):
