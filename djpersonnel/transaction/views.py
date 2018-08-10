@@ -41,7 +41,7 @@ def form_home(request):
         form = OperationForm()
 
     return render(
-        request, 'transaction/form.html', {'form': form,}
+        request, 'transaction/form_bootstrap.html', {'form': form,}
     )
 
 
