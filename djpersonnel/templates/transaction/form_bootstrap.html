@@ -3,6 +3,35 @@
 {% block title %}
     Personnel Action Form &mdash; Human Resources &mdash; Carthage College
 {% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+  function toggleCheck(domCheckBox, domInput) {
+    if (document.getElementById(domCheckBox).checked) {
+      document.getElementById(domInput).style.display = 'inherit';
+    } else {
+      document.getElementById(domInput).style.display = 'none';
+    }
+  }
+  /* jquery code */
+  $(function() {
+    {% if form.newhire_rehire.value == True %}
+    $("#position_title").removeClass("hyde");
+    {% endif %}
+    {% if form.budgeted_position.value == 'Yes' %}
+    $("#account_number").removeClass("hyde");
+    {% endif %}
+    {% if form.salary_type.value == 'Salary' %}
+    $("#hours_per_week").removeClass("hyde");
+    {% endif %}
+    {% if form.applicant_system.value == 'Yes' %}
+    $("#applicant_system_people").removeClass("hyde");
+    {% endif %}
+    {% if form.speciality_sites.value == 'Yes' %}
+    $("#speciality_sites_urls").removeClass("hyde");
+    {% endif %}
+  });
+</script>
+{% endblock %}
 {% block extra_style %}
 <style>
   .hyde {display:none;}
@@ -275,7 +304,11 @@
                         <div class="control-group">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> New Hire or Rehire
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.newhire_rehire.id_for_label}}"
+                                    name="{{form.newhire_rehire.name}}"
+                                    onclick="javascript:toggleCheck('id_{{form.newhire_rehire.name}}_1','position_title');"
+                                    value="1"> {{form.newhire_rehire.label}}
                                 </label>
                             </div>
                             <div class="form-check">
@@ -324,7 +357,7 @@
                     <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
                         <h6>Section IV - Complete only applicable information.</h6>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 hyde">
                         <label for="{{form.position_title.id_for_label}}"
                             {% if form.position_title.errors %}
                                 class="text-danger"
