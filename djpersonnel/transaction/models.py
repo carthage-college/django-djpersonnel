@@ -116,7 +116,7 @@ class Operation(models.Model):
         verbose_name='Effective date'
     )
     newhire_rehire = models.BooleanField(
-        verbose_name='New Hire_or Rehire',
+        verbose_name='New Hire or Rehire',
         default=False
     )
     onetime_payment = models.BooleanField(
@@ -132,7 +132,7 @@ class Operation(models.Model):
         default=False
     )
     unused_pto_payout = models.DecimalField(
-        "Unused paid time off payout",
+        verbose_name='Unused paid time off payout',
         decimal_places=2,
         max_digits=16
     )
@@ -153,94 +153,95 @@ class Operation(models.Model):
         default=False
     )
     position_title = models.CharField(
-        "Position Title",
+        verbose_name='Position Title',
         max_length=128,
         null=True, blank=True
     )
     department_name = models.CharField(
-        "Department Name",
+        verbose_name='Department Name',
         max_length=128,
         null=True, blank=True
     )
     compensation = models.DecimalField(
-        "Pay Rate/Salary/One-time Payment",
+        verbose_name='Pay Rate/Salary/One-time Payment',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     office_extension = models.CharField(
+        verbose_name='Office #/Extension',
         max_length=12,
-        verbose_name='Office #/Extension'
+        null=True, blank=True
     )
     position_type = models.CharField(
-        "This position is",
+        verbose_name='This position is',
         max_length=16,
         choices=POSITION_CHOICES
     )
     supervisor_name = models.CharField(
-        "Supervisors Name",
+        verbose_name='Supervisor Name',
         max_length=128,
         null=True, blank=True
     )
     budget_account = models.CharField(
-        "Budget Account",
+        verbose_name='Budget Account',
         max_length=30,
         null=True, blank=True
     )
     benefit_change_effective_date = models.DateField(
-        verbose_name='Benefit chenge effective date',
+        verbose_name='Benefit change effective date',
         null=True, blank=True
     )
     supplement_life_policy_amount = models.DecimalField(
-        "Supplement Life Policy Amount",
+        verbose_name='Supplement Life Policy Amount',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     supplement_life_ppp_contribution = models.DecimalField(
-        "Supplement Life PPP Contribution",
+        verbose_name='Supplement Life PPP Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     health_insurance_plan_tier = models.CharField(
-        "Health Insurance Plan and Tier",
+        verbose_name='Health Insurance Plan and Tier',
         max_length=30,
         null=True, blank=True
     )
     cc_health_insurance_compensation_contribution = models.DecimalField(
-        "Carthage Health Insurance Compensation Contribution",
+        verbose_name='Carthage Health Insurance Compensation Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     hsa_annual_ppp_contribution = models.DecimalField(
-        "HSA Annual PPP Contribution",
+        verbose_name='HSA Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     hsa_carthage_contribution = models.DecimalField(
-        "HSA Carthage Contribution",
+        verbose_name='HSA Carthage Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     fsa_medical_annual_ppp_contribution = models.DecimalField(
-        "FSA Medical Annual PPP Contribution",
+        verbose_name='FSA Medical Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     fsa_dependent_care_annual_ppp_contribution = models.DecimalField(
-        "FSA Dependent Care Annual PPP Contribution",
+        verbose_name='FSA Dependent Care Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
     )
     comments = models.TextField(
         null=True, blank=True,
-        help_text="Provide any additional comments if need be"
+        help_text='Provide any additional comments if need be'
     )
 
     class Meta:
