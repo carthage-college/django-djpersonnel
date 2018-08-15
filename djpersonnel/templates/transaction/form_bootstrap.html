@@ -6,19 +6,21 @@
 {% block extra_javascript %}
 <script type="text/javascript">
   function toggleCheck(domCheckBox, domInput) {
+    console.log(domCheckBox);
     if (document.getElementById(domCheckBox).checked) {
       document.getElementById(domInput).style.display = 'inherit';
+      console.log(domInput);
     } else {
       document.getElementById(domInput).style.display = 'none';
     }
   }
   /* jquery code */
   $(function() {
-    {% if form.newhire_rehire.value == True %}
+    {% if form.newhire_rehire.value %}
     $("#position_title").removeClass("hyde");
     {% endif %}
-    {% if form.budgeted_position.value == 'Yes' %}
-    $("#account_number").removeClass("hyde");
+    {% if form.newhire_rehire.value %}
+    $("#supervisor_name").removeClass("hyde");
     {% endif %}
     {% if form.salary_type.value == 'Salary' %}
     $("#hours_per_week").removeClass("hyde");
@@ -53,262 +55,316 @@
                 {% csrf_token %}
                 <div class="form-row mt-4">
                     <!-- Section I -->
-                    <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
+                    <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section I - Employee Information</h6>
                     </div>
                     <div class="col-sm-12 pb-3">
-                        <label for="{{form.employee_id_number.id_for_label}}"
-                            {% if form.employee_id_number.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.employee_id_number.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.employee_id_number.errors %} is-invalid{% endif %}"
-                            name="employee_id_number"
-                            id="{{form.employee_id_number.id_for_label}}"
-                            value="{{form.employee_id_number.value|default_if_none:''}}"
-                            placeholder="XXXXXXXXXXXXXXXX"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.employee_id_number.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.employee_id_number.id_for_label}}"
+                                    {% if form.employee_id_number.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.employee_id_number.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.employee_id_number.errors %} is-invalid{% endif %}"
+                                    name="employee_id_number"
+                                    id="{{form.employee_id_number.id_for_label}}"
+                                    value="{{form.employee_id_number.value|default_if_none:''}}"
+                                    placeholder="XXXXXXXXXXXXXXXX"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.employee_id_number.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.last_name.id_for_label}}"
-                            {% if form.last_name.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.last_name.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.last_name.errors %} is-invalid{% endif %}"
-                            name="last_name"
-                            id="{{form.last_name.id_for_label}}"
-                            value="{{form.last_name.value|default_if_none:''}}"
-                            placeholder="Enter Last Name"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.last_name.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.last_name.id_for_label}}"
+                                    {% if form.last_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.last_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.last_name.errors %} is-invalid{% endif %}"
+                                    name="last_name"
+                                    id="{{form.last_name.id_for_label}}"
+                                    value="{{form.last_name.value|default_if_none:''}}"
+                                    placeholder="Enter Last Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.last_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.first_name.id_for_label}}"
-                            {% if form.first_name.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.first_name.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.first_name.errors %} is-invalid{% endif %}"
-                            name="first_name"
-                            id="{{form.first_name.id_for_label}}"
-                            value="{{form.first_name.value|default_if_none:''}}"
-                            placeholder="Enter First Name"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.first_name.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.first_name.id_for_label}}"
+                                    {% if form.first_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.first_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.first_name.errors %} is-invalid{% endif %}"
+                                    name="first_name"
+                                    id="{{form.first_name.id_for_label}}"
+                                    value="{{form.first_name.value|default_if_none:''}}"
+                                    placeholder="Enter First Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.first_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.middle_name.id_for_label}}"
-                            {% if form.middle_name.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.middle_name.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.middle_name.errors %} is-invalid{% endif %}"
-                            name="middle_name"
-                            id="{{form.middle_name.id_for_label}}"
-                            value="{{form.middle_name.value|default_if_none:''}}"
-                            placeholder="Enter Middle Name"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.middle_name.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.middle_name.id_for_label}}"
+                                    {% if form.middle_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.middle_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.middle_name.errors %} is-invalid{% endif %}"
+                                    name="middle_name"
+                                    id="{{form.middle_name.id_for_label}}"
+                                    value="{{form.middle_name.value|default_if_none:''}}"
+                                    placeholder="Enter Middle Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.middle_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Section II -->
-                    <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
+                    <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section II - Complete for New Hires Only</h6>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.position_start_date.id_for_label}}"
-                            {% if form.position_start_date.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.position_start_date.label}}</h5>
-                        </label>
-                        <input type="date" class="form-control
-                            {% if form.position_start_date.errors %} is-invalid{% endif %}"
-                            name="position_start_date"
-                            id="{{form.position_start_date.id_for_label}}"
-                            value="{{form.position_start_date.value|default_if_none:''}}"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.position_start_date.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_start_date.id_for_label}}"
+                                    {% if form.position_start_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_start_date.label}}</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.position_start_date.errors %} is-invalid{% endif %}"
+                                    name="position_start_date"
+                                    id="{{form.position_start_date.id_for_label}}"
+                                    value="{{form.position_start_date.value|default_if_none:''}}"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.position_start_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.position_end_date.id_for_label}}"
-                            {% if form.position_end_date.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.position_end_date.label}} (if applicable)</h5>
-                        </label>
-                        <input type="date" class="form-control
-                            {% if form.position_end_date.errors %} is-invalid{% endif %}"
-                            name="position_end_date"
-                            id="{{form.position_end_date.id_for_label}}"
-                            value="{{form.position_end_date.value|default_if_none:''}}">
-                        <small class="text-danger">
-                          {{form.position_end_date.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_end_date.id_for_label}}"
+                                    {% if form.position_end_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_end_date.label}} (if applicable)</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.position_end_date.errors %} is-invalid{% endif %}"
+                                    name="position_end_date"
+                                    id="{{form.position_end_date.id_for_label}}"
+                                    value="{{form.position_end_date.value|default_if_none:''}}">
+                                <small class="text-danger">
+                                  {{form.position_end_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.home_address.id_for_label}}"
-                            {% if form.home_address.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.home_address.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.home_address.errors %} is-invalid{% endif %}"
-                            name="home_address"
-                            id="{{form.home_address.id_for_label}}"
-                            value="{{form.home_address.value|default_if_none:''}}"
-                            placeholder="Enter Home Address"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.home_address.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.home_address.id_for_label}}"
+                                    {% if form.home_address.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.home_address.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.home_address.errors %} is-invalid{% endif %}"
+                                    name="home_address"
+                                    id="{{form.home_address.id_for_label}}"
+                                    value="{{form.home_address.value|default_if_none:''}}"
+                                    placeholder="Enter Home Address"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.home_address.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.city.id_for_label}}"
-                            {% if form.city.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.city.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.city.errors %} is-invalid{% endif %}"
-                            name="city"
-                            id="{{form.city.id_for_label}}"
-                            value="{{form.city.value|default_if_none:''}}"
-                            placeholder="Enter City"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.city.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.city.id_for_label}}"
+                                    {% if form.city.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.city.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.city.errors %} is-invalid{% endif %}"
+                                    name="city"
+                                    id="{{form.city.id_for_label}}"
+                                    value="{{form.city.value|default_if_none:''}}"
+                                    placeholder="Enter City"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.city.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-2 pb-3">
-                        <label for="{{form.state.id_for_label}}"
-                            {% if form.state.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.state.label}}</h5>
-                        </label>
-                        <select class="form-control"
-                                id="{{form.state.id_for_label}}"
-                                name="state"
-                        {% if not django_debug %} required{% endif %}>
-                            {% for value, text in form.fields.state.choices %}
-                                <option value="{{value}}"
-                                        {% if form.state.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                </option>
-                            {% endfor %}
-                        </select>
+                        <div class="container-fluid-group">
+                            <div class="form-group">
+                                <label for="{{form.state.id_for_label}}"
+                                    {% if form.state.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.state.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                        id="{{form.state.id_for_label}}"
+                                        name="state"
+                                {% if not django_debug %} required{% endif %}>
+                                    {% for value, text in form.fields.state.choices %}
+                                        <option value="{{value}}"
+                                                {% if form.state.value == value %}
+                                                selected
+                                                {% endif %}>
+                                            {{text}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-2 pb-3">
-                        <label for="{{form.postal_code.id_for_label}}"
-                            {% if form.postal_code.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.postal_code.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.postal_code.errors %} is-invalid{% endif %}"
-                            name="postal_code"
-                            id="{{form.postal_code.id_for_label}}"
-                            value="{{form.postal_code.value|default_if_none:''}}"
-                            placeholder="Enter Zip Code"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.postal_code.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.postal_code.id_for_label}}"
+                                    {% if form.postal_code.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.postal_code.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.postal_code.errors %} is-invalid{% endif %}"
+                                    name="postal_code"
+                                    id="{{form.postal_code.id_for_label}}"
+                                    value="{{form.postal_code.value|default_if_none:''}}"
+                                    placeholder="Enter Zip Code"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.postal_code.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.phone.id_for_label}}"
-                            {% if form.phone.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.phone.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.phone.errors %} is-invalid{% endif %}"
-                            name="phone"
-                            id="{{form.phone.id_for_label}}"
-                            value="{{form.phone.value|default_if_none:''}}"
-                            placeholder="Enter Phone Number"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.phone.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.phone.id_for_label}}"
+                                    {% if form.phone.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.phone.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.phone.errors %} is-invalid{% endif %}"
+                                    name="phone"
+                                    id="{{form.phone.id_for_label}}"
+                                    value="{{form.phone.value|default_if_none:''}}"
+                                    placeholder="Enter Phone Number"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.phone.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.email.id_for_label}}"
-                            {% if form.email.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.email.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.email.errors %} is-invalid{% endif %}"
-                            name="email"
-                            id="{{form.email.id_for_label}}"
-                            value="{{form.email.value|default_if_none:''}}"
-                            placeholder="Enter Email Address"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.email.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.email.id_for_label}}"
+                                    {% if form.email.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.email.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.email.errors %} is-invalid{% endif %}"
+                                    name="email"
+                                    id="{{form.email.id_for_label}}"
+                                    value="{{form.email.value|default_if_none:''}}"
+                                    placeholder="Enter Email Address"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.email.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Section III -->
-                    <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
+                    <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Type of Action Please check applicable action(s) and enter effective date.</h6>
                     </div>
                     <div class="col-md-12 pb-3">
-                        <label for="{{form.effective_date.id_for_label}}"
-                            {% if form.effective_date.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.effective_date.label}}</h5>
-                        </label>
-                        <input type="date" class="form-control
-                            {% if form.effective_date.errors %} is-invalid{% endif %}"
-                            name="effective_date"
-                            id="{{form.effective_date.id_for_label}}"
-                            value="{{form.effective_date.value|default_if_none:''}}"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.effective_date.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.effective_date.id_for_label}}"
+                                    {% if form.effective_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.effective_date.label}}</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.effective_date.errors %} is-invalid{% endif %}"
+                                    name="effective_date"
+                                    id="{{form.effective_date.id_for_label}}"
+                                    value="{{form.effective_date.value|default_if_none:''}}"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.effective_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <div class="control-group">
+                        <div class="container-fluid">
                             <div class="form-check">
-                                <label class="form-check-label">
+                                <label for="id_{{form.newhire_rehire.name}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="{{form.newhire_rehire.id_for_label}}"
-                                    name="{{form.newhire_rehire.name}}"
-                                    onclick="javascript:toggleCheck('id_{{form.newhire_rehire.name}}_1','position_title');"
-                                    value="1"> {{form.newhire_rehire.label}}
+                                    id="id_{{form.newhire_rehire.name}}"
+                                    name="{{form.newhire_rehire.name}}" value="1"
+                                    onclick="javascript:toggleCheck('id_{{form.newhire_rehire.name}}','position_title','supervisor_name');"
+                                    {% if form.newhire_rehire.value == true %}
+                                           checked{% endif %}>
+                                    {{form.newhire_rehire.label}}
                                 </label>
                             </div>
                             <div class="form-check">
@@ -354,306 +410,370 @@
                     </div>
 
                     <!-- Section IV -->
-                    <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
+                    <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Complete only applicable information.</h6>
                     </div>
-                    <div class="col-md-6 pb-3 hyde">
-                        <label for="{{form.position_title.id_for_label}}"
-                            {% if form.position_title.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.position_title.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.position_title.errors %} is-invalid{% endif %}"
-                            name="position_title"
-                            id="{{form.position_title.id_for_label}}"
-                            value="{{form.position_title.value|default_if_none:''}}"
-                            placeholder="Enter Position Title"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.position_title.errors|join:", "}}
-                        </small>
+                    <div class="col-md-6 pb-3 hyde" id="position_title">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_title.id_for_label}}"
+                                    {% if form.position_title.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_title.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.position_title.errors %} is-invalid{% endif %}"
+                                    name="position_title"
+                                    id="{{form.position_title.id_for_label}}"
+                                    value="{{form.position_title.value|default_if_none:''}}"
+                                    placeholder="Enter Position Title"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.position_title.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <label for="{{form.department_name.id_for_label}}"
-                            {% if form.department_name.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.department_name.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.department_name.errors %} is-invalid{% endif %}"
-                            name="department_name"
-                            id="{{form.department_name.id_for_label}}"
-                            value="{{form.department_name.value|default_if_none:''}}"
-                            placeholder="Enter Department Name"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.department_name.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.department_name.id_for_label}}"
+                                    {% if form.department_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.department_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.department_name.errors %} is-invalid{% endif %}"
+                                    name="department_name"
+                                    id="{{form.department_name.id_for_label}}"
+                                    value="{{form.department_name.value|default_if_none:''}}"
+                                    placeholder="Enter Department Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.department_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <label for="{{form.compensation.id_for_label}}"
-                            {% if form.compensation.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.compensation.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.compensation.errors %} is-invalid{% endif %}"
-                            name="compensation"
-                            id="{{form.compensation.id_for_label}}"
-                            value="{{form.compensation.value|default_if_none:''}}"
-                            placeholder="Enter Compensation"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.compensation.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.compensation.id_for_label}}"
+                                    {% if form.compensation.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.compensation.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.compensation.errors %} is-invalid{% endif %}"
+                                    name="compensation"
+                                    id="{{form.compensation.id_for_label}}"
+                                    value="{{form.compensation.value|default_if_none:''}}"
+                                    placeholder="Enter Compensation"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.compensation.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-6 pb-3">
-                        <label for="{{form.office_extension.id_for_label}}"
-                            {% if form.office_extension.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.office_extension.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.office_extension.errors %} is-invalid{% endif %}"
-                            name="office_extension"
-                            id="{{form.office_extension.id_for_label}}"
-                            value="{{form.office_extension.value|default_if_none:''}}"
-                            placeholder="Enter Office Extension"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.office_extension.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.office_extension.id_for_label}}"
+                                    {% if form.office_extension.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.office_extension.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.office_extension.errors %} is-invalid{% endif %}"
+                                    name="office_extension"
+                                    id="{{form.office_extension.id_for_label}}"
+                                    value="{{form.office_extension.value|default_if_none:''}}"
+                                    placeholder="Enter Office Extension"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.office_extension.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <label for="{{form.position_type.id_for_label}}"
-                            {% if form.position_type.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.position_type.label}}</h5>
-                        </label>
-                        <select class="form-control"
-                                id="{{form.position_type.id_for_label}}"
-                                name="position_type"
-                        {% if not django_debug %} required{% endif %}>
-                            {% for value, text in form.fields.position_type.choices %}
-                                <option value="{{value}}"
-                                        {% if form.position_type.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                </option>
-                            {% endfor %}
-                        </select>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_type.id_for_label}}"
+                                    {% if form.position_type.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_type.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                        id="{{form.position_type.id_for_label}}"
+                                        name="position_type"
+                                {% if not django_debug %} required{% endif %}>
+                                    {% for value, text in form.fields.position_type.choices %}
+                                        <option value="{{value}}"
+                                                {% if form.position_type.value == value %}
+                                                selected
+                                                {% endif %}>
+                                            {{text}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <label for="{{form.supervisor_name.id_for_label}}"
-                            {% if form.supervisor_name.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.supervisor_name.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.supervisor_name.errors %} is-invalid{% endif %}"
-                            name="supervisor_name"
-                            id="{{form.supervisor_name.id_for_label}}"
-                            value="{{form.supervisor_name.value|default_if_none:''}}"
-                            placeholder="Enter Supervisor's Name"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.supervisor_name.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group hyde" id="supervisor_name">
+                                <label for="{{form.supervisor_name.id_for_label}}"
+                                    {% if form.supervisor_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.supervisor_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.supervisor_name.errors %} is-invalid{% endif %}"
+                                    name="supervisor_name"
+                                    id="{{form.supervisor_name.id_for_label}}"
+                                    value="{{form.supervisor_name.value|default_if_none:''}}"
+                                    placeholder="Enter Supervisor's Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.supervisor_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.budget_account.id_for_label}}"
-                            {% if form.budget_account.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.budget_account.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.budget_account.errors %} is-invalid{% endif %}"
-                            name="budget_account"
-                            id="{{form.budget_account.id_for_label}}"
-                            value="{{form.budget_account.value|default_if_none:''}}"
-                            placeholder="Budget Account Number"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.budget_account.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.budget_account.id_for_label}}"
+                                    {% if form.budget_account.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.budget_account.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.budget_account.errors %} is-invalid{% endif %}"
+                                    name="budget_account"
+                                    id="{{form.budget_account.id_for_label}}"
+                                    value="{{form.budget_account.value|default_if_none:''}}"
+                                    placeholder="Budget Account Number"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.budget_account.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Section V -->
-                    <div class="col-sm-12 pb-3 card-header bg-secondary text-white">
+                    <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section V - Benefit Change (To be completed by Human Resources)</h6>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.benefit_change_effective_date.id_for_label}}"
-                            {% if form.benefit_change_effective_date.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.benefit_change_effective_date.label}}</h5>
-                        </label>
-                        <input type="date" class="form-control
-                            {% if form.benefit_change_effective_date.errors %} is-invalid{% endif %}"
-                            name="benefit_change_effective_date"
-                            id="{{form.benefit_change_effective_date.id_for_label}}"
-                            value="{{form.benefit_change_effective_date.value|default_if_none:''}}"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.benefit_change_effective_date.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.benefit_change_effective_date.id_for_label}}"
+                                    {% if form.benefit_change_effective_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.benefit_change_effective_date.label}}</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.benefit_change_effective_date.errors %} is-invalid{% endif %}"
+                                    name="benefit_change_effective_date"
+                                    id="{{form.benefit_change_effective_date.id_for_label}}"
+                                    value="{{form.benefit_change_effective_date.value|default_if_none:''}}"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.benefit_change_effective_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.supplement_life_policy_amount.id_for_label}}"
-                            {% if form.supplement_life_policy_amount.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.supplement_life_policy_amount.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
-                            name="supplement_life_policy_amount"
-                            id="{{form.supplement_life_policy_amount.id_for_label}}"
-                            value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
-                            placeholder="Enter Supplement Life Policy Amount"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.supplement_life_policy_amount.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.supplement_life_policy_amount.id_for_label}}"
+                                    {% if form.supplement_life_policy_amount.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.supplement_life_policy_amount.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
+                                    name="supplement_life_policy_amount"
+                                    id="{{form.supplement_life_policy_amount.id_for_label}}"
+                                    value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
+                                    placeholder="Enter Supplement Life Policy Amount"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.supplement_life_policy_amount.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4 pb-3">
-                        <label for="{{form.supplement_life_ppp_contribution.id_for_label}}"
-                            {% if form.supplement_life_ppp_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.supplement_life_ppp_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
-                            name="supplement_life_ppp_contribution"
-                            id="{{form.supplement_life_ppp_contribution.id_for_label}}"
-                            value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
-                            placeholder="Enter Supplement Life PPP Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.supplement_life_ppp_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.supplement_life_ppp_contribution.id_for_label}}"
+                                    {% if form.supplement_life_ppp_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.supplement_life_ppp_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
+                                    name="supplement_life_ppp_contribution"
+                                    id="{{form.supplement_life_ppp_contribution.id_for_label}}"
+                                    value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter Supplement Life PPP Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.supplement_life_ppp_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.health_insurance_plan_tier.id_for_label}}"
-                            {% if form.health_insurance_plan_tier.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.health_insurance_plan_tier.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.health_insurance_plan_tier.errors %} is-invalid{% endif %}"
-                            name="health_insurance_plan_tier"
-                            id="{{form.health_insurance_plan_tier.id_for_label}}"
-                            value="{{form.health_insurance_plan_tier.value|default_if_none:''}}"
-                            placeholder="Enter Health Insurance Plan &#38; Tier"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.health_insurance_plan_tier.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.health_insurance_plan_tier.id_for_label}}"
+                                    {% if form.health_insurance_plan_tier.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.health_insurance_plan_tier.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.health_insurance_plan_tier.errors %} is-invalid{% endif %}"
+                                    name="health_insurance_plan_tier"
+                                    id="{{form.health_insurance_plan_tier.id_for_label}}"
+                                    value="{{form.health_insurance_plan_tier.value|default_if_none:''}}"
+                                    placeholder="Enter Health Insurance Plan &#38; Tier"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.health_insurance_plan_tier.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
-                            {% if form.cc_health_insurance_compensation_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.cc_health_insurance_compensation_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.cc_health_insurance_compensation_contribution.errors %} is-invalid{% endif %}"
-                            name="cc_health_insurance_compensation_contribution"
-                            id="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
-                            value="{{form.cc_health_insurance_compensation_contribution.value|default_if_none:''}}"
-                            placeholder="Enter Carthage Health Insurance Compensation Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.cc_health_insurance_compensation_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
+                                    {% if form.cc_health_insurance_compensation_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.cc_health_insurance_compensation_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.cc_health_insurance_compensation_contribution.errors %} is-invalid{% endif %}"
+                                    name="cc_health_insurance_compensation_contribution"
+                                    id="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
+                                    value="{{form.cc_health_insurance_compensation_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter Carthage Health Insurance Compensation Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.cc_health_insurance_compensation_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.hsa_annual_ppp_contribution.id_for_label}}"
-                            {% if form.hsa_annual_ppp_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.hsa_annual_ppp_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.hsa_annual_ppp_contribution.errors %} is-invalid{% endif %}"
-                            name="hsa_annual_ppp_contribution"
-                            id="{{form.hsa_annual_ppp_contribution.id_for_label}}"
-                            value="{{form.hsa_annual_ppp_contribution.value|default_if_none:''}}"
-                            placeholder="Enter HSA Annual or PPP Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.hsa_annual_ppp_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.hsa_annual_ppp_contribution.id_for_label}}"
+                                    {% if form.hsa_annual_ppp_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.hsa_annual_ppp_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.hsa_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+                                    name="hsa_annual_ppp_contribution"
+                                    id="{{form.hsa_annual_ppp_contribution.id_for_label}}"
+                                    value="{{form.hsa_annual_ppp_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter HSA Annual or PPP Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.hsa_annual_ppp_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.hsa_carthage_contribution.id_for_label}}"
-                            {% if form.hsa_carthage_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.hsa_carthage_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
-                            name="hsa_carthage_contribution"
-                            id="{{form.hsa_carthage_contribution.id_for_label}}"
-                            value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
-                            placeholder="Enter HSA Carthage Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.hsa_carthage_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.hsa_carthage_contribution.id_for_label}}"
+                                    {% if form.hsa_carthage_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.hsa_carthage_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
+                                    name="hsa_carthage_contribution"
+                                    id="{{form.hsa_carthage_contribution.id_for_label}}"
+                                    value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter HSA Carthage Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.hsa_carthage_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
-                            {% if form.fsa_medical_annual_ppp_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.fsa_medical_annual_ppp_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
-                            name="fsa_medical_annual_ppp_contribution"
-                            id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
-                            value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
-                            placeholder="Enter FSA Medical Annual or PPP Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
+                                    {% if form.fsa_medical_annual_ppp_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.fsa_medical_annual_ppp_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+                                    name="fsa_medical_annual_ppp_contribution"
+                                    id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
+                                    value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter FSA Medical Annual or PPP Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 pb-3">
-                        <label for="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
-                            {% if form.fsa_dependent_care_annual_ppp_contribution.errors %}
-                                class="text-danger"
-                            {% endif %}>
-                            <h5>{{form.fsa_dependent_care_annual_ppp_contribution.label}}</h5>
-                        </label>
-                        <input type="text" class="form-control
-                            {% if form.fsa_dependent_care_annual_ppp_contribution.errors %} is-invalid{% endif %}"
-                            name="fsa_dependent_care_annual_ppp_contribution"
-                            id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
-                            value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
-                            placeholder="Enter FSA Dependent Care Annual or PPP Contribution"
-                            {% if not django_debug %} required{% endif %}>
-                        <small class="text-danger">
-                          {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
-                        </small>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
+                                    {% if form.fsa_dependent_care_annual_ppp_contribution.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.fsa_dependent_care_annual_ppp_contribution.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.fsa_dependent_care_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+                                    name="fsa_dependent_care_annual_ppp_contribution"
+                                    id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
+                                    value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
+                                    placeholder="Enter FSA Dependent Care Annual or PPP Contribution"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- submit -->
