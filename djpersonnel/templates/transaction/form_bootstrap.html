@@ -17,10 +17,10 @@
   /* jquery code */
   $(function() {
     {% if form.newhire_rehire.value %}
-    $("#position_title").removeClass("hyde");
+    $("#position_title,#supervisor_name").removeClass("hyde");
     {% endif %}
-    {% if form.newhire_rehire.value %}
-    $("#supervisor_name").removeClass("hyde");
+    {% if form.newhireee_rehire.value %}
+    $("#supervisorss_name").removeClass("hyde");
     {% endif %}
     {% if form.salary_type.value == 'Salary' %}
     $("#hours_per_week").removeClass("hyde");
@@ -31,7 +31,21 @@
     {% if form.speciality_sites.value == 'Yes' %}
     $("#speciality_sites_urls").removeClass("hyde");
     {% endif %}
-  });
+  }); // end function toggleCheck()
+  function toggle(matchingAttribute) {
+    // optain all div elements in the page
+    var divArray = document.getElementsByTagName("div");
+      for(i=divArray.length-1; i>=0; i--) {  // for each div
+      if(divArray[i].id.match("_"+matchingAttribute+"_")) {
+        if(divArray[i].style.display != 'none') {
+          divArray[i].style.display = 'none';
+        }
+        else {
+          divArray[i].style.display = '';
+        }
+      }
+    }
+  }  // end function toggle()
 </script>
 {% endblock %}
 {% block extra_style %}
@@ -361,7 +375,7 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="id_{{form.newhire_rehire.name}}"
                                     name="{{form.newhire_rehire.name}}" value="1"
-                                    onclick="javascript:toggleCheck('id_{{form.newhire_rehire.name}}','position_title','supervisor_name');"
+                                    onclick="toggle('newhire_rehire');"
                                     {% if form.newhire_rehire.value == true %}
                                            checked{% endif %}>
                                     {{form.newhire_rehire.label}}
@@ -413,7 +427,7 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Complete only applicable information.</h6>
                     </div>
-                    <div class="col-md-6 pb-3 hyde" id="position_title">
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -527,9 +541,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display:none">
                         <div class="container-fluid">
-                            <div class="form-group hyde" id="supervisor_name">
+                            <div class="form-group">
                                 <label for="{{form.supervisor_name.id_for_label}}"
                                     {% if form.supervisor_name.errors %}
                                         class="text-danger"
