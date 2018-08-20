@@ -7,7 +7,7 @@ from djtools.fields import STATE_CHOICES
 POSITION_CHOICES = (
     ('Full-Time', 'Full-Time'),
     ('Part-Time', 'Part-Time'),
-    ('Limited-Time', 'Limited-Time')
+    ('Limited Term', 'Limited Term')
 )
 
 class Operation(models.Model):
@@ -18,13 +18,13 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='paf_operation_created_by',
-        #editable=False
+        editable=False
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='paf_operation_updated_by',
-        #editable=False,
+        editable=False,
         null=True, blank=True
     )
     created_at = models.DateTimeField(
@@ -127,14 +127,23 @@ class Operation(models.Model):
         verbose_name='Termination voluntary',
         default=False
     )
+    # NOTE: if 'Voluntary Termination checked', provide the unused pto payout
+    voluntary_unused_pto_payout = models.DecimalField(
+        verbose_name='Unused paid time off payout',
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
     involuntary_termination = models.BooleanField(
         verbose_name='Termination involuntary',
         default=False
     )
-    unused_pto_payout = models.DecimalField(
+    # NOTE: if 'Involuntary Termination checked', provide the unused pto payout
+    involuntary_unused_pto_payout = models.DecimalField(
         verbose_name='Unused paid time off payout',
         decimal_places=2,
-        max_digits=16
+        max_digits=16,
+        null=True, blank=True
     )
     position_change = models.BooleanField(
         verbose_name='Position change',
@@ -176,7 +185,8 @@ class Operation(models.Model):
     position_type = models.CharField(
         verbose_name='This position is',
         max_length=16,
-        choices=POSITION_CHOICES
+        choices=POSITION_CHOICES,
+        null=True, blank=True
     )
     supervisor_name = models.CharField(
         verbose_name='Supervisor Name',
