@@ -14,7 +14,7 @@ def transaction_operation_post_save_notify_hr(sender, **kwargs):
     have been met
     """
 
-    obj = kwargs['instance'].operation
+    obj = kwargs['instance']
 
     '''
     if not obj.decline and obj.step1() and obj.step2() \
