@@ -1,0 +1,41 @@
+{% load model_helpers %}
+
+<p>Hello,</p>
+
+<p>
+  A new position requisition form has been submitted
+  and is awaiting your review. This form has been submitted by:
+</p>
+
+<p>
+  <a href="mailto:{{data.created_by.email}}">
+    {{data.created_by.first_name}}
+    {{data.created_by.last_name}}
+  </a>
+</p>
+
+<dl {{dl_detail}}>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'position_title' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.position_title}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'department_name' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.department_name}}</dd>
+</dl>
+
+<p>
+  The details of this request can be
+  <a href="https://{{server_url}}{{data.get_absolute_url}}">
+      viewed here
+  </a>.
+</p>
+
+<p>
+  Please take a moment to review this submission and approve or deny.
+</p>
+
+<p>
+  Thank you!
+</p>
