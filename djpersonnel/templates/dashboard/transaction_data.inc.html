@@ -1,53 +1,153 @@
 <div class="table-responsive">
-  <div class="card-body" style="margin-bottom:20px">
-    <table class="dataTable display table-bordered table-hover" id="provisioning-data">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Last name</th>
-                <th>First name</th>
-                <th>
-                  <i class="fa fa-calendar-o green blue-tooltip" data-toggle="tooltip"
-                    data-placement="top" aria-hidden="true"
-                    title="Hover over the date to see comments"></i>
-                    Created at
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for o in objects %}
-            <tr>
-                <td>
-                  <a href="{{ o.get_absolute_url }}">
-                    {{o.title}}
-                  </a>
-                </td>
-                <td>
-                  {{o.created_by.last_name}}
-                </td>
-                <td>
-                  {{o.created_by.first_name}}
-                </td>
-                <td title="{{o.comments}}">
-                  {{o.created_at}}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Title</th>
-                <th>Last name</th>
-                <th>First name</th>
-                <th>
-                  <i class="fa fa-calendar-o green blue-tooltip" data-toggle="tooltip"
-                    data-placement="top" aria-hidden="true"
-                    title="Hover over the date to see comments"></i>
-                    Created at
-                </th>
-            </tr>
-        </tfoot>
-    </table>
-  </div>
+  <table class="table table-striped table-bordered table-hover display">
+    <thead>
+      <tr>
+        <th>
+          Last Name
+          <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Personnel Action Form"></i> /
+          <i class="fa fa-print green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Print Personnel Action Form"></i>
+        </th>
+        <th>First Name</th>
+        <th>
+          Submitted by
+          <i class="fa fa-envelope-o green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Send email to hiring manager"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="VP or Provost approval"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="VPFA approval"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="HR approval"></i>
+        </th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Effective Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in transactions %}
+      <tr>
+        <td>
+          <a href="{% url 'transaction_display' t.id %}" data-toggle="tooltip"
+          data-placement="top" class="blue-tooltip"
+          title="View Personnel Action Form">{{t.last_name}}</a>
+            <div class="float-right">
+            {% if t.last_name is not None %}
+            <i class="fa fa-user-plus green blue-tooltip" data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="This is a new hire"></i>
+            {% else %}
+            <i class="fa fa-user green blue-tooltip" data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="This position replaces '{{r.replacement_name}}'"></i>
+            {% endif %}
+            </div>
+        </td>
+        <td>
+          {{t.first_name}}
+          {% if t.first_name == "Yes" %}
+            <div class="float-right">
+              <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="This position is budgeted for account #{{r.account_number}}"></i>
+            </div>
+          {% endif %}
+        </td>
+        <td><a href="mailto:{{r.created_by.email}}">{{t.created_by}}</a></td>
+        <td class="text-center">
+          {% if t.level3 %}
+            <i class="fa fa-2x fa-check green blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="VP or Provost approved this PAF on {{level3_date}}"></i>
+          {% else %}
+            <i class="fa fa-2x fa-times red blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="VP or Provost has NOT approved this PAF"></i>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          {% if t.level2 %}
+            <i class="fa fa-2x fa-check green blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="VPFA approved this PRF on {{level2_date}}"></i>
+          {% else %}
+            <i class="fa fa-2x fa-times red blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="VPFA has NOT approved this PAF"></i>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          {% if t.level1 %}
+            <i class="fa fa-2x fa-check green blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="HR approved this PAF on {{level1_date}}"></i>
+          {% else %}
+            <i class="fa fa-2x fa-times red blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="HR have NOT approved this PRF"></i>
+          {% endif %}
+        </td>
+        <td>{{t.position_start_date}}</td>
+        <td>{{t.position_end_date}}</td>
+        <td>{{t.effective_date}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <!--<tr>-->
+        <!--<th>-->
+          <!--Last Name-->
+          <!--<i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="View Personnel Action Form"></i> /-->
+          <!--<i class="fa fa-print green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="Print Personnel Action Form"></i>-->
+        <!--</th>-->
+        <!--<th>First Name</th>-->
+        <!--<th>-->
+          <!--Submitted by-->
+          <!--<i class="fa fa-envelope-o green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="Send email to hiring manager"></i>-->
+        <!--</th>-->
+        <!--<th class="text-center">-->
+          <!--<i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="VP or Provost approval"></i>-->
+        <!--</th>-->
+        <!--<th class="text-center">-->
+          <!--<i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="VPFA approval"></i>-->
+        <!--</th>-->
+        <!--<th class="text-center">-->
+          <!--<i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"-->
+            <!--data-placement="top" aria-hidden="true"-->
+            <!--title="HR approval"></i>-->
+        <!--</th>-->
+        <!--<th>Start Date</th>-->
+        <!--<th>End Date</th>-->
+        <!--<th>Effective Date</th>-->
+      <!--</tr>-->
+      <tr>
+          <th colspan="9" class="p-3 mb-2 bg-dark text-white"></th>
+      </tr>
+    </tfoot>
+  </table>
 </div>
 <!-- /.table-responsive -->
