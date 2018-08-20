@@ -16,24 +16,24 @@
   }
   /* jquery code */
   $(function() {
-    {% if form.newhire_rehire.value %}
-    $("#position_title,#supervisor_name").removeClass("hyde");
+    {% if form.voluntary_terminationxx.value %}
+    $("#unused_pto_payoutxx").removeClass("hyde");
     {% endif %}
     {% if form.newhireee_rehire.value %}
-    $("#supervisorss_name").removeClass("hyde");
+    $("#supervisorss_namexx").removeClass("hyde");
     {% endif %}
     {% if form.salary_type.value == 'Salary' %}
-    $("#hours_per_week").removeClass("hyde");
+    $("#hours_per_weekxx").removeClass("hyde");
     {% endif %}
     {% if form.applicant_system.value == 'Yes' %}
-    $("#applicant_system_people").removeClass("hyde");
+    $("#applicant_system_peoplexx").removeClass("hyde");
     {% endif %}
     {% if form.speciality_sites.value == 'Yes' %}
-    $("#speciality_sites_urls").removeClass("hyde");
+    $("#speciality_sites_urlsxx").removeClass("hyde");
     {% endif %}
   }); // end function toggleCheck()
   function toggle(matchingAttribute) {
-    // optain all div elements in the page
+    // option all div elements in the page
     var divArray = document.getElementsByTagName("div");
       for(i=divArray.length-1; i>=0; i--) {  // for each div
       if(divArray[i].id.match("_"+matchingAttribute+"_")) {
@@ -67,6 +67,7 @@
 
             <form action="." method="post" class="form" role="form">
                 {% csrf_token %}
+                {{form.errors}}
                 <div class="form-row mt-4">
                     <!-- Section I -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
@@ -382,43 +383,91 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Request for one time payment
+                                <label for="id_{{form.onetime_payment.name}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="id_{{form.onetime_payment.name}}"
+                                    name="{{form.onetime_payment.name}}" value="1"
+
+                                    {% if form.onetime_payment.value == true %}
+                                           checked{% endif %}>
+                                    {{form.onetime_payment.label}}
                                 </label>
                             </div>
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Termination Voluntary
+                                <label for="id_{{form.voluntary_termination.name}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="id_{{form.voluntary_termination.name}}"
+                                    name="{{form.voluntary_termination.name}}" value="1"
+                                    onclick="toggle('voluntary_payout');"
+                                    {% if form.voluntary_termination.value == true %}
+                                           checked{% endif %}>
+                                    {{form.voluntary_termination.label}}
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Termination Involuntary
+                            <div class="form-check" id="_voluntary_payout_" style="display:none">
+                                <label for="{{form.voluntary_unused_pto_payout.id_for_label}}"
+                                       {% if form.voluntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
+                                    <h5>{{form.voluntary_unused_pto_payout.label}}</h5>
                                 </label>
+                                <input type="text" name="{{form.voluntary_unused_pto_payout.name}}"
+                                    class="form-control{% if form.voluntary_unused_pto_payout.errors %} is-invalid{% endif %}"
+                                    id="{{form.voluntary_unused_pto_payout.id_for_label}}"
+                                    value="{{form.voluntary_unused_pto_payout.value|default_if_none:''}}"
+                                    placeholder="Unused paid time off payout">
+                                <small class="text-danger">
+                                    {{form.voluntary_unused_pto_payout.errors|join:", "}}
+                                </small>
+                            </div>
+                            <div class="form-check">
+                                <label for="id_{{form.involuntary_termination.name}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="id_{{form.involuntary_termination.name}}"
+                                    name="{{form.involuntary_termination.name}}" value="1"
+                                    onclick="toggle('involuntary_payout');"
+                                    {% if form.voluntary_termination.value == true %}
+                                           checked{% endif %}>
+                                    {{form.involuntary_termination.label}}
+                                </label>
+                            </div>
+                            <div class="form-check" id="_involuntary_payout_" style="display:none">
+                                <label for="{{form.involuntary_unused_pto_payout.id_for_label}}"
+                                       {% if form.involuntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
+                                    <h5>{{form.involuntary_unused_pto_payout.label}}</h5>
+                                </label>
+                                <input type="text" name="{{form.involuntary_unused_pto_payout.name}}"
+                                    class="form-control{% if form.involuntary_unused_pto_payout.errors %} is-invalid{% endif %}"
+                                    id="{{form.involuntary_unused_pto_payout.id_for_label}}"
+                                    value="{{form.involuntary_unused_pto_payout.value|default_if_none:''}}"
+                                    placeholder="Unused paid time off payout">
+                                <small class="text-danger">
+                                    {{form.involuntary_unused_pto_payout.errors|join:", "}}
+                                </small>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 pb-3">
-                        <div class="control-group">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Position Change
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Department Change
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Compensation Change
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Compensation Change
-                                </label>
+                        <div class="container-fluid">
+                            <div class="control-group">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value=""> Position Change
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value=""> Department Change
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value=""> Compensation Change
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value=""> Compensation Change
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
