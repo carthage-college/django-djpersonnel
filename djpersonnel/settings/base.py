@@ -12,7 +12,7 @@ from djzbar.settings import JX_EARL_TEST
 from djzbar.settings import INFORMIX_ODBC
 
 # Debug
-DEBUG = False
+DEBUG = True
 INFORMIX_DEBUG = 'debug'
 # include html5 form attributes in input fields
 REQUIRED_ATTRIBUTE = True
