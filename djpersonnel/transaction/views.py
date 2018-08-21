@@ -36,7 +36,7 @@ def form_home(request):
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
                 # subject
-                subject = "[PAF Submission] {}, {}".format(
+                subject = u"[PAF Submission] {}, {}".format(
                     data.created_by.last_name, data.created_by.first_name
                 )
 
@@ -75,34 +75,6 @@ def form_home(request):
         request, 'transaction/form_bootstrap.html', {'form': form,}
     )
 
-    # if settings.DEBUG:
-    #     TO_LIST = [settings.SERVER_EMAIL,]
-    # else:
-    #     TO_LIST = [settings.PAF_EMAIL_LIST,]
-    # BCC = settings.MANAGERS
-
-    # if request.method=='POST':
-    #     form = OperationForm(request.POST)
-    #     if form.is_valid():
-    #         data = form.save()
-    #         email = data.created_by.email
-    #         subject = "[PAF Submission] {}, {}".format(
-    #             data.created_by.last_name, data.created_by.first_name
-    #         )
-    #         send_mail(
-    #             request, TO_LIST, subject, email,'transaction/email.html',
-    #             data, BCC
-    #         )
-    #         return HttpResponseRedirect(
-    #             reverse_lazy('transaction_form_success')
-    #         )
-    # else:
-    #     form = OperationForm()
-    #
-    # return render(
-    #     request, 'transaction/form_bootstrap.html', {'form': form,}
-    # )
-
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
@@ -113,11 +85,6 @@ def display(request, tid):
     return render(
         request, 'transaction/display.html', {'data':data}
     )
-# def display(request, tid):
-#     data = get_object_or_404(Operation, id=tid)
-#     return render(
-#         request, 'transaction/display.html', {'data':data}
-#     )
 
 
 @portal_auth_required(

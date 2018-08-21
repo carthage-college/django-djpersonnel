@@ -267,7 +267,6 @@ class Operation(models.Model):
             self.created_by.first_name
         )
 
-
     @models.permalink
     def get_absolute_url(self):
         return ('transaction_display', [str(self.id)])
