@@ -5,7 +5,6 @@
 {% endblock %}
 {% block extra_style %}
 <link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
-
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -13,7 +12,6 @@
         <div class="card-title">
             <h3 class="text-center text-white">Personnel Action Form</h3>
         </div>
-
         <div class="card-body bg-light">
             <div class="form-row">
                 <!-- Section I -->
@@ -23,12 +21,13 @@
                 <div class="col-sm-12">
                     <div class="container-fluid border border-secondary">
                         <div class="form-group">
-                            <h6 class="block-title">{% field_name data 'employee_id_number' %}</h6>
+                            <h6 class="block-title">
+                                {% field_name data 'employee_id_number' %}
+                            </h6>
                             <p>{{data.employee_id_number}}</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-sm-4">
                     <div class="container-fluid border border-secondary">
                         <div class="form-group">
@@ -53,7 +52,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Section II -->
                 <div class="col-sm-12 card-header bg-secondary text-white">
                     <h6>Section II - Complete for New Hires Only</h6>
@@ -69,7 +67,10 @@
                 <div class="col-sm-6">
                     <div class="container-fluid">
                         <div class="form-group">
-                            <h6>{% field_name data 'position_end_date' %} (if applicable)</h6>
+                            <h6>
+                                {% field_name data 'position_end_date' %}
+                                (if applicable)
+                            </h6>
                             <p>{{data.position_end_date}}</p>
                         </div>
                     </div>
@@ -122,10 +123,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Section III -->
                 <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>Section III - Type of Action Please check applicable action(s) and enter effective date.</h6>
+                    <h6>
+                        Section III - Type of Action Please check applicable
+                        action(s) and enter effective date.
+                    </h6>
                 </div>
                 <div class="col-md-12">
                     <div class="container-fluid">
@@ -143,7 +146,7 @@
                             {% else %}
                                 <i class="fa fa-square-o" data-placement="top"></i>
                             {% endif %}
-                                {% field_name data 'newhire_rehire' %}
+                            {% field_name data 'newhire_rehire' %}
                         </div>
                         <div class="form-check">
                             {% if data.onetime_payment == True %}
@@ -151,7 +154,7 @@
                             {% else %}
                                 <i class="fa fa-square-o" data-placement="top"></i>
                             {% endif %}
-                                {% field_name data 'onetime_payment' %}
+                            {% field_name data 'onetime_payment' %}
                         </div>
                         <div class="form-check">
                             {% if data.voluntary_termination == True %}
@@ -159,13 +162,18 @@
                             {% else %}
                                 <i class="fa fa-square-o" data-placement="top"></i>
                             {% endif %}
-                                {% field_name data 'voluntary_termination' %}
+                            {% field_name data 'voluntary_termination' %}
                         </div>
-                        <!--NOTE: if 'Voluntary Termination checked', provide the voluntary unused pto payout-->
+                        <!--NOTE:
+                            if 'Voluntary Termination checked',
+                            provide the voluntary unused pto payout
+                        -->
                         {% if data.voluntary_termination == True %}
                         <div class="form-check">
-                            <h6>{% field_name data 'voluntary_unused_pto_payout' %}</h6>
-                            <p>{{data.voluntary_unused_pto_payout}}</p>
+                          <h6>
+                            {% field_name data 'voluntary_unused_pto_payout' %}
+                          </h6>
+                          <p>{{data.voluntary_unused_pto_payout}}</p>
                         </div>
                         {% endif %}
                         <div class="form-check">
@@ -174,13 +182,18 @@
                             {% else %}
                                 <i class="fa fa-square-o" data-placement="top"></i>
                             {% endif %}
-                                {% field_name data 'involuntary_termination' %}
+                            {% field_name data 'involuntary_termination' %}
                         </div>
-                        <!--NOTE: if 'Involuntary Termination checked', provide the involuntary unused pto payout-->
+                        <!--NOTE:
+                            if 'Involuntary Termination checked',
+                            provide the involuntary unused pto payout
+                        -->
                         {% if data.involuntary_termination == True %}
                         <div class="form-check">
-                            <h6>{% field_name data 'involuntary_unused_pto_payout' %}</h6>
-                            <p>{{data.involuntary_unused_pto_payout}}</p>
+                          <h6>
+                            {% field_name data 'involuntary_unused_pto_payout' %}
+                          </h6>
+                          <p>{{data.involuntary_unused_pto_payout}}</p>
                         </div>
                         {% endif %}
                     </div>
@@ -194,7 +207,7 @@
                                 {% else %}
                                     <i class="fa fa-square-o" data-placement="top"></i>
                                 {% endif %}
-                                    {% field_name data 'position_change' %}
+                                {% field_name data 'position_change' %}
                             </div>
                             <div class="form-check">
                                 {% if data.department_change == True %}
@@ -285,12 +298,13 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="page-break"></div>
-
                 <!-- Section V -->
                 <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>Section V - Benefit Change (To be completed by Human Resources)</h6>
+                    <h6>
+                        Section V - Benefit Change
+                        (To be completed by Human Resources)
+                    </h6>
                 </div>
                 <div class="col-sm-4">
                     <div class="container-fluid">
@@ -326,13 +340,16 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>CC Health Insurance Compensation Contribution</h6>
-                            <p>{{data.cc_health_insurance_compensation_contribution}}</p>
-                        </div>
+                      <div class="form-group">
+                        <h6>
+                          CC Health Insurance Compensation Contribution
+                        </h6>
+                        <p>
+                          {{data.cc_health_insurance_compensation_contribution}}
+                        </p>
+                      </div>
                     </div>
                 </div>
-
                 <div class="col-sm-6">
                     <div class="container-fluid">
                         <div class="form-group">
@@ -349,7 +366,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-sm-6">
                     <div class="container-fluid">
                         <div class="form-group">
@@ -361,8 +377,10 @@
                 <div class="col-sm-6">
                     <div class="container-fluid">
                         <div class="form-group">
-                            <h6>FSA Dependent Care Annual PPP Contribution</h6>
-                            <p>{{data.fsa_dependent_care_annual_ppp_contribution}}</p>
+                          <h6>FSA Dependent Care Annual PPP Contribution</h6>
+                          <p>
+                            {{data.fsa_dependent_care_annual_ppp_contribution}}
+                          </p>
                         </div>
                     </div>
                 </div>
@@ -370,9 +388,7 @@
             <!-- end form row -->
         </div>
         <!-- end card body -->
-        <div class="card-footer text-muted">
-
-        </div>
+        <div class="card-footer text-muted"></div>
     </div>
     <!-- end card -->
 </div>
