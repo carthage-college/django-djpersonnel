@@ -2,6 +2,8 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
+from djtools.fields.helpers import upload_to_path
+from djtools.fields.validators import MimetypeValidator
 from djtools.fields import BINARY_CHOICES
 
 SALARY_CHOICES = (
@@ -159,10 +161,20 @@ class Operation(models.Model):
         help_text=("Please provide the URL(s) of the sites to which "
             "you would like to submit this job position")
     )
+    job_description = models.FileField(
+        "Job Description",
+        upload_to=upload_to_path,
+        max_length=768,
+        help_text="PDF or Word format",
+        null=True, blank=True
+    )
 
     class Meta:
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
+
+    def get_slug(self):
+        return 'requisition/'
 
     def __unicode__(self):
         """
