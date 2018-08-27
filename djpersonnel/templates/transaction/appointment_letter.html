@@ -1,0 +1,82 @@
+{% extends "minimal.html" %}
+{% load model_helpers %}
+{% block title %}
+    Appointment Letter &mdash;
+    Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+<link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+    <div>
+        <div class="col-lg-12 text-center">
+            <img src="{{static_url}}img/carthage-logo.png" width="250" height="250" alt="">
+        </div>
+    </div>
+    <div>
+        <p>{% now "F j, Y" %}</p>
+
+        <p>
+            {{data.first_name}} {{data.last_name}}<br>
+            {{data.home_address}}<br>
+            {{data.city}}, {{data.state}} {{data.postal_code}}
+        </p>
+
+        <p>Dear {{data.first_name}},</p>
+
+        <p>It is my pleasure to offer you the position of {{data.position_title}} beginning {{data.position_start_date}},
+            reporting to {{data.supervisor_name}}. This position is designated as {{data.position_type}}
+            <strong>(insert exempt or non-exempt)</strong> at the <strong>(insert annual salary or hourly rate)</strong>
+            of ${{data.compensation}}.</p>
+
+        <p><i>Note: you can also list any arrangments in this section</i></p>
+
+        <p>As we discussed during the interview process. Carthage College offers employees and their eligible dependents
+            a variety of group health insurance benefits. Coverage under these programs commences on the first day of
+            employment. Information about these programs and other company benefits are contained in the summary plan
+            description which will be sent to you electronically in onboarding materials.</p>
+
+        <p>Upon acceptance, you will receive an email linking you to the necessary paperwork for employment. Please
+            keep an eye on your email for these materials. During your first week, the Human Resources team will meet
+            with you to conduct your benefits orientation and complete any paperwork that is outstanding. It is
+            important to bring the required forms of identification for the Form I-9 completion (required by federal
+            law to verify eligibility to work in the U.S).</p>
+
+        <p>This offer is based on confidence that your employment with Carthage College will be mutually rewarding and
+            enriching experience, but this offer does not constitute a contract of employment, nor does it guarantee a
+            lifetime security. Employment at Carthage College is employment-at-will. Please note this offer is also
+            contingent upon the successful completion of a background check.</p>
+
+        <p>{{data.first_name}}, I am delighted that you have decided to join our team and look forward to working with
+            you. Our rich academic experience equips students with foundational knowledge and skills, preparing
+            graduates to be lifelong learners, and to lead meaningful, productive lives. It is a very exciting time
+            for our entire organization and we are happy that you have chosen to be a part of it.</p>
+
+        <p>We ask you sign and return this letter, indicating acceptance of the position.</p>
+
+        <p>I ________________________________________________________ accept the position as stated above.</p>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <p>Signature _________________________________________________________</p>
+        </div>
+        <div class="col-sm-6">
+            <p class="float-right">Date _________________________________________________________</p>
+        </div>
+    </div>
+    <div class="mt-3 pb-3">
+        <p>Sincerely,</p>
+        <p>Signature _________________________________________________________</p>
+        <p><strong>(Insert Hiring Manager Name)</strong></p>
+    </div>
+    <footer class="mt-5">
+        <div class="container">
+            <p class="m-0 text-center">2001 Alford Park Drive | Kenosha, Wisconsin 53140-1994 | 262-551-8500</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+</div>
+<!-- /.container -->
+{% endblock %}
