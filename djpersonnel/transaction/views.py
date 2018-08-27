@@ -85,7 +85,11 @@ def display(request, tid):
     return render(
         request, 'transaction/display.html', {'data':data}
     )
-
+def appointment_letter(request, tid):
+    data = get_object_or_404(Operation, id=tid)
+    return render(
+        request, 'transaction/appointment_letter.html', {'data':data}
+    )
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
