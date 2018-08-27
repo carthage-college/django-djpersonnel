@@ -6,8 +6,7 @@ from djtools.fields import STATE_CHOICES
 
 POSITION_CHOICES = (
     ('Full-Time', 'Full-Time'),
-    ('Part-Time', 'Part-Time'),
-    ('Limited Term', 'Limited Term')
+    ('Part-Time', 'Part-Time')
 )
 
 class Operation(models.Model):
@@ -183,7 +182,7 @@ class Operation(models.Model):
         null=True, blank=True
     )
     position_type = models.CharField(
-        verbose_name='This position is',
+        verbose_name='Status',
         max_length=16,
         choices=POSITION_CHOICES,
         null=True, blank=True
