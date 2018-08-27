@@ -46,15 +46,10 @@
           data-placement="top" class="blue-tooltip"
           title="View Personnel Action Form">{{t.last_name}}</a>
             <div class="float-right">
-            {% if t.last_name is not None %}
-            <i class="fa fa-user-plus green blue-tooltip" data-toggle="tooltip"
+            <a href="{% url 'transaction_appointment_letter' t.id %}">
+            <i class="fa fa-address-card-o green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
-              title="This is a new hire"></i>
-            {% else %}
-            <i class="fa fa-user green blue-tooltip" data-toggle="tooltip"
-              data-placement="top" aria-hidden="true"
-              title="This position replaces '{{r.replacement_name}}'"></i>
-            {% endif %}
+               title="Appointment Letter View"></i></a>
             </div>
         </td>
         <td>
