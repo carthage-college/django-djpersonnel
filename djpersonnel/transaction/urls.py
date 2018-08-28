@@ -15,7 +15,7 @@ urlpatterns = [
         TemplateView.as_view(
             template_name='transaction/success.html'
         ),
-        name='transaction_success'
+        name='transaction_form_success'
     ),
     #
     # dashboard URLs

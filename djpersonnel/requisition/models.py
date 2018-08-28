@@ -174,7 +174,7 @@ class Operation(models.Model):
         get_latest_by = 'created_at'
 
     def get_slug(self):
-        return 'requisition/'
+        return 'files/requisition/'
 
     def __unicode__(self):
         """
