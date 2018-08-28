@@ -58,7 +58,8 @@
       indicating approval, and the job will be posted.
     </div>
     <div class="card-body bg-light">
-      <form action="." method="post" class="form" role="form">
+      <form action="." method="post" class="form" enctype="multipart/form-data"
+         role="form">
         {% csrf_token %}
         <div class="form-row mt-4">
           <div class="col-sm-6 pb-2 pr-5">
@@ -478,6 +479,15 @@
                 costs associated with posting positions to specialty sites.
               </small>
             </div>
+            
+            <div class="col-sm-6 pb-2">
+            <label for="{{form.job_description.id_for_label}}"
+              <h5>Upload File <small class="text-danger">({{form.job_description.help_text}})</small></h5>
+            </label>
+            <input type="file" class="form-control
+              {% if form.department_name.errors %} is-invalid{% endif %}"
+              name="job_description" id="{{form.job_description.id_for_label}}">
+          </div>
           </div>
           <div class="col-12 pb-2 text-center">
             <button class="btn btn-primary" style="width:200px;" type="submit">

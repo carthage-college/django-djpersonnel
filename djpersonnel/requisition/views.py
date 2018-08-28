@@ -19,7 +19,9 @@ def form_home(request):
 
     if request.method=='POST':
 
-        form = OperationForm(request.POST, label_suffix='')
+        form = OperationForm(
+            data=request.POST, files=request.FILES, label_suffix=''
+        )
         if form.is_valid():
 
             data = form.save(commit=False)
