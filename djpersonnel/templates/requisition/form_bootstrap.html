@@ -1,9 +1,10 @@
-{% extends "minimal.html" %}
+{% extends "dashboard/home.html" %}
 {% load bootstrap4 %}
 {% block title %}
     Personnel Requisition Form &mdash; Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
 <script type="text/javascript">
   function toggleCheck(domRadio, domInput) {
     if (document.getElementById(domRadio).checked) {
@@ -33,6 +34,7 @@
 </script>
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <style>
   .hyde {display:none;}
   label { margin-bottom: .25em; }

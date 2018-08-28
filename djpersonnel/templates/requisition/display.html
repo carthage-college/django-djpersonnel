@@ -1,4 +1,4 @@
-{% extends "minimal.html" %}
+{% extends "dashboard/home.html" %}
 {% load bootstrap4 %}
 {% load model_helpers %}
 {% block title %}
@@ -6,6 +6,7 @@
     Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content %}
