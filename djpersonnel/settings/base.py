@@ -7,9 +7,6 @@ import os
 from datetime import datetime
 
 from djzbar.settings import INFORMIX_EARL_TEST as INFORMIX_EARL
-from djzbar.settings import JX_EARL_PROD
-from djzbar.settings import JX_EARL_TEST
-from djzbar.settings import INFORMIX_ODBC
 
 # Debug
 DEBUG = True
