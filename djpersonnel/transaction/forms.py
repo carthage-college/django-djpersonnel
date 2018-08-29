@@ -4,6 +4,7 @@ from django import forms
 
 from djpersonnel.transaction.models import Operation
 
+
 class OperationForm(forms.ModelForm):
 
     class Meta:

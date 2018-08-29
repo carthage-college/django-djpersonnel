@@ -3,8 +3,8 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 from djtools.fields.helpers import upload_to_path
-from djtools.fields.validators import MimetypeValidator
 from djtools.fields import BINARY_CHOICES
+from djzbar.utils.hr import departments_all_choices
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
@@ -71,6 +71,7 @@ class Operation(models.Model):
     department_name = models.CharField(
         "Department Name",
         max_length=128,
+        choices=departments_all_choices()
     )
     new_position = models.CharField(
         "Is this a new position?",

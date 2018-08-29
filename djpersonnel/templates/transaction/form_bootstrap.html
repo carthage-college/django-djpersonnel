@@ -500,13 +500,19 @@
                                     {% endif %}>
                                     <h5>{{form.department_name.label}}</h5>
                                 </label>
-                                <input type="text" class="form-control
-                                    {% if form.department_name.errors %} is-invalid{% endif %}"
-                                    name="department_name"
+                                <select class="form-control"
                                     id="{{form.department_name.id_for_label}}"
-                                    value="{{form.department_name.value|default_if_none:''}}"
-                                    placeholder="Enter Department Name"
+                                    name="department_name"
                                     {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.department_name.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.department_name.value and form.department_name.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
                                 <small class="text-danger">
                                   {{form.department_name.errors|join:", "}}
                                 </small>
@@ -783,7 +789,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-sm-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">

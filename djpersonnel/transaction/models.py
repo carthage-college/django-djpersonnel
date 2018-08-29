@@ -3,11 +3,13 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 from djtools.fields import STATE_CHOICES
+from djzbar.utils.hr import departments_all_choices
 
 POSITION_CHOICES = (
     ('Full-Time', 'Full-Time'),
     ('Part-Time', 'Part-Time')
 )
+
 
 class Operation(models.Model):
     """
@@ -166,9 +168,9 @@ class Operation(models.Model):
         null=True, blank=True
     )
     department_name = models.CharField(
-        verbose_name='Department Name',
         max_length=128,
-        null=True, blank=True
+        choices=departments_all_choices(),
+        null=True, blank=True,
     )
     compensation = models.DecimalField(
         verbose_name='Pay Rate/Salary/One-time Payment',
