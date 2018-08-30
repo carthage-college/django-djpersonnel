@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
-from djpersonnel.dashboard.forms import DateCreatedForm
+from djpersonnel.core.forms import DateCreatedForm
 
 from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.users import in_group
@@ -16,7 +16,9 @@ from djtools.utils.users import in_group
     redirect_url=reverse_lazy('access_denied')
 )
 def home(request):
-
+    """
+    dashboard home page view
+    """
 
     user = request.user
 
@@ -30,7 +32,7 @@ def home(request):
         transactions = Transaction.objects.filter(created_by=user)
 
     return render(
-        request, 'dashboard/home.html', {
+        request, 'home.html', {
             'requisitions':requisitions, 'transactions':transactions
         }
     )
@@ -54,7 +56,7 @@ def search(request):
         form = DateCreatedForm()
 
     return render(
-        request, 'dashboard/search.html', {
+        request, 'search.html', {
             'form':form, 'objects':objects, 'error':error
         }
     )

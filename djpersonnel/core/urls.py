@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 
-from djpersonnel.dashboard import views
+from djpersonnel.core import views
 
 
 urlpatterns = [

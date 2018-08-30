@@ -6,12 +6,12 @@ from django.test import TestCase
 
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
-from djpersonnel.dashboard.forms import DateCreatedForm
+from djpersonnel.core.forms import DateCreatedForm
 
 from djtools.utils.test import create_test_user
 
 
-class DashboardViewsTestCase(TestCase):
+class CoreViewsTestCase(TestCase):
 
     def setUp(self):
         self.user = create_test_user()

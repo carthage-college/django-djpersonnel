@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'djpersonnel.dashboard',
+    'djpersonnel.core',
     'djpersonnel.transaction',
     'djpersonnel.requisition',
     # needed for template tags

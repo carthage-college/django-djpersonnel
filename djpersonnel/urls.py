@@ -52,7 +52,7 @@ urlpatterns = [
     ),
     # dashboard
     url(
-        r'^dashboard/', include('djpersonnel.dashboard.urls')
+        r'^dashboard/', include('djpersonnel.core.urls')
     ),
     # redirect home to dashboard
     url(
