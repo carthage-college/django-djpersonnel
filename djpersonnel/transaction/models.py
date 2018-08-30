@@ -9,18 +9,18 @@ STATUS_CHOICES = (
     ('Full-Time', 'Full-Time'),
     ('Part-Time', 'Part-Time')
 )
-EMPLOYEE_CHOICES = (
-    ('Faculty', 'Faculty'),
-    ('Staff', 'Staff')
-)
+# EMPLOYEE_CHOICES = (
+#     ('Faculty', 'Faculty'),
+#     ('Staff', 'Staff')
+# )
 HIRE_CHOICES = (
     ('New Hire', 'New Hire'),
     ('Rehire', 'Rehire')
 )
-PAY_CHOICES = (
-    ('Exempt', 'Exempt (Salary)'),
-    ('Non-exempt', 'Non-exempt (Hourly)')
-)
+# PAY_CHOICES = (
+#     ('Exempt', 'Exempt (Salary)'),
+#     ('Non-exempt', 'Non-exempt (Hourly)')
+# )
 PAY_RATE_CHOICES = (
     ('Hourly Rate', 'Hourly Rate'),
     ('Annual Salary', 'Annual Salary')
@@ -168,10 +168,15 @@ class Operation(models.Model):
         verbose_name='Supervisor Name',
         max_length=128
     )
+    # employee_type = models.CharField(
+    #     "Employee Type",
+    #     max_length=16,
+    #     choices=EMPLOYEE_CHOICES,
+    # )
     employee_type = models.CharField(
         "Employee Type",
         max_length=16,
-        choices=EMPLOYEE_CHOICES,
+        choices=BINARY_CHOICES,
     )
 
     # position_start_date = models.DateField(
@@ -247,29 +252,34 @@ class Operation(models.Model):
         null=True, blank=True
     )
     pay_type = models.CharField(
-        verbose_name='Exempt/Non-exempt',
+        "Exempt/Non-exempt",
         max_length=16,
-        choices=PAY_CHOICES,
-        null=True, blank=True
+        choices=BINARY_CHOICES,
     )
+    # pay_type = models.CharField(
+    #     verbose_name='Exempt/Non-exempt',
+    #     max_length=16,
+    #     choices=PAY_CHOICES,
+    #     null=True, blank=True
+    # )
     # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position will work
     hours_per_week = models.CharField(
-        "How many hours per week will this position work?",
+        "Hours worked per week",
         max_length=25,
-        null=True, blank=True
-    )
-    expected_start_date = models.DateField(
-        "Expected Start Date"
-    )
-    budget_account = models.CharField(
-        verbose_name='Budget Account',
-        max_length=30,
         null=True, blank=True
     )
     pay_rate = models.CharField(
         verbose_name='Pay rate/annual salary',
         max_length=16,
         choices=PAY_RATE_CHOICES,
+        null=True, blank=True
+    )
+    expected_start_date = models.DateField(
+        verbose_name='Expected Start Date'
+    )
+    budget_account = models.CharField(
+        verbose_name='Budget Account',
+        max_length=30,
         null=True, blank=True
     )
     supervise_others = models.CharField(
@@ -334,7 +344,7 @@ class Operation(models.Model):
     )
     # NOTE: if 'Contract-ongoing or Contract-terminal', need the number of years in the contract
     contract_years = models.CharField(
-        "What are the number of years on the contract?",
+        "Number of years",
         max_length=25,
         null=True, blank=True
     )
