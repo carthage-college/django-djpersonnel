@@ -47,6 +47,12 @@ PROGRAM_CHOICES = (
     ('7 Week Program', '7 Week Program'),
     ('Enrichment Program', 'Enrichment Program')
 )
+TEACHING_APPOINTMENT_CHOICES = (
+    ('1 Year', 'Seven 4 credit courses during academic year'),
+    ('3 Year Program', 'Seven 4 credit courses during academic year'),
+    ('7 Week Program', '7 Week Program'),
+    ('Enrichment Program', 'Enrichment Program')
+)
 LEAVING_REASONS_CHOICES = (
     ('Alternate opportunity elsewhere', 'Alternate opportunity elsewhere'),
     ('Job dissatisfaction', 'Job dissatisfaction'),
@@ -492,6 +498,11 @@ class Operation(models.Model):
         "Academic year",
         max_length=4,
         null=True, blank=True
+    )
+    teaching_appointment = models.CharField(
+        "Select one",
+        max_length=6,
+        choices=BINARY_CHOICES,
     )
     old_position = models.CharField(
         verbose_name='Old position/title',
