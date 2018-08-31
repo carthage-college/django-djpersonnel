@@ -406,7 +406,7 @@ class Operation(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
     )
-    compensation = models.DecimalField(
+    current_compensation = models.DecimalField(
         verbose_name='Current annual salary/rate of pay',
         decimal_places=2,
         max_digits=16,
@@ -464,6 +464,16 @@ class Operation(models.Model):
         "What is the grant account number?",
         max_length=25,
         null=True, blank=True
+    )
+    program_types = models.CharField(
+        "Select one",
+        max_length=16,
+        choices=PROGRAM_CHOICES,
+    )
+    leaving_types = models.CharField(
+        "Select one",
+        max_length=16,
+        choices=LEAVING_REASONS_CHOICES,
     )
     sabbatical_types = models.CharField(
         "Select one",
