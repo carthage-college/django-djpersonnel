@@ -162,10 +162,6 @@ class Operation(models.Model):
         verbose_name='Email Address',
         max_length=128
     )
-    department_name = models.CharField(
-        verbose_name='Department Name',
-        max_length=128
-    )
     supervisor_name = models.CharField(
         verbose_name='Supervisor Name',
         max_length=128
@@ -241,7 +237,6 @@ class Operation(models.Model):
         max_length=128,
         null=True, blank=True
     )
-<<<<<<< HEAD
     status_type = models.CharField(
         verbose_name='Status (Full-Time/Part-Time)',
         max_length=16,
@@ -265,7 +260,8 @@ class Operation(models.Model):
     #     choices=PAY_CHOICES,
     #     null=True, blank=True
     # )
-    # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position will work
+    # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position
+    # will work
     hours_per_week = models.CharField(
         "Hours worked per week",
         max_length=25,
@@ -284,12 +280,11 @@ class Operation(models.Model):
         verbose_name='Budget Account',
         max_length=30,
         null=True, blank=True
-=======
+    )
     department_name = models.CharField(
         max_length=128,
         choices=departments_all_choices(),
         null=True, blank=True,
->>>>>>> a33e6f57f96a21a6d8a8b39e779d1b2a51cb0ad8
     )
     supervise_others = models.CharField(
         "Does this position supervise others?",
