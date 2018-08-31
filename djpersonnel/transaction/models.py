@@ -10,18 +10,10 @@ STATUS_CHOICES = (
     ('Full-Time', 'Full-Time'),
     ('Part-Time', 'Part-Time')
 )
-# EMPLOYEE_CHOICES = (
-#     ('Faculty', 'Faculty'),
-#     ('Staff', 'Staff')
-# )
 HIRE_CHOICES = (
     ('New Hire', 'New Hire'),
     ('Rehire', 'Rehire')
 )
-# PAY_CHOICES = (
-#     ('Exempt', 'Exempt (Salary)'),
-#     ('Non-exempt', 'Non-exempt (Hourly)')
-# )
 PAY_RATE_CHOICES = (
     ('Hourly Rate', 'Hourly Rate'),
     ('Annual Salary', 'Annual Salary')
@@ -118,10 +110,6 @@ class Operation(models.Model):
     email_approved = models.BooleanField(default=False)
 
     # form fields
-    # employee_id_number = models.CharField(
-    #     verbose_name='Employee Number',
-    #     max_length=15
-    # )
     # required fields in the first part of the form
     last_name = models.CharField(
         verbose_name='Last Name (Legal Name)',
@@ -254,12 +242,6 @@ class Operation(models.Model):
         max_length=16,
         choices=BINARY_CHOICES,
     )
-    # pay_type = models.CharField(
-    #     verbose_name='Exempt/Non-exempt',
-    #     max_length=16,
-    #     choices=PAY_CHOICES,
-    #     null=True, blank=True
-    # )
     # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position
     # will work
     hours_per_week = models.CharField(
@@ -424,7 +406,7 @@ class Operation(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
     )
-    compensation = models.DecimalField(
+    current_compensation = models.DecimalField(
         verbose_name='Current annual salary/rate of pay',
         decimal_places=2,
         max_digits=16,
@@ -483,6 +465,16 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
+    program_types = models.CharField(
+        "Select one",
+        max_length=16,
+        choices=PROGRAM_CHOICES,
+    )
+    leaving_types = models.CharField(
+        "Select one",
+        max_length=16,
+        choices=LEAVING_REASONS_CHOICES,
+    )
     sabbatical_types = models.CharField(
         "Select one",
         max_length=16,
@@ -492,6 +484,16 @@ class Operation(models.Model):
         "Academic year",
         max_length=4,
         null=True, blank=True
+    )
+    teaching_appointment = models.CharField(
+        "Select one",
+        max_length=6,
+        choices=BINARY_CHOICES,
+        null=True, blank=True
+    )
+    teaching_appointment_arrangements = models.TextField(
+        null=True, blank=True,
+        help_text='Other arrangements'
     )
     old_position = models.CharField(
         verbose_name='Old position/title',
