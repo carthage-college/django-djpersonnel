@@ -71,29 +71,7 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section I - Employee Information</h6>
                     </div>
-                    <div class="col-sm-12 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.employee_id_number.id_for_label}}"
-                                    {% if form.employee_id_number.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.employee_id_number.label}}</h5>
-                                </label>
-                                <input type="text" class="form-control
-                                    {% if form.employee_id_number.errors %} is-invalid{% endif %}"
-                                    name="employee_id_number"
-                                    id="{{form.employee_id_number.id_for_label}}"
-                                    value="{{form.employee_id_number.value|default_if_none:''}}"
-                                    placeholder="XXXXXXXXXXXXXXXX"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.employee_id_number.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-sm-4 mt-3 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.last_name.id_for_label}}"
@@ -115,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-sm-4 mt-3 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.first_name.id_for_label}}"
@@ -137,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-sm-4 mt-3 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.middle_name.id_for_label}}"
@@ -155,51 +133,6 @@
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.middle_name.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Section II -->
-                    <div class="col-sm-12 card-header bg-secondary text-white">
-                        <h6>Section II - Complete for New Hires Only</h6>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.position_start_date.id_for_label}}"
-                                    {% if form.position_start_date.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.position_start_date.label}}</h5>
-                                </label>
-                                <input type="date" class="form-control
-                                    {% if form.position_start_date.errors %} is-invalid{% endif %}"
-                                    name="position_start_date"
-                                    id="{{form.position_start_date.id_for_label}}"
-                                    value="{{form.position_start_date.value|default_if_none:''}}"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.position_start_date.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.position_end_date.id_for_label}}"
-                                    {% if form.position_end_date.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.position_end_date.label}} (if applicable)</h5>
-                                </label>
-                                <input type="date" class="form-control
-                                    {% if form.position_end_date.errors %} is-invalid{% endif %}"
-                                    name="position_end_date"
-                                    id="{{form.position_end_date.id_for_label}}"
-                                    value="{{form.position_end_date.value|default_if_none:''}}">
-                                <small class="text-danger">
-                                  {{form.position_end_date.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
@@ -249,7 +182,7 @@
                         </div>
                     </div>
                     <div class="col-sm-2 pb-3">
-                        <div class="container-fluid-group">
+                        <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.state.id_for_label}}"
                                     {% if form.state.errors %}
@@ -339,9 +272,108 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Section III -->
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.department_name.id_for_label}}"
+                                    {% if form.department_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.department_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.department_name.errors %} is-invalid{% endif %}"
+                                    name="department_name"
+                                    id="{{form.department_name.id_for_label}}"
+                                    value="{{form.department_name.value|default_if_none:''}}"
+                                    placeholder="Enter Department Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.department_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.employee_type.name}}_0"
+                                   {% if form.employee_type.errors %}class="text-danger"{% endif %}>
+                                <h5>Check One</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.employee_type.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Faculty"
+                                        type="radio" name="employee_type"
+                                        id="id_{{form.employee_type.name}}_0"
+                                        {% if form.employee_type.value == 'Faculty' %}
+                                          checked
+                                        {% endif %}>
+                                        Faculty
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.employee_type.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="Staff"
+                                        type="radio" name="employee_type"
+                                        id="id_{{form.employee_type.name}}_1"
+                                        {% if form.employee_type.value == 'Staff' %}
+                                          checked
+                                        {% endif %}>
+                                        Staff
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.supervisor_name.id_for_label}}"
+                                    {% if form.supervisor_name.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.supervisor_name.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.supervisor_name.errors %} is-invalid{% endif %}"
+                                    name="supervisor_name"
+                                    id="{{form.supervisor_name.id_for_label}}"
+                                    value="{{form.supervisor_name.value|default_if_none:''}}"
+                                    placeholder="Enter Supervisor Name"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.supervisor_name.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Section II -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
-                        <h6>Section III - Type of Action Please check applicable action(s) and enter effective date.</h6>
+                        <h6>Section II - Complete for New Hires Only</h6>
+                    </div>
+
+                    <div class="col-sm-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_end_date.id_for_label}}"
+                                    {% if form.position_end_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_end_date.label}} (if applicable)</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.position_end_date.errors %} is-invalid{% endif %}"
+                                    name="position_end_date"
+                                    id="{{form.position_end_date.id_for_label}}"
+                                    value="{{form.position_end_date.value|default_if_none:''}}">
+                                <small class="text-danger">
+                                  {{form.position_end_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 pb-3">
                         <div class="container-fluid">
@@ -364,12 +396,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="form-check" id="_voluntary_payout_" style="display:none">
+                        <label for="{{form.voluntary_unused_pto_payout.id_for_label}}"
+                            {% if form.voluntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
+                            <h5>{{form.voluntary_unused_pto_payout.label}}</h5>
+                        </label>
+                        <input type="text" name="{{form.voluntary_unused_pto_payout.name}}"
+                            class="form-control{% if form.voluntary_unused_pto_payout.errors %} is-invalid{% endif %}"
+                            id="{{form.voluntary_unused_pto_payout.id_for_label}}"
+                            value="{{form.voluntary_unused_pto_payout.value|default_if_none:''}}"
+                            placeholder="Unused paid time off payout">
+                        <small class="text-danger">
+                            {{form.voluntary_unused_pto_payout.errors|join:", "}}
+                        </small>
+                    </div>
+                    <div class="form-check" id="_involuntary_payout_" style="display:none">
+                        <label for="{{form.involuntary_unused_pto_payout.id_for_label}}"
+                            {% if form.involuntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
+                            <h5>{{form.involuntary_unused_pto_payout.label}}</h5>
+                        </label>
+                        <input type="text" name="{{form.involuntary_unused_pto_payout.name}}"
+                            class="form-control{% if form.involuntary_unused_pto_payout.errors %} is-invalid{% endif %}"
+                            id="{{form.involuntary_unused_pto_payout.id_for_label}}"
+                            value="{{form.involuntary_unused_pto_payout.value|default_if_none:''}}"
+                            placeholder="Unused paid time off payout">
+                        <small class="text-danger">
+                            {{form.involuntary_unused_pto_payout.errors|join:", "}}
+                        </small>
+                    </div>
+
+
+                    <!-- Section III -->
+                    <div class="col-sm-12 card-header bg-secondary text-white">
+                        <h6>Section III - Please check applicable action(s) and enter effective date.</h6>
+                    </div>
+
+                    <div class="col-md-4 mt-3 pb-3">
                         <div class="container-fluid">
                             <div class="form-check">
-                                <label for="id_{{form.newhire_rehire.name}}" class="form-check-label">
+                                <label for="{{form.newhire_rehire.id_for_label}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="id_{{form.newhire_rehire.name}}"
+                                    id="{{form.newhire_rehire.id_for_label}}"
                                     name="{{form.newhire_rehire.name}}" value="1"
                                     onclick="toggle('newhire_rehire');"
                                     {% if form.newhire_rehire.value == True %}
@@ -378,19 +445,53 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <label for="id_{{form.onetime_payment.name}}" class="form-check-label">
+                                <label for="{{form.department_change.id_for_label}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="id_{{form.onetime_payment.name}}"
+                                    id="{{form.department_change.id_for_label}}"
+                                    name="{{form.department_change.name}}" value="1"
+                                    {% if form.department_change.value == True %}
+                                        checked{% endif %}>
+                                    {{form.department_change.label}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{form.compensation_change.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.compensation_change.id_for_label}}"
+                                    name="{{form.compensation_change.name}}" value="1"
+                                    {% if form.compensation_change.value == True %}
+                                        checked{% endif %}>
+                                    {{form.compensation_change.label}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{form.onetime_payment.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.onetime_payment.id_for_label}}"
                                     name="{{form.onetime_payment.name}}" value="1"
                                     {% if form.onetime_payment.value == True %}
                                         checked{% endif %}>
                                     {{form.onetime_payment.label}}
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-3 pb-3">
+                        <div class="container-fluid">
                             <div class="form-check">
-                                <label for="id_{{form.voluntary_termination.name}}" class="form-check-label">
+                                <label for="{{form.supervisor_change.id_for_label}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="id_{{form.voluntary_termination.name}}"
+                                    id="{{form.supervisor_change.id_for_label}}"
+                                    name="{{form.supervisor_change.name}}" value="1"
+                                    {% if form.supervisor_change.value == True %}
+                                        checked{% endif %}>
+                                    {{form.supervisor_change.label}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{form.voluntary_termination.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.voluntary_termination.id_for_label}}"
                                     name="{{form.voluntary_termination.name}}" value="1"
                                     onclick="toggle('voluntary_payout');"
                                     {% if form.voluntary_termination.value == True %}
@@ -398,24 +499,10 @@
                                     {{form.voluntary_termination.label}}
                                 </label>
                             </div>
-                            <div class="form-check" id="_voluntary_payout_" style="display:none">
-                                <label for="{{form.voluntary_unused_pto_payout.id_for_label}}"
-                                    {% if form.voluntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
-                                    <h5>{{form.voluntary_unused_pto_payout.label}}</h5>
-                                </label>
-                                <input type="text" name="{{form.voluntary_unused_pto_payout.name}}"
-                                    class="form-control{% if form.voluntary_unused_pto_payout.errors %} is-invalid{% endif %}"
-                                    id="{{form.voluntary_unused_pto_payout.id_for_label}}"
-                                    value="{{form.voluntary_unused_pto_payout.value|default_if_none:''}}"
-                                    placeholder="Unused paid time off payout">
-                                <small class="text-danger">
-                                    {{form.voluntary_unused_pto_payout.errors|join:", "}}
-                                </small>
-                            </div>
                             <div class="form-check">
-                                <label for="id_{{form.involuntary_termination.name}}" class="form-check-label">
+                                <label for="{{form.involuntary_termination.id_for_label}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="id_{{form.involuntary_termination.name}}"
+                                    id="{{form.involuntary_termination.id_for_label}}"
                                     name="{{form.involuntary_termination.name}}" value="1"
                                     onclick="toggle('involuntary_payout');"
                                     {% if form.voluntary_termination.value == True %}
@@ -423,45 +510,53 @@
                                     {{form.involuntary_termination.label}}
                                 </label>
                             </div>
-                            <div class="form-check" id="_involuntary_payout_" style="display:none">
-                                <label for="{{form.involuntary_unused_pto_payout.id_for_label}}"
-                                    {% if form.involuntary_unused_pto_payout.errors %}class="text-danger"{% endif %}>
-                                    <h5>{{form.involuntary_unused_pto_payout.label}}</h5>
+                            <div class="form-check">
+                                <label for="{{form.status_change.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.status_change.id_for_label}}"
+                                    name="{{form.status_change.name}}" value="1"
+                                    onclick="toggle('status_change');"
+                                    {% if form.status_change.value == True %}
+                                        checked{% endif %}>
+                                    {{form.status_change.label}}
                                 </label>
-                                <input type="text" name="{{form.involuntary_unused_pto_payout.name}}"
-                                    class="form-control{% if form.involuntary_unused_pto_payout.errors %} is-invalid{% endif %}"
-                                    id="{{form.involuntary_unused_pto_payout.id_for_label}}"
-                                    value="{{form.involuntary_unused_pto_payout.value|default_if_none:''}}"
-                                    placeholder="Unused paid time off payout">
-                                <small class="text-danger">
-                                    {{form.involuntary_unused_pto_payout.errors|join:", "}}
-                                </small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-4 mt-3 pb-3">
                         <div class="container-fluid">
-                            <div class="control-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value=""> Position Change
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value=""> Department Change
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value=""> Compensation Change
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value=""> Leave of Absence
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <label for="{{form.position_change.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.position_change.id_for_label}}"
+                                    name="{{form.position_change.name}}" value="1"
+                                    onclick="toggle('position_change');"
+                                    {% if form.position_change.value == True %}
+                                        checked{% endif %}>
+                                    {{form.position_change.label}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{form.leave_of_absence.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.leave_of_absence.id_for_label}}"
+                                    name="{{form.leave_of_absence.name}}" value="1"
+                                    onclick="toggle('leave_of_absence');"
+                                    {% if form.leave_of_absence.value == True %}
+                                        checked{% endif %}>
+                                    {{form.leave_of_absence.label}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="{{form.sabbatical.id_for_label}}" class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                    id="{{form.sabbatical.id_for_label}}"
+                                    name="{{form.sabbatical.name}}" value="1"
+                                    onclick="toggle('sabbatical');"
+                                    {% if form.sabbatical.value == True %}
+                                        checked{% endif %}>
+                                    {{form.sabbatical.label}}
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -469,7 +564,7 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Complete only applicable information.</h6>
                     </div>
-                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display:none">
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -494,15 +589,106 @@
                     <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
-                                <label for="{{form.department_name.id_for_label}}"
-                                    {% if form.department_name.errors %}
+                                <label for="{{form.status_type.id_for_label}}"
+                                    {% if form.status_type.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.department_name.label}}</h5>
+                                    <h5>{{form.status_type.label}}</h5>
                                 </label>
+                                <select class="form-control"
+                                        id="{{form.status_type.id_for_label}}"
+                                        name="status_type"
+                                {% if not django_debug %} required{% endif %}>
+                                    {% for value, text in form.fields.status_type.choices %}
+                                        <option value="{{value}}"
+                                                {% if form.status_type.value == value %}
+                                                selected
+                                                {% endif %}>
+                                            {{text}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.hire_type.id_for_label}}"
+                                    {% if form.hire_type.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.hire_type.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                        id="{{form.hire_type.id_for_label}}"
+                                        name="hire_type"
+                                {% if not django_debug %} required{% endif %}>
+                                    {% for value, text in form.fields.hire_type.choices %}
+                                        <option value="{{value}}"
+                                                {% if form.hire_type.value == value %}
+                                                selected
+                                                {% endif %}>
+                                            {{text}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.pay_type.name}}_0"
+                                   {% if form.pay_type.errors %}class="text-danger"{% endif %}>
+                                <h5>Check One</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.pay_type.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Exempt"
+                                        type="radio" name="pay_type"
+                                        id="id_{{form.pay_type.name}}_0"
+                                        {% if form.pay_type.value == 'Exempt' %}
+                                          checked
+                                        {% endif %}>
+                                        Exempt
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.pay_type.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="Non-exempt"
+                                        type="radio" name="pay_type"
+                                        id="id_{{form.pay_type.name}}_1"
+                                        {% if form.pay_type.value == 'Non-exempt' %}
+                                          checked
+                                        {% endif %}>
+                                        Non-exempt
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3" id="_newhire_rehire_">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.hours_per_week.id_for_label}}"
+                                    {% if form.hours_per_week.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.hours_per_week.label}}</h5>
+                                </label>
+<<<<<<< HEAD
+                                <input type="text" class="form-control
+                                    {% if form.hours_per_week.errors %} is-invalid{% endif %}"
+                                    name="hours_per_week"
+                                    id="{{form.hours_per_week.id_for_label}}"
+                                    value="{{form.hours_per_week.value|default_if_none:''}}"
+                                    placeholder="Hours worked per week"
+=======
                                 <select class="form-control"
                                     id="{{form.department_name.id_for_label}}"
                                     name="department_name"
+>>>>>>> a33e6f57f96a21a6d8a8b39e779d1b2a51cb0ad8
                                     {% if not django_debug %} required{% endif %}>
                                 {% for value, text in form.fields.department_name.choices %}
                                     <option value="{{value}}"
@@ -514,7 +700,7 @@
                                 {% endfor %}
                                 </select>
                                 <small class="text-danger">
-                                  {{form.department_name.errors|join:", "}}
+                                  {{form.hours_per_week.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
@@ -522,90 +708,45 @@
                     <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
-                                <label for="{{form.compensation.id_for_label}}"
-                                    {% if form.compensation.errors %}
+                                <label for="{{form.pay_rate.id_for_label}}"
+                                    {% if form.pay_rate.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.compensation.label}}</h5>
-                                </label>
-                                <input type="text" class="form-control
-                                    {% if form.compensation.errors %} is-invalid{% endif %}"
-                                    name="compensation"
-                                    id="{{form.compensation.id_for_label}}"
-                                    value="{{form.compensation.value|default_if_none:''}}"
-                                    placeholder="Enter Compensation"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.compensation.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.office_extension.id_for_label}}"
-                                    {% if form.office_extension.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.office_extension.label}}</h5>
-                                </label>
-                                <input type="text" class="form-control
-                                    {% if form.office_extension.errors %} is-invalid{% endif %}"
-                                    name="office_extension"
-                                    id="{{form.office_extension.id_for_label}}"
-                                    value="{{form.office_extension.value|default_if_none:''}}"
-                                    placeholder="Enter Office Extension"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.office_extension.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.position_type.id_for_label}}"
-                                    {% if form.position_type.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.position_type.label}}</h5>
+                                    <h5>{{form.pay_rate.label}}</h5>
                                 </label>
                                 <select class="form-control"
-                                    id="{{form.position_type.id_for_label}}"
-                                    name="position_type"
-                                    {% if not django_debug %} required{% endif %}>
-                                {% for value, text in form.fields.position_type.choices %}
-                                    <option value="{{value}}"
-                                        {% if form.position_type.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                    </option>
-                                {% endfor %}
+                                        id="{{form.pay_rate.id_for_label}}"
+                                        name="pay_rate"
+                                {% if not django_debug %} required{% endif %}>
+                                    {% for value, text in form.fields.pay_rate.choices %}
+                                        <option value="{{value}}"
+                                                {% if form.pay_rate.value == value %}
+                                                selected
+                                                {% endif %}>
+                                            {{text}}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display:none">
+                    <div class="col-sm-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
-                                <label for="{{form.supervisor_name.id_for_label}}"
-                                    {% if form.supervisor_name.errors %}
+                                <label for="{{form.expected_start_date.id_for_label}}"
+                                    {% if form.expected_start_date.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.supervisor_name.label}}</h5>
+                                    <h5>{{form.expected_start_date.label}}</h5>
                                 </label>
-                                <input type="text" class="form-control
-                                    {% if form.supervisor_name.errors %} is-invalid{% endif %}"
-                                    name="supervisor_name"
-                                    id="{{form.supervisor_name.id_for_label}}"
-                                    value="{{form.supervisor_name.value|default_if_none:''}}"
-                                    placeholder="Enter Supervisor's Name"
+                                <input type="date" class="form-control
+                                    {% if form.expected_start_date.errors %} is-invalid{% endif %}"
+                                    name="expected_start_date"
+                                    id="{{form.expected_start_date.id_for_label}}"
+                                    value="{{form.expected_start_date.value|default_if_none:''}}"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
-                                  {{form.supervisor_name.errors|join:", "}}
+                                  {{form.expected_start_date.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
@@ -624,7 +765,7 @@
                                     name="budget_account"
                                     id="{{form.budget_account.id_for_label}}"
                                     value="{{form.budget_account.value|default_if_none:''}}"
-                                    placeholder="Budget Account Number"
+                                    placeholder="Enter Budget Account"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.budget_account.errors|join:", "}}
@@ -632,6 +773,312 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.supervise_others.name}}_0"
+                                   {% if form.supervise_others.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.supervise_others.label}}</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.supervise_others.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Yes"
+                                        type="radio" name="supervise_others"
+                                        id="id_{{form.supervise_others.name}}_0"
+                                        {% if form.supervise_others.value == 'Yes' %}
+                                          checked
+                                        {% endif %}>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.supervise_others.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="No"
+                                        type="radio" name="supervise_others"
+                                        id="id_{{form.supervise_others.name}}_1"
+                                        {% if form.supervise_others.value == 'No' %}
+                                          checked
+                                        {% endif %}>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.standard_vacation_package.name}}_0"
+                                   {% if form.standard_vacation_package.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.standard_vacation_package.label}}</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.standard_vacation_package.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Yes"
+                                        type="radio" name="standard_vacation_package"
+                                        id="id_{{form.standard_vacation_package.name}}_0"
+                                        {% if form.standard_vacation_package.value == 'Yes' %}
+                                          checked
+                                        {% endif %}>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.standard_vacation_package.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="No"
+                                        type="radio" name="standard_vacation_package"
+                                        id="id_{{form.standard_vacation_package.name}}_1"
+                                        {% if form.standard_vacation_package.value == 'No' %}
+                                          checked
+                                        {% endif %}>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3" id="_newhire_rehire_">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.vacation_days.id_for_label}}"
+                                    {% if form.vacation_days.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.vacation_days.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.vacation_days.errors %} is-invalid{% endif %}"
+                                    name="vacation_days"
+                                    id="{{form.vacation_days.id_for_label}}"
+                                    value="{{form.vacation_days.value|default_if_none:''}}"
+                                    placeholder="Hours many vacation days"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.vacation_days.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.position_grant_funded.name}}_0"
+                                   {% if form.position_grant_funded.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.position_grant_funded.label}}</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.position_grant_funded.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Yes"
+                                        type="radio" name="position_grant_funded"
+                                        id="id_{{form.position_grant_funded.name}}_0"
+                                        {% if form.position_grant_funded.value == 'Yes' %}
+                                          checked
+                                        {% endif %}>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.position_grant_funded.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="No"
+                                        type="radio" name="position_grant_funded"
+                                        id="id_{{form.position_grant_funded.name}}_1"
+                                        {% if form.position_grant_funded.value == 'No' %}
+                                          checked
+                                        {% endif %}>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{form.grant_number.id_for_label}}"
+                                    {% if form.grant_number.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.grant_number.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.grant_number.errors %} is-invalid{% endif %}"
+                                    name="grant_number"
+                                    id="{{form.grant_number.id_for_label}}"
+                                    value="{{form.grant_number.value|default_if_none:''}}"
+                                    placeholder="Hours many vacation days"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.grant_number.errors|join:", "}}
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{form.grant_amount.id_for_label}}"
+                                    {% if form.grant_amount.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.grant_amount.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.grant_amount.errors %} is-invalid{% endif %}"
+                                    name="grant_amount"
+                                    id="{{form.grant_amount.id_for_label}}"
+                                    value="{{form.grant_amount.value|default_if_none:''}}"
+                                    placeholder="Hours many vacation days"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.grant_amount.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3">
+                        <div class="container-fluid">
+                            <label for="id_{{form.moving_expenses.name}}_0"
+                                   {% if form.moving_expenses.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.moving_expenses.label}}</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.moving_expenses.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Yes"
+                                        type="radio" name="moving_expenses"
+                                        id="id_{{form.moving_expenses.name}}_0"
+                                        {% if form.moving_expenses.value == 'Yes' %}
+                                          checked
+                                        {% endif %}>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.moving_expenses.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="No"
+                                        type="radio" name="moving_expenses"
+                                        id="id_{{form.moving_expenses.name}}_1"
+                                        {% if form.moving_expenses.value == 'No' %}
+                                          checked
+                                        {% endif %}>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3" id="_newhire_rehire_">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.moving_expenses_amount.id_for_label}}"
+                                    {% if form.moving_expenses_amount.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.moving_expenses_amount.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.moving_expenses_amount.errors %} is-invalid{% endif %}"
+                                    name="moving_expenses_amount"
+                                    id="{{form.moving_expenses_amount.id_for_label}}"
+                                    value="{{form.moving_expenses_amount.value|default_if_none:''}}"
+                                    placeholder="Hours many vacation days"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.moving_expenses_amount.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.shift.id_for_label}}"
+                                    {% if form.shift.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.shift.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.shift.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.shift.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.shift.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.other_arrangements.id_for_label}}"
+                                    {% if form.other_arrangements.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.other_arrangements.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.other_arrangements.errors %} is-invalid{% endif %}"
+                                    name="other_arrangements"
+                                    id="{{form.other_arrangements.id_for_label}}"
+                                    value="{{form.other_arrangements.value|default_if_none:''}}"
+                                    placeholder="Other special arrangements"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.other_arrangements.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.employment_types.id_for_label}}"
+                                    {% if form.employment_types.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.employment_types.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.employment_types.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.employment_types.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.employment_types.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.contract_years.id_for_label}}"
+                                    {% if form.contract_years.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.contract_years.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.contract_years.errors %} is-invalid{% endif %}"
+                                    name="contract_years"
+                                    id="{{form.contract_years.id_for_label}}"
+                                    value="{{form.contract_years.value|default_if_none:''}}"
+                                    placeholder="Number of years"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.contract_years.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                     <!-- Section V -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section V - Benefit Change (To be completed by Human Resources)</h6>
