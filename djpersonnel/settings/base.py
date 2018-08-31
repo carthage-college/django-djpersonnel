@@ -201,6 +201,7 @@ BOOTSTRAP4 = {
 PAF_EMAIL_LIST=[]
 PRF_EMAIL_LIST=[]
 HR_GROUP='Human Resources'
+STAFF_GROUP='carthageStaffStatus'
 PROV_TPOS=2877
 VPFA_TPOS=2760
 # tests

@@ -110,11 +110,13 @@
             <div class="form-group">
               <label for="id_{{form.new_position.name}}_0"
                 {% if form.new_position.errors %}
-                  class="text-danger"
+                  class="d-block text-danger"
+                {% else %}
+                  class="d-block"
                 {% endif %}>
                 <h5>{{form.new_position.label}}</h5>
               </label>
-              <div class="form-check">
+              <div class="form-check form-check-inline">
                 <label for="id_{{form.new_position.name}}_0"
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
@@ -127,7 +129,7 @@
                     Yes
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check form-check-inline">
                 <label for="id_{{form.new_position.name}}_1"
                   class="form-check-label">
                   <input class="form-check-input" value="No"
@@ -166,10 +168,15 @@
           <div class="col-md-3 pb-1">
             <div class="form-group">
               <label for="id_{{form.budgeted_position.name}}_0"
-                {% if form.budgeted_position.errors %}class="text-danger"{% endif %}>
+                {% if form.budgeted_position.errors %}
+                  class="d-block text-danger"
+                {% else %}
+                  class="d-block"
+                {% endif %}
+                >
                 <h5>{{form.budgeted_position.label}}</h5>
               </label>
-              <div class="form-check">
+              <div class="form-check form-check-inline">
                 <label for="id_{{form.budgeted_position.name}}_0"
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
@@ -182,7 +189,7 @@
                     Yes
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check form-check-inline">
                 <label for="id_{{form.budgeted_position.name}}_1"
                   class="form-check-label">
                   <input class="form-check-input" value="No"
@@ -247,7 +254,7 @@
               <div class="form-check hyde" id="account_number">
                 <label for="{{form.account_number.id_for_label}}"
                   {% if form.account_number.errors %}class="text-danger"{% endif %}>
-                  <h5>Account number</h5>
+                  <h5>{{form.account_number.label}}</h5>
                 </label>
                 <input type="text" name="account_number"
                   class="form-control{% if form.account_number.errors %} is-invalid{% endif %}"
@@ -487,15 +494,44 @@
                 costs associated with posting positions to specialty sites.
               </small>
             </div>
-            <div class="col-sm-6 pb-2">
-            <label for="{{form.job_description.id_for_label}}"
-              <h5>Upload File <small class="text-danger">({{form.job_description.help_text}})</small></h5>
+          </div>
+          <div class="col-sm-5 pb-2">
+            <label for="{{form.job_description.id_for_label}}">
+              <h5>
+                {{form.job_description.label}}
+                <small class="text-danger">
+                  ({{form.job_description.help_text}})
+                </small>
+              </h5>
             </label>
-            <input type="file" class="form-control
-              {% if form.department_name.errors %} is-invalid{% endif %}"
-              name="job_description" id="{{form.job_description.id_for_label}}">
+            <input type="file" class="form-control name="job_description"
+              {% if form.job_description.errors %} is-invalid{% endif %}"
+              id="{{form.job_description.id_for_label}}">
           </div>
+          {% if form.veep %}
+          <div class="col-sm-5 pb-2">
+            <label for="{{form.veep.id_for_label}}"
+              {% if form.veep.errors %}class="text-danger"{% endif %}>
+              <h5>{{form.veep.label}}</h5>
+            </label>
+            <select class="form-control"
+              id="{{form.veep.id_for_label}}"
+              name="veep"
+              {% if not django_debug %} required{% endif %}>
+            {% for value, text in form.fields.veep.choices %}
+              <option value="{{value}}"
+                {% if form.veep.value == value %}
+                  selected
+                {% endif %}>
+                {{text}}
+              </option>
+            {% endfor %}
+            </select>
+            <small class="text-danger">
+              {{form.veep.errors|join:", "}}
+            </small>
           </div>
+          {% endif %}
           <div class="col-12 pb-2 text-center">
             <button class="btn btn-primary" style="width:200px;" type="submit">
               Submit

@@ -5,6 +5,19 @@ from django import forms
 from djpersonnel.requisition.models import Operation
 
 from djtools.fields import BINARY_CHOICES
+from djzbar.core.sql import VEEPS
+from djzbar.utils.informix import do_sql
+
+
+def _veep_choices():
+
+    veeps = do_sql(VEEPS)
+    veep_choices = [('','---select---')]
+
+    for v in veeps:
+        name = '{}, {}'.format(v.lastname, v.firstname)
+        veep_choices.append((str(v.id), name))
+    return veep_choices
 
 
 class OperationForm(forms.ModelForm):
@@ -58,3 +71,12 @@ class OperationForm(forms.ModelForm):
                 "the speciality site(s)."))
 
         return cd['speciality_sites_urls']
+
+
+class OperationStaffForm(OperationForm):
+
+    veep = forms.ChoiceField(
+        label="Who is the Vice President of your section?",
+        choices=_veep_choices()
+    )
+

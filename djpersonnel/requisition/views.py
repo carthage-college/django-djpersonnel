@@ -4,11 +4,12 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.requisition.models import Operation
-from djpersonnel.requisition.forms import OperationForm
+from djpersonnel.requisition.forms import OperationForm,  OperationStaffForm
 
 from djzbar.decorators.auth import portal_auth_required
 from djzbar.utils.hr import get_position
 from djtools.utils.mail import send_mail
+from djtools.utils.users import in_group
 
 
 @portal_auth_required(
@@ -17,15 +18,21 @@ from djtools.utils.mail import send_mail
 )
 def form_home(request):
 
+    user = request.user
+    group = in_group(user, settings.STAFF_GROUP)
+
+    Form = OperationForm
+    if group:
+        Form = OperationStaffForm
+
     if request.method=='POST':
 
-        form = OperationForm(
+        form = Form(
             data=request.POST, files=request.FILES, label_suffix=''
         )
         if form.is_valid():
 
             data = form.save(commit=False)
-            user = request.user
             data.created_by = user
             data.updated_by = user
             data.save()
@@ -72,7 +79,7 @@ def form_home(request):
                     request, template, {'data': data,'form':form}
                 )
     else:
-        form = OperationForm(label_suffix='')
+        form = Form(label_suffix='')
 
     return render(
         request, 'requisition/form_bootstrap.html', {'form': form,}
