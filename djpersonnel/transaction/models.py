@@ -10,18 +10,10 @@ STATUS_CHOICES = (
     ('Full-Time', 'Full-Time'),
     ('Part-Time', 'Part-Time')
 )
-# EMPLOYEE_CHOICES = (
-#     ('Faculty', 'Faculty'),
-#     ('Staff', 'Staff')
-# )
 HIRE_CHOICES = (
     ('New Hire', 'New Hire'),
     ('Rehire', 'Rehire')
 )
-# PAY_CHOICES = (
-#     ('Exempt', 'Exempt (Salary)'),
-#     ('Non-exempt', 'Non-exempt (Hourly)')
-# )
 PAY_RATE_CHOICES = (
     ('Hourly Rate', 'Hourly Rate'),
     ('Annual Salary', 'Annual Salary')
@@ -44,12 +36,6 @@ EMPLOYMENT_TYPE_CHOICES = (
 PROGRAM_CHOICES = (
     ('Graduate Program', 'Graduate Program'),
     ('Semester Program', 'Semester Program'),
-    ('7 Week Program', '7 Week Program'),
-    ('Enrichment Program', 'Enrichment Program')
-)
-TEACHING_APPOINTMENT_CHOICES = (
-    ('1 Year', 'Seven 4 credit courses during academic year'),
-    ('3 Year Program', 'Seven 4 credit courses during academic year'),
     ('7 Week Program', '7 Week Program'),
     ('Enrichment Program', 'Enrichment Program')
 )
@@ -124,10 +110,6 @@ class Operation(models.Model):
     email_approved = models.BooleanField(default=False)
 
     # form fields
-    # employee_id_number = models.CharField(
-    #     verbose_name='Employee Number',
-    #     max_length=15
-    # )
     # required fields in the first part of the form
     last_name = models.CharField(
         verbose_name='Last Name (Legal Name)',
@@ -260,12 +242,6 @@ class Operation(models.Model):
         max_length=16,
         choices=BINARY_CHOICES,
     )
-    # pay_type = models.CharField(
-    #     verbose_name='Exempt/Non-exempt',
-    #     max_length=16,
-    #     choices=PAY_CHOICES,
-    #     null=True, blank=True
-    # )
     # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position
     # will work
     hours_per_week = models.CharField(
@@ -503,6 +479,11 @@ class Operation(models.Model):
         "Select one",
         max_length=6,
         choices=BINARY_CHOICES,
+        null=True, blank=True
+    )
+    teaching_appointment_arrangements = models.TextField(
+        null=True, blank=True,
+        help_text='Other arrangements'
     )
     old_position = models.CharField(
         verbose_name='Old position/title',
