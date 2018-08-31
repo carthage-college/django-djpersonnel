@@ -4,6 +4,7 @@ from django.db import models, connection
 from django.contrib.auth.models import User
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
+from djzbar.utils.hr import departments_all_choices
 
 STATUS_CHOICES = (
     ('Full-Time', 'Full-Time'),
@@ -63,6 +64,7 @@ SABBATICAL_TERM_CHOICES = (
     ('Spring', 'Spring'),
     ('Fall and Spring', 'Fall and Spring')
 )
+
 
 class Operation(models.Model):
     """
@@ -239,6 +241,7 @@ class Operation(models.Model):
         max_length=128,
         null=True, blank=True
     )
+<<<<<<< HEAD
     status_type = models.CharField(
         verbose_name='Status (Full-Time/Part-Time)',
         max_length=16,
@@ -281,6 +284,12 @@ class Operation(models.Model):
         verbose_name='Budget Account',
         max_length=30,
         null=True, blank=True
+=======
+    department_name = models.CharField(
+        max_length=128,
+        choices=departments_all_choices(),
+        null=True, blank=True,
+>>>>>>> a33e6f57f96a21a6d8a8b39e779d1b2a51cb0ad8
     )
     supervise_others = models.CharField(
         "Does this position supervise others?",

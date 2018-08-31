@@ -677,13 +677,28 @@
                                     {% endif %}>
                                     <h5>{{form.hours_per_week.label}}</h5>
                                 </label>
+<<<<<<< HEAD
                                 <input type="text" class="form-control
                                     {% if form.hours_per_week.errors %} is-invalid{% endif %}"
                                     name="hours_per_week"
                                     id="{{form.hours_per_week.id_for_label}}"
                                     value="{{form.hours_per_week.value|default_if_none:''}}"
                                     placeholder="Hours worked per week"
+=======
+                                <select class="form-control"
+                                    id="{{form.department_name.id_for_label}}"
+                                    name="department_name"
+>>>>>>> a33e6f57f96a21a6d8a8b39e779d1b2a51cb0ad8
                                     {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.department_name.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.department_name.value and form.department_name.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
                                 <small class="text-danger">
                                   {{form.hours_per_week.errors|join:", "}}
                                 </small>
@@ -1221,7 +1236,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-sm-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
