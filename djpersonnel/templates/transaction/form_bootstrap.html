@@ -6,23 +6,31 @@
 {% block extra_javascript %}
 {{block.super}}
 <script type="text/javascript">
-  function toggleCheck(domCheckBox, domInput) {
-    if (document.getElementById(domCheckBox).checked) {
-      document.getElementById(domInput).style.display = 'inherit';
-    } else {
-      document.getElementById(domInput).style.display = 'none';
+  function toggleCheck(checkBoxObj, displayObj){
+    console.log('Showing checkbox object');
+    console.log($(checkBoxObj));
+    console.log('Display object(s)');
+    console.log($(displayObj));
+    $(displayObj).toggle($(checkBoxObj).is(':checked'));
     }
-  }
+  // function toggleCheck(domCheckBox, domInput) {
+  //   if (document.getElementById(domCheckBox).checked) {
+  //       console.log(domInput);
+  //     document.getElementById(domInput).style.display = 'inherit';
+  //   } else {
+  //     document.getElementById(domInput).style.display = 'none';
+  //   }
+  // }
   /* jquery code */
   $(function() {
-    {% if form.voluntary_terminationxx.value %}
-    $("#unused_pto_payoutxx").removeClass("hyde");
+    {% if form.pay_type.value == 'Non-exempt' %}
+    $("#hours_per_week").removeClass("hyde");
     {% endif %}
-    {% if form.newhireee_rehire.value %}
-    $("#supervisorss_namexx").removeClass("hyde");
+    {% if form.standard_vacation_package.value == 'No' %}
+    $("#vacation_days").removeClass("hyde");
     {% endif %}
-    {% if form.salary_type.value == 'Salary' %}
-    $("#hours_per_weekxx").removeClass("hyde");
+    {% if form.position_grant_funded.value == 'Yes' %}
+    $("#grant_amount,#grant_number").removeClass("hyde");
     {% endif %}
     {% if form.applicant_system.value == 'Yes' %}
     $("#applicant_system_peoplexx").removeClass("hyde");
@@ -489,7 +497,8 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Complete only applicable information.</h6>
                     </div>
-                    <div class="col-md-6 pb-3" id="_newhire_rehire_">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -511,7 +520,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.status_type.id_for_label}}"
@@ -536,7 +546,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hire_type.id_for_label}}"
@@ -561,7 +572,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-3 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <label for="id_{{form.pay_type.name}}_0"
                                    {% if form.pay_type.errors %}class="text-danger"{% endif %}>
@@ -573,6 +585,7 @@
                                       <input class="form-check-input" value="Exempt"
                                         type="radio" name="pay_type"
                                         id="id_{{form.pay_type.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.pay_type.name}}_1','hours_per_week');"
                                         {% if form.pay_type.value == 'Exempt' %}
                                           checked
                                         {% endif %}>
@@ -584,6 +597,7 @@
                                       <input class="form-check-input" value="Non-exempt"
                                         type="radio" name="pay_type"
                                         id="id_{{form.pay_type.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.pay_type.name}}_1','hours_per_week');"
                                         {% if form.pay_type.value == 'Non-exempt' %}
                                           checked
                                         {% endif %}>
@@ -593,7 +607,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3" id="_newhire_rehire_">
+                    <!-- Hidden unless "Non-exempt" is selected -->
+                    <div class="col-md-3 pb-3 hyde" id="hours_per_week">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hours_per_week.id_for_label}}"
@@ -614,7 +629,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.pay_rate.id_for_label}}"
@@ -639,7 +655,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-sm-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_start_date.id_for_label}}"
@@ -660,7 +677,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-sm-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.budget_account.id_for_label}}"
@@ -682,7 +700,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <label for="id_{{form.supervise_others.name}}_0"
                                    {% if form.supervise_others.errors %}class="text-danger"{% endif %}>
@@ -714,7 +733,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <!-- Hidden unless "newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <label for="id_{{form.standard_vacation_package.name}}_0"
                                    {% if form.standard_vacation_package.errors %}class="text-danger"{% endif %}>
@@ -726,6 +746,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="standard_vacation_package"
                                         id="id_{{form.standard_vacation_package.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.standard_vacation_package.name}}_1','vacation_days');"
                                         {% if form.standard_vacation_package.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -737,6 +758,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="standard_vacation_package"
                                         id="id_{{form.standard_vacation_package.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.standard_vacation_package.name}}_1','vacation_days');"
                                         {% if form.standard_vacation_package.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -744,7 +766,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!-- Hidden unless "No" is selected -->
+                            <div class="form-group hyde" id="vacation_days">
                                 <label for="{{form.vacation_days.id_for_label}}"
                                     {% if form.vacation_days.errors %}
                                         class="text-danger"
@@ -764,6 +787,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless "newhire_rehire" is checked -->
                     <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <label for="id_{{form.position_grant_funded.name}}_0"
@@ -776,6 +800,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="position_grant_funded"
                                         id="id_{{form.position_grant_funded.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','#grant_amount, #grant_number');"
                                         {% if form.position_grant_funded.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -787,6 +812,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="position_grant_funded"
                                         id="id_{{form.position_grant_funded.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','#grant_amount, #grant_number');"
                                         {% if form.position_grant_funded.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -794,25 +820,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="{{form.grant_number.id_for_label}}"
-                                    {% if form.grant_number.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.grant_number.label}}</h5>
-                                </label>
-                                <input type="text" class="form-control
-                                    {% if form.grant_number.errors %} is-invalid{% endif %}"
-                                    name="grant_number"
-                                    id="{{form.grant_number.id_for_label}}"
-                                    value="{{form.grant_number.value|default_if_none:''}}"
-                                    placeholder="Hours many vacation days"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.grant_number.errors|join:", "}}
-                                </small>
-                            </div>
-                            <div class="form-group">
+                            <!-- Hidden unless "Yes" is selected -->
+                             <div class="form-group hyde" id="grant_amount">
                                 <label for="{{form.grant_amount.id_for_label}}"
                                     {% if form.grant_amount.errors %}
                                         class="text-danger"
@@ -828,6 +837,24 @@
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.grant_amount.errors|join:", "}}
+                                </small>
+                            </div>
+                            <div class="form-group hyde" id="grant_number">
+                                <label for="{{form.grant_number.id_for_label}}"
+                                    {% if form.grant_number.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.grant_number.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.grant_number.errors %} is-invalid{% endif %}"
+                                    name="grant_number"
+                                    id="{{form.grant_number.id_for_label}}"
+                                    value="{{form.grant_number.value|default_if_none:''}}"
+                                    placeholder="Hours many vacation days"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.grant_number.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
