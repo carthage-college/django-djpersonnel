@@ -28,8 +28,7 @@ def form_home(request):
 
             user = request.user
             # deal with VP/Provost
-            cd = form.cleaned_data
-            vpid = cd['veep']
+            vpid = form.cleaned_data['veep']
             try:
                 veep = User.objects.get(pk=vpid)
             except:
@@ -44,7 +43,8 @@ def form_home(request):
             data.save()
 
             # send email or display it for dev
-            template = 'requisition/email/created_by.html'
+            #template = 'requisition/email/created_by.html'
+            template = 'requisition/email/approver.html'
             if not settings.DEBUG:
 
                 # email distribution list and bcc parameters
@@ -96,10 +96,10 @@ def form_home(request):
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def display(request, rid):
+def detail(request, rid):
     data = get_object_or_404(Operation, id=rid)
     return render(
-        request, 'requisition/display.html', {'data':data}
+        request, 'requisition/detail.html', {'data':data}
     )
 
 

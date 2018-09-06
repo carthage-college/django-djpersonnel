@@ -90,7 +90,7 @@ class Operation(models.Model):
     level3_approver = models.ForeignKey(
         User,
         verbose_name="Level 3 Approver",
-        related_name='prf_operation_approver',
+        related_name='paf_operation_approver',
         editable=settings.DEBUG,
         null=True, blank=True
     )
