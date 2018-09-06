@@ -1,15 +1,16 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.requisition.models import Operation
-from djpersonnel.requisition.forms import OperationForm,  OperationStaffForm
+from djpersonnel.requisition.forms import OperationForm
 
 from djzbar.decorators.auth import portal_auth_required
 from djzbar.utils.hr import get_position
 from djtools.utils.mail import send_mail
-from djtools.utils.users import in_group
+from djauth.LDAPManager import LDAPManager
 
 
 @portal_auth_required(
@@ -18,23 +19,28 @@ from djtools.utils.users import in_group
 )
 def form_home(request):
 
-    user = request.user
-    group = in_group(user, settings.STAFF_GROUP)
-
-    Form = OperationForm
-    if group:
-        Form = OperationStaffForm
-
     if request.method=='POST':
 
-        form = Form(
+        form = OperationForm(
             data=request.POST, files=request.FILES, label_suffix=''
         )
         if form.is_valid():
 
+            user = request.user
+            # deal with VP/Provost
+            cd = form.cleaned_data
+            vpid = cd['veep']
+            try:
+                veep = User.objects.get(pk=vpid)
+            except:
+                l = LDAPManager()
+                luser = l.search(vpid)
+                veep = l.dj_create(luser)
+
             data = form.save(commit=False)
             data.created_by = user
             data.updated_by = user
+            data.level3_approver = veep
             data.save()
 
             # send email or display it for dev
@@ -79,7 +85,7 @@ def form_home(request):
                     request, template, {'data': data,'form':form}
                 )
     else:
-        form = Form(label_suffix='')
+        form = OperationForm(label_suffix='')
 
     return render(
         request, 'requisition/form_bootstrap.html', {'form': form,}

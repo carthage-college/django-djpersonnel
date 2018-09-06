@@ -288,7 +288,7 @@
               and not benefits eligible.
             </p>
             <input type="text" name="hours_per_week"
-              class="form-control{% if form.hours_per_week.errors %} is-invalid{% endif %}"
+              class="form-control col-xs-2{% if form.hours_per_week.errors %} is-invalid{% endif %}"
               id="{{form.hours_per_week.id_for_label}}"
               value="{{form.hours_per_week.value|default_if_none:''}}"
               placeholder="Enter Hours per Week"
@@ -504,15 +504,19 @@
                 </small>
               </h5>
             </label>
-            <input type="file" class="form-control name="job_description"
-              {% if form.job_description.errors %} is-invalid{% endif %}"
-              id="{{form.job_description.id_for_label}}">
+            <input type="file" name="job_description" id="{{form.job_description.id_for_label}}"
+              class="form-control{% if form.job_description.errors %} is-invalid{% endif %}">
           </div>
           {% if form.veep %}
           <div class="col-sm-5 pb-2">
             <label for="{{form.veep.id_for_label}}"
               {% if form.veep.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.veep.label}}</h5>
+              <h5>
+                {{form.veep.label}}
+                <small class="text-danger">
+                  {{form.veep.errors|join:", "}}
+                </small>
+              </h5>
             </label>
             <select class="form-control"
               id="{{form.veep.id_for_label}}"
@@ -528,7 +532,7 @@
             {% endfor %}
             </select>
             <small class="text-danger">
-              {{form.veep.errors|join:", "}}
+              ({{form.veep.help_text}})
             </small>
           </div>
           {% endif %}

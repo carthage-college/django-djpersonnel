@@ -12,15 +12,21 @@
     console.log('Display object(s)');
     console.log($(displayObj));
     $(displayObj).toggle($(checkBoxObj).is(':checked'));
+  }
+  function toggle(matchingAttribute) {
+    // option all div elements in the page
+    var divArray = document.getElementsByTagName("div");
+      for(i=divArray.length-1; i>=0; i--) {  // for each div
+      if(divArray[i].id.match("_"+matchingAttribute+"_")) {
+        if(divArray[i].style.display != 'none') {
+          divArray[i].style.display = 'none';
+        }
+        else {
+          divArray[i].style.display = '';
+        }
+      }
     }
-  // function toggleCheck(domCheckBox, domInput) {
-  //   if (document.getElementById(domCheckBox).checked) {
-  //       console.log(domInput);
-  //     document.getElementById(domInput).style.display = 'inherit';
-  //   } else {
-  //     document.getElementById(domInput).style.display = 'none';
-  //   }
-  // }
+  }  // end function toggle()
   /* jquery code */
   $(function() {
     {% if form.pay_type.value == 'Non-exempt' %}
@@ -38,21 +44,7 @@
     {% if form.speciality_sites.value == 'Yes' %}
     $("#speciality_sites_urlsxx").removeClass("hyde");
     {% endif %}
-  }); // end function toggleCheck()
-  function toggle(matchingAttribute) {
-    // option all div elements in the page
-    var divArray = document.getElementsByTagName("div");
-      for(i=divArray.length-1; i>=0; i--) {  // for each div
-      if(divArray[i].id.match("_"+matchingAttribute+"_")) {
-        if(divArray[i].style.display != 'none') {
-          divArray[i].style.display = 'none';
-        }
-        else {
-          divArray[i].style.display = '';
-        }
-      }
-    }
-  }  // end function toggle()
+  }); // end jquery check
 </script>
 {% endblock %}
 {% block extra_style %}
@@ -359,7 +351,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Section II -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section II - Complete for New Hires Only</h6>
@@ -530,18 +521,17 @@
                                     {% endif %}>
                                     <h5>{{form.status_type.label}}</h5>
                                 </label>
-                                <select class="form-control"
-                                        id="{{form.status_type.id_for_label}}"
-                                        name="status_type"
-                                {% if not django_debug %} required{% endif %}>
-                                    {% for value, text in form.fields.status_type.choices %}
-                                        <option value="{{value}}"
-                                                {% if form.status_type.value == value %}
-                                                selected
-                                                {% endif %}>
-                                            {{text}}
-                                        </option>
-                                    {% endfor %}
+                                <select class="form-control" name="status_type"
+                                  id="{{form.status_type.id_for_label}}"
+                                  {% if not django_debug %} required{% endif %}>
+                                  {% for value, text in form.fields.status_type.choices %}
+                                    <option value="{{value}}"
+                                      {% if form.status_type.value == value %}
+                                        selected
+                                      {% endif %}>
+                                      {{text}}
+                                    </option>
+                                  {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -556,18 +546,17 @@
                                     {% endif %}>
                                     <h5>{{form.hire_type.label}}</h5>
                                 </label>
-                                <select class="form-control"
-                                        id="{{form.hire_type.id_for_label}}"
-                                        name="hire_type"
-                                {% if not django_debug %} required{% endif %}>
-                                    {% for value, text in form.fields.hire_type.choices %}
-                                        <option value="{{value}}"
-                                                {% if form.hire_type.value == value %}
-                                                selected
-                                                {% endif %}>
-                                            {{text}}
-                                        </option>
-                                    {% endfor %}
+                                <select class="form-control" name="hire_type"
+                                  id="{{form.hire_type.id_for_label}}"
+                                  {% if not django_debug %} required{% endif %}>
+                                  {% for value, text in form.fields.hire_type.choices %}
+                                    <option value="{{value}}"
+                                      {% if form.hire_type.value == value %}
+                                        selected
+                                      {% endif %}>
+                                      {{text}}
+                                    </option>
+                                  {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -576,8 +565,8 @@
                     <div class="col-md-3 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <label for="id_{{form.pay_type.name}}_0"
-                                   {% if form.pay_type.errors %}class="text-danger"{% endif %}>
-                                <h5>Check One</h5>
+                              {% if form.pay_type.errors %}class="text-danger"{% endif %}>
+                              <h5>Check One</h5>
                             </label>
                             <div class="form-group small">
                                 <div class="form-check form-check-inline">
@@ -639,18 +628,17 @@
                                     {% endif %}>
                                     <h5>{{form.pay_rate.label}}</h5>
                                 </label>
-                                <select class="form-control"
-                                        id="{{form.pay_rate.id_for_label}}"
-                                        name="pay_rate"
-                                {% if not django_debug %} required{% endif %}>
-                                    {% for value, text in form.fields.pay_rate.choices %}
-                                        <option value="{{value}}"
-                                                {% if form.pay_rate.value == value %}
-                                                selected
-                                                {% endif %}>
-                                            {{text}}
-                                        </option>
-                                    {% endfor %}
+                                <select class="form-control" name="pay_rate"
+                                  id="{{form.pay_rate.id_for_label}}"
+                                  {% if not django_debug %} required{% endif %}>
+                                  {% for value, text in form.fields.pay_rate.choices %}
+                                    <option value="{{value}}"
+                                      {% if form.pay_rate.value == value %}
+                                        selected
+                                      {% endif %}>
+                                      {{text}}
+                                    </option>
+                                  {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -737,7 +725,7 @@
                     <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
                         <div class="container-fluid">
                             <label for="id_{{form.standard_vacation_package.name}}_0"
-                                   {% if form.standard_vacation_package.errors %}class="text-danger"{% endif %}>
+                                {% if form.standard_vacation_package.errors %}class="text-danger"{% endif %}>
                                 <h5>{{form.standard_vacation_package.label}}</h5>
                             </label>
                             <div class="form-group small">
@@ -1257,18 +1245,16 @@
                                     {% endif %}>
                                     <h5>{{form.old_department.label}}</h5>
                                 </label>
-                                <select class="form-control"
-                                        id="{{form.old_department.id_for_label}}"
-                                        name="old_department"
-                                {% if not django_debug %} required{% endif %}>
-                                    {% for value, text in form.fields.department_name.choices %}
-                                        <option value="{{value}}"
-                                                {% if form.old_department.value == value %}
-                                                selected
-                                                {% endif %}>
-                                            {{text}}
-                                        </option>
-                                    {% endfor %}
+                                <select class="form-control" name="old_department"
+                                  id="{{form.old_department.id_for_label}}"
+                                  {% if not django_debug %} required{% endif %}>
+                                  {% for value, text in form.fields.department_name.choices %}
+                                    <option value="{{value}}"
+                                      {% if form.old_department.value == value %}
+                                        selected {% endif %}>
+                                      {{text}}
+                                    </option>
+                                  {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -1843,7 +1829,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Section IV -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Please check applicable action(s) and enter effective date.</h6>

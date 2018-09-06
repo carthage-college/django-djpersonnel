@@ -87,6 +87,13 @@ class Operation(models.Model):
 
     # VP of Area or Provost
     level3 = models.BooleanField(default=False)
+    level3_approver = models.ForeignKey(
+        User,
+        verbose_name="Level 3 Approver",
+        related_name='prf_operation_approver',
+        editable=settings.DEBUG,
+        null=True, blank=True
+    )
     level3_date = models.DateField(
         "VP or Area or Provost signed date",
         null=True, blank=True

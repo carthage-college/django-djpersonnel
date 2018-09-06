@@ -33,6 +33,10 @@ class OperationForm(forms.ModelForm):
         label="Is this a new position?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect()
     )
+    veep = forms.ChoiceField(
+        label="Who will approve this request for you?",
+        choices=_veep_choices()
+    )
 
     class Meta:
         model = Operation
@@ -71,12 +75,3 @@ class OperationForm(forms.ModelForm):
                 "the speciality site(s)."))
 
         return cd['speciality_sites_urls']
-
-
-class OperationStaffForm(OperationForm):
-
-    veep = forms.ChoiceField(
-        label="Who is the Vice President of your section?",
-        choices=_veep_choices()
-    )
-

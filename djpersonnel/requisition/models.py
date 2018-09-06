@@ -20,13 +20,13 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='prf_operation_created_by',
-        editable=False
+        editable=settings.DEBUG
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='prf_operation_updated_by',
-        editable=False,
+        editable=settings.DEBUG,
         null=True, blank=True
     )
     created_at = models.DateTimeField(
@@ -35,12 +35,18 @@ class Operation(models.Model):
     updated_at = models.DateTimeField(
         "Date Updated", auto_now=True
     )
-
     # supervisor/chair has submitted the form and
     # the following are status levels for various approvers
 
     # VP of Area or Provost
     level3 = models.BooleanField(default=False)
+    level3_approver = models.ForeignKey(
+        User,
+        verbose_name="Level 3 Approver",
+        related_name='prf_operation_approver',
+        editable=settings.DEBUG,
+        null=True, blank=True
+    )
     level3_date = models.DateField(
         "VP or Area or Provost signed date",
         null=True, blank=True
