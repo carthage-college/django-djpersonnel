@@ -100,7 +100,7 @@ def detail(request, rid):
     data = get_object_or_404(Operation, id=rid)
     user = request.user
     perms = data.permissions(user)
-    if not perms:
+    if not perms['view']:
         raise Http404
 
     return render(

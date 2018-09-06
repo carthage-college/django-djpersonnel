@@ -9,4 +9,9 @@ urlpatterns = [
         r'^$',
         views.home, name='dashboard_home'
     ),
+    # proposal status view for 'approve' or 'decline' actions
+    url(
+        r'^operation/status/$',
+        views.operation_status, name='operation_status'
+    ),
 ]

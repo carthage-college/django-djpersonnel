@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.shortcuts import render
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
@@ -60,3 +62,38 @@ def search(request):
             'form':form, 'objects':objects, 'error':error
         }
     )
+
+
+@csrf_exempt
+@portal_auth_required(
+    group='Human Resources', session_var='DJVISION_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def operation_status(request):
+    '''
+    scope:    set the status on a operation
+    options:  approve, decline
+    method:   AJAX POST
+    '''
+
+    # requires POST request
+    if request.POST:
+        user = request.user
+        oid = request.POST.get('oid')
+        model = request.POST.get('model')
+        status = request.POST.get('status')
+        obj = get_object_or_404(model, id=oid)
+        perms = obj.permissions(user)
+
+        if perms['approver']:
+            if status == 'approved':
+                pass
+            if status == 'declined':
+                pass
+            message = "{} has been {}".format(model, status)
+        else:
+            message = "Access Denied"
+    else:
+        message = "Requires POST request"
+
+    return HttpResponse(message)

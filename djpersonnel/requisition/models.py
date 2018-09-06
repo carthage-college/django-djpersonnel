@@ -6,12 +6,13 @@ from django.contrib.auth.models import User
 from djtools.utils.users import in_group
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
-from djzbar.utils.hr import departments_all_choices
+from djzbar.utils.hr import departments_all_choices, get_position
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
     ('Non-exempt', 'Non-exempt (hourly)')
 )
+VPFA = get_position(settings.VPFA_TPOS)
 
 
 class Operation(models.Model):
@@ -195,11 +196,27 @@ class Operation(models.Model):
         )
 
     def permissions(self, user):
-        perms = False
+        perms = {
+            'view':False,'approver':False,
+            'level3': False, 'level2': False, 'level1': False
+        }
+
         # in_group includes an exception for superusers
         group = in_group(user, settings.HR_GROUP)
-        if group or self.created_by == user or self.level3_approver == user:
-            perms = True
+        if group:
+            perms['view'] = True
+            perms['approver'] = True
+            perms['level1'] = True
+        elif user.id == VPFA.id:
+            perms['view'] = True
+            perms['approver'] = True
+            perms['level2'] = True
+        elif self.level3_approver == user:
+            perms['view'] = True
+            perms['approver'] = True
+            perms['level3'] = True
+        elif self.created_by == user:
+            perms['view'] = True
 
         return perms
 
