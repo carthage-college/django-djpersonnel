@@ -309,6 +309,7 @@
                                       <input class="form-check-input" value="Faculty"
                                         type="radio" name="employee_type"
                                         id="id_{{form.employee_type.name}}_0"
+                                        onclick="toggle('fac');"
                                         {% if form.employee_type.value == 'Faculty' %}
                                           checked
                                         {% endif %}>
@@ -320,6 +321,7 @@
                                       <input class="form-check-input" value="Staff"
                                         type="radio" name="employee_type"
                                         id="id_{{form.employee_type.name}}_1"
+                                        onclick="toggle('staff');"
                                         {% if form.employee_type.value == 'Staff' %}
                                           checked
                                         {% endif %}>
@@ -489,7 +491,7 @@
                         <h6>Section III - Complete only applicable information.</h6>
                     </div>
                     <!-- Hidden unless "newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3" id="_newhire_rehire_" style="display: none;">
+                    <div class="col-md-6 pb-3" id="_newhire_rehire_staff_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -586,7 +588,7 @@
                                       <input class="form-check-input" value="Non-exempt"
                                         type="radio" name="pay_type"
                                         id="id_{{form.pay_type.name}}_1"
-                                        onclick="javascript:toggleCheck('id_{{form.pay_type.name}}_1','hours_per_week');"
+                                        onclick="toggle('pay_type');"
                                         {% if form.pay_type.value == 'Non-exempt' %}
                                           checked
                                         {% endif %}>
@@ -597,7 +599,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "Non-exempt" is selected -->
-                    <div class="col-md-3 pb-3 hyde" id="hours_per_week">
+                    <div class="col-md-3 pb-3" id="_pay_type_" style="display: none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hours_per_week.id_for_label}}"
