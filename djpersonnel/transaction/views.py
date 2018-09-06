@@ -85,10 +85,10 @@ def form_home(request):
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def display(request, tid):
+def detail(request, tid):
     data = get_object_or_404(Operation, id=tid)
     return render(
-        request, 'transaction/display.html', {'data':data}
+        request, 'transaction/detail.html', {'data':data}
     )
 def appointment_letter(request, tid):
     data = get_object_or_404(Operation, id=tid)

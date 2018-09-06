@@ -2,6 +2,8 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
+
+from djtools.utils.users import in_group
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
@@ -191,6 +193,15 @@ class Operation(models.Model):
             self.position_title, self.created_by.last_name,
             self.created_by.first_name
         )
+
+    def permissions(self, user):
+        perms = False
+        # in_group includes an exception for superusers
+        group = in_group(user, settings.HR_GROUP)
+        if group or self.created_by == user or self.level3_approver == user:
+            perms = True
+
+        return perms
 
     @models.permalink
     def get_absolute_url(self):

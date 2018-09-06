@@ -21,8 +21,8 @@ urlpatterns = [
     #
     # transaction detail
     url(
-        r'^(?P<rid>\d+)/display/$',
-        views.display, name='requisition_display'
+        r'^(?P<rid>\d+)/detail/$',
+        views.detail, name='requisition_detail'
     ),
     # transaction update
     url(

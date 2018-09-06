@@ -42,7 +42,7 @@
       {% for r in requisitions %}
       <tr>
         <td>
-          <a href="{% url 'requisition_display' r.id %}" data-toggle="tooltip"
+          <a href="{% url 'requisition_detail' r.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
           title="View Personnel Requisition">{{r.position_title}}</a>
             <div class="float-right">

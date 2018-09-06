@@ -42,7 +42,7 @@
       {% for t in transactions %}
       <tr>
         <td>
-          <a href="{% url 'transaction_display' t.id %}" data-toggle="tooltip"
+          <a href="{% url 'transaction_detail' t.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
           title="View Personnel Action Form">{{t.last_name}}</a>
             <div class="float-right">

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.requisition.models import Operation
@@ -98,6 +98,11 @@ def form_home(request):
 )
 def detail(request, rid):
     data = get_object_or_404(Operation, id=rid)
+    user = request.user
+    perms = data.permissions(user)
+    if not perms:
+        raise Http404
+
     return render(
         request, 'requisition/detail.html', {'data':data}
     )
