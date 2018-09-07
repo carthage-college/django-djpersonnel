@@ -68,6 +68,11 @@
           {% endif %}
         </td>
         <td><a href="mailto:{{r.created_by.email}}">{{r.created_by}}</a></td>
+        {% if r.declined %}
+        <td colspan="3" class="red text-center font-weight-bold">
+            Requisition Declined
+        </td>
+        {% else %}
         <td class="text-center">
           {% if r.level3 %}
             <i class="fa fa-2x fa-check green blue-tooltip"
@@ -101,6 +106,7 @@
             title="HR have NOT approved this PRF"></i>
           {% endif %}
         </td>
+        {% endif %}
         <td>{{r.publication_date}}</td>
         <td>{{r.position_open_date}}</td>
         <td>{{r.expected_start_date}}</td>

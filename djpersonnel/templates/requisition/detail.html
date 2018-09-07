@@ -40,7 +40,7 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "{% url 'operation_status' %}",
-      data: {'status':$(this).data('status'),'oid':'{{data.id}}','model':'Requisition'},
+      data: {'status':$(this).data('status'),'oid':'{{data.id}}','app':'requisition'},
       cache: false,
       beforeSend: function(){
         spinner.spin(target);
@@ -69,6 +69,7 @@ $(function() {
 {% endblock %}
 {% block content %}
 <div class="container mb-4">
+  {% if not data.declined %}
   {% if data.created_by != request.user %}
   <div class="row mb-4">
     <div class="col-lg-12 text-center">
@@ -85,6 +86,9 @@ $(function() {
   </div>
   <!-- /.row -->
   {% endif %}
+  {% else %}
+        <h1 style="color: #5810d1;">DECLINED</h1>
+  {% endif %}
   <div class="col-md-12 card bg-dark">
     <div class="card-title">
       <h3 class="text-white pull-left">
@@ -92,7 +96,7 @@ $(function() {
       </h3>
       <h3 class="pull-right">
           <a href="#" id="print" class="no-print-icon">
-            <i class="fa fa-print text-white blue-tooltip" aria-hidden="true"
+            <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
             data-toggle="tooltip" data-placement="top"
             title="Print to paper or PDF"></i></a>
       </h3>

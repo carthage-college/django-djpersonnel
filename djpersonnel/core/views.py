@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.apps import apps
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
@@ -80,19 +81,32 @@ def operation_status(request):
     if request.POST:
         user = request.user
         oid = request.POST.get('oid')
-        model = request.POST.get('model')
+        app = request.POST.get('app')
+        model = apps.get_model(app_label=app,  model_name='Operation')
         status = request.POST.get('status')
         obj = get_object_or_404(model, id=oid)
         perms = obj.permissions(user)
-
-        if perms['approver']:
-            if status == 'approved':
-                pass
-            if status == 'declined':
-                pass
-            message = "{} has been {}".format(model, status)
+        if not obj.declined:
+            if perms['approver']:
+                from djtools.fields import NOW
+                if status == 'declined':
+                    setattr(obj, 'declined', True)
+                    setattr(obj, 'updated_at', NOW)
+                if status == 'approved':
+                    if perms['level1']:
+                        level = level1
+                    elif perms['level2']:
+                        level = 'level2'
+                    elif perms['level3']:
+                        level = 'level3'
+                    setattr(obj, level, True)
+                    setattr(obj, '{}_date'.format(level), NOW)
+                obj.save()
+                message = "Personnel {} has been {}".format(app, status)
+            else:
+                message = "Access Denied"
         else:
-            message = "Access Denied"
+            message = "Personnel {} has already been declined".format(app)
     else:
         message = "Requires POST request"
 
