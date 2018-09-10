@@ -27,49 +27,40 @@ def form_home(request):
         if form.is_valid():
 
             user = request.user
-            # deal with VP/Provost
-            vpid = form.cleaned_data['veep']
+            # deal with level 3 approver
+            lid = form.cleaned_data['level3']
             try:
-                veep = User.objects.get(pk=vpid)
+                level3 = User.objects.get(pk=lid)
             except:
                 l = LDAPManager()
                 luser = l.search(vpid)
-                veep = l.dj_create(luser)
+                level3 = l.dj_create(luser)
 
             data = form.save(commit=False)
             data.created_by = user
             data.updated_by = user
-            data.level3_approver = veep
+            data.level3_approver = level3
             data.save()
 
-            # send email or display it for dev
-            #template = 'requisition/email/created_by.html'
-            template = 'requisition/email/approver.html'
+            # send email a creator and approver or display it for dev
             if not settings.DEBUG:
 
-                # email distribution list and bcc parameters
-                bcc = [settings.ADMINS[0][1],]
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
+                bcc = [settings.ADMINS[0][1],]
                 # subject
                 subject = "[PRF Submission] {}, {}".format(
                     data.created_by.last_name, data.created_by.first_name
                 )
-
+                template = 'requisition/email/created_by.html'
                 send_mail(
                     request, to_list, subject, settings.PRF_EMAIL_LIST[0],
                     template, data, bcc
                 )
 
-                # send approver email to VP or Provost
+                # send email to level3 approver
                 template = 'requisition/email/approver.html'
-                # waiting for SQL that identifies staff VP
-                veep = False
-                if veep:
-                    to_list = []
-                else:
-                    #to_list = [get_position(settings.PROV_TPOS).email]
-                    to_list = bcc
+                to_list = [level3.email,]
 
                 send_mail(
                     request, to_list, subject, data.created_by.email,

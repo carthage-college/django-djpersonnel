@@ -3,21 +3,9 @@
 from django import forms
 
 from djpersonnel.requisition.models import Operation
+from djpersonnel.core.utils import _level3_choices
 
 from djtools.fields import BINARY_CHOICES
-from djzbar.core.sql import VEEPS
-from djzbar.utils.informix import do_sql
-
-
-def _veep_choices():
-
-    veeps = do_sql(VEEPS)
-    veep_choices = [('','---select---')]
-
-    for v in veeps:
-        name = '{}, {}'.format(v.lastname, v.firstname)
-        veep_choices.append((str(v.id), name))
-    return veep_choices
 
 
 class OperationForm(forms.ModelForm):
@@ -33,9 +21,9 @@ class OperationForm(forms.ModelForm):
         label="Is this a new position?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect()
     )
-    veep = forms.ChoiceField(
+    level3 = forms.ChoiceField(
         label="Who will approve this request for you?",
-        choices=_veep_choices()
+        choices=_level3_choices()
     )
 
     class Meta:

@@ -95,19 +95,19 @@ class Operation(models.Model):
         null=True, blank=True
     )
     level3_date = models.DateField(
-        "VP or Area or Provost signed date",
+        "Level 3 signed date",
         null=True, blank=True
     )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
-        "VPFA signed date",
+        "Level 2 signed date",
         null=True, blank=True
     )
     # HR
     level1 = models.BooleanField(default=False)
     level1_date = models.DateField(
-        "HR Signed Date",
+        "Level 1 Signed Date",
         null=True, blank=True
     )
     # anyone in the workflow can decline the operation

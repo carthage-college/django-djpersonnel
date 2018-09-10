@@ -3,16 +3,17 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
+from djpersonnel.core.utils import LEVEL2
+
 from djtools.utils.users import in_group
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
-from djzbar.utils.hr import departments_all_choices, get_position
+from djzbar.utils.hr import departments_all_choices
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
     ('Non-exempt', 'Non-exempt (hourly)')
 )
-VPFA = get_position(settings.VPFA_TPOS)
 
 
 class Operation(models.Model):
@@ -51,25 +52,25 @@ class Operation(models.Model):
         null=True, blank=True
     )
     level3_date = models.DateField(
-        "VP or Area or Provost signed date",
+        "Level 3 signed date",
         null=True, blank=True
     )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
-        "VPFA signed date",
+        "Level 2 signed date",
         null=True, blank=True
     )
     # HR
     level1 = models.BooleanField(default=False)
     level1_date = models.DateField(
-        "HR Signed Date",
+        "Level 1 Signed Date",
         null=True, blank=True
     )
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
-    # set to True when levels are completed.
-    # post_save signal sends email to Supervisor.
+    # set to True when all levels are completed.
+    # post_save signal sends email to...whom?
     email_approved = models.BooleanField(default=False)
 
     # form fields
@@ -207,7 +208,7 @@ class Operation(models.Model):
             perms['view'] = True
             perms['approver'] = True
             perms['level1'] = True
-        elif user.id == VPFA.id:
+        elif user.id == LEVEL2.id:
             perms['view'] = True
             perms['approver'] = True
             perms['level2'] = True

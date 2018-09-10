@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.apps import apps
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
@@ -9,9 +10,11 @@ from django.shortcuts import render, get_object_or_404
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.core.forms import DateCreatedForm
+from djpersonnel.core.utils import LEVEL2
 
 from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.users import in_group
+from djtools.utils.mail import send_mail
 
 
 @portal_auth_required(
@@ -25,9 +28,10 @@ def home(request):
 
     user = request.user
 
-    group = in_group(user, settings.HR_GROUP)
+    hr = in_group(user, settings.HR_GROUP)
 
-    if group:
+    # HR or VPFA can access all objects
+    if hr or user.id == LEVEL2.id:
         requisitions = Requisition.objects.all()
         transactions = Transaction.objects.all()
     else:
@@ -82,32 +86,69 @@ def operation_status(request):
         user = request.user
         oid = request.POST.get('oid')
         app = request.POST.get('app')
-        model = apps.get_model(app_label=app,  model_name='Operation')
+        model = apps.get_model(app_label=app, model_name='Operation')
         status = request.POST.get('status')
         obj = get_object_or_404(model, id=oid)
         perms = obj.permissions(user)
         if not obj.declined:
-            if perms['approver']:
-                from djtools.fields import NOW
-                if status == 'declined':
-                    setattr(obj, 'declined', True)
-                    setattr(obj, 'updated_at', NOW)
+            if perms['approver'] and status in ['approved','declined']:
+
                 if status == 'approved':
-                    if perms['level1']:
-                        level = level1
-                    elif perms['level2']:
-                        level = 'level2'
-                    elif perms['level3']:
-                        level = 'level3'
                     setattr(obj, level, True)
                     setattr(obj, '{}_date'.format(level), NOW)
+
+                if status == 'declined':
+                    obj.declined = True
+
                 obj.save()
+
+                from djtools.fields import NOW
+
+                to_approver = []
+                if perms['level1']:
+                    level = 'level1'
+                    users = User.objects.filter(groups__name=settings.HR_GROUP)
+                    for u in users:
+                        to_approver.append(u.email)
+                elif perms['level2']:
+                    level = 'level2'
+                    to_approver = [LEVEL2.email,]
+                elif perms['level3']:
+                    level = 'level3'
+
+                bcc = settings.MANAGERS
+                frum = user.email
+                to_creator = [obj.created_by.email,]
+                subject = "[PRF] {}: '{}'".format(status, obj.position_title)
+                template = 'requisition/email/{}_{}.html'.format(
+                    perms['prefix'], status
+                )
+
+                if settings.DEBUG:
+                    obj.to_creator = to_creator
+                    to_creator = [settings.MANAGERS[0][1],]
+                    if to_approver:
+                        to_approver = [settings.MANAGERS[0][1],]
+                        obj.to_approver = to_approver
+
+                # notify the creator of current status
+                send_mail(
+                    request, to_creator, subject, frum, template, obj, bcc
+                )
+
+                # notify the next approver
+                if to_approver and status == 'approved':
+                    send_mail(
+                        request, to_approver, subject, frum,
+                        'requisition/email/approver.html', obj, bcc
+                    )
+
                 message = "Personnel {} has been {}".format(app, status)
             else:
                 message = "Access Denied"
         else:
             message = "Personnel {} has already been declined".format(app)
     else:
-        message = "Requires POST request"
+        message = "Requires HTTP POST"
 
     return HttpResponse(message)
