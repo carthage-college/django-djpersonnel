@@ -101,16 +101,17 @@ def operation_status(request):
                 from djtools.fields import NOW
 
                 to_approver = []
+
                 if perms['level1']:
                     level = 'level1'
+                elif perms['level2']:
+                    level = 'level2'
                     users = User.objects.filter(groups__name=settings.HR_GROUP)
                     for u in users:
                         to_approver.append(u.email)
-                elif perms['level2']:
-                    level = 'level2'
-                    to_approver = [LEVEL2.email,]
                 elif perms['level3']:
                     level = 'level3'
+                    to_approver = [LEVEL2.email,]
 
                 if status == 'approved':
                     setattr(obj, level, True)

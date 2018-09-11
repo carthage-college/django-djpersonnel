@@ -52,7 +52,7 @@ class CoreViewsTestCase(TestCase):
                 Q(created_by=user) | Q(level3_approver=user)
             )
 
-        self.assertGreaterEqual(requisition.count(), 1)
+        self.assertGreaterEqual(requisitions.count(), 1)
         #self.assertGreaterEqual(transactions.count(), 1)
 
     def test_requisition_search(self):
@@ -63,7 +63,7 @@ class CoreViewsTestCase(TestCase):
             created_at__gte = self.created_at_date
         )
 
-        self.assertGreaterEqual(requisition.count(), 1)
+        self.assertGreaterEqual(requisitions.count(), 1)
 
     def test_transaction_search(self):
 
@@ -78,9 +78,11 @@ class CoreViewsTestCase(TestCase):
         user = self.level3_approver
         app = 'requisition'
         model = apps.get_model(app_label=app, model_name='Operation')
-        status = 'declined'
+        status = 'approved'
         obj = get_object_or_404(model, pk=self.oid)
         perms = obj.permissions(user)
+        print("permissions:\n")
+        print(perms)
         if not obj.declined:
             if perms['approver'] and status in ['approved','declined']:
 
@@ -89,14 +91,14 @@ class CoreViewsTestCase(TestCase):
                 to_approver = []
                 if perms['level1']:
                     level = 'level1'
+                elif perms['level2']:
+                    level = 'level2'
                     users = User.objects.filter(groups__name=settings.HR_GROUP)
                     for u in users:
                         to_approver.append(u.email)
-                elif perms['level2']:
-                    level = 'level2'
-                    to_approver = [LEVEL2.email,]
                 elif perms['level3']:
                     level = 'level3'
+                    to_approver = [LEVEL2.email,]
 
                 if status == 'approved':
                     setattr(obj, level, True)
@@ -106,6 +108,7 @@ class CoreViewsTestCase(TestCase):
                     obj.declined = True
 
                 obj.save()
+                print("obj title: {}".format(obj.position_title))
                 print(obj.__dict__)
 
                 bcc = settings.MANAGERS
