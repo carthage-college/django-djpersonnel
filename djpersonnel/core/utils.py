@@ -1,3 +1,4 @@
+from django.conf import settings
 from djzbar.core.sql import VEEPS
 from djzbar.utils.informix import do_sql
 
@@ -12,7 +13,7 @@ def _level3_choices():
     choices = [('','---select---')]
 
     for l in level3:
-        name = '{}, {}'.format(v.lastname, v.firstname)
-        choices.append((str(v.id), name))
+        name = '{}, {}'.format(l.lastname, l.firstname)
+        choices.append((str(l.id), name))
     return choices
 
