@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.apps import apps
+from django.db.models import Q
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
@@ -18,7 +19,7 @@ from djtools.utils.mail import send_mail
 
 
 @portal_auth_required(
-    group='Human Resources', session_var='DJVISION_AUTH',
+    session_var='DJVISION_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def home(request):
@@ -35,8 +36,12 @@ def home(request):
         requisitions = Requisition.objects.all()
         transactions = Transaction.objects.all()
     else:
-        requisitions = Requisition.objects.filter(created_by=user)
-        transactions = Transaction.objects.filter(created_by=user)
+        requisitions = Requisition.objects.filter(
+            Q(created_by=user) | Q(level3_approver=user)
+        )
+        transactions = Transaction.objects.filter(
+            Q(created_by=user) | Q(level3_approver=user)
+        )
 
     return render(
         request, 'home.html', {
@@ -46,7 +51,7 @@ def home(request):
 
 
 @portal_auth_required(
-    group='Human Resources', session_var='DJVISION_AUTH',
+    session_var='DJVISION_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def search(request):
@@ -71,7 +76,7 @@ def search(request):
 
 @csrf_exempt
 @portal_auth_required(
-    group='Human Resources', session_var='DJVISION_AUTH',
+    session_var='DJVISION_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def operation_status(request):
@@ -93,15 +98,6 @@ def operation_status(request):
         if not obj.declined:
             if perms['approver'] and status in ['approved','declined']:
 
-                if status == 'approved':
-                    setattr(obj, level, True)
-                    setattr(obj, '{}_date'.format(level), NOW)
-
-                if status == 'declined':
-                    obj.declined = True
-
-                obj.save()
-
                 from djtools.fields import NOW
 
                 to_approver = []
@@ -116,13 +112,20 @@ def operation_status(request):
                 elif perms['level3']:
                     level = 'level3'
 
+                if status == 'approved':
+                    setattr(obj, level, True)
+                    setattr(obj, '{}_date'.format(level), NOW)
+
+                if status == 'declined':
+                    obj.declined = True
+
+                obj.save()
+
                 bcc = settings.MANAGERS
                 frum = user.email
                 to_creator = [obj.created_by.email,]
                 subject = "[PRF] {}: '{}'".format(status, obj.position_title)
-                template = 'requisition/email/{}_{}.html'.format(
-                    perms['prefix'], status
-                )
+                template = 'requisition/email/{}_{}.html'.format(level, status)
 
                 if settings.DEBUG:
                     obj.to_creator = to_creator

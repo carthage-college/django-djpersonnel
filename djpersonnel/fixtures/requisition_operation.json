@@ -1,1 +1,45 @@
-[{"model": "requisition.operation", "pk": 1, "fields": {"created_by": 1217657, "updated_by": 1217657, "created_at": "2018-09-05T12:08:04", "updated_at": "2018-09-05T12:08:04", "level3": false, "level3_date": null, "level2": false, "level2_date": null, "level1": false, "level1_date": null, "declined": false, "email_approved": false, "position_title": "Bender", "department_name": "MAIN", "new_position": "No", "replacement_name": "Kir Kroker", "budgeted_position": "Yes", "account_number": "8675309", "salary_type": "Non-exempt", "hours_per_week": "37.5", "min_salary_range": "33333.00", "mid_salary_range": "44444.00", "max_salary_range": "55555.00", "position_open_date": "2018-02-02", "expected_start_date": "2018-05-01", "publication_date": "2018-04-20", "applicant_system": "Yes", "applicant_system_people": "larry kurkowski", "speciality_sites": "Yes", "speciality_sites_urls": "https://www.stackexchange.com/", "job_description": ""}},{"model": "requisition.operation", "pk": 7, "fields": {"created_by": 1217657, "updated_by": 1217657, "created_at": "2018-09-06T08:43:02", "updated_at": "2018-09-06T08:43:02", "level3": false, "level3_approver": 1559244, "level3_date": null, "level2": false, "level2_date": null, "level1": false, "level1_date": null, "declined": false, "email_approved": false, "position_title": "Grade 36 Bureaucrat", "department_name": "INEF", "new_position": "No", "replacement_name": "Kir Kroker", "budgeted_position": "Yes", "account_number": "8675309", "salary_type": "Non-exempt", "hours_per_week": "37.5", "min_salary_range": "33333.00", "mid_salary_range": "44444.00", "max_salary_range": "55555.00", "position_open_date": "2018-02-02", "expected_start_date": "2018-05-01", "publication_date": "2018-04-20", "applicant_system": "Yes", "applicant_system_people": "Hermes Conrad", "speciality_sites": "Yes", "speciality_sites_urls": "https://www.stackoverflow.com/", "job_description": "files/requisition/4f0ba67212be47e38022d679e88c134f.pdf"}}]
+[
+    {
+        "model": "requisition.operation", "pk": 1, "fields": {
+            "created_by": 1217657, "updated_by": 1217657,
+            "created_at": "2018-09-05T12:08:04",
+            "updated_at": "2018-09-05T12:08:04", "level3": false,
+            "level3_approver": 1470526, "level3_date": null, "level2": false,
+            "level2_date": null, "level1": false, "level1_date": null,
+            "declined": false, "email_approved": false, "position_title":
+            "Bender", "department_name": "MAIN", "new_position": "No",
+            "replacement_name": "Kir Kroker", "budgeted_position": "Yes",
+            "account_number": "8675309", "salary_type": "Non-exempt",
+            "hours_per_week": "37.5", "min_salary_range": "33333.00",
+            "mid_salary_range": "44444.00", "max_salary_range": "55555.00",
+            "position_open_date": "2018-02-02",
+            "expected_start_date": "2018-05-01",
+            "publication_date": "2018-04-20", "applicant_system": "Yes",
+            "applicant_system_people": "larry kurkowski",
+            "speciality_sites": "Yes",
+            "speciality_sites_urls": "https://www.stackexchange.com/",
+            "job_description": ""
+        }
+    },{
+        "model": "requisition.operation", "pk": 7, "fields": {
+            "created_by": 1217657, "updated_by": 1217657,
+            "created_at": "2018-09-06T08:43:02",
+            "updated_at": "2018-09-06T08:43:02", "level3": false,
+            "level3_approver": 1470526, "level3_date": null, "level2": false,
+            "level2_date": null, "level1": false, "level1_date": null,
+            "declined": false, "email_approved": false,
+            "position_title": "Grade 36 Bureaucrat", "department_name": "INEF",
+            "new_position": "No", "replacement_name": "Kir Kroker",
+            "budgeted_position": "Yes", "account_number": "8675309",
+            "salary_type": "Non-exempt", "hours_per_week": "37.5",
+            "min_salary_range": "33333.00", "mid_salary_range": "44444.00",
+            "max_salary_range": "55555.00", "position_open_date": "2018-02-02",
+            "expected_start_date": "2018-05-01",
+            "publication_date": "2018-04-20", "applicant_system": "Yes",
+            "applicant_system_people": "Hermes Conrad",
+            "speciality_sites": "Yes",
+            "speciality_sites_urls": "https://www.stackoverflow.com/",
+            "job_description": "files/requisition/4f0ba67212be47e38022d679e88c134f.pdf"
+        }
+    }
+]

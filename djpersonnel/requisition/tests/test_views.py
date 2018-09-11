@@ -46,6 +46,6 @@ class RequisitionViewsTestCase(TestCase):
 
     def test_email_logic(self):
 
-        provost = get_position(settings.PROV_TPOS)
+        provost = get_position(settings.LEVEL3_TPOS)
         print(provost)
 

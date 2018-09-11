@@ -51,19 +51,19 @@ class Operation(models.Model):
         editable=settings.DEBUG,
         null=True, blank=True
     )
-    level3_date = models.DateField(
+    level3_date = models.DateTimeField(
         "Level 3 signed date",
         null=True, blank=True
     )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
-    level2_date = models.DateField(
+    level2_date = models.DateTimeField(
         "Level 2 signed date",
         null=True, blank=True
     )
     # HR
     level1 = models.BooleanField(default=False)
-    level1_date = models.DateField(
+    level1_date = models.DateTimeField(
         "Level 1 Signed Date",
         null=True, blank=True
     )
@@ -223,5 +223,5 @@ class Operation(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('requisition_display', [str(self.id)])
+        return ('requisition_detail', [str(self.id)])
 
