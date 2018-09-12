@@ -12,6 +12,10 @@ import json
 
 class RequisitionViewsTestCase(TestCase):
 
+    fixtures = [
+        'fixtures/group.json'
+    ]
+
     def setUp(self):
 
         self.user = create_test_user()
@@ -39,14 +43,15 @@ class RequisitionViewsTestCase(TestCase):
         data['level1_date'] = ''
         data['level2_date'] = ''
         data['level3_date'] = ''
+        data['approver'] = settings.TEST_LEVEL3_APPROVER_ID
         requi = self.client.post(earl, data)
         print("requi response\n")
         print(requi)
-        requisitions = Operation.objects.get(created_by = self.user)
+        requisitions = Operation.objects.filter(created_by = self.user)
         self.assertGreaterEqual(requisitions.count(), 1)
 
     def test_email_logic(self):
 
-        provost = get_position(settings.LEVEL3_TPOS)
-        print(provost)
+        level3 = get_position(settings.LEVEL3_TPOS)
+        print(level3)
 
