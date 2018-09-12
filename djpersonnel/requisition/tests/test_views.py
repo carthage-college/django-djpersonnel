@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.test import TestCase
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 
 from djpersonnel.requisition.models import Operation
 
-from djzbar.utils.hr import get_position
 from djtools.utils.test import create_test_user
 
 import json
@@ -13,12 +14,23 @@ import json
 class RequisitionViewsTestCase(TestCase):
 
     fixtures = [
-        'fixtures/group.json'
+        'fixtures/group.json', 'fixtures/user.json',
+        'fixtures/requisition_operation.json'
     ]
 
     def setUp(self):
 
+        self.oid = 7
         self.user = create_test_user()
+        self.level3_approver = User.objects.get(
+            pk=settings.TEST_LEVEL3_APPROVER_ID
+        )
+        self.level2_approver = User.objects.get(
+            pk=settings.TEST_LEVEL2_APPROVER_ID
+        )
+        self.level1_approver = User.objects.get(
+            pk=settings.TEST_LEVEL1_APPROVER_ID
+        )
         self.password = settings.TEST_USER_PASSWORD
 
     def test_requisition_form(self):
@@ -50,8 +62,29 @@ class RequisitionViewsTestCase(TestCase):
         requisitions = Operation.objects.filter(created_by = self.user)
         self.assertGreaterEqual(requisitions.count(), 1)
 
-    def test_email_logic(self):
+    def test_requisition_detail_view(self):
 
-        level3 = get_position(settings.LEVEL3_TPOS)
-        print(level3)
+        data = get_object_or_404(Operation, id=self.oid)
+        # creator
+        user = self.user
+        perms = data.permissions(user)
+        self.assertTrue(perms['view'])
+        # level3
+        user = self.level3_approver
+        perms = data.permissions(user)
+        self.assertTrue(perms['view'])
+        self.assertTrue(perms['level3'])
+        self.assertTrue(perms['approver'])
+        # level2
+        user = self.level2_approver
+        perms = data.permissions(user)
+        self.assertTrue(perms['view'])
+        self.assertTrue(perms['level2'])
+        self.assertTrue(perms['approver'])
+        # level1
+        user = self.level1_approver
+        perms = data.permissions(user)
+        self.assertTrue(perms['view'])
+        self.assertTrue(perms['level1'])
+        self.assertTrue(perms['approver'])
 
