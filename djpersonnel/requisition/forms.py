@@ -21,7 +21,7 @@ class OperationForm(forms.ModelForm):
         label="Is this a new position?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect()
     )
-    level3 = forms.ChoiceField(
+    approver = forms.ChoiceField(
         label="Who will approve this request for you?",
         choices=_level3_choices()
     )
@@ -32,7 +32,7 @@ class OperationForm(forms.ModelForm):
         exclude = [
             'created_by','updated_by','created_at','updated_at',
             'level1,level1_date','level2,level2_date','level3,level3_date',
-            'decline','email_approved'
+            'level3_approver','decline','email_approved'
         ]
 
 

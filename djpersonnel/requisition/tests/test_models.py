@@ -27,6 +27,9 @@ class RequisitionModelsTestCase(TestCase):
         self.day = 1
         self.user = create_test_user()
         self.date = datetime(self.year, self.month, self.day)
+        self.level3_approver = User.objects.get(
+            pk=settings.TEST_LEVEL3_APPROVER_ID
+        )
 
     #@skip('skip to the lieu')
     def test_operation(self):
@@ -35,20 +38,25 @@ class RequisitionModelsTestCase(TestCase):
         obj = Operation.objects.create(
             created_by = self.user, updated_by = self.user, new_position='No',
             expected_start_date = self.date, salary_type = 'Non-exempt',
-            position_title = 'Slacker', department_name = 'Delivery',
-            account_number = '90120', budgeted_position = True,
+            position_title = 'Slacker', department_name = 'MAIN',
+            account_number = '90120', budgeted_position = 'Yes',
             min_salary_range = 39000.00, mid_salary_range = 49000.00,
             max_salary_range = 69000.00, position_open_date = self.date,
             publication_date = self.date, hours_per_week = '37.5',
-            replacement_name = 'Kir Kroker'
+            level3_approver = self.level3_approver,
+            replacement_name = 'Kir Kroker', applicant_system = 'Yes',
+            applicant_system_people = 'larry kurkowski',
+            job_description = "", speciality_sites = 'Yes',
+            speciality_sites_urls = 'https://www.stackexchange.com/',
         )
+
         obj.save()
 
         objects = Operation.objects.all()
         self.assertEqual(Operation.objects.count(), 3)
 
         op = Operation.objects.filter(created_by=self.user)
-        self.assertEqual(op.count(), 2)
+        self.assertEqual(op.count(), 3)
 
         # update
         obj.title = 'test update operation object'

@@ -28,12 +28,12 @@ def form_home(request):
 
             user = request.user
             # deal with level 3 approver
-            lid = form.cleaned_data['level3']
+            lid = form.cleaned_data['approver']
             try:
                 level3 = User.objects.get(pk=lid)
             except:
                 l = LDAPManager()
-                luser = l.search(vpid)
+                luser = l.search(lid)
                 level3 = l.dj_create(luser)
 
             data = form.save(commit=False)
@@ -43,6 +43,7 @@ def form_home(request):
             data.save()
 
             # send email a creator and approver or display it for dev
+            template = 'requisition/email/approver.html'
             if not settings.DEBUG:
 
                 # send confirmation email to user who submitted the form
