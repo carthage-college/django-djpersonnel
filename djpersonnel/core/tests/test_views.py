@@ -160,37 +160,37 @@ class CoreViewsTestCase(TestCase):
 
         #self.assertGreaterEqual(transactions.count(), 1)
 
-    def test_operation_status_level3_approved(self):
+    def test_requisition_status_level3_approved(self):
 
         _operation_status(
             self.level3_approver, 'requisition', 'approved', self.oid
         )
 
-    def test_operation_status_level3_declined(self):
+    def test_requisition_status_level3_declined(self):
 
         _operation_status(
             self.level3_approver, 'requisition', 'declined', self.oid
         )
 
-    def test_operation_status_level2_approved(self):
+    def test_requisition_status_level2_approved(self):
 
         _operation_status(
             self.level2_approver, 'requisition', 'approved', self.oid
         )
 
-    def test_operation_status_level2_declined(self):
+    def test_requisition_status_level2_declined(self):
 
         _operation_status(
             self.level2_approver, 'requisition', 'declined', self.oid
         )
 
-    def test_operation_status_level1_approved(self):
+    def test_requisition_status_level1_approved(self):
 
         _operation_status(
             self.level1_approver, 'requisition', 'approved', self.oid
         )
 
-    def test_operation_status_level1_declined(self):
+    def test_requisition_status_level1_declined(self):
 
         _operation_status(
             self.level1_approver, 'requisition', 'declined', self.oid
