@@ -48,7 +48,7 @@ class RequisitionModelsTestCase(TestCase):
         self.assertEqual(Operation.objects.count(), 3)
 
         op = Operation.objects.filter(created_by=self.user)
-        self.assertEqual(op.count(), 2)
+        self.assertEqual(op.count(), 3)
 
         # update
         obj.title = 'test update operation object'

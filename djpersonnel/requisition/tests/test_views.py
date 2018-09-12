@@ -40,7 +40,8 @@ class RequisitionViewsTestCase(TestCase):
         data['level2_date'] = ''
         data['level3_date'] = ''
         requi = self.client.post(earl, data)
-
+        print("requi response\n")
+        print(requi)
         requisitions = Operation.objects.get(created_by = self.user)
         self.assertGreaterEqual(requisitions.count(), 1)
 
