@@ -507,24 +507,23 @@
             <input type="file" name="job_description" id="{{form.job_description.id_for_label}}"
               class="form-control{% if form.job_description.errors %} is-invalid{% endif %}">
           </div>
-          {% if form.veep %}
           <div class="col-sm-5 pb-2">
-            <label for="{{form.veep.id_for_label}}"
-              {% if form.veep.errors %}class="text-danger"{% endif %}>
+            <label for="{{form.approver.id_for_label}}"
+              {% if form.approver.errors %}class="text-danger"{% endif %}>
               <h5>
-                {{form.veep.label}}
+                {{form.approver.label}}
                 <small class="text-danger">
-                  {{form.veep.errors|join:", "}}
+                  {{form.approver.errors|join:", "}}
                 </small>
               </h5>
             </label>
             <select class="form-control"
-              id="{{form.veep.id_for_label}}"
-              name="veep"
+              id="{{form.approver.id_for_label}}"
+              name="approver"
               {% if not django_debug %} required{% endif %}>
-            {% for value, text in form.fields.veep.choices %}
+            {% for value, text in form.fields.approver.choices %}
               <option value="{{value}}"
-                {% if form.veep.value == value %}
+                {% if form.approver.value == value %}
                   selected
                 {% endif %}>
                 {{text}}
@@ -532,7 +531,6 @@
             {% endfor %}
             </select>
           </div>
-          {% endif %}
           <div class="col-12 pb-2 text-center">
             <button class="btn btn-primary" style="width:200px;" type="submit">
               Submit
