@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from djtools.utils.test import create_test_user
 
@@ -14,8 +15,12 @@ class OperationTestCase(TestCase):
 
     def setUp(self):
         self.user = create_test_user()
+        self.level3_approver_id = settings.TEST_LEVEL3_APPROVER_ID
+        self.level3_approver = User.objects.get(
+            pk=self.level3_approver_id
+        )
         self.data = {
-            'position_title': 'Bender','department_name': 'Delivery',
+            'position_title': 'Bender','department_name': 'MAIN',
             'account_number': '8675309', 'new_position': 'No',
             'replacement_name': 'Kir Kroker', 'budgeted_position': 'Yes',
             'account_number': '8675309', 'salary_type': 'Non-exempt',
@@ -25,7 +30,8 @@ class OperationTestCase(TestCase):
             'expected_start_date': '2018-05-01', 'applicant_system': 'Yes',
             'applicant_system_people': 'Larry', 'speciality_sites': 'Yes',
             'speciality_sites_urls': 'https://serverfault.com/',
-            'created_by': self.user.id,
+            'created_by': self.user.id,'level3_approver': self.level3_approver,
+            'approver': self.level3_approver_id
         }
 
     def test_operation_form_valid_data(self):
@@ -42,4 +48,3 @@ class OperationTestCase(TestCase):
     def test_operation_form_blank_data(self):
         form = OperationForm({})
         self.assertFalse(form.is_valid())
-        #print(form.errors)
