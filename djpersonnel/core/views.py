@@ -101,7 +101,6 @@ def operation_status(request):
                 from djtools.fields import NOW
 
                 to_approver = []
-
                 if perms['level1']:
                     level = 'level1'
                 elif perms['level2']:
@@ -132,8 +131,8 @@ def operation_status(request):
                     obj.to_creator = to_creator
                     to_creator = [settings.MANAGERS[0][1],]
                     if to_approver:
-                        to_approver = [settings.MANAGERS[0][1],]
                         obj.to_approver = to_approver
+                        to_approver = [settings.MANAGERS[0][1],]
 
                 # notify the creator of current status
                 send_mail(

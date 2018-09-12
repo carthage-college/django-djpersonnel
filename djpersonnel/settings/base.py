@@ -220,6 +220,8 @@ TEST_USER_FIRSTNAME = ''
 TEST_USER_LASTNAME = ''
 TEST_CREATED_AT_DATE = datetime(2018, 5, 1, 16, 20, 0)
 TEST_LEVEL3_APPROVER_ID = 0
+TEST_LEVEL2_APPROVER_ID = 0
+TEST_LEVEl1_APPROVER_ID = 0
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
 LOG_FILENAME = LOG_FILEPATH + 'debug.log'

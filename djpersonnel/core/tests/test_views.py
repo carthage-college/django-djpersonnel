@@ -17,6 +17,87 @@ from djtools.utils.test import create_test_user
 from djtools.utils.users import in_group
 
 
+def _operation_status(user, app, status, oid):
+    model = apps.get_model(app_label=app, model_name='Operation')
+    obj = get_object_or_404(model, pk=oid)
+    perms = obj.permissions(user)
+    print("permissions:\n")
+    print(perms)
+    if not obj.declined:
+        if perms['approver'] and status in ['approved','declined']:
+
+            from djtools.fields import NOW
+
+            to_approver = []
+            if perms['level1']:
+                level = 'level1'
+            elif perms['level2']:
+                level = 'level2'
+                users = User.objects.filter(groups__name=settings.HR_GROUP)
+                for u in users:
+                    to_approver.append(u.email)
+            elif perms['level3']:
+                level = 'level3'
+                to_approver = [LEVEL2.email,]
+
+            if status == 'approved':
+                setattr(obj, level, True)
+                setattr(obj, '{}_date'.format(level), NOW)
+
+            if status == 'declined':
+                obj.declined = True
+
+            obj.save()
+            print("obj title: {}".format(obj.position_title))
+            print(obj.__dict__)
+
+            bcc = settings.MANAGERS
+            frum = user.email
+            to_creator = [obj.created_by.email,]
+            subject = "[PRF] {}: '{}'".format(status, obj.position_title)
+            template = 'requisition/email/{}_{}.html'.format(level, status)
+
+            if settings.DEBUG:
+                print("DEBUG")
+                obj.to_creator = to_creator
+                to_creator = [settings.MANAGERS[0][1],]
+                if to_approver:
+                    to_approver = [settings.MANAGERS[0][1],]
+                    obj.to_approver = to_approver
+
+            print("bcc = {}".format(bcc))
+            print("from = {}".format(frum))
+            print("to_creator = {}".format(to_creator))
+            print("subject = {}".format(subject))
+            print("template = {}".format(template))
+
+            '''
+            # notify the creator of current status
+            send_mail(
+                request, to_creator, subject, frum, template, obj, bcc
+            )
+            '''
+
+            # notify the next approver
+            if to_approver and status == 'approved':
+                print("to_approver = {}".format(to_approver))
+                '''
+                send_mail(
+                    request, to_approver, subject, frum,
+                    'requisition/email/approver.html', obj, bcc
+                )
+                '''
+
+            message = "Personnel {} has been {}".format(app, status)
+        else:
+            message = "Access Denied"
+    else:
+        message = "Personnel {} has already been declined".format(app)
+
+    print("Message:\n")
+    print(message)
+
+
 class CoreViewsTestCase(TestCase):
 
     fixtures = [
@@ -30,6 +111,12 @@ class CoreViewsTestCase(TestCase):
         self.user = create_test_user()
         self.level3_approver = User.objects.get(
             pk=settings.TEST_LEVEL3_APPROVER_ID
+        )
+        self.level2_approver = User.objects.get(
+            pk=settings.TEST_LEVEL2_APPROVER_ID
+        )
+        self.level1_approver = User.objects.get(
+            pk=settings.TEST_LEVEL1_APPROVER_ID
         )
         self.oid = 7
         self.created_at_date = settings.TEST_CREATED_AT_DATE
@@ -73,84 +160,39 @@ class CoreViewsTestCase(TestCase):
 
         #self.assertGreaterEqual(transactions.count(), 1)
 
-    def test_operation_status(self):
+    def test_operation_status_level3_approved(self):
 
-        user = self.level3_approver
-        app = 'requisition'
-        model = apps.get_model(app_label=app, model_name='Operation')
-        status = 'approved'
-        obj = get_object_or_404(model, pk=self.oid)
-        perms = obj.permissions(user)
-        print("permissions:\n")
-        print(perms)
-        if not obj.declined:
-            if perms['approver'] and status in ['approved','declined']:
+        _operation_status(
+            self.level3_approver, 'requisition', 'approved', self.oid
+        )
 
-                from djtools.fields import NOW
+    def test_operation_status_level3_declined(self):
 
-                to_approver = []
-                if perms['level1']:
-                    level = 'level1'
-                elif perms['level2']:
-                    level = 'level2'
-                    users = User.objects.filter(groups__name=settings.HR_GROUP)
-                    for u in users:
-                        to_approver.append(u.email)
-                elif perms['level3']:
-                    level = 'level3'
-                    to_approver = [LEVEL2.email,]
+        _operation_status(
+            self.level3_approver, 'requisition', 'declined', self.oid
+        )
 
-                if status == 'approved':
-                    setattr(obj, level, True)
-                    setattr(obj, '{}_date'.format(level), NOW)
+    def test_operation_status_level2_approved(self):
 
-                if status == 'declined':
-                    obj.declined = True
+        _operation_status(
+            self.level2_approver, 'requisition', 'approved', self.oid
+        )
 
-                obj.save()
-                print("obj title: {}".format(obj.position_title))
-                print(obj.__dict__)
+    def test_operation_status_level2_declined(self):
 
-                bcc = settings.MANAGERS
-                frum = user.email
-                to_creator = [obj.created_by.email,]
-                subject = "[PRF] {}: '{}'".format(status, obj.position_title)
-                template = 'requisition/email/{}_{}.html'.format(level, status)
-                if settings.DEBUG:
-                    obj.to_creator = to_creator
-                    to_creator = [settings.MANAGERS[0][1],]
-                    if to_approver:
-                        to_approver = [settings.MANAGERS[0][1],]
-                        obj.to_approver = to_approver
+        _operation_status(
+            self.level2_approver, 'requisition', 'declined', self.oid
+        )
 
-                print("bcc = {}".format(bcc))
-                print("from = {}".format(frum))
-                print("to_creator = {}".format(to_creator))
-                print("to_approver = {}".format(to_approver))
-                print("subject = {}".format(subject))
-                print("template = {}".format(template))
+    def test_operation_status_level1_approved(self):
 
-                '''
-                # notify the creator of current status
-                send_mail(
-                    request, to_creator, subject, frum, template, obj, bcc
-                )
-                '''
+        _operation_status(
+            self.level1_approver, 'requisition', 'approved', self.oid
+        )
 
-                '''
-                # notify the next approver
-                if to_approver and status == 'approved':
-                    send_mail(
-                        request, to_approver, subject, frum,
-                        'requisition/email/approver.html', obj, bcc
-                    )
-                '''
+    def test_operation_status_level1_declined(self):
 
-                message = "Personnel {} has been {}".format(app, status)
-            else:
-                message = "Access Denied"
-        else:
-            message = "Personnel {} has already been declined".format(app)
+        _operation_status(
+            self.level1_approver, 'requisition', 'declined', self.oid
+        )
 
-        print("Message:\n")
-        print(message)
