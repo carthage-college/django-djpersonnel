@@ -37,13 +37,9 @@
         $('#deptchange').click(test2);
         $('#compchange').click(test3);
 
+        //$('#id_newhire_rehire').click(function(){
 
-
-
-
-        $('#id_newhire_rehire').click(function(){
-
-        });
+        //});
     }); // end function hire()
 
   function toggleCheck(domRadio, domInput) {
@@ -71,17 +67,32 @@
     {% if form.speciality_sites.value == 'Yes' %}
     $("#speciality_sites_urlsxx").removeClass("hyde");
     {% endif %}
-  }); // end jquery check
+  }); // end jquery code
+   // /* function dept_name */
   $(function() {
       $('#id_department_name').on('change', function(){
           console.log(this.value);
-          {% if this.value == 'ENV' %}
-            $("#shift").removeClass("hyde");
-          {% else %}
-          $("#shift").addClass("hyde");
-          {% endif %}
+          if (this.value == 'EVS')
+          {
+              $('.shift').show();
+          }
+          else
+          {
+              $('.shift').hide();
+          }
       });
-  });
+      $('#id_employment_types').on('change', function(){
+          console.log(this.value);
+          if (this.value == 'Contract-ongoing' || this.value == 'Contract-terminal')
+          {
+              $('.contract').show();
+          }
+          else
+          {
+              $('.contract').hide();
+          }
+      });
+  });// end function dept_name
 </script>
 {% endblock %}
 {% block extra_style %}
@@ -524,8 +535,8 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Complete only applicable information.</h6>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -939,7 +950,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 hyde">
+                    <div class="col-md-6 pb-3 shift" style="display:none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.shift.id_for_label}}"
@@ -986,7 +997,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.employment_types.id_for_label}}"
@@ -1011,7 +1022,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 contract" style="display:none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.contract_years.id_for_label}}"
