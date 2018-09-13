@@ -18,7 +18,7 @@ SALARY_CHOICES = (
 
 class Operation(models.Model):
     """
-    Model: ...
+    Data model for the personnel requisition form
     """
     created_by = models.ForeignKey(
         User,

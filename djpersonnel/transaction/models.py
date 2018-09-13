@@ -60,7 +60,7 @@ SABBATICAL_TERM_CHOICES = (
 
 class Operation(models.Model):
     """
-    Model: ...
+    Data model for the personnel action form
     """
     created_by = models.ForeignKey(
         User,
