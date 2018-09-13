@@ -1,396 +1,482 @@
 {% extends "home.html" %}
 {% load model_helpers %}
 {% block title %}
-    Transaction Data Display &mdash; Human Resources &mdash; Carthage College
+  Transaction Data Detail &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_javascript %}
+{{block.super}}
+<script src="//www.carthage.edu/static/vendor/js/spin.min.js"
+    type="text/javascript"></script>
+<script src="https://malsup.github.io/min/jquery.blockUI.min.js"
+    type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  /* spinner */
+  var opts = {
+      lines: 13, // The number of lines to draw
+      length: 20, // The length of each line
+      width: 10, // The line thickness
+      radius: 30, // The radius of the inner circle
+      corners: 1, // Corner roundness (0..1)
+      rotate: 0, // The rotation offset
+      direction: 1, // 1: clockwise, -1: counterclockwise
+      color: '#000', // #rgb or #rrggbb or array of colors
+      speed: 1, // Rounds per second
+      trail: 60, // Afterglow percentage
+      shadow: false, // Whether to render a shadow
+      hwaccel: false, // Whether to use hardware acceleration
+      className: 'search-results', // The CSS class to assign to spinner
+      zIndex: 2e9, // The z-index (defaults to 2000000000)
+      top: '50px', // Top position relative to parent in px
+      left: 'auto' // Left position relative to parent in px
+  };
+  var target = document.getElementById("wrapper");
+  var spinner = new Spinner(opts).spin(target);
+  spinner.stop(target);
+
+  $(".operation-status").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'operation_status' %}",
+      data: {'status':$(this).data('status'),'oid':'{{data.id}}','app':'transaction'},
+      cache: false,
+      beforeSend: function(){
+        spinner.spin(target);
+      },
+      success: function(data) {
+        spinner.stop(target);
+        $.growlUI(data);
+      },
+      error: function(data) {
+        spinner.stop(target);
+        $.growlUI('Error', data);
+      }
+    });
+  });
+  $('#print').click(function() {
+    window.print();
+    return false;
+  });
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content %}
-<div class="container">
-    <div class="col-md-12 offset-md-1 card card bg-dark">
-        <div class="card-title">
-            <h3 class="text-center text-white">Personnel Action Form</h3>
+<div class="container mb-4">
+  {% if not data.declined %}
+  {% if data.created_by != request.user %}
+  <div class="row mb-4">
+    <div class="col-lg-12 text-center">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="#" class="btn btn-default btn-success operation-status mr-4"
+            style="width:128px;" data-status="approved">Approve</a>
+          <a href="#" class="btn btn-default btn-danger operation-status mr-4"
+            style="width:128px;" data-status="declined">Decline</a>
         </div>
-        <div class="card-body bg-light">
-            <div class="form-row">
-                <!-- Section I -->
-                <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>Section I - Employee Information</h6>
-                </div>
-                <div class="col-sm-12">
-                    <div class="container-fluid border border-secondary">
-                        <div class="form-group">
-                            <h6 class="block-title">
-                                {% field_name data 'employee_id_number' %}
-                            </h6>
-                            <p>{{data.employee_id_number}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid border border-secondary">
-                        <div class="form-group">
-                            <h6>{% field_name data 'last_name' %}</h6>
-                            <p>{{data.last_name}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'first_name' %}</h6>
-                            <p>{{data.first_name}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'middle_name' %}</h6>
-                            <p>{{data.middle_name}}</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Section II -->
-                <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>Section II - Complete for New Hires Only</h6>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'position_start_date' %}</h6>
-                            <p>{{data.position_start_date}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>
-                                {% field_name data 'position_end_date' %}
-                                (if applicable)
-                            </h6>
-                            <p>{{data.position_end_date}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'home_address' %}</h6>
-                            <p>{{data.home_address}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'city' %}</h6>
-                            <p>{{data.city}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="container-fluid-group">
-                        <div class="form-group">
-                            <h6>{% field_name data 'state' %}</h6>
-                            <p>{{data.state}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'postal_code' %}</h6>
-                            <p>{{data.postal_code}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'phone' %}</h6>
-                            <p>{{data.phone}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'email' %}</h6>
-                            <p>{{data.email}}</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Section III -->
-                <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>
-                        Section III - Type of Action Please check applicable
-                        action(s) and enter effective date.
-                    </h6>
-                </div>
-                <div class="col-md-12">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'effective_date' %}</h6>
-                            <p>{{data.effective_date}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-check">
-                            {% if data.newhire_rehire == True %}
-                                <i class="fa fa-check-square-o green" data-placement="top"></i>
-                            {% else %}
-                                <i class="fa fa-square-o" data-placement="top"></i>
-                            {% endif %}
-                            {% field_name data 'newhire_rehire' %}
-                        </div>
-                        <div class="form-check">
-                            {% if data.onetime_payment == True %}
-                                <i class="fa fa-check green" data-placement="top"></i>
-                            {% else %}
-                                <i class="fa fa-square-o" data-placement="top"></i>
-                            {% endif %}
-                            {% field_name data 'onetime_payment' %}
-                        </div>
-                        <div class="form-check">
-                            {% if data.voluntary_termination == True %}
-                                <i class="fa fa-check-square-o green" data-placement="top"></i>
-                            {% else %}
-                                <i class="fa fa-square-o" data-placement="top"></i>
-                            {% endif %}
-                            {% field_name data 'voluntary_termination' %}
-                        </div>
-                        <!--NOTE:
-                            if 'Voluntary Termination checked',
-                            provide the voluntary unused pto payout
-                        -->
-                        {% if data.voluntary_termination == True %}
-                        <div class="form-check">
-                          <h6>
-                            {% field_name data 'voluntary_unused_pto_payout' %}
-                          </h6>
-                          <p>{{data.voluntary_unused_pto_payout}}</p>
-                        </div>
-                        {% endif %}
-                        <div class="form-check">
-                            {% if data.involuntary_termination == True %}
-                                <i class="fa fa-check-square-o green" data-placement="top"></i>
-                            {% else %}
-                                <i class="fa fa-square-o" data-placement="top"></i>
-                            {% endif %}
-                            {% field_name data 'involuntary_termination' %}
-                        </div>
-                        <!--NOTE:
-                            if 'Involuntary Termination checked',
-                            provide the involuntary unused pto payout
-                        -->
-                        {% if data.involuntary_termination == True %}
-                        <div class="form-check">
-                          <h6>
-                            {% field_name data 'involuntary_unused_pto_payout' %}
-                          </h6>
-                          <p>{{data.involuntary_unused_pto_payout}}</p>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="control-group">
-                            <div class="form-check">
-                                {% if data.position_change == True %}
-                                    <i class="fa fa-check-square-o green" data-placement="top"></i>
-                                {% else %}
-                                    <i class="fa fa-square-o" data-placement="top"></i>
-                                {% endif %}
-                                {% field_name data 'position_change' %}
-                            </div>
-                            <div class="form-check">
-                                {% if data.department_change == True %}
-                                    <i class="fa fa-check-square-o green" data-placement="top"></i>
-                                {% else %}
-                                    <i class="fa fa-square-o" data-placement="top"></i>
-                                {% endif %}
-                                    {% field_name data 'department_change' %}
-                            </div>
-                            <div class="form-check">
-                                {% if data.compensation_change == True %}
-                                    <i class="fa fa-check-square-o green" data-placement="top"></i>
-                                {% else %}
-                                    <i class="fa fa-square-o" data-placement="top"></i>
-                                {% endif %}
-                                    {% field_name data 'compensation_change' %}
-                            </div>
-                            <div class="form-check">
-                                {% if data.leave_of_absence == True %}
-                                    <i class="fa fa-check-square-o green" data-placement="top"></i>
-                                {% else %}
-                                    <i class="fa fa-square-o" data-placement="top"></i>
-                                {% endif %}
-                                    {% field_name data 'leave_of_absence' %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section IV -->
-                <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>Section IV - Complete only applicable information.</h6>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'position_title' %}</h6>
-                            <p>{{data.position_title}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'department_name' %}</h6>
-                            <p>{{data.department_name}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'compensation' %}</h6>
-                            <p>{{data.compensation}}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'office_extension' %}</h6>
-                            <p>{{data.office_extension}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'position_type' %}</h6>
-                            <p>{{data.position_type}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'supervisor_name' %}</h6>
-                            <p>{{data.supervisor_name}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>{% field_name data 'budget_account' %}</h6>
-                            <p>{{data.budget_account}}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section V -->
-                <div class="col-sm-12 card-header bg-secondary text-white">
-                    <h6>
-                        Section V - Benefit Change
-                        (To be completed by Human Resources)
-                    </h6>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>Benefit change effective date</h6>
-                            <p>{{data.benefit_change_effective_date}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>Supplement Life Policy Amount</h6>
-                            <p>{{data.supplement_life_policy_amount}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>Supplement Life PPP Contribution</h6>
-                            <p>{{data.supplement_life_ppp_contribution}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>Health Insurance Plan and Tier</h6>
-                            <p>{{data.health_insurance_plan_tier}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                      <div class="form-group">
-                        <h6>
-                          CC Health Insurance Compensation Contribution
-                        </h6>
-                        <p>
-                          {{data.cc_health_insurance_compensation_contribution}}
-                        </p>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>HSA Annual PPP Contribution</h6>
-                            <p>{{data.hsa_annual_ppp_contribution}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>HSA Carthage Contribution</h6>
-                            <p>{{data.hsa_carthage_contribution}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                            <h6>FSA Medical Annual PPP Contribution</h6>
-                            <p>{{data.fsa_medical_annual_ppp_contribution}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="container-fluid">
-                        <div class="form-group">
-                          <h6>FSA Dependent Care Annual PPP Contribution</h6>
-                          <p>
-                            {{data.fsa_dependent_care_annual_ppp_contribution}}
-                          </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end form row -->
-        </div>
-        <!-- end card body -->
-        <div class="card-footer text-muted"></div>
+      </div>
     </div>
-    <!-- end card -->
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  {% endif %}
+  {% else %}
+    <h1 style="color: #5810d1;">DECLINED</h1>
+  {% endif %}
+  <div class="col-md-12 card card bg-dark">
+    <div class="card-title">
+      <h3 class="text-white pull-left">
+        Personnel Action Form
+      </h3>
+      <h3 class="pull-right">
+        <a href="#" id="print" class="no-print-icon">
+          <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Print to paper or PDF"></i></a>
+      </h3>
+    </div>
+    <div class="card-body bg-light">
+      <div class="form-row">
+        <!-- Section I -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section I - Employee Information</h6>
+        </div>
+        <div class="col-sm-12">
+          <div class="container-fluid border border-secondary">
+            <div class="form-group">
+              <h6 class="block-title">
+                  {# field_name data 'employee_id_number' #}
+              </h6>
+              <p>{{data.employee_id_number}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid border border-secondary">
+            <div class="form-group">
+              <h6>{% field_name data 'last_name' %}</h6>
+              <p>{{data.last_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'first_name' %}</h6>
+              <p>{{data.first_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'middle_name' %}</h6>
+              <p>{{data.middle_name}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Section II -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section II - Complete for New Hires Only</h6>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                {% field_name data 'expected_start_date' %}
+              </h6>
+              <p>{{data.expected_start_date}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                {% field_name data 'end_date' %}
+                (if applicable)
+              </h6>
+              <p>{{data.end_date}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'home_address' %}</h6>
+              <p>{{data.home_address}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'city' %}</h6>
+              <p>{{data.city}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="container-fluid-group">
+            <div class="form-group">
+              <h6>{% field_name data 'state' %}</h6>
+              <p>{{data.state}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'postal_code' %}</h6>
+              <p>{{data.postal_code}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'phone' %}</h6>
+              <p>{{data.phone}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'email' %}</h6>
+              <p>{{data.email}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Section III -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>
+            Section III - Type of Action Please check applicable
+            action(s) and enter effective date.
+          </h6>
+        </div>
+        <div class="col-md-12">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'effective_date' %}</h6>
+              <p>{{data.effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.newhire_rehire == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'newhire_rehire' %}
+            </div>
+            <div class="form-check">
+              {% if data.onetime_payment == True %}
+                <i class="fa fa-check green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'onetime_payment' %}
+            </div>
+            <div class="form-check">
+              {% if data.voluntary_termination == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'voluntary_termination' %}
+            </div>
+            <!--NOTE:
+              if 'Voluntary Termination checked',
+              provide the voluntary unused pto payout
+            -->
+            {% if data.voluntary_termination == True %}
+            <div class="form-check">
+              <h6>
+                {% field_name data 'voluntary_unused_pto_payout' %}
+              </h6>
+              <p>{{data.voluntary_unused_pto_payout}}</p>
+            </div>
+            {% endif %}
+            <div class="form-check">
+              {% if data.involuntary_termination == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'involuntary_termination' %}
+            </div>
+            <!--NOTE:
+              if 'Involuntary Termination checked',
+              provide the involuntary unused pto payout
+            -->
+            {% if data.involuntary_termination == True %}
+            <div class="form-check">
+              <h6>
+                {% field_name data 'involuntary_unused_pto_payout' %}
+              </h6>
+              <p>{{data.involuntary_unused_pto_payout}}</p>
+            </div>
+            {% endif %}
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="control-group">
+              <div class="form-check">
+                {% if data.position_change == True %}
+                  <i class="fa fa-check-square-o green" data-placement="top"></i>
+                {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+                {% endif %}
+                {% field_name data 'position_change' %}
+              </div>
+              <div class="form-check">
+                {% if data.department_change == True %}
+                  <i class="fa fa-check-square-o green" data-placement="top"></i>
+                {% else %}
+                    <i class="fa fa-square-o" data-placement="top"></i>
+                {% endif %}
+                {% field_name data 'department_change' %}
+              </div>
+              <div class="form-check">
+                {% if data.compensation_change == True %}
+                  <i class="fa fa-check-square-o green" data-placement="top"></i>
+                {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+                {% endif %}
+                {% field_name data 'compensation_change' %}
+              </div>
+              <div class="form-check">
+                {% if data.leave_of_absence == True %}
+                  <i class="fa fa-check-square-o green" data-placement="top"></i>
+                {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+                {% endif %}
+                {% field_name data 'leave_of_absence' %}
+              </div>
+            </div>
+            <!-- /.control-group -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.col-sm-6 -->
+        <!-- Section IV -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section IV - Complete only applicable information.</h6>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_title' %}</h6>
+              <p>{{data.position_title}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'department_name' %}</h6>
+              <p>{{data.department_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                {% field_name data 'compensation_change' %}
+              </h6>
+              <p>{{data.compensation_change}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                {% field_name data 'employee_type' %}
+              </h6>
+              <p>{{data.position_type}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'supervisor_name' %}</h6>
+              <p>{{data.supervisor_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'budget_account' %}</h6>
+              <p>{{data.budget_account}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Section V -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>
+            Section V - Benefit Change
+            (To be completed by Human Resources)
+          </h6>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Benefit change effective date</h6>
+              <p>{{data.benefit_change_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Supplement Life Policy Amount</h6>
+              <p>{{data.supplement_life_policy_amount}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Supplement Life PPP Contribution</h6>
+              <p>{{data.supplement_life_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Health Insurance Plan and Tier</h6>
+              <p>{{data.health_insurance_plan_tier}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                CC Health Insurance Compensation Contribution
+              </h6>
+              <p>
+                {{data.cc_health_insurance_compensation_contribution}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>HSA Annual PPP Contribution</h6>
+              <p>{{data.hsa_annual_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>HSA Carthage Contribution</h6>
+              <p>{{data.hsa_carthage_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>FSA Medical Annual PPP Contribution</h6>
+              <p>{{data.fsa_medical_annual_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>FSA Dependent Care Annual PPP Contribution</h6>
+              <p>
+                {{data.fsa_dependent_care_annual_ppp_contribution}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end form row -->
+    </div>
+    <!-- end card body -->
+    <div class="card-footer text-muted"></div>
+  </div>
+  <!-- end card -->
 </div>
 <!-- end container -->
 {% endblock %}

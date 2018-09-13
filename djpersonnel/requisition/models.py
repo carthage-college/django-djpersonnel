@@ -3,9 +3,8 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
-from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import get_permissions
 
-from djtools.utils.users import in_group
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
@@ -18,7 +17,7 @@ SALARY_CHOICES = (
 
 class Operation(models.Model):
     """
-    Model: ...
+    Data model for the personnel requisition form
     """
     created_by = models.ForeignKey(
         User,
@@ -197,29 +196,8 @@ class Operation(models.Model):
         )
 
     def permissions(self, user):
-        perms = {
-            'view':False,'approver':False,
-            'level3': False, 'level2': False, 'level1': False
-        }
 
-        # in_group includes an exception for superusers
-        group = in_group(user, settings.HR_GROUP)
-        if group:
-            perms['view'] = True
-            perms['approver'] = True
-            perms['level1'] = True
-        elif user.id == LEVEL2.id:
-            perms['view'] = True
-            perms['approver'] = True
-            perms['level2'] = True
-        elif self.level3_approver == user:
-            perms['view'] = True
-            perms['approver'] = True
-            perms['level3'] = True
-        elif self.created_by == user:
-            perms['view'] = True
-
-        return perms
+        return get_permissions(self, user)
 
     @models.permalink
     def get_absolute_url(self):

@@ -124,8 +124,10 @@ def operation_status(request):
                 bcc = settings.MANAGERS
                 frum = user.email
                 to_creator = [obj.created_by.email,]
-                subject = "[PRF] {}: '{}'".format(status, obj.position_title)
-                template = 'requisition/email/{}_{}.html'.format(level, status)
+                subject = "[Personnel {} Form] {}: '{}'".format(
+                    app.capitalize(), status, obj.position_title
+                )
+                template = '{}/email/{}_{}.html'.format(app, level, status)
 
                 if settings.DEBUG:
                     obj.to_creator = to_creator
@@ -143,7 +145,7 @@ def operation_status(request):
                 if to_approver and status == 'approved':
                     send_mail(
                         request, to_approver, subject, frum,
-                        'requisition/email/approver.html', obj, bcc
+                        '{}/email/approver.html'.format(app), obj, bcc
                     )
 
                 message = "Personnel {} has been {}".format(app, status)

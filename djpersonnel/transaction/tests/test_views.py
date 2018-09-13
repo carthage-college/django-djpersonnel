@@ -25,7 +25,7 @@ class TransactionOperationTestCase(TestCase):
 
     def test_display_returns_correct_html(self):
 
-        response = self.client.get(reverse('transaction_display'))
+        response = self.client.get(reverse('transaction_detail'))
         self.assertTemplateUsed(response, 'transaction/display.html')
         html = response.content.decode('utf8')
         self.assertTrue(html.startswith('<!DOCTYPE html>'))

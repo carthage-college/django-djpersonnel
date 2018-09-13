@@ -87,7 +87,7 @@ $(function() {
   <!-- /.row -->
   {% endif %}
   {% else %}
-        <h1 style="color: #5810d1;">DECLINED</h1>
+    <h1 style="color: #5810d1;">DECLINED</h1>
   {% endif %}
   <div class="col-md-12 card bg-dark">
     <div class="card-title">
@@ -95,137 +95,133 @@ $(function() {
         Personnel Requisition Form
       </h3>
       <h3 class="pull-right">
-          <a href="#" id="print" class="no-print-icon">
-            <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
-            data-toggle="tooltip" data-placement="top"
-            title="Print to paper or PDF"></i></a>
+        <a href="#" id="print" class="no-print-icon">
+          <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Print to paper or PDF"></i></a>
       </h3>
     </div>
     <div class="card-body bg-light">
-        <div class="form-row">
-          <div class="col-sm-6">
-            <div class="container-fluid">
-              <h6>{% field_name data 'position_title' %}</h6>
-              <p>{{data.position_title}}</p>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="container-fluid">
-              <h6>{% field_name data 'department_name' %}</h6>
-              <p>{{data.department_name}}</p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="container-fluid">
-              <h6>{% field_name data 'new_position' %}</h6>
-              <div class="form-check">
-                <p>{{data.new_position}}</p>
-              </div>
-              <!-- Hidden unless "No" is selected -->
-              <div class="form-check {% if data.new_position == 'Yes' %}hyde{% endif %}" id="replacement">
-                  <h6>{% field_name data 'replacement_name' %}</h6>
-                  <p>{{data.replacement_name}}</p>
-              </div>
-            </div>
-            <!-- /.form-group -->
-          </div>
-          <div class="col-sm-3">
-            <div class="container-fluid">
-              <h6>{% field_name data 'budgeted_position' %}</h6>
-              <p>{{data.budgeted_position}}</p>
-            </div>
-            <!-- /.form-group -->
-            <div class="container-fluid">
-                <h6>{% field_name data 'salary_type' %}</h6>
-                <p>{{data.salary_type}}</p>
-            </div>
-            <!-- /.form-group -->
-          </div>
-          <div class="col-sm-3">
-            <div class="container-fluid">
-              <!-- Hidden unless "Yes" is selected -->
-              <div class="form-check {% if data.budgeted_position == 'No' %} hyde{% endif %}" id="account_number">
-                  <h6>{% field_name data 'account_number' %}</h6>
-                  <p>{{data.account_number}}</p>
-              </div>
-            </div>
-            <!-- /.form-group -->
-          </div>
-          <!-- Hidden unless "Salary" is selected -->
-          <div class="{% if data.budgeted_position == 'Non-exempt' %} hyde{% endif %} pb-4" id="hours_per_week">
-            <div class="col-sm-12">
-              <h6>{% field_name data 'hours_per_week' %}</h6>
-              <p>{{data.hours_per_week}}</p>
-            </div>
-          </div>
-          <div class="col-sm-12 card-header bg-secondary text-white">
-            <h6>Job Salary Range (consult Human Resources)</h6>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'min_salary_range' %}</h6>
-              <p>{{data.min_salary_range}}</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'mid_salary_range' %}</h6>
-              <p>{{data.mid_salary_range}}</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'max_salary_range' %}</h6>
-              <p>{{data.max_salary_range}}</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'position_open_date' %}</h6>
-              <p>{{data.position_open_date}}</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'expected_start_date' %}</h6>
-              <p>{{data.expected_start_date}}</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="container-fluid">
-              <h6>{% field_name data 'publication_date' %}</h6>
-              <p>{{data.publication_date}}</p>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <h6>{% field_name data 'applicant_system' %}</h6>
-            <div class="form-check form-check-inline">
-              <p>{{data.applicant_system}}</p>
-            </div>
-            <!-- Hidden unless "Yes" is selected -->
-            <div class="form-check {% if data.applicant_system == 'No' %}hyde{% endif %}" id="applicant_system_people">
-              <p>{{data.applicant_system_people}}</p>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <h6>{% field_name data 'speciality_sites' %}</h6>
-            <div class="form-check form-check-inline">
-              <p>{{data.speciality_sites}}</p>
-            </div>
-            <!-- Hidden unless "Yes" is selected -->
-            <div class="form-check {% if data.speciality_sites == 'No' %}hyde{% endif %}" id="speciality_sites_urls">
-              <p>{{data.speciality_sites_urls}}</p>
-            </div>
+      <div class="form-row">
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'position_title' %}</h6>
+            <p>{{data.position_title}}</p>
           </div>
         </div>
-        <!-- end form row -->
-      </form>
-      <!-- end form -->
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'department_name' %}</h6>
+            <p>{{data.department_name}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'new_position' %}</h6>
+            <div class="form-check">
+              <p>{{data.new_position}}</p>
+            </div>
+            <!-- Hidden unless "No" is selected -->
+            <div class="form-check {% if data.new_position == 'Yes' %}hyde{% endif %}" id="replacement">
+              <h6>{% field_name data 'replacement_name' %}</h6>
+              <p>{{data.replacement_name}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <div class="col-sm-3">
+          <div class="container-fluid">
+            <h6>{% field_name data 'budgeted_position' %}</h6>
+            <p>{{data.budgeted_position}}</p>
+          </div>
+          <!-- /.form-group -->
+          <div class="container-fluid">
+            <h6>{% field_name data 'salary_type' %}</h6>
+            <p>{{data.salary_type}}</p>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <div class="col-sm-3">
+          <div class="container-fluid">
+            <!-- Hidden unless "Yes" is selected -->
+            <div class="form-check {% if data.budgeted_position == 'No' %} hyde{% endif %}" id="account_number">
+              <h6>{% field_name data 'account_number' %}</h6>
+              <p>{{data.account_number}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- Hidden unless "Salary" is selected -->
+        <div class="{% if data.budgeted_position == 'Non-exempt' %} hyde{% endif %} pb-4" id="hours_per_week">
+          <div class="col-sm-12">
+            <h6>{% field_name data 'hours_per_week' %}</h6>
+            <p>{{data.hours_per_week}}</p>
+          </div>
+        </div>
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Job Salary Range (consult Human Resources)</h6>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'min_salary_range' %}</h6>
+            <p>{{data.min_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'mid_salary_range' %}</h6>
+            <p>{{data.mid_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'max_salary_range' %}</h6>
+            <p>{{data.max_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'position_open_date' %}</h6>
+            <p>{{data.position_open_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'expected_start_date' %}</h6>
+            <p>{{data.expected_start_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'publication_date' %}</h6>
+            <p>{{data.publication_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <h6>{% field_name data 'applicant_system' %}</h6>
+          <div class="form-check form-check-inline">
+            <p>{{data.applicant_system}}</p>
+          </div>
+          <!-- Hidden unless "Yes" is selected -->
+          <div class="form-check {% if data.applicant_system == 'No' %}hyde{% endif %}" id="applicant_system_people">
+            <p>{{data.applicant_system_people}}</p>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <h6>{% field_name data 'speciality_sites' %}</h6>
+          <div class="form-check form-check-inline">
+            <p>{{data.speciality_sites}}</p>
+          </div>
+          <!-- Hidden unless "Yes" is selected -->
+          <div class="form-check {% if data.speciality_sites == 'No' %}hyde{% endif %}" id="speciality_sites_urls">
+            <p>{{data.speciality_sites_urls}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- end form row -->
     </div>
     <!-- end card body -->
-    <div class="card-footer text-muted">
-
-    </div>
+    <div class="card-footer text-muted"></div>
   </div>
   <!-- end card -->
 </div>
