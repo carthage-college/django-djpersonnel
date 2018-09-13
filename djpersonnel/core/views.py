@@ -45,7 +45,7 @@ def home(request):
 
     return render(
         request, 'home.html', {
-            'requisitions':requisitions, 'transactions':transactions
+            'hr':hr, 'requisitions':requisitions, 'transactions':transactions
         }
     )
 

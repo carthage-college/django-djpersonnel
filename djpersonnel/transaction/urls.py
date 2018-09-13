@@ -27,12 +27,12 @@ urlpatterns = [
     ),
     # transaction update
     url(
-        r'^(?P<aid>\d+)/update/$',
+        r'^(?P<tid>\d+)/update/$',
         views.update, name='transaction_update'
     ),
     # transaction appointment letter
     url(
-        r'^(?P<tid>\d+)/appointment_letter/$',
+        r'^(?P<tid>\d+)/appointment-letter/$',
         views.appointment_letter, name='transaction_appointment_letter'
     ),
 ]

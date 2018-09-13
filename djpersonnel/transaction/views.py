@@ -90,17 +90,25 @@ def detail(request, tid):
     return render(
         request, 'transaction/detail.html', {'data':data}
     )
+
+
+@portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def appointment_letter(request, tid):
     data = get_object_or_404(Operation, id=tid)
     return render(
         request, 'transaction/appointment_letter.html', {'data':data}
     )
 
+
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def update(request, pid):
+def update(request, tid):
     return render(
         request, 'transaction/update.html', {}
     )

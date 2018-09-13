@@ -45,12 +45,14 @@
           <a href="{% url 'transaction_detail' t.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
           title="View Personnel Action Form">{{t.last_name}}</a>
+            {% if hr %}
             <div class="float-right">
             <a href="{% url 'transaction_appointment_letter' t.id %}">
             <i class="fa fa-address-card-o green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
                title="Appointment Letter View"></i></a>
             </div>
+            {% endif %}
         </td>
         <td>
           {{t.first_name}}
