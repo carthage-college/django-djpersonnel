@@ -3,7 +3,7 @@
 <p>Hello,</p>
 
 <p>
-  A new position requisition form has been submitted
+  A new position transaction form has been submitted
   and is awaiting your review. This form has been submitted by:
 </p>
 
@@ -33,9 +33,13 @@
 </p>
 
 <p>
-  Please take a moment to review this submission and approve or deny.
+  Please take a moment to review this submission and approve or deny it.
 </p>
 
 <p>
-  Thank you!
+  Thank you.
 </p>
+{# debuging #}
+{% if data.to_approver %}
+{{data.to_approver}}
+{% endif %}

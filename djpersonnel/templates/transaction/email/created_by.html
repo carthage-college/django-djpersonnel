@@ -1,3 +1,7 @@
 {% load livewhale_api %}
 {% get_lw_content as success blurbs 2622 %}
 {{success.body|safe}}
+{# debuging #}
+{% if to_creator %}
+{{to_creator}}
+{% endif %}
