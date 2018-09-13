@@ -3,7 +3,7 @@
 from django import forms
 
 from djpersonnel.requisition.models import Operation
-from djpersonnel.core.utils import _level3_choices
+from djpersonnel.core.utils import level3_choices
 
 from djtools.fields import BINARY_CHOICES
 
@@ -23,7 +23,7 @@ class OperationForm(forms.ModelForm):
     )
     approver = forms.ChoiceField(
         label="Who will approve this request for you?",
-        choices=_level3_choices()
+        choices=level3_choices()
     )
 
     class Meta:
@@ -34,7 +34,6 @@ class OperationForm(forms.ModelForm):
             'level1,level1_date','level2,level2_date','level3,level3_date',
             'level3_approver','decline','email_approved'
         ]
-
 
     def clean_replacement_name(self):
 

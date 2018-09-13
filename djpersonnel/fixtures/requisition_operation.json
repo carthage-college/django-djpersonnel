@@ -1,7 +1,7 @@
 [
     {
         "model": "requisition.operation", "pk": 1, "fields": {
-            "created_by": 1217657, "updated_by": 1217657,
+            "created_by": 666, "updated_by": 666,
             "created_at": "2018-09-05T12:08:04",
             "updated_at": "2018-09-05T12:08:04", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,
@@ -22,7 +22,7 @@
         }
     },{
         "model": "requisition.operation", "pk": 7, "fields": {
-            "created_by": 1217657, "updated_by": 1217657,
+            "created_by": 666, "updated_by": 666,
             "created_at": "2018-09-06T08:43:02",
             "updated_at": "2018-09-06T08:43:02", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,

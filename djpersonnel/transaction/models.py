@@ -2,6 +2,9 @@
 from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
+
+from djpersonnel.core.utils import get_permissions
+
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
@@ -161,27 +164,13 @@ class Operation(models.Model):
         verbose_name='Supervisor Name',
         max_length=128
     )
-    # employee_type = models.CharField(
-    #     "Employee Type",
-    #     max_length=16,
-    #     choices=EMPLOYEE_CHOICES,
-    # )
     employee_type = models.CharField(
         "Employee Type",
         max_length=16,
         choices=BINARY_CHOICES,
     )
-
-    # position_start_date = models.DateField(
-    #     verbose_name='Position start date'
-    # )
-    # position_end_date = models.DateField(
-    #     verbose_name='Position end date',
-    #     null=True, blank=True
-    # )
-
-
-    # NOTE: the choices will bring up a set of fields to filled out based on which is checked
+    # NOTE: the choices will bring up a set of fields to filled out
+    # based on which is checked
     newhire_rehire = models.BooleanField(
         verbose_name='New Hire/Rehire',
         default=False
@@ -335,7 +324,8 @@ class Operation(models.Model):
         max_length=255,
         choices=EMPLOYMENT_TYPE_CHOICES,
     )
-    # NOTE: if 'Contract-ongoing or Contract-terminal', need the number of years in the contract
+    # NOTE: if 'Contract-ongoing or Contract-terminal',
+    # need the number of years in the contract
     contract_years = models.CharField(
         "Number of years",
         max_length=25,
@@ -440,7 +430,8 @@ class Operation(models.Model):
     )
     # NOTE: if temporary_interim_pay 'Yes', provide the end date
     end_date = models.DateField(
-        verbose_name='Effective date'
+        verbose_name='Effective date',
+        null=True, blank=True
     )
     amount = models.DecimalField(
         verbose_name='Amount',
@@ -592,6 +583,13 @@ class Operation(models.Model):
             self.created_by.first_name
         )
 
+    def get_slug(self):
+        return 'files/transaction/'
+
     @models.permalink
     def get_absolute_url(self):
-        return ('transaction_display', [str(self.id)])
+        return ('transaction_detail', [str(self.id)])
+
+    def permissions(self, user):
+
+        return get_permissions(self, user)
