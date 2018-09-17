@@ -9,6 +9,11 @@ urlpatterns = [
         r'^$',
         views.home, name='dashboard_home'
     ),
+    # complete lising
+    url(
+        r'^(?P<mod>[-\w]+)/list/$',
+        views.list, name='dashboard_list'
+    ),
     # proposal status view for 'approve' or 'decline' actions
     url(
         r'^operation/status/$',

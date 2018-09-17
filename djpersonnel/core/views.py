@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.apps import apps
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
@@ -28,9 +28,7 @@ def home(request):
     """
 
     user = request.user
-
     hr = in_group(user, settings.HR_GROUP)
-
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
         requisitions = Requisition.objects.all()
@@ -48,6 +46,37 @@ def home(request):
             'hr':hr, 'requisitions':requisitions, 'transactions':transactions
         }
     )
+
+
+@portal_auth_required(
+    session_var='DJVISION_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def list(request, mod):
+    """
+    complete listing of all objects
+    """
+
+    user = request.user
+    hr = in_group(user, settings.HR_GROUP)
+    # HR or VPFA can access all objects
+    if hr or user.id == LEVEL2.id:
+        if mod == 'requisition':
+            objects = Requisition.objects.all()
+        elif mod == 'transaction':
+            objects = Transaction.objects.all()
+        else:
+            objects = None
+
+        response = render(
+            request, 'list.html', { 'objects': objects, 'mod':mod }
+        )
+    else:
+        response = HttpResponseRedirect(
+            reverse_lazy('dashboard_home')
+        )
+
+    return response
 
 
 @portal_auth_required(

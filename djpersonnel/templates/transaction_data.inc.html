@@ -60,11 +60,11 @@
             <div class="float-right">
               <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
-              title="This position is budgeted for account #{{r.account_number}}"></i>
+              title="This position is budgeted for account #{{t.account_number}}"></i>
             </div>
           {% endif %}
         </td>
-        <td><a href="mailto:{{r.created_by.email}}">{{t.created_by}}</a></td>
+        <td><a href="mailto:{{t.created_by.email}}">{{t.created_by}}</a></td>
         {% if t.declined %}
         <td colspan="3" class="red text-center font-weight-bold">
             Transaction Declined
@@ -72,41 +72,41 @@
         {% else %}
         <td class="text-center">
           {% if t.level3 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Provost approved this PAF on {{level3_date}}"></i>
+            title="VP or Provost approved this PAF on {{t.level3_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VP or Provost has NOT approved this PAF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if t.level2 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VPFA approved this PRF on {{level2_date}}"></i>
+            title="VPFA approved this PRF on {{t.level2_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VPFA has NOT approved this PAF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if t.level1 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="HR approved this PAF on {{level1_date}}"></i>
+            title="HR approved this PAF on {{t.level1_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="HR have NOT approved this PRF"></i>
           {% endif %}
         </td>
         {% endif %}
-        <td>{{t.expected_start_date}}</td>
-        <td>{{t.end_date}}</td>
-        <td>{{t.effective_date}}</td>
+        <td>{{t.expected_start_date|date:'Y-m-d'}}</td>
+        <td>{{t.end_date|date:'Y-m-d'}}</td>
+        <td>{{t.effective_date|date:'Y-m-d'}}</td>
       </tr>
       {% endfor %}
     </tbody>

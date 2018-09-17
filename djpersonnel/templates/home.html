@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    Personnel Transaction Form Submissions &mdash;
+    Personnel Form Submissions &mdash;
     Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
@@ -99,13 +99,25 @@ $(function() {
 <div class="row">
   {% if requisitions %}
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-      <h3>Personnel Requisition Form (PRF)</h3>
+      <h4>
+        <a href="{% url 'dashboard_list' 'requisition' %}">
+          <i class="fa fa-list-alt blue-tooltip" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="View All PRF submissions"></i></a>
+        Personnel Requisition Form (PRF)
+      </h4>
       {% include "requisition_data.inc.html" %}
     </div>
   {% endif %}
   {% if transactions %}
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-      <h3>Personnel Action Form (PAF)</h3>
+      <h4>
+        <a href="{% url 'dashboard_list' 'transaction' %}">
+          <i class="fa fa-list-alt blue-tooltip" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="View All PAF submissions"></i></a>
+        Personnel Action Form (PAF)
+      </h4>
       {% include "transaction_data.inc.html" %}
     </div>
   {% endif %}
