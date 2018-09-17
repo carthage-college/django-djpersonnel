@@ -308,6 +308,17 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
+    startup_expenses = models.CharField(
+        "Startup expenses?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
+    # NOTE: if 'Yes', how much for moving expenses
+    startup_expenses_amount = models.CharField(
+        "What amount for the startup expenses?",
+        max_length=25,
+        null=True, blank=True
+    )
     # NOTE: if department = 'EVD', what shift
     shift = models.CharField(
         verbose_name='What shift?',
@@ -424,13 +435,13 @@ class Operation(models.Model):
         verbose_name='Effective date'
     )
     temporary_interim_pay = models.CharField(
-        "Eligible for rehire",
+        "Temporary interim pay",
         max_length=4,
         choices=BINARY_CHOICES,
     )
     # NOTE: if temporary_interim_pay 'Yes', provide the end date
     end_date = models.DateField(
-        verbose_name='Effective date',
+        verbose_name='End date',
         null=True, blank=True
     )
     amount = models.DecimalField(
@@ -464,17 +475,17 @@ class Operation(models.Model):
         null=True, blank=True
     )
     program_types = models.CharField(
-        "Select one",
+        "Program types",
         max_length=16,
         choices=PROGRAM_CHOICES,
     )
     leaving_types = models.CharField(
-        "Select one",
+        "Reason for leaving",
         max_length=16,
         choices=LEAVING_REASONS_CHOICES,
     )
     sabbatical_types = models.CharField(
-        "Select one",
+        "Reason for sabbatical",
         max_length=16,
         choices=SABBATICAL_TERM_CHOICES,
     )
@@ -484,14 +495,14 @@ class Operation(models.Model):
         null=True, blank=True
     )
     teaching_appointment = models.CharField(
-        "Select one",
+        "Teaching appointment",
         max_length=6,
         choices=BINARY_CHOICES,
         null=True, blank=True
     )
     teaching_appointment_arrangements = models.TextField(
         null=True, blank=True,
-        help_text='Other arrangements'
+        help_text='Teaching arrangements'
     )
     old_position = models.CharField(
         verbose_name='Old position/title',
