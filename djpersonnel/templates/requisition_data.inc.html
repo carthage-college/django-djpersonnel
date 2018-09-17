@@ -75,41 +75,41 @@
         {% else %}
         <td class="text-center">
           {% if r.level3 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Provost approved this PRF on {{level3_date}}"></i>
+            title="VP or Provost approved this PRF on {{r.level3_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VP or Provost has NOT approved this PRF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if r.level2 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VPFA approved this PRF on {{level2_date}}"></i>
+            title="VPFA approved this PRF on {{r.level2_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VPFA has NOT approved this PRF"></i>
           {% endif %}
         </td>
         <td class="text-center">
           {% if r.level1 %}
-            <i class="fa fa-2x fa-check green blue-tooltip"
+            <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="HR approved this PRF on {{level1_date}}"></i>
+            title="HR approved this PRF on {{r.level1_date}}"></i>
           {% else %}
-            <i class="fa fa-2x fa-times red blue-tooltip"
+            <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="HR have NOT approved this PRF"></i>
           {% endif %}
         </td>
         {% endif %}
-        <td>{{r.publication_date}}</td>
-        <td>{{r.position_open_date}}</td>
-        <td>{{r.expected_start_date}}</td>
+        <td>{{r.publication_date|date:'Y-m-d'}}</td>
+        <td>{{r.position_open_date|date:'Y-m-d'}}</td>
+        <td>{{r.expected_start_date|date:'Y-m-d'}}</td>
       </tr>
       {% endfor %}
     </tbody>
