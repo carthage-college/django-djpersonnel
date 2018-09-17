@@ -7,7 +7,10 @@
 {{block.super}}
 <script type="text/javascript">
     $(document).ready(function() {
+        // hide fields on page load
+        $("#section3").hide();
         function hire(){
+            $("#section3").show();
             var isFaculty = $('#id_employee_type_0').is(':checked'),
                 isStaff = $('#id_employee_type_1').is(':checked'),
                 isChecked = $(this).is(':checked'),
@@ -24,18 +27,202 @@
                 $('.faculty, .staff').hide();
             }
         }
-        function test2(){ }
-        function test3(){ }
+        function deptchange(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function compchange(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function supchange(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function payment(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function volterm(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function involterm(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function statchange(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function poschange(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function leave(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
+        function sabbatical(){
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isChecked = $(this).is(':checked'),
+                showClass = isFaculty?'faculty':'staff',
+                hideClass = isFaculty?'staff':'faculty';
+            //console.log(isChecked);
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
+            //console.log($('.faculty'));
+            if (isChecked){
+                $('.' + hideClass).hide();
+                $('.' + showClass).show();
+            }
+            else {
+                $('.faculty, .staff').hide();
+            }
+        }
 
         $('#id_employee_type_0, #id_employee_type_1').click(function() {
             hire();
-            test2();
-            test3();
+            deptchange();
+            compchange();
+            supchange();
+            payment();
+            volterm();
+            involterm();
+            statchange();
+            poschange();
+            leave();
+            sabbatical();
         });
 
         $('#id_newhire_rehire').click(hire);
-        $('#deptchange').click(test2);
-        $('#compchange').click(test3);
+        $('#id_department_change').click(deptchange);
+        $('#id_compensation_change').click(compchange);
+        $('#id_supervisor_change').click(supchange);
+        $('#id_onetime_payment').click(payment);
+        $('#id_voluntary_termination').click(volterm);
+        $('#id_involuntary_termination').click(involterm);
+        $('#id_status_change').click(statchange);
+        $('#pid_osition_change').click(poschange);
+        $('#id_leave_of_absence').click(leave);
+        $('#id_sabbatical').click(sabbatical);
 
         //$('#id_newhire_rehire').click(function(){
 
@@ -90,6 +277,17 @@
           else
           {
               $('.contract').hide();
+          }
+      });
+      $('#id_employment_types').on('change', function(){
+          console.log(this.value);
+          if (this.value == 'Adjunct' || this.value == 'Adjunct')
+          {
+              $('.music').show();
+          }
+          else
+          {
+              $('.music').hide();
           }
       });
   });// end function dept_name
@@ -369,8 +567,9 @@
                                         type="radio" name="employee_type"
                                         id="id_{{form.employee_type.name}}_1"
                                         {% if form.employee_type.value == 'Staff' %}
-                                          checked
-                                        {% endif %}>
+                                            checked
+                                        {% endif %}
+                                        {% if not form.employee_type.value %} checked{% endif %}>
                                         Staff
                                     </label>
                                 </div>
@@ -399,6 +598,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- end form row -->
+                <div class="form-row mt-4">
                     <!-- Section II -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section II - Complete for New Hires Only</h6>
@@ -531,12 +733,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- end form row -->
+                <div class="form-row mt-4" id="section3">
                     <!-- Section III -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Complete only applicable information.</h6>
                     </div>
                     <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 faculty staff" id="position_title">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -608,8 +813,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-3 pb-3 staff">
+                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
+                    <div class="col-md-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.pay_type.name}}_0"
                               {% if form.pay_type.errors %}class="text-danger"{% endif %}>
@@ -691,7 +896,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "newhire_rehire" is checked -->
-                    <div class="col-sm-6 pb-3 staff">
+                    <div class="col-sm-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_start_date.id_for_label}}"
@@ -713,7 +918,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-sm-6 pb-3 staff">
+                    <div class="col-sm-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.budget_account.id_for_label}}"
@@ -822,8 +1027,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.position_grant_funded.name}}_0"
                                    {% if form.position_grant_funded.errors %}class="text-danger"{% endif %}>
@@ -893,8 +1098,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.moving_expenses.name}}_0"
                                    {% if form.moving_expenses.errors %}class="text-danger"{% endif %}>
@@ -945,6 +1150,59 @@
                                 </small>
                                 <small>
                                   Note: All moving expenses are paid from the departmental budgets.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless "faculty, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 faculty">
+                        <div class="container-fluid">
+                            <label for="id_{{form.startup_expenses.name}}_0"
+                                   {% if form.startup_expenses.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.startup_expenses.label}}</h5>
+                            </label>
+                            <div class="form-group small">
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.startup_expenses.name}}_0" class="form-check-label">
+                                      <input class="form-check-input" value="Yes"
+                                        type="radio" name="startup_expenses"
+                                        id="id_{{form.startup_expenses.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.startup_expenses.name}}_0','startup_expenses_amount');"
+                                        {% if form.moving_expenses.value == 'Yes' %}
+                                          checked
+                                        {% endif %}>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label for="id_{{form.startup_expenses.name}}_1" class="form-check-label">
+                                      <input class="form-check-input" value="No"
+                                        type="radio" name="startup_expenses"
+                                        id="id_{{form.startup_expenses.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.startup_expenses.name}}_0','startup_expenses_amount');"
+                                        {% if form.moving_expenses.value == 'No' %}
+                                          checked
+                                        {% endif %}>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group hyde" id="startup_expenses_amount">
+                                <label for="{{form.startup_expenses_amount.id_for_label}}"
+                                    {% if form.startup_expenses_amount.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.startup_expenses_amount.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.startup_expenses_amount.errors %} is-invalid{% endif %}"
+                                    name="startup_expenses_amount"
+                                    id="{{form.startup_expenses_amount.id_for_label}}"
+                                    value="{{form.startup_expenses_amount.value|default_if_none:''}}"
+                                    placeholder="Enter amount for stratup expenses"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.startup_expenses_amount.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
@@ -1044,7 +1302,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 music" style="display:none;">
                         <div class="container-fluid">
                             <label for="id_{{form.music.name}}_0"
                                    {% if form.music.errors %}class="text-danger"{% endif %}>
@@ -1056,6 +1314,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="music"
                                         id="id_{{form.music.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','hours_per_week');"
                                         {% if form.music.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -1067,6 +1326,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="music"
                                         id="id_{{form.music.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','hours_per_week');"
                                         {% if form.music.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -1074,6 +1334,10 @@
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.courses_teaching.id_for_label}}"
                                     {% if form.courses_teaching.errors %}
@@ -1093,7 +1357,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.number_of_credits.id_for_label}}"
@@ -1115,7 +1379,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty">
                         <div class="container-fluid">
                             <label for="id_{{form.teaching_appointment.name}}_0"
                                    {% if form.teaching_appointment.errors %}class="text-danger"{% endif %}>
@@ -1127,6 +1391,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="teaching_appointment"
                                         id="id_{{form.teaching_appointment.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                                         {% if form.teaching_appointment.value == '1 Year' %}
                                           checked
                                         {% endif %}>
@@ -1138,6 +1403,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="teaching_appointment"
                                         id="id_{{form.teaching_appointment.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                                         {% if form.teaching_appointment.value == '3 Year' %}
                                           checked
                                         {% endif %}>
@@ -1145,10 +1411,11 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <label for="id_{{form.teaching_appointment.name}}_1" class="form-check-label">
+                                    <label for="id_{{form.teaching_appointment.name}}_2" class="form-check-label">
                                       <input class="form-check-input" value="No"
                                         type="radio" name="teaching_appointment"
-                                        id="id_{{form.teaching_appointment.name}}_1"
+                                        id="id_{{form.teaching_appointment.name}}_2"
+                                        onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                                         {% if form.teaching_appointment.value == 'Other' %}
                                           checked
                                         {% endif %}>
@@ -1156,14 +1423,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group hyde" id="teaching_appointment_arrangements">
                                 <label for="{{form.teaching_appointment_arrangements.id_for_label}}"
                                     {% if form.teaching_appointment_arrangements.errors %}
                                         class="text-danger"
                                     {% endif %}>
                                     <h5>{{form.teaching_appointment_arrangements.label}}</h5>
                                 </label>
-                                <textarea rows="2"
+                                <textarea rows="2" cols="6"
                                     class="form-control{% if form.teaching_appointment_arrangements.errors %} is-invalid{% endif %}"
                                     id="{{form.teaching_appointment_arrangements.id_for_label}}"
                                     name="teaching_appointment_arrangements"
@@ -1176,7 +1443,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.program_types.id_for_label}}"
@@ -1265,7 +1532,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_department.id_for_label}}"
@@ -1290,7 +1557,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_department.id_for_label}}"
@@ -1883,6 +2150,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- end form row -->
+                <div class="form-row mt-4">
                     <!-- Section IV -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Please check applicable action(s) and enter effective date.</h6>
