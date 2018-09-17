@@ -1,0 +1,27 @@
+{% extends "home.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <h4>
+        Personnel
+        {% if mod == 'transaction' %}
+        Action
+        {% else %}
+        {{mod|title}}
+        {% endif %}
+        Form
+      </h4>
+      {% if mod == 'transaction' %}
+      {% with transactions=objects %}
+      {% include "transaction_data.inc.html" %}
+      {% endwith %}
+      {% endif %}
+      {% if mod == 'requisition' %}
+      {% with requisitions=objects %}
+      {% include "requisition_data.inc.html" %}
+      {% endwith %}
+      {% endif %}
+    </div>
+</div>
+<!-- /.row -->
+{% endblock content %}

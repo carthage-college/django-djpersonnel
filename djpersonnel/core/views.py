@@ -69,7 +69,7 @@ def list(request, mod):
             objects = None
 
         response = render(
-            request, 'list.html', { 'objects': objects }
+            request, 'list.html', { 'objects': objects, 'mod':mod }
         )
     else:
         response = HttpResponseRedirect(
