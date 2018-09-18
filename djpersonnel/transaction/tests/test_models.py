@@ -26,7 +26,7 @@ class TransactionModelsTestCase(TestCase):
         self.user = create_test_user()
         self.start_date = datetime(self.year, self.month, self.day)
 
-    #@skip('skip to the lieu')
+    @skip('skip to my loo')
     def test_operation(self):
 
         # create

@@ -116,7 +116,12 @@ def delete(request, rid):
         extra_tags='alert-success'
     )
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # there is no referer in unit tests
+    redirect = request.META.get('HTTP_REFERER')
+    if not redirect:
+        redirect = reverse_lazy('dashboard_home')
+
+    return HttpResponseRedirect(redirect)
 
 
 @portal_auth_required(

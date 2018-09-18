@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from unittest import skip, skipIf, skipUnless
+from unittest import skip
 
 from django.conf import settings
 from django.test import TestCase
@@ -31,7 +31,6 @@ class RequisitionModelsTestCase(TestCase):
             pk=settings.TEST_LEVEL3_APPROVER_ID
         )
 
-    #@skip('skip to the lieu')
     def test_operation(self):
 
         # create

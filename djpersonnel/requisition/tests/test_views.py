@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -7,6 +8,8 @@ from django.shortcuts import get_object_or_404
 from djpersonnel.requisition.models import Operation
 
 from djtools.utils.test import create_test_user
+
+from unittest import skip, skipIf, skipUnless
 
 import json
 
@@ -46,7 +49,7 @@ class RequisitionViewsTestCase(TestCase):
         self.assertTrue(login)
         response = self.client.get(earl)
         self.assertEqual(response.status_code, 200)
-
+        # obtain data from json fixture
         json_data = open(
             '{}/fixtures/requisition_operation.json'.format(settings.ROOT_DIR)
         ).read()
@@ -55,14 +58,14 @@ class RequisitionViewsTestCase(TestCase):
         data['level1_date'] = ''
         data['level2_date'] = ''
         data['level3_date'] = ''
-        data['approver'] = settings.TEST_LEVEL3_APPROVER_ID
+        data['level3_approver'] = settings.TEST_LEVEL3_APPROVER_ID
         requi = self.client.post(earl, data)
         print("requi response\n")
         print(requi)
         requisitions = Operation.objects.filter(created_by = self.user)
         self.assertGreaterEqual(requisitions.count(), 1)
 
-    def test_requisition_detail_view(self):
+    def test_requisition_detail(self):
 
         data = get_object_or_404(Operation, id=self.oid)
         # creator
@@ -88,3 +91,15 @@ class RequisitionViewsTestCase(TestCase):
         self.assertTrue(perms['level1'])
         self.assertTrue(perms['approver'])
 
+    def test_requisition_delete(self):
+
+        # attempt to sign in with client login method
+        login = self.client.login(
+            username=self.level1_approver.username, password=self.password
+        )
+        self.assertTrue(login)
+        # get delete URL
+        earl = reverse('requisition_delete', kwargs={'rid': self.oid})
+        response = self.client.get(earl)
+        # response should be redirect to dashboard home
+        self.assertEqual(response.status_code, 302)
