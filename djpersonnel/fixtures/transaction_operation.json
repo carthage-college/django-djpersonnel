@@ -46,6 +46,8 @@
             "grant_amount": "$70,747",
             "moving_expenses": "Yes",
             "moving_expenses_amount": "€9,999",
+            "startup_expenses": "Yes",
+            "startup_expenses_amount": "$666.66",
             "shift": "3rd shift",
             "other_arrangements": "A bowl of M&Ms with no red ones",
             "employment_types": "Tenure",
