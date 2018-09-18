@@ -735,7 +735,7 @@
                     </div>
                 </div>
                 <!-- end form row -->
-                <div class="form-row mt-4" id="section3">
+                <div class="form-row mt-4">
                     <!-- Section III -->
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Complete only applicable information.</h6>
@@ -1468,7 +1468,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3">
+                    <div class="col-sm-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leave_of_absence_date.id_for_label}}"
@@ -1489,7 +1489,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3">
+                    <div class="col-sm-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_return_date.id_for_label}}"
@@ -1510,7 +1510,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leave_of_absence_reason.id_for_label}}"
@@ -1528,6 +1528,9 @@
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.leave_of_absence_reason.errors|join:", "}}
+                                </small>
+                                <small>
+                                  Human Resources will contact supervisors to discuss approve the terms of leave.
                                 </small>
                             </div>
                         </div>
@@ -1580,7 +1583,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_supervisor.id_for_label}}"
@@ -1602,7 +1605,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_supervisor.id_for_label}}"
@@ -1624,7 +1627,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-sm-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.last_day_date.id_for_label}}"
@@ -1645,7 +1648,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.returned_property.id_for_label}}"
@@ -1667,7 +1670,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.eligible_rehire.name}}_0"
                                    {% if form.eligible_rehire.errors %}class="text-danger"{% endif %}>
@@ -1699,7 +1702,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leaving_types.id_for_label}}"
@@ -1724,7 +1727,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.current_compensation.id_for_label}}"
@@ -1746,7 +1749,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_compensation.id_for_label}}"
@@ -1768,7 +1771,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.salary_change_reason.id_for_label}}"
@@ -1790,7 +1793,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-sm-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.effective_date.id_for_label}}"
@@ -1811,7 +1814,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.temporary_interim_pay.name}}_0"
                                    {% if form.temporary_interim_pay.errors %}class="text-danger"{% endif %}>
@@ -1823,6 +1826,7 @@
                                       <input class="form-check-input" value="Temporary Pay"
                                         type="radio" name="temporary_interim_pay"
                                         id="id_{{form.temporary_interim_pay.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
                                         {% if form.temporary_interim_pay.value == 'Temporary Pay' %}
                                           checked
                                         {% endif %}>
@@ -1834,6 +1838,7 @@
                                       <input class="form-check-input" value="Interim Pay"
                                         type="radio" name="temporary_interim_pay"
                                         id="id_{{form.temporary_interim_pay.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
                                         {% if form.temporary_interim_pay.value == 'Interim Pay' %}
                                           checked
                                         {% endif %}>
@@ -1843,7 +1848,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3">
+                    <div class="col-sm-3 pb-3 hyde" id="end_date">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.end_date.id_for_label}}"
@@ -1864,7 +1869,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.amount.id_for_label}}"
@@ -1886,7 +1891,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.amount_reason.id_for_label}}"
@@ -1908,7 +1913,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3">
+                    <div class="col-sm-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.pay_after_date.id_for_label}}"
@@ -1929,7 +1934,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.department_account_number.id_for_label}}"
@@ -1951,7 +1956,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.grant_pay.name}}_0"
                                    {% if form.grant_pay.errors %}class="text-danger"{% endif %}>
@@ -1963,6 +1968,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="grant_pay"
                                         id="id_{{form.grant_pay.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.grant_pay.name}}_0','grant_pay_account_number');"
                                         {% if form.grant_pay.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -1974,6 +1980,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="grant_pay"
                                         id="id_{{form.grant_pay.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.grant_pay.name}}_0','grant_pay_account_number');"
                                         {% if form.grant_pay.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -1983,7 +1990,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 hyde" id="grant_pay_account_number">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.grant_number.id_for_label}}"
@@ -2005,7 +2012,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-6 pb-3 faculty">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.sabbatical_types.id_for_label}}"
@@ -2027,10 +2034,14 @@
                                     </option>
                                 {% endfor %}
                                 </select>
+                                <small>
+                                  If the sabbatical spans a full academic year then the faculty member receives half of
+                                    their annual salary.
+                                </small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.academic_year.id_for_label}}"
@@ -2052,7 +2063,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_position.id_for_label}}"
@@ -2074,7 +2085,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
+                    <div class="col-md-6 pb-3 faculty staff">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_position.id_for_label}}"
@@ -2096,7 +2107,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 faculty staff">
                         <div class="container-fluid">
                             <label for="id_{{form.additional_supervisor_role.name}}_0"
                                    {% if form.additional_supervisor_role.errors %}class="text-danger"{% endif %}>
@@ -2108,6 +2119,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="additional_supervisor_role"
                                         id="id_{{form.additional_supervisor_role.name}}_0"
+                                        onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                                         {% if form.additional_supervisor_role.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -2119,6 +2131,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="additional_supervisor_role"
                                         id="id_{{form.additional_supervisor_role.name}}_1"
+                                        onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                                         {% if form.additional_supervisor_role.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -2128,7 +2141,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3">
+                    <div class="col-md-3 pb-3 hyde" id="direct_reports">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.direct_reports.id_for_label}}"
