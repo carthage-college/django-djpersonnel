@@ -1,6 +1,7 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
@@ -97,11 +98,17 @@ def detail(request, tid):
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def appointment_letter(request, tid):
-    data = get_object_or_404(Operation, id=tid)
-    return render(
-        request, 'transaction/appointment_letter.html', {'data':data}
+def delete(request, tid):
+    obj = get_object_or_404(Operation, id=tid)
+    title = obj.position_title
+    obj.delete()
+
+    messages.add_message(
+        request, messages.SUCCESS, "PAF {} was deleted.".format(title),
+        extra_tags='alert-success'
     )
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @portal_auth_required(
@@ -112,3 +119,16 @@ def update(request, tid):
     return render(
         request, 'transaction/update.html', {}
     )
+
+
+@portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def appointment_letter(request, tid):
+    data = get_object_or_404(Operation, id=tid)
+    return render(
+        request, 'transaction/appointment_letter.html', {'data':data}
+    )
+

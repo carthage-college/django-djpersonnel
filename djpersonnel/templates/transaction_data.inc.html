@@ -36,6 +36,11 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Effective Date</th>
+        <th class="text-center">
+          <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Delete this PRF"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -44,7 +49,8 @@
         <td>
           <a href="{% url 'transaction_detail' t.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
-          title="View Personnel Action Form">{{t.last_name}}</a>
+          title="View PAF{% if t.position_title %}: {{t.position_title}}{% endif %}">
+            {{t.last_name}}</a>
             {% if hr %}
             <div class="float-right">
             <a href="{% url 'transaction_appointment_letter' t.id %}">
@@ -107,6 +113,15 @@
         <td>{{t.expected_start_date|date:'Y-m-d'}}</td>
         <td>{{t.end_date|date:'Y-m-d'}}</td>
         <td>{{t.effective_date|date:'Y-m-d'}}</td>
+        <td class="text-center">
+          <a href="#" data-href="{% url 'transaction_delete' t.id %}"
+            data-title="PAF: {{t.position_title}}" data-toggle="modal"
+            data-target="#confirm-delete">
+            <i class="fa fa-trash-o red blue-tooltip"  data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="Delete Personnel Requisition: {{t.position_title}}"></i>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -146,6 +161,11 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Effective Date</th>
+        <th class="text-center">
+          <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Delete this PRF"></i>
+        </th>
       </tr>
     </tfoot>
   </table>

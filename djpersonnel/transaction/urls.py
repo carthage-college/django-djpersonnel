@@ -30,6 +30,11 @@ urlpatterns = [
         r'^(?P<tid>\d+)/update/$',
         views.update, name='transaction_update'
     ),
+    # requisition delete
+    url(
+        r'^(?P<tid>\d+)/delete/$',
+        views.delete, name='transaction_delete'
+    ),
     # transaction appointment letter
     url(
         r'^(?P<tid>\d+)/appointment-letter/$',

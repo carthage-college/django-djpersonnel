@@ -7,6 +7,10 @@
 <script>
 $(function() {
   $("body").toggleClass("sidenav-toggled");
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    $('.object-title').text( $(e.relatedTarget).data('title') );
+  });
 });
 </script>
 {% endblock %}
@@ -97,7 +101,15 @@ $(function() {
 {% endblock navbar-sidenav %}
 {% block content %}
 <div class="row">
-  {% if requisitions %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
       <h4>
         <a href="{% url 'dashboard_list' 'requisition' %}">
@@ -106,10 +118,12 @@ $(function() {
             title="View All PRF submissions"></i></a>
         Personnel Requisition Form (PRF)
       </h4>
-      {% include "requisition_data.inc.html" %}
+      {% if requisitions %}
+        {% include "requisition_data.inc.html" %}
+      {% else %}
+        <h5>No submissions</h5>
+      {% endif %}
     </div>
-  {% endif %}
-  {% if transactions %}
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
       <h4>
         <a href="{% url 'dashboard_list' 'transaction' %}">
@@ -118,10 +132,38 @@ $(function() {
             title="View All PAF submissions"></i></a>
         Personnel Action Form (PAF)
       </h4>
-      {% include "transaction_data.inc.html" %}
+      {% if transactions %}
+        {% include "transaction_data.inc.html" %}
+      {% else %}
+        <h5>No submissions</h5>
+      {% endif %}
     </div>
-  {% endif %}
 </div>
 <!-- /.row -->
 {% endblock content %}
-{% block footer %}{% endblock %}
+{% block footer %}
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+          <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">&times;</button>
+        </div>
+      <div class="modal-body">
+        <p>
+          You are about to delete the <strong class="object-title"></strong>.
+        </p>
+        <p>Would you like to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Cancel
+        </button>
+        <a class="btn btn-danger btn-ok">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

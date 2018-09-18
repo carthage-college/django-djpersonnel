@@ -31,15 +31,15 @@ def home(request):
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
-        requisitions = Requisition.objects.all()
-        transactions = Transaction.objects.all()
+        requisitions = Requisition.objects.all()[:10]
+        transactions = Transaction.objects.all()[:10]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        )
+        )[:10]
         transactions = Transaction.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        )
+        )[:10]
 
     return render(
         request, 'home.html', {
@@ -67,16 +67,21 @@ def list(request, mod):
             objects = Transaction.objects.all()
         else:
             objects = None
-
-        response = render(
-            request, 'list.html', { 'objects': objects, 'mod':mod }
-        )
     else:
-        response = HttpResponseRedirect(
-            reverse_lazy('dashboard_home')
-        )
+        if mod == 'requisition':
+            objects = Requisition.objects.filter(
+                Q(created_by=user) | Q(level3_approver=user)
+            )
+        elif mod == 'transaction':
+            objects = Transaction.objects.filter(
+                Q(created_by=user) | Q(level3_approver=user)
+            )
+        else:
+            objects = None
 
-    return response
+    return render(
+        request, 'list.html', { 'objects': objects, 'mod':mod }
+    )
 
 
 @portal_auth_required(

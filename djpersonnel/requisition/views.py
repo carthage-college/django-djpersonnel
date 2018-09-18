@@ -1,7 +1,8 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.requisition.models import Operation
@@ -98,6 +99,24 @@ def detail(request, rid):
     return render(
         request, 'requisition/detail.html', {'data':data}
     )
+
+
+@portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def delete(request, rid):
+    obj = get_object_or_404(Operation, id=rid)
+    title = obj.position_title
+    obj.delete()
+
+    messages.add_message(
+        request, messages.SUCCESS, "PRF {} was deleted.".format(title),
+        extra_tags='alert-success'
+    )
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @portal_auth_required(

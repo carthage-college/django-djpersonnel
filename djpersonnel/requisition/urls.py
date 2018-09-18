@@ -5,7 +5,7 @@ from djpersonnel.requisition import views
 
 
 urlpatterns = [
-    # requisition form
+    # requisition create
     url(
         r'^$', views.form_home, name='requisition_form'
     ),
@@ -19,14 +19,19 @@ urlpatterns = [
     #
     # dashboard URLs
     #
-    # transaction detail
+    # requisition update
+    url(
+        r'^(?P<rid>\d+)/update/$',
+        views.update, name='requisition_update'
+    ),
+    # requisition detail
     url(
         r'^(?P<rid>\d+)/detail/$',
         views.detail, name='requisition_detail'
     ),
-    # transaction update
+    # requisition delete
     url(
-        r'^(?P<aid>\d+)/update/$',
-        views.update, name='requisition_update'
+        r'^(?P<rid>\d+)/delete/$',
+        views.delete, name='requisition_delete'
     ),
 ]
