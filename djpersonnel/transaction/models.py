@@ -59,6 +59,10 @@ SABBATICAL_TERM_CHOICES = (
     ('Spring', 'Spring'),
     ('Fall and Spring', 'Fall and Spring')
 )
+EMPLOYEE_TYPE_CHOICES = (
+    ('Faculty', 'Faculty'),
+    ('Staff', 'Staff')
+)
 
 
 class Operation(models.Model):
@@ -167,7 +171,7 @@ class Operation(models.Model):
     employee_type = models.CharField(
         "Employee Type",
         max_length=16,
-        choices=BINARY_CHOICES,
+        choices=EMPLOYEE_TYPE_CHOICES,
     )
     # NOTE: the choices will bring up a set of fields to filled out
     # based on which is checked
@@ -469,8 +473,8 @@ class Operation(models.Model):
         choices=BINARY_CHOICES,
     )
     # NOTE: if Grant pay 'Yes' to grant account number
-    grant_number = models.CharField(
-        "What is the grant account number?",
+    grant_pay_account_number = models.CharField(
+        "What is the grant pay account number?",
         max_length=25,
         null=True, blank=True
     )
