@@ -18,8 +18,13 @@ HIRE_CHOICES = (
     ('Rehire', 'Rehire')
 )
 PAY_RATE_CHOICES = (
-    ('Hourly Rate', 'Hourly Rate'),
-    ('Annual Salary', 'Annual Salary')
+    ('Annual Salary', 'Annual Salary'),
+    ('Hourly Rate', 'Hourly Rate')
+
+)
+PAY_CLASS_CHOICES = (
+    ('Exempt', 'Exempt'),
+    ('Non-exempt', 'Non-exempt')
 )
 SHIFT_CHOICES = (
     ('1st Shift', '1st Shift'),
@@ -240,7 +245,7 @@ class Operation(models.Model):
     pay_type = models.CharField(
         "Exempt/Non-exempt",
         max_length=16,
-        choices=BINARY_CHOICES,
+        choices=PAY_CLASS_CHOICES,
     )
     # NOTE: if 'Non Exempt (hourly)', provide the hours per week this position
     # will work
@@ -297,7 +302,7 @@ class Operation(models.Model):
     )
     # NOTE: if 'Yes', to grant funded, then grant amount
     grant_amount = models.CharField(
-        "What is the grant fund percentage or amount?",
+        "What is the percentage or amount?",
         max_length=25,
         null=True, blank=True
     )
@@ -396,6 +401,11 @@ class Operation(models.Model):
     last_day_date = models.DateField(
         verbose_name='Last day'
     )
+    vacation_days_accrued = models.CharField(
+        verbose_name='Remaining vacation days accrued',
+        max_length=5,
+        null=True, blank=True
+    )
     # NOTE: if 'Voluntary Termination checked', provide the unused pto payout
     voluntary_unused_pto_payout = models.CharField(
         verbose_name='Unused paid time off payout',
@@ -435,7 +445,7 @@ class Operation(models.Model):
         max_length=255,
         null=True, blank=True
     )
-    effective_date = models.DateField(
+    compensation_effective_date = models.DateField(
         verbose_name='Effective date'
     )
     temporary_interim_pay = models.CharField(
@@ -522,6 +532,9 @@ class Operation(models.Model):
         "Additional supervisory role?",
         max_length=4,
         choices=BINARY_CHOICES,
+    )
+    position_effective_date = models.DateField(
+        verbose_name='Position effective date'
     )
     # NOTE: if Addition Supervisory role 'Yes'
     direct_reports = models.CharField(
