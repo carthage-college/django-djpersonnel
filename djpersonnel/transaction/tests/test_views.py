@@ -14,8 +14,6 @@ from djtools.utils.test import create_test_user
 
 from unittest import skip, skipIf, skipUnless
 
-import json
-
 
 class TransactionOperationTestCase(TestCase):
 
@@ -26,7 +24,9 @@ class TransactionOperationTestCase(TestCase):
 
     def setUp(self):
 
-        self.oid = 7
+        global tid
+        tid = 7
+
         self.user = create_test_user()
         self.level3_approver = User.objects.get(
             pk=settings.TEST_LEVEL3_APPROVER_ID
@@ -57,7 +57,7 @@ class TransactionOperationTestCase(TestCase):
 
         # get detail url
         response = self.client.get(
-            reverse('transaction_detail', kwargs={'tid': self.oid})
+            reverse('transaction_detail', kwargs={'tid': tid})
         )
         self.assertTemplateUsed(response, 'transaction/detail.html')
         html = response.content.decode('utf8')
@@ -67,7 +67,13 @@ class TransactionOperationTestCase(TestCase):
     def test_transaction_delete(self):
 
         # get delete URL
-        earl = reverse('transaction_delete', kwargs={'tid': self.oid})
+        earl = reverse('transaction_delete', kwargs={'tid': tid})
         response = self.client.get(earl)
         # response should be redirect to dashboard home
         self.assertEqual(response.status_code, 302)
+        # was it deleted?
+        try:
+            obj = Operation.objects.get(pk=tid)
+        except:
+            obj = None
+        self.assertEqual(obj, None)
