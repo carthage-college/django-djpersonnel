@@ -7,226 +7,285 @@
 {{block.super}}
 <script type="text/javascript">
     $(document).ready(function() {
-        // hide fields on page load
-        $("#section3").hide();
-        function hire(){
-            $("#section3").show();
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function deptchange(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function compchange(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function supchange(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function payment(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function volterm(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function involterm(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function statchange(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function poschange(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function leave(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-        function sabbatical(){
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-                isStaff = $('#id_employee_type_1').is(':checked'),
-                isChecked = $(this).is(':checked'),
-                showClass = isFaculty?'faculty':'staff',
-                hideClass = isFaculty?'staff':'faculty';
-            //console.log(isChecked);
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff + '; showClass: ' + showClass + '; hideClass: ' + hideClass);
-            //console.log($('.faculty'));
-            if (isChecked){
-                $('.' + hideClass).hide();
-                $('.' + showClass).show();
-            }
-            else {
-                $('.faculty, .staff').hide();
-            }
-        }
-
-        $('#id_employee_type_0, #id_employee_type_1').click(function() {
-            hire();
-            deptchange();
-            compchange();
-            supchange();
-            payment();
-            volterm();
-            involterm();
-            statchange();
-            poschange();
-            leave();
-            sabbatical();
-        });
-
         $('#id_newhire_rehire').click(hire);
-        $('#id_department_change').click(deptchange);
-        $('#id_compensation_change').click(compchange);
-        $('#id_supervisor_change').click(supchange);
-        $('#id_onetime_payment').click(payment);
+        $('#id_department_name').click(hire);
+        $('#id_compensation_change').click(compensationchange);
+        $('#id_onetime_payment').click(onetimepayment);
+        $('#id_supervisor_change').click(supervisorchange);
         $('#id_voluntary_termination').click(volterm);
         $('#id_involuntary_termination').click(involterm);
-        $('#id_status_change').click(statchange);
-        $('#pid_osition_change').click(poschange);
+        $('#id_status_change').click(statuschange);
+        $('#id_position_change').click(positionchange);
         $('#id_leave_of_absence').click(leave);
         $('#id_sabbatical').click(sabbatical);
 
-        //$('#id_newhire_rehire').click(function(){
-
-        //});
+        $("[name=employee_type]").click(function() {
+                hire();
+                departmentchange();
+                compensationchange();
+                onetimepayment();
+                supervisorchange();
+                volterm();
+                involterm();
+                statuschange();
+                positionchange();
+                leave();
+                sabbatical();
+            });
+        function hire(){
+            $('.facNewhire, .staffNewhire').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+                isStaff = $('#id_employee_type_1').is(':checked'),
+                isNewhireRehire = $('#id_newhire_rehire').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("New Hire / Rehire: " + isNewhireRehire);
+            console.log('I am in the hire function!');
+            if(isFaculty == true && isNewhireRehire == true)
+            {
+                console.log('Faculty and New hire are checked');
+                $('.facNewhire').show();
+            }
+            else if(isStaff == true && isNewhireRehire == true)
+            {
+                console.log('Staff and New hire are checked');
+                $('.staffNewhire').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facNewhire, .staffNewhire').hide();
+            }
+        }
+        function departmentchange(){
+            $('.fac_staffDepartment').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isDepartmentChange = $('#id_department_change').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Department: " + isDepartmentChange);
+            console.log('I am in the department function!');
+            if(isFaculty == true && isDepartmentChange == true)
+            {
+                console.log('Faculty and Department Change are checked');
+                $('.fac_staffDepartment').show();
+            }
+            else if(isStaff == true && isDepartmentChange == true)
+            {
+                console.log('Staff and Department Change are checked');
+                $('.fac_staffDepartment').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.fac_staffDepartment').hide();
+            }
+        }
+        function compensationchange(){
+            $('.facCompensation, .staffCompensation').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isCompensationChange = $('#id_compensation_change').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Compensation: " + isCompensationChange);
+            console.log('I am in the compensation function!');
+            if(isFaculty == true && isCompensationChange == true)
+            {
+                console.log('Faculty and Compensation Change are checked');
+                $('.facCompensation').show();
+            }
+            else if(isStaff == true && isCompensationChange == true)
+            {
+                console.log('Staff and Compensation Change are checked');
+                $('.staffCompensation').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facCompensation, .staffCompensation').hide();
+            }
+        }
+        function onetimepayment(){
+            $('.facOnetimePayment, .staffOnetimePayment').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isOnetimePayment = $('#id_onetime_payment').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Onetime Payment: " + isOnetimePayment);
+            console.log('I am in the onetime payment function!');
+            if(isFaculty == true && isOnetimePayment == true)
+            {
+                console.log('Faculty and One Time Payment are checked');
+                $('.staffOnetimePayment').show();
+            }
+            else if(isStaff == true && isOnetimePayment == true)
+            {
+                console.log('Staff and One Time are checked');
+                $('.staffOnetimePayment').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facOnetimePayment, .staffOnetimePayment').hide();
+            }
+        }
+        function supervisorchange(){
+            $('.fac_staffSupervisor').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isSupervisor = $('#id_supervisor_change').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Supervisor Change: " + isSupervisor);
+            console.log('I am in the supervisor function!');
+            if(isFaculty == true && isSupervisor == true)
+            {
+                console.log('Faculty and Supervisor Change are checked');
+                $('.fac_staffSupervisor').show();
+            }
+            else if(isStaff == true && isSupervisor == true)
+            {
+                console.log('Staff and Supervisor Change are checked');
+                $('.fac_staffSupervisor').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.fac_staffSupervisor').hide();
+            }
+        }
+        function volterm(){
+            $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isVoluntaryTermination = $('#id_voluntary_termination').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Voluntary Termination: " + isVoluntaryTermination);
+            console.log('I am in the voluntary termination function!');
+            if(isFaculty == true && isVoluntaryTermination == true)
+            {
+                console.log('Faculty and Voluntary Termination are checked');
+                $('.facVoluntaryTermination').show();
+            }
+            else if(isStaff == true && isVoluntaryTermination == true)
+            {
+                console.log('Staff and VoluntaryTermination  are checked');
+                $('.staffVoluntaryTermination').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+            }
+        }
+        function involterm(){
+            $('.facInVoluntaryTermination, .staffInVoluntaryTermination').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isInVoluntaryTermination = $('#id_involuntary_termination').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Involuntary Termination: " + isInVoluntaryTermination);
+            console.log('I am in the involuntary termination function!');
+            if(isFaculty == true && isInVoluntaryTermination == true)
+            {
+                console.log('Faculty and Involuntary Termination are checked');
+                $('.facInVoluntaryTermination').show();
+            }
+            else if(isStaff == true && isInVoluntaryTermination == true)
+            {
+                console.log('Staff and InvoluntaryTermination  are checked');
+                $('.staffInVoluntaryTermination').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facInVoluntaryTermination, .staffInVoluntaryTermination').hide();
+            }
+        }
+        function statuschange(){
+            $('.staffStatus').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isStatusChange = $('#id_status_change').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Status: " + isStatusChange);
+            console.log('I am in the status function!');
+            if(isStaff == true && isStatusChange == true)
+            {
+                console.log('Staff and Status Change are checked');
+                $('.staffStatus').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.staffStatus').hide();
+            }
+        }
+        function positionchange(){
+            $('.fac_staffPosition').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isPositionChange = $('#id_position_change').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Position: " + isPositionChange);
+            console.log('I am in the position function!');
+            if(isFaculty == true && isPositionChange == true)
+            {
+                console.log('Faculty and Position Change are checked');
+                $('.fac_staffPosition').show();
+            }
+            else if(isStaff == true && isPositionChange == true)
+            {
+                console.log('Staff and Position Change are checked');
+                $('.fac_staffPosition').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.fac_staffPosition').hide();
+            }
+        }
+        function leave(){
+            $('.fac_staffLeave').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isLeave = $('#id_leave_of_absence').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Leave of Absence: " + isLeave);
+            console.log('I am in the leave of absence function!');
+            if(isFaculty == true && isLeave == true)
+            {
+                console.log('Faculty and Leave of Absence are checked');
+                $('.fac_staffLeave').show();
+            }
+            else if(isStaff == true && isLeave == true)
+            {
+                console.log('Staff and Leave of Absence are checked');
+                $('.fac_staffLeave').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.fac_staffLeave').hide();
+            }
+        }
+        function sabbatical(){
+            $('.facSabbatical').hide();
+            var isFaculty = $('#id_employee_type_0').is(':checked'),
+            isStaff = $('#id_employee_type_1').is(':checked'),
+            isSabbatical = $('#id_sabbatical').is(':checked');
+            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+            console.log("Sabbatical: " + isSabbatical);
+            console.log('I am in the sabbatical function!');
+            if(isFaculty == true && isSabbatical == true)
+            {
+                console.log('Faculty and sabbatical are checked');
+                $('.facSabbatical').show();
+            }
+            else
+            {
+                console.log('Missing something to be checked');
+                $('.facSabbatical').hide();
+            }
+        }
     }); // end function hire()
 
   function toggleCheck(domRadio, domInput) {
@@ -251,15 +310,17 @@
     {% if form.moving_expenses.value == 'Yes' %}
     $("#moving_expenses_amount").removeClass("hyde");
     {% endif %}
-    {% if form.speciality_sites.value == 'Yes' %}
-    $("#speciality_sites_urlsxx").removeClass("hyde");
+    {% if form.music.value == 'Yes' %}
+    $("#courses_teaching").removeClass("hyde");
     {% endif %}
   }); // end jquery code
    // /* function dept_name */
   $(function() {
       $('#id_department_name').on('change', function(){
+          console.log(isStaff);
           console.log(this.value);
           if (this.value == 'EVS')
+          if(isStaff == true && this.value == 'EVS')
           {
               $('.shift').show();
           }
@@ -568,8 +629,7 @@
                                         id="id_{{form.employee_type.name}}_1"
                                         {% if form.employee_type.value == 'Staff' %}
                                             checked
-                                        {% endif %}
-                                        {% if not form.employee_type.value %} checked{% endif %}>
+                                        {% endif %}>
                                         Staff
                                     </label>
                                 </div>
@@ -666,7 +726,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.voluntary_termination.id_for_label}}"
                                     name="{{form.voluntary_termination.name}}" value="1"
-                                    onclick="toggle('voluntary_payout');"
                                     {% if form.voluntary_termination.value == True %}
                                          checked{% endif %}>
                                     {{form.voluntary_termination.label}}
@@ -677,7 +736,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.involuntary_termination.id_for_label}}"
                                     name="{{form.involuntary_termination.name}}" value="1"
-                                    onclick="toggle('involuntary_payout');"
                                     {% if form.voluntary_termination.value == True %}
                                         checked{% endif %}>
                                     {{form.involuntary_termination.label}}
@@ -688,7 +746,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.status_change.id_for_label}}"
                                     name="{{form.status_change.name}}" value="1"
-                                    onclick="toggle('status_change');"
                                     {% if form.status_change.value == True %}
                                         checked{% endif %}>
                                     {{form.status_change.label}}
@@ -703,7 +760,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.position_change.id_for_label}}"
                                     name="{{form.position_change.name}}" value="1"
-                                    onclick="toggle('position_change');"
                                     {% if form.position_change.value == True %}
                                         checked{% endif %}>
                                     {{form.position_change.label}}
@@ -714,7 +770,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.leave_of_absence.id_for_label}}"
                                     name="{{form.leave_of_absence.name}}" value="1"
-                                    onclick="toggle('leave_of_absence');"
                                     {% if form.leave_of_absence.value == True %}
                                         checked{% endif %}>
                                     {{form.leave_of_absence.label}}
@@ -725,7 +780,6 @@
                                     <input class="form-check-input" type="checkbox"
                                     id="{{form.sabbatical.id_for_label}}"
                                     name="{{form.sabbatical.name}}" value="1"
-                                    onclick="toggle('sabbatical');"
                                     {% if form.sabbatical.value == True %}
                                         checked{% endif %}>
                                     {{form.sabbatical.label}}
@@ -740,8 +794,8 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section III - Complete only applicable information.</h6>
                     </div>
-                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 faculty staff" id="position_title">
+                    <!-- Hidden unless "faculty or staff and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.position_title.id_for_label}}"
@@ -764,7 +818,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.status_type.id_for_label}}"
@@ -788,8 +842,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "faculty  or staff and, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hire_type.id_for_label}}"
@@ -814,7 +868,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
-                    <div class="col-md-3 pb-3 faculty staff">
+                    <div class="col-md-3 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.pay_type.name}}_0"
                               {% if form.pay_type.errors %}class="text-danger"{% endif %}>
@@ -870,8 +924,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "staff and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.pay_rate.id_for_label}}"
@@ -895,8 +949,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "newhire_rehire" is checked -->
-                    <div class="col-sm-6 pb-3 faculty staff">
+                    <!-- Hidden unless faculty or staff and "newhire_rehire" is checked -->
+                    <div class="col-sm-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_start_date.id_for_label}}"
@@ -917,8 +971,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-sm-6 pb-3 faculty staff">
+                    <!-- Hidden unless "faculty or staff, and newhire_rehire" is checked -->
+                    <div class="col-sm-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.budget_account.id_for_label}}"
@@ -940,8 +994,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "staff, and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.supervise_others.name}}_0"
                                    {% if form.supervise_others.errors %}class="text-danger"{% endif %}>
@@ -973,8 +1027,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "staff, and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.standard_vacation_package.name}}_0"
                                 {% if form.standard_vacation_package.errors %}class="text-danger"{% endif %}>
@@ -1027,8 +1081,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <!-- Hidden unless "faculty or staff and, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.position_grant_funded.name}}_0"
                                    {% if form.position_grant_funded.errors %}class="text-danger"{% endif %}>
@@ -1060,8 +1114,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <!-- Hidden unless "Yes" is selected -->
-                            <div class="form-group hyde" id="grant_number">
+                        </div>
+                    </div>
+                    <!-- Hidden unless "Yes" is selected grant funded -->
+                    <div class="col-md-12 pb-3 hyde" id="grant_number">
+                        <div class="col-md-6 pb-3">
+                            <div class="form-group">
                                 <label for="{{form.grant_number.id_for_label}}"
                                     {% if form.grant_number.errors %}
                                         class="text-danger"
@@ -1078,7 +1136,10 @@
                                 <small class="text-danger">
                                   {{form.grant_number.errors|join:", "}}
                                 </small>
-                                <br>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pb-3">
+                            <div class="form-group">
                                 <label for="{{form.grant_amount.id_for_label}}"
                                     {% if form.grant_amount.errors %}
                                         class="text-danger"
@@ -1098,8 +1159,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "faculty or staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <!-- Hidden unless "faculty or staff, and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.moving_expenses.name}}_0"
                                    {% if form.moving_expenses.errors %}class="text-danger"{% endif %}>
@@ -1154,8 +1215,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "faculty, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 faculty">
+                    <!-- Hidden unless "faculty, and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.startup_expenses.name}}_0"
                                    {% if form.startup_expenses.errors %}class="text-danger"{% endif %}>
@@ -1207,8 +1268,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 shift" style="display:none;">
+                    <!-- Hidden unless "staff and, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 shift" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.shift.id_for_label}}"
@@ -1233,8 +1294,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "staff, newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staff">
+                    <!-- Hidden unless "staff and, newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.other_arrangements.id_for_label}}"
@@ -1255,7 +1316,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty">
+                    <div class="col-md-6 pb-3 facNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.employment_types.id_for_label}}"
@@ -1287,7 +1348,7 @@
                                     {% if form.contract_years.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.contract_years.label}}</h5>
+                                    <h5>{{form.contract_years.label}}333</h5>
                                 </label>
                                 <input type="text" class="form-control
                                     {% if form.contract_years.errors %} is-invalid{% endif %}"
@@ -1302,7 +1363,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 music" style="display:none;">
+                    <div class="col-md-6 pb-3 music" style="display:none;">
                         <div class="container-fluid">
                             <label for="id_{{form.music.name}}_0"
                                    {% if form.music.errors %}class="text-danger"{% endif %}>
@@ -1314,7 +1375,7 @@
                                       <input class="form-check-input" value="Yes"
                                         type="radio" name="music"
                                         id="id_{{form.music.name}}_0"
-                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','hours_per_week');"
+                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','courses_teaching');"
                                         {% if form.music.value == 'Yes' %}
                                           checked
                                         {% endif %}>
@@ -1326,7 +1387,7 @@
                                       <input class="form-check-input" value="No"
                                         type="radio" name="music"
                                         id="id_{{form.music.name}}_1"
-                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','hours_per_week');"
+                                        onclick="javascript:toggleCheck('id_{{form.music.name}}_0','courses_teaching');"
                                         {% if form.music.value == 'No' %}
                                           checked
                                         {% endif %}>
@@ -1336,50 +1397,52 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.courses_teaching.id_for_label}}"
-                                    {% if form.courses_teaching.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.courses_teaching.label}}</h5>
-                                </label>
-                                <textarea rows="2"
-                                    class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
-                                    id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
-                                    placeholder="{{form.courses_teaching.help_text}}">
-                                    {{form.courses_teaching.value|default_if_none:''}}
-                                </textarea>
-                                <small class="text-danger">
-                                  {{form.courses_teaching.errors|join:", "}}
-                                </small>
+                    <div class="col-md-12 pb-3 hyde" id="courses_teaching">
+                        <div class="col-md-6 pb-3">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    <label for="{{form.courses_teaching.id_for_label}}"
+                                        {% if form.courses_teaching.errors %}
+                                            class="text-danger"
+                                        {% endif %}>
+                                        <h5>{{form.courses_teaching.label}}</h5>
+                                    </label>
+                                    <textarea rows="2"
+                                        class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
+                                        id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
+                                        placeholder="{{form.courses_teaching.help_text}}">
+                                        {{form.courses_teaching.value|default_if_none:''}}
+                                    </textarea>
+                                    <small class="text-danger">
+                                      {{form.courses_teaching.errors|join:", "}}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pb-3">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    <label for="{{form.number_of_credits.id_for_label}}"
+                                        {% if form.number_of_credits.errors %}
+                                            class="text-danger"
+                                        {% endif %}>
+                                        <h5>{{form.number_of_credits.label}}</h5>
+                                    </label>
+                                    <input type="text" class="form-control
+                                        {% if form.number_of_credits.errors %} is-invalid{% endif %}"
+                                        name="number_of_credits"
+                                        id="{{form.number_of_credits.id_for_label}}"
+                                        value="{{form.number_of_credits.value|default_if_none:''}}"
+                                        placeholder="Number of credits"
+                                        {% if not django_debug %} required{% endif %}>
+                                    <small class="text-danger">
+                                      {{form.number_of_credits.errors|join:", "}}
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.number_of_credits.id_for_label}}"
-                                    {% if form.number_of_credits.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.number_of_credits.label}}</h5>
-                                </label>
-                                <input type="text" class="form-control
-                                    {% if form.number_of_credits.errors %} is-invalid{% endif %}"
-                                    name="number_of_credits"
-                                    id="{{form.number_of_credits.id_for_label}}"
-                                    value="{{form.number_of_credits.value|default_if_none:''}}"
-                                    placeholder="Number of credits"
-                                    {% if not django_debug %} required{% endif %}>
-                                <small class="text-danger">
-                                  {{form.number_of_credits.errors|join:", "}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3 faculty">
+                    <div class="col-md-6 pb-3 facNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.teaching_appointment.name}}_0"
                                    {% if form.teaching_appointment.errors %}class="text-danger"{% endif %}>
@@ -1443,7 +1506,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty">
+                    <div class="col-md-6 pb-3 facNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.program_types.id_for_label}}"
@@ -1468,7 +1531,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 faculty staff">
+                    <div class="col-sm-3 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leave_of_absence_date.id_for_label}}"
@@ -1489,7 +1552,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 faculty staff">
+                    <div class="col-sm-3 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_return_date.id_for_label}}"
@@ -1510,7 +1573,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leave_of_absence_reason.id_for_label}}"
@@ -1535,7 +1598,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffDepartment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_department.id_for_label}}"
@@ -1560,7 +1623,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffDepartment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_department.id_for_label}}"
@@ -1583,7 +1646,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffSupervisor" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_supervisor.id_for_label}}"
@@ -1605,7 +1668,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffSupervisor" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_supervisor.id_for_label}}"
@@ -1627,7 +1690,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3 faculty staff">
+                    <div class="col-sm-6 pb-3 facVoluntaryTermination facInVoluntaryTermination
+                    staffVoluntaryTermination staffInVoluntaryTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.last_day_date.id_for_label}}"
@@ -1648,7 +1712,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facVoluntaryTermination facInVoluntaryTermination
+                    staffVoluntaryTermination staffInVoluntaryTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.returned_property.id_for_label}}"
@@ -1670,7 +1735,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facVoluntaryTermination facInVoluntaryTermination
+                    staffVoluntaryTermination staffInVoluntaryTermination" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.eligible_rehire.name}}_0"
                                    {% if form.eligible_rehire.errors %}class="text-danger"{% endif %}>
@@ -1702,7 +1768,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facVoluntaryTermination facInVoluntaryTermination
+                    staffVoluntaryTermination staffInVoluntaryTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leaving_types.id_for_label}}"
@@ -1727,7 +1794,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facVoluntaryTermination facInVoluntaryTermination
+                    staffVoluntaryTermination staffInVoluntaryTermination" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.vacation_days_accrued.id_for_label}}"
+                                    {% if form.vacation_days_accrued.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.vacation_days_accrued.label}}</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.vacation_days_accrued.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.vacation_days_accrued.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.vacation_days_accrued.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.current_compensation.id_for_label}}"
@@ -1749,7 +1842,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_compensation.id_for_label}}"
@@ -1771,7 +1864,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.salary_change_reason.id_for_label}}"
@@ -1793,7 +1886,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3 faculty staff">
+                    <div class="col-sm-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.effective_date.id_for_label}}"
@@ -1814,7 +1907,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty staff">
+                    <div class="col-md-3 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.temporary_interim_pay.name}}_0"
                                    {% if form.temporary_interim_pay.errors %}class="text-danger"{% endif %}>
@@ -1869,7 +1962,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.amount.id_for_label}}"
@@ -1891,7 +1984,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.amount_reason.id_for_label}}"
@@ -1913,7 +2006,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 faculty staff">
+                    <div class="col-sm-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.pay_after_date.id_for_label}}"
@@ -1934,7 +2027,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty staff">
+                    <div class="col-md-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.department_account_number.id_for_label}}"
@@ -1956,7 +2049,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty staff">
+                    <div class="col-md-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.grant_pay.name}}_0"
                                    {% if form.grant_pay.errors %}class="text-danger"{% endif %}>
@@ -2012,7 +2105,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty">
+                    <div class="col-md-6 pb-3 facSabbatical" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.sabbatical_types.id_for_label}}"
@@ -2041,7 +2134,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty">
+                    <div class="col-md-3 pb-3 facSabbatical" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.academic_year.id_for_label}}"
@@ -2063,7 +2156,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.old_position.id_for_label}}"
@@ -2085,7 +2178,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.new_position.id_for_label}}"
@@ -2107,7 +2200,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 faculty staff">
+                    <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.position_effective_date.id_for_label}}"
+                                    {% if form.position_effective_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.position_effective_date.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.position_effective_date.errors %} is-invalid{% endif %}"
+                                    name="position_effective_date"
+                                    id="{{form.position_effective_date.id_for_label}}"
+                                    value="{{form.position_effective_date.value|default_if_none:''}}"
+                                    placeholder="Number returned_property credits"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.position_effective_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.additional_supervisor_role.name}}_0"
                                    {% if form.additional_supervisor_role.errors %}class="text-danger"{% endif %}>
