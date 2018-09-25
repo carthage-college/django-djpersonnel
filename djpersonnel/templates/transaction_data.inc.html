@@ -112,7 +112,7 @@
         {% endif %}
         <td>{{t.expected_start_date|date:'Y-m-d'}}</td>
         <td>{{t.end_date|date:'Y-m-d'}}</td>
-        <td>{{t.effective_date|date:'Y-m-d'}}</td>
+        <td>{{t.position_effective_date|date:'Y-m-d'}}</td>
         <td class="text-center">
           <a href="#" data-href="{% url 'transaction_delete' t.id %}"
             data-title="PAF: {{t.position_title}}" data-toggle="modal"
