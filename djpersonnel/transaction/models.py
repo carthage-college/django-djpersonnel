@@ -20,7 +20,6 @@ HIRE_CHOICES = (
 PAY_RATE_CHOICES = (
     ('Annual Salary', 'Annual Salary'),
     ('Hourly Rate', 'Hourly Rate')
-
 )
 PAY_CLASS_CHOICES = (
     ('Exempt', 'Exempt'),
@@ -30,6 +29,10 @@ SHIFT_CHOICES = (
     ('1st Shift', '1st Shift'),
     ('2nd Shift', '2nd Shift'),
     ('3rd Shift', '3rd Shift')
+)
+TERMINATION_CHOICES = (
+    ('Voluntary', 'Voluntary'),
+    ('Involuntary', 'Involuntary')
 )
 EMPLOYMENT_TYPE_CHOICES = (
     ('Adjunct', 'Adjunct'),
@@ -58,6 +61,28 @@ LEAVING_REASONS_CHOICES = (
     ('Relocation', 'Relocation'),
     ('Retirement', 'Retirement'),
     ('Other', 'Other')
+)
+STAFF_LEAVING_VOLUNTARY_CHOICES = (
+    ('Alternate opportunity elsewhere', 'Alternate opportunity elsewhere'),
+    ('Job dissatisfaction', 'Job dissatisfaction'),
+    ('Relocation', 'Relocation'),
+    ('Retirement', 'Retirement'),
+    ('Other', 'Other')
+)
+STAFF_LEAVING_INVOLUNTARY_CHOICES = (
+    ('Contract expired', 'Contract expired'),
+    ('Deceased', 'Deceased'),
+    ('Gross misconduct', 'Gross misconduct')
+)
+FACULTY_LEAVING_VOLUNTARY_CHOICES = (
+    ('Perusing other opportunity', 'Perusing other opportunity'),
+    ('Retirement', 'Retirement')
+)
+FACULTY_LEAVING_INVOLUNTARY_CHOICES = (
+    ('Contract expired', 'Contract expired'),
+    ('Contract non-renwed', 'Contract non-renwed'),
+    ('Deceased', 'Deceased'),
+    ('Gross misconduct', 'Gross misconduct')
 )
 SABBATICAL_TERM_CHOICES = (
     ('Fall', 'Fall'),
@@ -398,6 +423,12 @@ class Operation(models.Model):
         max_length=100,
         null=True, blank=True
     )
+    termination = models.CharField(
+        verbose_name='Voluntary/Involuntary',
+        max_length=16,
+        choices=TERMINATION_CHOICES,
+        null=True, blank=True
+    )
     last_day_date = models.DateField(
         verbose_name='Last day'
     )
@@ -490,13 +521,33 @@ class Operation(models.Model):
     )
     program_types = models.CharField(
         "Program types",
-        max_length=16,
+        max_length=30,
         choices=PROGRAM_CHOICES,
     )
     leaving_types = models.CharField(
         "Reason for leaving",
-        max_length=16,
+        max_length=50,
         choices=LEAVING_REASONS_CHOICES,
+    )
+    staff_leaving_voluntary_types = models.CharField(
+        "Reason for leaving",
+        max_length=50,
+        choices=STAFF_LEAVING_VOLUNTARY_CHOICES,
+    )
+    staff_leaving_involuntary_types = models.CharField(
+        "Reason for leaving",
+        max_length=50,
+        choices=STAFF_LEAVING_INVOLUNTARY_CHOICES,
+    )
+    faculty_leaving_voluntary_types = models.CharField(
+        "Reason for leaving",
+        max_length=50,
+        choices=FACULTY_LEAVING_VOLUNTARY_CHOICES,
+    )
+    faculty_leaving_involuntary_types = models.CharField(
+        "Reason for leaving",
+        max_length=50,
+        choices=FACULTY_LEAVING_INVOLUNTARY_CHOICES,
     )
     sabbatical_types = models.CharField(
         "Reason for sabbatical",
