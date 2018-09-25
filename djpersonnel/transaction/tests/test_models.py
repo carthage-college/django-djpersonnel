@@ -40,9 +40,6 @@ class TransactionModelsTestCase(TestCase):
         json_data = open(
             '{}/fixtures/transaction_operation.json'.format(settings.ROOT_DIR)
         ).read()
-        json_dict = json.loads(json_data)
-        data = json_dict[0]['fields']
-        data['level3_approver'] = settings.TEST_LEVEL3_APPROVER_ID
 
     #@skip('skip to my loo')
     def test_operation(self):
