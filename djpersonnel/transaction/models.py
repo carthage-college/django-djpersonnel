@@ -225,12 +225,8 @@ class Operation(models.Model):
         verbose_name='Supervisor change',
         default=False
     )
-    voluntary_termination = models.BooleanField(
-        verbose_name='Termination voluntary',
-        default=False
-    )
-    involuntary_termination = models.BooleanField(
-        verbose_name='Termination involuntary',
+    termination = models.BooleanField(
+        verbose_name='Termination',
         default=False
     )
     status_change = models.BooleanField(
@@ -392,6 +388,9 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
+    status_change_effective_date = models.DateField(
+        verbose_name='Status Change date'
+    )
     leave_of_absence_date = models.DateField(
         verbose_name='Leave of Absence date'
     )
@@ -423,7 +422,7 @@ class Operation(models.Model):
         max_length=100,
         null=True, blank=True
     )
-    termination = models.CharField(
+    voluntary_involuntary_termination = models.CharField(
         verbose_name='Voluntary/Involuntary',
         max_length=16,
         choices=TERMINATION_CHOICES,
