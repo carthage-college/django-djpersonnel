@@ -12,26 +12,51 @@
         $('#id_compensation_change').click(compensationchange);
         $('#id_onetime_payment').click(onetimepayment);
         $('#id_supervisor_change').click(supervisorchange);
-        $('#id_voluntary_termination, #id_involuntary_termination').click(termination);
-        $('#id_involuntary_termination').click(involterm);
+        $('#id_termination').click(termination);
         $('#id_status_change').click(statuschange);
         $('#id_position_change').click(positionchange);
         $('#id_leave_of_absence').click(leave);
         $('#id_sabbatical').click(sabbatical);
 
         $("[name=employee_type]").click(function() {
-                hire();
-                departmentchange();
-                compensationchange();
-                onetimepayment();
-                supervisorchange();
-                termination();
-                involterm();
-                statuschange();
-                positionchange();
-                leave();
-                sabbatical();
-            });
+            hire();
+            departmentchange();
+            compensationchange();
+            onetimepayment();
+            supervisorchange();
+            termination();
+            statuschange();
+            positionchange();
+            leave();
+            sabbatical();
+        });
+        $("[name=voluntary_involuntary_termination]").click(function() {
+            termination();
+        });
+        $("[name=position_grant_funded]").click(function() {
+            hire();
+        });
+        $("[name=standard_vacation_package]").click(function() {
+            hire();
+        });
+        $("[name=moving_expenses]").click(function() {
+            hire();
+        });
+        $("[name=teaching_appointment]").click(function() {
+            hire();
+        });
+        $("[name=music]").click(function() {
+            hire();
+        });
+        $("[name=temporary_interim_pay]").click(function() {
+            compensationchange();
+        });
+        $("[name=eligible_rehire]").click(function() {
+            compensationchange();
+        });
+        $("[name=additional_supervisor_role]").click(function() {
+            positionchange();
+        });
         function hire(){
             $('.facNewhire, .staffNewhire').hide();
             var isFaculty = $('#id_employee_type_0').is(':checked'),
@@ -53,7 +78,13 @@
             else
             {
                 console.log('Missing something to be checked');
-                $('.facNewhire, .staffNewhire').hide();
+                $('.facNewhire, .staffNewhire, .hyde').hide();
+                $('#id_position_grant_funded_0').prop('checked', false);
+                $('#id_standard_vacation_package_1').prop('checked', false);
+                $('#id_moving_expenses_0').prop('checked', false);
+                $('#id_teaching_appointment_2').prop('checked', false);
+                $('#id_music_0').prop('checked', false);
+                //$('#id_employment_types').prop('selected', false);
             }
         }
         function departmentchange(){
@@ -101,7 +132,8 @@
             else
             {
                 console.log('Missing something to be checked');
-                $('.facCompensation, .staffCompensation').hide();
+                $('.facCompensation, .staffCompensation, .hyde').hide();
+                $('#id_temporary_interim_pay_0').prop('checked', false);
             }
         }
         function onetimepayment(){
@@ -153,57 +185,65 @@
             }
         }
         function termination(){
-            $('.facVoluntaryTermination, .staffVoluntaryTermination, .staffInvoluntaryTermination').hide();
+            $('.facultyTermination, .facultyTerminationVoluntary, .facultyTerminationInvoluntary, .staffTermination, ' +
+                '.staffTerminationVoluntary, .staffTerminationInvoluntary').hide();
             var isFaculty = $('#id_employee_type_0').is(':checked'),
             isStaff = $('#id_employee_type_1').is(':checked'),
-            isVoluntaryTermination = $('#id_voluntary_termination').is(':checked');
-            isInvoluntaryTermination = $('#id_involuntary_termination').is(':checked');
+            isTermination = $('#id_termination').is(':checked');
+            isVoluntary = $('#id_voluntary_involuntary_termination_0').is(':checked');
+            isInvoluntary = $('#id_voluntary_involuntary_termination_1').is(':checked');
             console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-            console.log("Voluntary Termination: " + isVoluntaryTermination+ '; Involuntary Termination: ' + isInvoluntaryTermination);
-            console.log('I am in the voluntary termination function!');
-            if((isFaculty == true && isVoluntaryTermination == true) || (isFaculty == true && isInvoluntaryTermination == true))
-            {
-                console.log('Faculty and Termination are checked');
-                $('.facVoluntaryTermination').show();
-            }
-            else if((isStaff == true && isVoluntaryTermination == true) || (isFaculty == true && isInvoluntaryTermination == true))
+            console.log("Voluntary Termination: " + isTermination + '; Radio Button Voluntary Termination: ' + isVoluntary);
+            console.log("Involuntary Termination: " + isTermination + '; Radio Button Involuntary Termination: ' + isInvoluntary);
+            console.log('I am in the termination function!');
+            if(isFaculty == true && isTermination == true)
             {
                 console.log('Staff and Termination are checked');
-                $('.staffVoluntaryTermination').show();
+                $('.facultyTermination').show();
             }
-            else if((isStaff == true && isInvoluntaryTermination == true) || (isFaculty == true && isInvoluntaryTermination == true))
+            if(isFaculty == true && isTermination == true && isVoluntary == true)
+            {
+                console.log('Faculty and Termination and Voluntary are checked');
+                $('.facultyTerminationVoluntary').show();
+            }
+            if(isFaculty == true && isTermination == true && isInvoluntary == true)
+            {
+                console.log('Faculty and Termination and Involuntary are checked');
+                $('.facultyTerminationInvoluntary').show();
+            }
+            if(isStaff == true && isTermination == true)
             {
                 console.log('Staff and Termination are checked');
-                $('.staffInvoluntaryTermination').show();
+                $('.staffTermination').show();
             }
-            else
+            if(isStaff == true && isTermination == true && isVoluntary == true)
+            {
+                console.log('Staff and Termination and Voluntary are checked');
+                $('.staffTerminationVoluntary').show();
+            }
+            if(isStaff == true && isTermination == true && isInvoluntary == true)
+            {
+                console.log('Staff and Termination and Involuntary are checked');
+                $('.staffTerminationInvoluntary').show();
+            }
+            if(isTermination == false && isVoluntary == true)
             {
                 console.log('Missing something to be checked');
-                $('.facVoluntaryTermination, .staffVoluntaryTermination, .staffInvoluntaryTermination').hide();
+                $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+                $('#id_voluntary_involuntary_termination_0').prop('checked', false);
             }
-        }
-        function involterm(){
-            $('.facInVoluntaryTermination, .staffInVoluntaryTermination').hide();
-            var isFaculty = $('#id_employee_type_0').is(':checked'),
-            isStaff = $('#id_employee_type_1').is(':checked'),
-            isInVoluntaryTermination = $('#id_involuntary_termination').is(':checked');
-            console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-            console.log("Involuntary Termination: " + isInVoluntaryTermination);
-            console.log('I am in the involuntary termination function!');
-            if(isFaculty == true && isInVoluntaryTermination == true)
-            {
-                console.log('Faculty and Involuntary Termination are checked');
-                $('.facInVoluntaryTermination').show();
-            }
-            else if(isStaff == true && isInVoluntaryTermination == true)
-            {
-                console.log('Staff and InvoluntaryTermination  are checked');
-                $('.staffInVoluntaryTermination').show();
-            }
-            else
+            if(isTermination == false && isInvoluntary == true)
             {
                 console.log('Missing something to be checked');
-                $('.facInVoluntaryTermination, .staffInVoluntaryTermination').hide();
+                $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+                $('#id_voluntary_involuntary_termination_1').prop('checked', false);
+            }
+            if(isTermination == false)
+            {
+                console.log('Missing something to be checked');
+                $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+                $('#id_eligible_rehire_0').prop('checked', false);
+                $('#id_eligible_rehire_1').prop('checked', false);
             }
         }
         function statuschange(){
@@ -246,7 +286,9 @@
             else
             {
                 console.log('Missing something to be checked');
-                $('.fac_staffPosition').hide();
+                $('.fac_staffPosition, .hyde').hide();
+                $('#id_additional_supervisor_role_0').prop('checked', false);
+                $('#id_additional_supervisor_role_1').prop('checked', false);
             }
         }
         function leave(){
@@ -304,9 +346,6 @@
   } // end function toggleCheck()
   /* jquery code */
   $(function() {
-    {% if form.pay_type.value == 'Non-exempt' %}
-    $("#hours_per_week").removeClass("hyde");
-    {% endif %}
     {% if form.standard_vacation_package.value == 'No' %}
     $("#vacation_days").removeClass("hyde");
     {% endif %}
@@ -319,14 +358,15 @@
     {% if form.music.value == 'Yes' %}
     $("#courses_teaching").removeClass("hyde");
     {% endif %}
+    {% if form.additional_supervisor_role.value == 'Yes' %}
+    $("#direct_reports").removeClass("hyde");
+    {% endif %}
   }); // end jquery code
    // /* function dept_name */
   $(function() {
       $('#id_department_name').on('change', function(){
-          //console.log(isStaff);
           console.log(this.value);
           if (this.value == 'EVS')
-          //if(isStaff == true && this.value == 'EVS')
           {
               $('.shift').show();
           }
@@ -728,23 +768,13 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <label for="{{form.voluntary_termination.id_for_label}}" class="form-check-label">
+                                <label for="{{form.termination.id_for_label}}" class="form-check-label">
                                     <input class="form-check-input" type="checkbox"
-                                    id="{{form.voluntary_termination.id_for_label}}"
-                                    name="{{form.voluntary_termination.name}}" value="1"
-                                    {% if form.voluntary_termination.value == True %}
+                                    id="{{form.termination.id_for_label}}"
+                                    name="{{form.termination.name}}" value="1"
+                                    {% if form.termination.value == True %}
                                          checked{% endif %}>
-                                    {{form.voluntary_termination.label}}
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label for="{{form.involuntary_termination.id_for_label}}" class="form-check-label">
-                                    <input class="form-check-input" type="checkbox"
-                                    id="{{form.involuntary_termination.id_for_label}}"
-                                    name="{{form.involuntary_termination.name}}" value="1"
-                                    {% if form.voluntary_termination.value == True %}
-                                        checked{% endif %}>
-                                    {{form.involuntary_termination.label}}
+                                    {{form.termination.label}}
                                 </label>
                             </div>
                             <div class="form-check">
@@ -823,8 +853,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless staff and "newhire_rehire" is checked -->
-                    <div class="col-md-6 pb-3 staffNewhire" style="display:none">
+                    <!-- Hidden unless staff and "newhire_rehire" or "status change" is checked -->
+                    <div class="col-md-6 pb-3 staffNewhire staffStatus" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.status_type.id_for_label}}"
@@ -848,7 +878,29 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "faculty  or staff and newhire_rehire" is checked -->
+                    <!-- Hidden unless staff and "status change" is checked -->
+                    <div class="col-sm-6 pb-3 staffStatus" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.status_change_effective_date.id_for_label}}"
+                                    {% if form.status_change_effective_date.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>Status change effective date</h5>
+                                </label>
+                                <input type="date" class="form-control
+                                    {% if form.status_change_effective_date.errors %} is-invalid{% endif %}"
+                                    name="status_change_effective_date"
+                                    id="{{form.status_change_effective_date.id_for_label}}"
+                                    value="{{form.status_change_effective_date.value|default_if_none:''}}"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.status_change_effective_date.errors|join:", "}}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless "faculty or staff and newhire_rehire" is checked -->
                     <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -874,7 +926,7 @@
                         </div>
                     </div>
                     <!-- Hidden unless "faculty or staff and newhire_rehire" is checked -->
-                    <div class="col-md-3 pb-3 facNewhire staffNewhire" style="display:none">
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.pay_type.name}}_0"
                               {% if form.pay_type.errors %}class="text-danger"{% endif %}>
@@ -886,7 +938,6 @@
                                       <input class="form-check-input" value="Exempt"
                                         type="radio" name="pay_type"
                                         id="id_{{form.pay_type.name}}_0"
-                                        onclick="javascript:toggleCheck('id_{{form.pay_type.name}}_1','hours_per_week');"
                                         {% if form.pay_type.value == 'Exempt' %}
                                           checked
                                         {% endif %}>
@@ -898,7 +949,6 @@
                                       <input class="form-check-input" value="Non-exempt"
                                         type="radio" name="pay_type"
                                         id="id_{{form.pay_type.name}}_1"
-                                        onclick="javascript:toggleCheck('id_{{form.pay_type.name}}_1','hours_per_week');"
                                         {% if form.pay_type.value == 'Non-exempt' %}
                                           checked
                                         {% endif %}>
@@ -908,8 +958,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless "Non-exempt" is selected -->
-                    <div class="col-md-3 pb-3 hyde" id="hours_per_week">
+                    <!-- Hidden unless "faculty or staff and newhire_rehire" is checked -->
+                    <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hours_per_week.id_for_label}}"
@@ -1066,8 +1116,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <!-- Hidden unless "No" is selected for standard vacation package -->
-                            <div class="form-group hyde" id="vacation_days">
+                        </div>
+                    </div>
+                    <!-- Hidden unless "No" is selected for standard vacation package -->
+                    <div class="col-md-6 pb-3 hyde" id="vacation_days">
+                        <div class="container-fluid">
+                            <div class="form-group">
                                 <label for="{{form.vacation_days.id_for_label}}"
                                     {% if form.vacation_days.errors %}
                                         class="text-danger"
@@ -1198,8 +1252,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <!-- Hidden unless 'Yes', provide how much -->
-                            <div class="form-group hyde" id="moving_expenses_amount">
+                        </div>
+                    </div>
+                    <!-- Hidden unless 'Yes', check from moving expenses -->
+                    <div class="col-md-6 pb-3 hyde" id="moving_expenses_amount">
+                        <div class="container-fluid">
+                            <div class="form-group">
                                 <label for="{{form.moving_expenses_amount.id_for_label}}"
                                     {% if form.moving_expenses_amount.errors %}
                                         class="text-danger"
@@ -1336,7 +1394,7 @@
                                 </label>
                                 <select class="form-control"
                                     id="{{form.employment_types.id_for_label}}"
-                                    name="shift"
+                                    name="employment_types"
                                     {% if not django_debug %} required{% endif %}>
                                 {% for value, text in form.fields.employment_types.choices %}
                                     <option value="{{value}}"
@@ -1353,7 +1411,7 @@
                     <!--
                      Hidden unless faculty and "newhire_rehire" is checked and contract-ongoing or contract terminal is selected
                     -->
-                    <div class="col-md-3 pb-3 contract" style="display:none;">
+                    <div class="col-md-6 pb-3 contract" style="display:none;">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.contract_years.id_for_label}}"
@@ -1414,47 +1472,43 @@
                     Hidden unless Adjunct is selected from employment type and "faculty and newhire_rehire" is checked
                     -->
                     <div class="col-md-12 pb-3 hyde" id="courses_teaching">
-                        <div class="col-md-6 pb-3">
-                            <div class="container-fluid">
-                                <div class="form-group">
-                                    <label for="{{form.courses_teaching.id_for_label}}"
-                                        {% if form.courses_teaching.errors %}
-                                            class="text-danger"
-                                        {% endif %}>
-                                        <h5>{{form.courses_teaching.label}}</h5>
-                                    </label>
-                                    <textarea rows="2"
-                                        class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
-                                        id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
-                                        placeholder="{{form.courses_teaching.help_text}}">
-                                        {{form.courses_teaching.value|default_if_none:''}}
-                                    </textarea>
-                                    <small class="text-danger">
-                                      {{form.courses_teaching.errors|join:", "}}
-                                    </small>
-                                </div>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.courses_teaching.id_for_label}}"
+                                    {% if form.courses_teaching.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.courses_teaching.label}}</h5>
+                                </label>
+                                <textarea rows="2"
+                                    class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
+                                    id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
+                                    placeholder="{{form.courses_teaching.help_text}}">
+                                    {{form.courses_teaching.value|default_if_none:''}}
+                                </textarea>
+                                <small class="text-danger">
+                                  {{form.courses_teaching.errors|join:", "}}
+                                </small>
                             </div>
                         </div>
-                        <div class="col-md-6 pb-3">
-                            <div class="container-fluid">
-                                <div class="form-group">
-                                    <label for="{{form.number_of_credits.id_for_label}}"
-                                        {% if form.number_of_credits.errors %}
-                                            class="text-danger"
-                                        {% endif %}>
-                                        <h5>{{form.number_of_credits.label}}</h5>
-                                    </label>
-                                    <input type="text" class="form-control
-                                        {% if form.number_of_credits.errors %} is-invalid{% endif %}"
-                                        name="number_of_credits"
-                                        id="{{form.number_of_credits.id_for_label}}"
-                                        value="{{form.number_of_credits.value|default_if_none:''}}"
-                                        placeholder="Number of credits"
-                                        {% if not django_debug %} required{% endif %}>
-                                    <small class="text-danger">
-                                      {{form.number_of_credits.errors|join:", "}}
-                                    </small>
-                                </div>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.number_of_credits.id_for_label}}"
+                                    {% if form.number_of_credits.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>{{form.number_of_credits.label}}</h5>
+                                </label>
+                                <input type="text" class="form-control
+                                    {% if form.number_of_credits.errors %} is-invalid{% endif %}"
+                                    name="number_of_credits"
+                                    id="{{form.number_of_credits.id_for_label}}"
+                                    value="{{form.number_of_credits.value|default_if_none:''}}"
+                                    placeholder="Number of credits"
+                                    {% if not django_debug %} required{% endif %}>
+                                <small class="text-danger">
+                                  {{form.number_of_credits.errors|join:", "}}
+                                </small>
                             </div>
                         </div>
                     </div>
@@ -1503,8 +1557,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <!-- Hidden unless "Other" is selected then show teaching appointment arrangements  -->
-                            <div class="form-group hyde" id="teaching_appointment_arrangements">
+                        </div>
+                    </div>
+                    <!-- Hidden unless "Other" is selected then show teaching appointment arrangements  -->
+                    <div class="col-md-6 pb-3 hyde" id="teaching_appointment_arrangements">
+                        <div class="container-fluid">
+                            <div class="form-group" >
                                 <label for="{{form.teaching_appointment_arrangements.id_for_label}}"
                                     {% if form.teaching_appointment_arrangements.errors %}
                                         class="text-danger"
@@ -1550,7 +1608,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 fac_staffLeave" style="display:none">
+                    <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.leave_of_absence_date.id_for_label}}"
@@ -1571,7 +1629,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 fac_staffLeave" style="display:none">
+                    <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.expected_return_date.id_for_label}}"
@@ -1713,33 +1771,31 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless faculty or staff and "voluntary_termination" is checked -->
-                    <div class="col-md-6 pb-3 facVoluntaryTermination staffVoluntaryTermination" style="display:none;">
+                    <!-- Hidden unless faculty or staff and "termination" is checked -->
+                    <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none;">
                         <div class="container-fluid">
-                            <label for="id_{{form.termination.name}}_0"
-                                   {% if form.termination.errors %}class="text-danger"{% endif %}>
-                                <h5>{{form.termination.label}}</h5>
+                            <label for="id_{{form.voluntary_involuntary_termination.name}}_0"
+                                   {% if form.voluntary_involuntary_termination.errors %}class="text-danger"{% endif %}>
+                                <h5>{{form.voluntary_involuntary_termination.label}}</h5>
                             </label>
                             <div class="form-group small">
                                 <div class="form-check form-check-inline">
-                                    <label for="id_{{form.termination.name}}_0" class="form-check-label">
+                                    <label for="id_{{form.voluntary_involuntary_termination.name}}_0" class="form-check-label">
                                       <input class="form-check-input" value="Voluntary"
-                                        type="radio" name="termination"
-                                        id="id_{{form.termination.name}}_0"
-                                        onclick="javascript:toggleCheck('id_{{form.termination.name}}_0','staffVoluntaryTermination');"
-                                        {% if form.termination.value == 'Voluntary' %}
+                                        type="radio" name="voluntary_involuntary_termination"
+                                        id="id_{{form.voluntary_involuntary_termination.name}}_0"
+                                        {% if form.voluntary_involuntary_termination.value == 'Voluntary' %}
                                           checked
                                         {% endif %}>
                                         Voluntary Termination
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label for="id_{{form.termination.name}}_1" class="form-check-label">
+                                    <label for="id_{{form.voluntary_involuntary_termination.name}}_1" class="form-check-label">
                                       <input class="form-check-input" value="Involuntary"
-                                        type="radio" name="termination"
-                                        id="id_{{form.termination.name}}_1"
-                                        onclick="javascript:toggleCheck('id_{{form.termination.name}}_0','staffVoluntaryTermination');"
-                                        {% if form.termination.value == 'Involuntary' %}
+                                        type="radio" name="voluntary_involuntary_termination"
+                                        id="id_{{form.voluntary_involuntary_termination.name}}_1"
+                                        {% if form.voluntary_involuntary_termination.value == 'Involuntary' %}
                                           checked
                                         {% endif %}>
                                         Involuntary Termination
@@ -1748,8 +1804,112 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless faculty or staff and "voluntary_termination" is checked -->
-                    <div class="col-sm-6 pb-3 facVoluntaryTermination staffVoluntaryTermination" style="display:none">
+                    <!-- Hidden unless staff, termination and "Voluntary" is checked -->
+                    <div class="col-md-6 pb-3 staffTerminationVoluntary" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.staff_leaving_voluntary_types.id_for_label}}"
+                                    {% if form.staff_leaving_voluntary_types.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>Voluntary Reasons for Leaving</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.staff_leaving_voluntary_types.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.staff_leaving_voluntary_types.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.staff_leaving_voluntary_types.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless staff, termination and "Involuntary" is checked -->
+                    <div class="col-md-6 pb-3 staffTerminationInvoluntary" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.staff_leaving_involuntary_types.id_for_label}}"
+                                    {% if form.staff_leaving_involuntary_types.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>Involuntary Reasons for Leaving</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.staff_leaving_involuntary_types.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.staff_leaving_involuntary_types.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.staff_leaving_involuntary_types.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless faculty, termination and "Voluntary" is checked -->
+                    <div class="col-md-6 pb-3 facultyTerminationVoluntary" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.faculty_leaving_voluntary_types.id_for_label}}"
+                                    {% if form.faculty_leaving_voluntary_types.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>Voluntary Reasons for Leaving</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.faculty_leaving_voluntary_types.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.faculty_leaving_voluntary_types.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.faculty_leaving_voluntary_types.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless faculty, termination and "Involuntary" is checked -->
+                    <div class="col-md-6 pb-3 facultyTerminationInvoluntary" style="display:none">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="{{form.faculty_leaving_involuntary_types.id_for_label}}"
+                                    {% if form.faculty_leaving_involuntary_types.errors %}
+                                        class="text-danger"
+                                    {% endif %}>
+                                    <h5>Involuntary Reasons for Leaving</h5>
+                                </label>
+                                <select class="form-control"
+                                    id="{{form.faculty_leaving_involuntary_types.id_for_label}}"
+                                    name="shift"
+                                    {% if not django_debug %} required{% endif %}>
+                                {% for value, text in form.fields.faculty_leaving_involuntary_types.choices %}
+                                    <option value="{{value}}"
+                                        {% if form.faculty_leaving_involuntary_types.value == value %}
+                                        selected
+                                        {% endif %}>
+                                    {{text}}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden unless faculty or staff and "termination" is checked -->
+                    <div class="col-sm-6 pb-3 facultyTermination staffTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.last_day_date.id_for_label}}"
@@ -1770,8 +1930,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Hidden unless faculty or staff and "voluntary_termination" is checked -->
-                    <div class="col-md-6 pb-3 facVoluntaryTermination staffVoluntaryTermination" style="display:none">
+                    <!-- Hidden unless faculty or staff and "termination" is checked -->
+                    <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.returned_property.id_for_label}}"
@@ -1793,7 +1953,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3 facVoluntaryTermination staffVoluntaryTermination" style="display:none">
+                    <!-- Hidden unless faculty or staff and "termination" is checked -->
+                    <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.eligible_rehire.name}}_0"
                                    {% if form.eligible_rehire.errors %}class="text-danger"{% endif %}>
@@ -1825,82 +1986,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pb-3" style="display:none">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.leaving_types.id_for_label}}"
-                                    {% if form.leaving_types.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.leaving_types.label}}</h5>
-                                </label>
-                                <select class="form-control"
-                                    id="{{form.leaving_types.id_for_label}}"
-                                    name="shift"
-                                    {% if not django_debug %} required{% endif %}>
-                                {% for value, text in form.fields.leaving_types.choices %}
-                                    <option value="{{value}}"
-                                        {% if form.leaving_types.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                    </option>
-                                {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3" style="display:none" id="staffVoluntaryTermination">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.staff_leaving_voluntary_types.id_for_label}}"
-                                    {% if form.staff_leaving_voluntary_types.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.staff_leaving_voluntary_types.label}} Staff Vol Leave</h5>
-                                </label>
-                                <select class="form-control"
-                                    id="{{form.staff_leaving_voluntary_types.id_for_label}}"
-                                    name="shift"
-                                    {% if not django_debug %} required{% endif %}>
-                                {% for value, text in form.fields.staff_leaving_voluntary_types.choices %}
-                                    <option value="{{value}}"
-                                        {% if form.staff_leaving_voluntary_types.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                    </option>
-                                {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3 staffInvoluntaryTermination" style="display:none">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="{{form.staff_leaving_involuntary_types.id_for_label}}"
-                                    {% if form.staff_leaving_involuntary_types.errors %}
-                                        class="text-danger"
-                                    {% endif %}>
-                                    <h5>{{form.staff_leaving_involuntary_types.label}} Staff Invol Leave</h5>
-                                </label>
-                                <select class="form-control"
-                                    id="{{form.staff_leaving_involuntary_types.id_for_label}}"
-                                    name="shift"
-                                    {% if not django_debug %} required{% endif %}>
-                                {% for value, text in form.fields.staff_leaving_involuntary_types.choices %}
-                                    <option value="{{value}}"
-                                        {% if form.staff_leaving_involuntary_types.value == value %}
-                                        selected
-                                        {% endif %}>
-                                    {{text}}
-                                    </option>
-                                {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pb-3 facVoluntaryTermination staffVoluntaryTermination" style="display:none">
+                    <!-- Hidden unless faculty or staff and "termination" is checked -->
+                    <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.vacation_days_accrued.id_for_label}}"
@@ -1914,7 +2001,7 @@
                                     name="current_compensation"
                                     id="{{form.vacation_days_accrued.id_for_label}}"
                                     value="{{form.vacation_days_accrued.value|default_if_none:''}}"
-                                    placeholder="Number vacation days accured"
+                                    placeholder="Number vacation days accrued"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.vacation_days_accrued.errors|join:", "}}
@@ -1922,6 +2009,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "compensation change" is checked -->
                     <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1936,7 +2024,7 @@
                                     name="current_compensation"
                                     id="{{form.current_compensation.id_for_label}}"
                                     value="{{form.current_compensation.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Current annual salary/rate of pay"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.current_compensation.errors|join:", "}}
@@ -1944,6 +2032,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "compensation change" is checked -->
                     <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1958,7 +2047,7 @@
                                     name="new_compensation"
                                     id="{{form.new_compensation.id_for_label}}"
                                     value="{{form.new_compensation.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="New annual salary/rate of pay"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.new_compensation.errors|join:", "}}
@@ -1966,6 +2055,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "compensation change" is checked -->
                     <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1980,7 +2070,7 @@
                                     name="salary_change_reason"
                                     id="{{form.salary_change_reason.id_for_label}}"
                                     value="{{form.salary_change_reason.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Salary Change Reason"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.salary_change_reason.errors|join:", "}}
@@ -1988,32 +2078,34 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "compensation change" is checked -->
                     <div class="col-sm-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
-                                <label for="{{form.effective_date.id_for_label}}"
-                                    {% if form.effective_date.errors %}
+                                <label for="{{form.compensation_effective_date.id_for_label}}"
+                                    {% if form.compensation_effective_date.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.effective_date.label}}</h5>
+                                    <h5>{{form.compensation_effective_date.label}}</h5>
                                 </label>
                                 <input type="date" class="form-control
-                                    {% if form.effective_date.errors %} is-invalid{% endif %}"
+                                    {% if form.compensation_effective_date.errors %} is-invalid{% endif %}"
                                     name="effective_date"
-                                    id="{{form.effective_date.id_for_label}}"
-                                    value="{{form.effective_date.value|default_if_none:''}}"
+                                    id="{{form.compensation_effective_date.id_for_label}}"
+                                    value="{{form.compensation_effective_date.value|default_if_none:''}}"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
-                                  {{form.effective_date.errors|join:", "}}
+                                  {{form.compensation_effective_date.errors|join:", "}}
                                 </small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 facCompensation staffCompensation" style="display:none">
+                    <!-- Hidden unless faculty or staff and "compensation change" is checked -->
+                    <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.temporary_interim_pay.name}}_0"
                                    {% if form.temporary_interim_pay.errors %}class="text-danger"{% endif %}>
-                                <h5>{{form.temporary_interim_pay.label}}</h5>
+                                <h5>Interim Pay</h5>
                             </label>
                             <div class="form-group small">
                                 <div class="form-check form-check-inline">
@@ -2043,14 +2135,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 hyde" id="end_date">
+                    <!-- Hidden unless Temporary Interim Pay checked "Yes" -->
+                    <div class="col-sm-6 pb-3 hyde" id="end_date">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.end_date.id_for_label}}"
                                     {% if form.end_date.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.end_date.label}}</h5>
+                                    <h5>Interim Pay End Date</h5>
                                 </label>
                                 <input type="date" class="form-control
                                     {% if form.end_date.errors %} is-invalid{% endif %}"
@@ -2064,6 +2157,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "request for onetime payment" is checked -->
                     <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2078,7 +2172,7 @@
                                     name="amount"
                                     id="{{form.amount.id_for_label}}"
                                     value="{{form.amount.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Amount"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.amount.errors|join:", "}}
@@ -2086,6 +2180,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "request for onetime payment" is checked -->
                     <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2100,7 +2195,7 @@
                                     name="amount_reason"
                                     id="{{form.amount_reason.id_for_label}}"
                                     value="{{form.amount_reason.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Amount Reason"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.amount_reason.errors|join:", "}}
@@ -2108,7 +2203,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
+                    <!-- Hidden unless faculty or staff and "request for onetime payment" is checked -->
+                    <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.pay_after_date.id_for_label}}"
@@ -2129,7 +2225,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
+                    <!-- Hidden unless faculty or staff and "request for onetime payment" is checked -->
+                    <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.department_account_number.id_for_label}}"
@@ -2151,7 +2248,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
+                    <!-- Hidden unless faculty or staff and "request for onetime payment" is checked -->
+                    <div class="col-md-6 pb-3 facOnetimePayment staffOnetimePayment" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.grant_pay.name}}_0"
                                    {% if form.grant_pay.errors %}class="text-danger"{% endif %}>
@@ -2185,7 +2283,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 hyde" id="grant_pay_account_number">
+                    <!-- Hidden unless Grant Pay checked "Yes" -->
+                    <div class="col-md-6 pb-3 hyde" id="grant_pay_account_number">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.grant_number.id_for_label}}"
@@ -2199,7 +2298,7 @@
                                     name="grant_number"
                                     id="{{form.grant_number.id_for_label}}"
                                     value="{{form.grant_number.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Grant Pay Account Number"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.grant_number.errors|join:", "}}
@@ -2207,6 +2306,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty and "sabbatical" is checked -->
                     <div class="col-md-6 pb-3 facSabbatical" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2236,7 +2336,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 facSabbatical" style="display:none">
+                    <!-- Hidden unless faculty and "sabbatical" is checked -->
+                    <div class="col-md-6 pb-3 facSabbatical" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.academic_year.id_for_label}}"
@@ -2250,7 +2351,7 @@
                                     name="academic_year"
                                     id="{{form.academic_year.id_for_label}}"
                                     value="{{form.academic_year.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Academic Year"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.academic_year.errors|join:", "}}
@@ -2258,6 +2359,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty staff and "position/title change" is checked -->
                     <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2272,7 +2374,7 @@
                                     name="old_position"
                                     id="{{form.old_position.id_for_label}}"
                                     value="{{form.old_position.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Old Position"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.old_position.errors|join:", "}}
@@ -2280,6 +2382,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty staff and "position/title change" is checked -->
                     <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2294,7 +2397,7 @@
                                     name="new_position"
                                     id="{{form.new_position.id_for_label}}"
                                     value="{{form.new_position.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="New Position"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.new_position.errors|join:", "}}
@@ -2302,6 +2405,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty staff and "position/title change" is checked -->
                     <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -2311,12 +2415,11 @@
                                     {% endif %}>
                                     <h5>{{form.position_effective_date.label}}</h5>
                                 </label>
-                                <input type="text" class="form-control
+                                <input type="date" class="form-control
                                     {% if form.position_effective_date.errors %} is-invalid{% endif %}"
                                     name="position_effective_date"
                                     id="{{form.position_effective_date.id_for_label}}"
                                     value="{{form.position_effective_date.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.position_effective_date.errors|join:", "}}
@@ -2324,7 +2427,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 fac_staffPosition" style="display:none">
+                    <!-- Hidden unless faculty staff and "position/title change" is checked -->
+                    <div class="col-md-6 pb-3 fac_staffPosition" style="display:none">
                         <div class="container-fluid">
                             <label for="id_{{form.additional_supervisor_role.name}}_0"
                                    {% if form.additional_supervisor_role.errors %}class="text-danger"{% endif %}>
@@ -2358,21 +2462,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pb-3 hyde" id="direct_reports">
+                    <!-- Hidden unless Additional Supervisory Role checked "Yes" -->
+                    <div class="col-md-6 pb-3 hyde" id="direct_reports">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.direct_reports.id_for_label}}"
                                     {% if form.direct_reports.errors %}
                                         class="text-danger"
                                     {% endif %}>
-                                    <h5>{{form.direct_reports.label}}</h5>
+                                    <h5>Name(s) of direct reports</h5>
                                 </label>
                                 <input type="text" class="form-control
                                     {% if form.direct_reports.errors %} is-invalid{% endif %}"
                                     name="direct_reports"
                                     id="{{form.direct_reports.id_for_label}}"
                                     value="{{form.direct_reports.value|default_if_none:''}}"
-                                    placeholder="Number returned_property credits"
+                                    placeholder="Names of direct reports"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.direct_reports.errors|join:", "}}
