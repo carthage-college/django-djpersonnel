@@ -7,7 +7,7 @@ from djtools.utils.test import create_test_user
 from djpersonnel.requisition.forms import OperationForm
 
 
-class OperationTestCase(TestCase):
+class RequistionOperationTestCase(TestCase):
 
     fixtures = [
         'fixtures/user.json','fixtures/requisition_operation.json'

@@ -54,22 +54,58 @@ class TransactionOperationTestCase(TestCase):
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertTrue(html.strip().endswith('</html>'))
 
-    def test_detail_returns_correct_html(self):
+    def test_detail(self):
 
-        # get detail url
+        # get detail URL
         response = self.client.get(
             reverse('transaction_detail', kwargs={'tid': tid})
         )
+        # valid response?
+        self.assertEqual(response.status_code, 200)
+        # correct template?
         self.assertTemplateUsed(response, 'transaction/detail.html')
+        # returns correct html?
         html = response.content.decode('utf8')
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertTrue(html.strip().endswith('</html>'))
 
-    def test_transaction_delete(self):
+    def test_appointment_letter(self):
+
+        # get appointment letter URL
+        response = self.client.get(
+            reverse('transaction_appointment_letter', kwargs={'tid': tid})
+        )
+        # valid response?
+        self.assertEqual(response.status_code, 200)
+        # correct template?
+        self.assertTemplateUsed(response,'transaction/appointment_letter.html')
+        # returns correct html?
+        html = response.content.decode('utf8')
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))
+        self.assertTrue(html.strip().endswith('</html>'))
+
+    def test_appointment_letter_denied(self):
+
+        # sign in with user who cannot view appointment letter
+        login = self.client.login(
+            username=self.user.username, password=self.password
+        )
+        self.assertTrue(login)
+
+        # get appointment letter URL
+        response = self.client.get(
+            reverse('transaction_appointment_letter', kwargs={'tid': tid})
+        )
+        self.assertEqual(response.url, reverse('access_denied'))
+        # redirect (302) to denied URL
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete(self):
 
         # get delete URL
-        earl = reverse('transaction_delete', kwargs={'tid': tid})
-        response = self.client.get(earl)
+        response = self.client.get(
+            reverse('transaction_delete', kwargs={'tid': tid})
+        )
         # response should be redirect to dashboard home
         self.assertEqual(response.status_code, 302)
         # was it deleted?
@@ -78,3 +114,21 @@ class TransactionOperationTestCase(TestCase):
         except:
             obj = None
         self.assertEqual(obj, None)
+
+    def test_delete_denied(self):
+
+        # sign in with user who cannot delete
+        login = self.client.login(
+            username=self.user.username, password=self.password
+        )
+        self.assertTrue(login)
+
+        # get delete URL
+        response = self.client.get(
+            reverse('transaction_delete', kwargs={'tid': tid})
+        )
+
+        self.assertEqual(response.url, reverse('access_denied'))
+        # redirect (302) to denied URL
+        self.assertEqual(response.status_code, 302)
+

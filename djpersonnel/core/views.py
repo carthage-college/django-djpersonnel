@@ -31,15 +31,15 @@ def home(request):
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
-        requisitions = Requisition.objects.all()[:10]
-        transactions = Transaction.objects.all()[:10]
+        requisitions = Requisition.objects.all().order_by('-created_at')[:10]
+        transactions = Transaction.objects.all().order_by('-created_at')[:10]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        )[:10]
+        ).order_by('-created_at')[:10]
         transactions = Transaction.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        )[:10]
+        ).order_by('-created_at')[:10]
 
     return render(
         request, 'home.html', {
