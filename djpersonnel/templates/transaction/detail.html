@@ -245,46 +245,12 @@ $(function() {
               {% endif %}
               {% field_name data 'onetime_payment' %}
             </div>
-            <div class="form-check">
-              {% if data.voluntary_termination == True %}
-                <i class="fa fa-check-square-o green" data-placement="top"></i>
-              {% else %}
-                <i class="fa fa-square-o" data-placement="top"></i>
-              {% endif %}
-              {% field_name data 'voluntary_termination' %}
-            </div>
-            <!--NOTE:
-              if 'Voluntary Termination checked',
-              provide the voluntary unused pto payout
-            -->
-            {% if data.voluntary_termination == True %}
-            <div class="form-check">
+            <div class="form-group">
               <h6>
-                {% field_name data 'voluntary_unused_pto_payout' %}
+                {% field_name data 'voluntary_involuntary_termination' %}
               </h6>
-              <p>{{data.voluntary_unused_pto_payout}}</p>
+              <p>{{data.voluntary_involuntary_termination}}</p>
             </div>
-            {% endif %}
-            <div class="form-check">
-              {% if data.involuntary_termination == True %}
-                <i class="fa fa-check-square-o green" data-placement="top"></i>
-              {% else %}
-                <i class="fa fa-square-o" data-placement="top"></i>
-              {% endif %}
-              {% field_name data 'involuntary_termination' %}
-            </div>
-            <!--NOTE:
-              if 'Involuntary Termination checked',
-              provide the involuntary unused pto payout
-            -->
-            {% if data.involuntary_termination == True %}
-            <div class="form-check">
-              <h6>
-                {% field_name data 'involuntary_unused_pto_payout' %}
-              </h6>
-              <p>{{data.involuntary_unused_pto_payout}}</p>
-            </div>
-            {% endif %}
           </div>
           <!-- /.container-fluid -->
         </div>

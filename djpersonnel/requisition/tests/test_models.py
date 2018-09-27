@@ -9,8 +9,6 @@ from django.contrib.auth.models import User
 
 from djpersonnel.requisition.models import Operation
 
-from djtools.utils.test import create_test_user
-
 from datetime import datetime
 
 
@@ -25,8 +23,8 @@ class RequisitionModelsTestCase(TestCase):
         self.year = 2020
         self.month = 5
         self.day = 1
-        self.user = create_test_user()
         self.date = datetime(self.year, self.month, self.day)
+        self.user = User.objects.get(pk=settings.TEST_USER_ID)
         self.level3_approver = User.objects.get(
             pk=settings.TEST_LEVEL3_APPROVER_ID
         )

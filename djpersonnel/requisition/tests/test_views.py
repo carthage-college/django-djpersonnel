@@ -7,8 +7,6 @@ from django.shortcuts import get_object_or_404
 
 from djpersonnel.requisition.models import Operation
 
-from djtools.utils.test import create_test_user
-
 from unittest import skip, skipIf, skipUnless
 
 import json
@@ -24,7 +22,7 @@ class RequisitionViewsTestCase(TestCase):
     def setUp(self):
 
         self.oid = 7
-        self.user = create_test_user()
+        self.user = User.objects.get(pk=settings.TEST_USER_ID)
         self.level3_approver = User.objects.get(
             pk=settings.TEST_LEVEL3_APPROVER_ID
         )

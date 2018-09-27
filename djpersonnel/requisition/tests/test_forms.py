@@ -2,8 +2,6 @@ from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from djtools.utils.test import create_test_user
-
 from djpersonnel.requisition.forms import OperationForm
 
 
@@ -14,11 +12,10 @@ class RequistionOperationTestCase(TestCase):
     ]
 
     def setUp(self):
-        self.user = create_test_user()
+
+        self.user = User.objects.get(pk=settings.TEST_USER_ID)
         self.level3_approver_id = settings.TEST_LEVEL3_APPROVER_ID
-        self.level3_approver = User.objects.get(
-            pk=self.level3_approver_id
-        )
+        self.level3_approver = User.objects.get(pk=self.level3_approver_id)
         self.data = {
             'position_title': 'Bender','department_name': 'MAIN',
             'account_number': '8675309', 'new_position': 'No',

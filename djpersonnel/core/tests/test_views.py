@@ -13,7 +13,6 @@ from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import LEVEL2
 
-from djtools.utils.test import create_test_user
 from djtools.utils.users import in_group
 
 
@@ -104,11 +103,16 @@ class CoreViewsTestCase(TestCase):
         'fixtures/group.json',
         'fixtures/user.json',
         'fixtures/requisition_operation.json',
-        #'fixtures/transaction_operation.json'
+        'fixtures/transaction_operation.json'
     ]
 
     def setUp(self):
-        self.user = create_test_user()
+
+        global user
+
+        user = User.objects.get(
+            pk=settings.TEST_USER_ID
+        )
         self.level3_approver = User.objects.get(
             pk=settings.TEST_LEVEL3_APPROVER_ID
         )
@@ -122,8 +126,6 @@ class CoreViewsTestCase(TestCase):
         self.created_at_date = settings.TEST_CREATED_AT_DATE
 
     def test_home(self):
-
-        user = self.user
 
         hr = in_group(user, settings.HR_GROUP)
 
@@ -140,7 +142,7 @@ class CoreViewsTestCase(TestCase):
             )
 
         self.assertGreaterEqual(requisitions.count(), 1)
-        #self.assertGreaterEqual(transactions.count(), 1)
+        self.assertGreaterEqual(transactions.count(), 1)
 
     def test_requisition_search(self):
 
@@ -158,7 +160,7 @@ class CoreViewsTestCase(TestCase):
             created_at__gte = self.created_at_date
         ).all()
 
-        #self.assertGreaterEqual(transactions.count(), 1)
+        self.assertGreaterEqual(transactions.count(), 1)
 
     def test_requisition_status_level3_approved(self):
 
