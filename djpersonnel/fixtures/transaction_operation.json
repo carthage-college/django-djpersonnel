@@ -55,6 +55,7 @@
             "music": "No",
             "courses_teaching": "Welding",
             "number_of_credits": "8",
+            "status_change_effective_date": "2018-05-01",
             "leave_of_absence_date": "2018-02-02",
             "expected_return_date": "2018-05-01",
             "leave_of_absence_reason": "Space Travel",
