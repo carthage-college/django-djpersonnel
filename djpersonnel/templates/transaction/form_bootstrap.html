@@ -30,6 +30,10 @@
             leave();
             sabbatical();
         });
+        /*
+            I am bringing these fields into the various functions so if the user unchecks the check box it will
+            reset the radio button if the user decides to recheck the same checkbox
+        */
         $("[name=voluntary_involuntary_termination]").click(function() {
             termination();
         });
@@ -57,6 +61,14 @@
         $("[name=additional_supervisor_role]").click(function() {
             positionchange();
         });
+        $("[name=grant_pay]").click(function() {
+            onetimepayment();
+        });
+        /*
+            each function is working with whatever checkbox has been checked
+            it turns shows/hides the various classes which then will show the input fields
+            which are needed to be completed
+        */
         function hire(){
             $('.facNewhire, .staffNewhire').hide();
             var isFaculty = $('#id_employee_type_0').is(':checked'),
@@ -78,13 +90,13 @@
             else
             {
                 console.log('Missing something to be checked');
-                $('.facNewhire, .staffNewhire, .hyde').hide();
+                $('.facNewhire, .staffNewhire, .hyde, .music, .contract').hide();
                 $('#id_position_grant_funded_0').prop('checked', false);
                 $('#id_standard_vacation_package_1').prop('checked', false);
                 $('#id_moving_expenses_0').prop('checked', false);
                 $('#id_teaching_appointment_2').prop('checked', false);
                 $('#id_music_0').prop('checked', false);
-                //$('#id_employment_types').prop('selected', false);
+                $('#id_music_1').prop('checked', false);
             }
         }
         function departmentchange(){
@@ -157,7 +169,9 @@
             else
             {
                 console.log('Missing something to be checked');
-                $('.facOnetimePayment, .staffOnetimePayment').hide();
+                $('.facOnetimePayment, .staffOnetimePayment, .hyde').hide();
+                $('#id_grant_pay_0').prop('checked', false);
+                $('#id_grant_pay_1').prop('checked', false);
             }
         }
         function supervisorchange(){
@@ -344,7 +358,8 @@
           document.getElementById(domInput).style.display = 'none';
       }
   } // end function toggleCheck()
-  /* jquery code */
+
+  // This function is uses with radio buttons so when an item is selected it will show the input field
   $(function() {
     {% if form.standard_vacation_package.value == 'No' %}
     $("#vacation_days").removeClass("hyde");
@@ -362,7 +377,8 @@
     $("#direct_reports").removeClass("hyde");
     {% endif %}
   }); // end jquery code
-   // /* function dept_name */
+
+    // This function is uses with select lists so when an item is selected it will show the input field
   $(function() {
       $('#id_department_name').on('change', function(){
           console.log(this.value);
@@ -397,7 +413,7 @@
               $('.music').hide();
           }
       });
-  });// end function dept_name
+  });// end function()
 </script>
 {% endblock %}
 {% block extra_style %}
@@ -1409,7 +1425,8 @@
                         </div>
                     </div>
                     <!--
-                     Hidden unless faculty and "newhire_rehire" is checked and contract-ongoing or contract terminal is selected
+                     Hidden unless faculty and "newhire_rehire" is checked
+                     and contract-ongoing or contract terminal is selected
                     -->
                     <div class="col-md-6 pb-3 contract" style="display:none;">
                         <div class="container-fluid">
@@ -1469,7 +1486,8 @@
                         </div>
                     </div>
                     <!--
-                    Hidden unless Adjunct is selected from employment type and "faculty and newhire_rehire" is checked
+                    Hidden unless Adjunct is selected from employment type
+                    and "faculty and newhire_rehire" is checked
                     -->
                     <div class="col-md-12 pb-3 hyde" id="courses_teaching">
                         <div class="container-fluid">
@@ -1608,6 +1626,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "leave of absence" is checked -->
                     <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1629,6 +1648,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "leave of absence" is checked -->
                     <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1650,6 +1670,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden unless faculty or staff and "leave of absence" is checked -->
                     <div class="col-md-6 pb-3 fac_staffLeave" style="display:none">
                         <div class="container-fluid">
                             <div class="form-group">
@@ -1664,7 +1685,7 @@
                                     name="leave_of_absence_reason"
                                     id="{{form.leave_of_absence_reason.id_for_label}}"
                                     value="{{form.leave_of_absence_reason.value|default_if_none:''}}"
-                                    placeholder="Number leave_of_absence_reason credits"
+                                    placeholder="Reason for leave of absence"
                                     {% if not django_debug %} required{% endif %}>
                                 <small class="text-danger">
                                   {{form.leave_of_absence_reason.errors|join:", "}}
@@ -2492,7 +2513,7 @@
                     <div class="col-sm-12 card-header bg-secondary text-white">
                         <h6>Section IV - Please check applicable action(s) and enter effective date.</h6>
                     </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.benefit_change_effective_date.id_for_label}}"
@@ -2513,7 +2534,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.supplement_life_policy_amount.id_for_label}}"
@@ -2535,7 +2556,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.supplement_life_ppp_contribution.id_for_label}}"
@@ -2557,7 +2578,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.health_insurance_plan_tier.id_for_label}}"
@@ -2579,7 +2600,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
@@ -2601,7 +2622,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hsa_annual_ppp_contribution.id_for_label}}"
@@ -2623,7 +2644,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.hsa_carthage_contribution.id_for_label}}"
@@ -2645,7 +2666,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
@@ -2667,7 +2688,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 pb-3">
+                    <div class="col-md-6 pb-3">
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label for="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
