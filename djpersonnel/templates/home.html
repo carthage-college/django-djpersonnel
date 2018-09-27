@@ -114,9 +114,12 @@ $(function() {
       <h4>
         <a href="{% url 'dashboard_list' 'requisition' %}">
           <i class="fa fa-list-alt blue-tooltip" aria-hidden="true"
-            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top"
             title="View All PRF submissions"></i></a>
         Personnel Requisition Form (PRF)
+        <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top" aria-hidden="true"
+          title="The 10 most recent PRF submissions are list below"></i>
       </h4>
       {% if requisitions %}
         {% include "requisition_data.inc.html" %}
@@ -128,9 +131,13 @@ $(function() {
       <h4>
         <a href="{% url 'dashboard_list' 'transaction' %}">
           <i class="fa fa-list-alt blue-tooltip" aria-hidden="true"
-            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top"
             title="View All PAF submissions"></i></a>
         Personnel Action Form (PAF)
+        <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top" aria-hidden="true"
+          title="The 10 most recent PAF submissions are list below"></i>
+
       </h4>
       {% if transactions %}
         {% include "transaction_data.inc.html" %}
