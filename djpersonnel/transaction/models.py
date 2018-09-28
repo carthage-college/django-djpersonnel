@@ -171,7 +171,7 @@ class Operation(models.Model):
     )
     postal_code = models.CharField(
         max_length=10,
-        verbose_name='Zip Code'
+        verbose_name='Zip'
     )
     phone = models.CharField(
         max_length=12,
@@ -256,6 +256,7 @@ class Operation(models.Model):
         "Exempt/Non-exempt",
         max_length=16,
         choices=PAY_CLASS_CHOICES,
+        null=True, blank=True
     )
     hours_per_week = models.CharField(
         "Hours worked per week",
@@ -269,7 +270,8 @@ class Operation(models.Model):
         null=True, blank=True
     )
     expected_start_date = models.DateField(
-        verbose_name='Expected Start Date'
+        verbose_name='Expected Start Date',
+        null=True, blank=True
     )
     budget_account = models.CharField(
         verbose_name='Budget Account',
@@ -285,11 +287,13 @@ class Operation(models.Model):
         "Does this position supervise others?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     standard_vacation_package = models.CharField(
         "Standard vacation package",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if 'No' to vacation package then how many days
     vacation_days = models.CharField(
@@ -301,6 +305,7 @@ class Operation(models.Model):
         "Is this position grant funded?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if 'Yes' to grant funded, then grant number
     grant_number = models.CharField(
@@ -318,6 +323,7 @@ class Operation(models.Model):
         "Moving expenses (up to $3,000)?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if 'Yes' to moving expenses, then how much for moving expenses
     moving_expenses_amount = models.CharField(
@@ -364,6 +370,7 @@ class Operation(models.Model):
         "Music",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Music is 'Yes', then courses teaching and number of credits
     courses_teaching = models.TextField(
@@ -389,6 +396,7 @@ class Operation(models.Model):
         "Program types",
         max_length=30,
         choices=PROGRAM_CHOICES,
+        null=True, blank=True
     )
     # Department Change checkbox
     # the following fields are used when the department_change checkbox is checked
@@ -422,12 +430,14 @@ class Operation(models.Model):
         null=True, blank=True
     )
     compensation_effective_date = models.DateField(
-        verbose_name='Effective date'
+        verbose_name='Effective date',
+        null=True, blank=True
     )
     temporary_interim_pay = models.CharField(
         "Temporary interim pay",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if temporary_interim_pay 'Yes', provide the end date
     end_date = models.DateField(
@@ -448,7 +458,8 @@ class Operation(models.Model):
         null=True, blank=True
     )
     pay_after_date = models.DateField(
-        verbose_name='Pay after this date'
+        verbose_name='Pay after this date',
+        null=True, blank=True
     )
     department_account_number = models.CharField(
         verbose_name='Department account number',
@@ -459,6 +470,7 @@ class Operation(models.Model):
         "Grant pay",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Grant pay 'Yes' to grant account number
     grant_pay_account_number = models.CharField(
@@ -491,27 +503,32 @@ class Operation(models.Model):
         "Reason for leaving",
         max_length=50,
         choices=STAFF_LEAVING_VOLUNTARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Staff, Termination are checked and 'Voluntary' then involuntary staff list
     staff_leaving_involuntary_types = models.CharField(
         "Reason for leaving",
         max_length=50,
         choices=STAFF_LEAVING_INVOLUNTARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Faculty, Termination are checked and 'Voluntary' then voluntary faculty list
     faculty_leaving_voluntary_types = models.CharField(
         "Reason for leaving",
         max_length=50,
         choices=FACULTY_LEAVING_VOLUNTARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Faculty, Termination are checked and 'Voluntary' then involuntary faculty list
     faculty_leaving_involuntary_types = models.CharField(
         "Reason for leaving",
         max_length=50,
         choices=FACULTY_LEAVING_INVOLUNTARY_CHOICES,
+        null=True, blank=True
     )
     last_day_date = models.DateField(
-        verbose_name='Last day'
+        verbose_name='Last day',
+        null=True, blank=True
     )
     vacation_days_accrued = models.CharField(
         verbose_name='Remaining vacation days accrued',
@@ -527,12 +544,14 @@ class Operation(models.Model):
         "Eligible for rehire",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # Status Change
     # the following fields are used when the status_change checkbox is checked
     # NOTE: This uses the status_type field which is also used when New Hire/Rehire is checked
     status_change_effective_date = models.DateField(
-        verbose_name='Status Change date'
+        verbose_name='Status Change date',
+        null=True, blank=True
     )
     # Position/Title Change
     # the following fields are used when the position_change checkbox is checked
@@ -547,12 +566,14 @@ class Operation(models.Model):
         null=True, blank=True
     )
     position_effective_date = models.DateField(
-        verbose_name='Position effective date'
+        verbose_name='Position effective date',
+        null=True, blank=True
     )
     additional_supervisor_role = models.CharField(
         "Additional supervisory role?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if Addition Supervisory role 'Yes' then add names of direct reports
     direct_reports = models.CharField(
@@ -563,10 +584,12 @@ class Operation(models.Model):
     # Leave of Absence
     # the following fields are used when the leave_of_absence checkbox is checked
     leave_of_absence_date = models.DateField(
-        verbose_name='Leave of Absence date'
+        verbose_name='Leave of Absence date',
+        null=True, blank=True
     )
     expected_return_date = models.DateField(
-        verbose_name='Expected return date'
+        verbose_name='Expected return date',
+        null=True, blank=True
     )
     leave_of_absence_reason = models.CharField(
         "Reason for the leave of absence?",
@@ -579,6 +602,7 @@ class Operation(models.Model):
         "Reason for sabbatical",
         max_length=16,
         choices=SABBATICAL_TERM_CHOICES,
+        null=True, blank=True
     )
     academic_year = models.CharField(
         "Academic year",
