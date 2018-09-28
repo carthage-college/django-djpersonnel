@@ -25,20 +25,20 @@ def form_home(request):
         if form.is_valid():
 
             user = request.user
-            # deal with VP/Provost
-            cd = form.cleaned_data
-            vpid = cd['veep']
+
+            # deal with level 3 approver
+            lid = form.cleaned_data['approver']
             try:
-                veep = User.objects.get(pk=vpid)
+                level3 = User.objects.get(pk=lid)
             except:
                 l = LDAPManager()
-                luser = l.search(vpid)
-                veep = l.dj_create(luser)
+                luser = l.search(lid)
+                level3 = l.dj_create(luser)
 
             data = form.save(commit=False)
             data.created_by = user
             data.updated_by = user
-            data.level3_approver = veep
+            data.level3_approver = level3
             data.save()
 
             # send email or display it for dev
