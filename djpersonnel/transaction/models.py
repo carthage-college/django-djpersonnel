@@ -339,6 +339,7 @@ class Operation(models.Model):
         "Startup expenses?",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if 'Yes', how much for moving expenses
     startup_expenses_amount = models.CharField(
@@ -357,6 +358,7 @@ class Operation(models.Model):
         "Employment Types",
         max_length=255,
         choices=EMPLOYMENT_TYPE_CHOICES,
+        null=True, blank=True
     )
     # NOTE: if 'Contract-ongoing or Contract-terminal',
     # need the number of years in the contract
