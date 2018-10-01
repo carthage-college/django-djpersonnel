@@ -1,0 +1,202 @@
+<!-- Section IV -->
+<div class="form-row mt-4">
+  <div class="col-sm-12 card-header bg-secondary text-white">
+    <h6>
+      Section IV - Please check applicable action(s) and enter
+      effective date.
+    </h6>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.benefit_change_effective_date.id_for_label}}"
+          {% if form.benefit_change_effective_date.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.benefit_change_effective_date.label}}</h5>
+        </label>
+        <input type="date" class="form-control
+          {% if form.benefit_change_effective_date.errors %} is-invalid{% endif %}"
+          name="benefit_change_effective_date"
+          id="{{form.benefit_change_effective_date.id_for_label}}"
+          value="{{form.benefit_change_effective_date.value|default_if_none:''}}"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.benefit_change_effective_date.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.supplement_life_policy_amount.id_for_label}}"
+          {% if form.supplement_life_policy_amount.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.supplement_life_policy_amount.label}}</h5>
+        </label>
+        <input type="text" name="supplement_life_policy_amount"
+          class="form-control{% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
+          id="{{form.supplement_life_policy_amount.id_for_label}}"
+          value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
+          placeholder="Enter Supplement Life Policy Amount"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.supplement_life_policy_amount.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.supplement_life_ppp_contribution.id_for_label}}"
+          {% if form.supplement_life_ppp_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.supplement_life_ppp_contribution.label}}</h5>
+        </label>
+        <input type="text" name="supplement_life_ppp_contribution"
+          class="form-control{% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
+          id="{{form.supplement_life_ppp_contribution.id_for_label}}"
+          value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
+          placeholder="Enter Supplement Life PPP Contribution"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.supplement_life_ppp_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.health_insurance_plan_tier.id_for_label}}"
+          {% if form.health_insurance_plan_tier.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.health_insurance_plan_tier.label}}</h5>
+        </label>
+        <input type="text"
+          class="form-control
+          {% if form.health_insurance_plan_tier.errors %} is-invalid{% endif %}"
+          name="health_insurance_plan_tier"
+          id="{{form.health_insurance_plan_tier.id_for_label}}"
+          value="{{form.health_insurance_plan_tier.value|default_if_none:''}}"
+          placeholder="Enter Health Insurance Plan &#38; Tier"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.health_insurance_plan_tier.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
+          {% if form.cc_health_insurance_compensation_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.cc_health_insurance_compensation_contribution.label}}</h5>
+        </label>
+        <input type="text" name="cc_health_insurance_compensation_contribution"
+          class="form-control{% if form.cc_health_insurance_compensation_contribution.errors %} is-invalid{% endif %}"
+          id="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
+          value="{{form.cc_health_insurance_compensation_contribution.value|default_if_none:''}}"
+          placeholder="Carthage Health Insurance Compensation Contribution"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.cc_health_insurance_compensation_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.hsa_annual_ppp_contribution.id_for_label}}"
+          {% if form.hsa_annual_ppp_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.hsa_annual_ppp_contribution.label}}</h5>
+        </label>
+        <input type="text" name="hsa_annual_ppp_contribution"
+          class="form-control{% if form.hsa_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+          id="{{form.hsa_annual_ppp_contribution.id_for_label}}"
+          value="{{form.hsa_annual_ppp_contribution.value|default_if_none:''}}"
+          placeholder="HSA Annual or PPP Contribution"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.hsa_annual_ppp_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.hsa_carthage_contribution.id_for_label}}"
+          {% if form.hsa_carthage_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.hsa_carthage_contribution.label}}</h5>
+        </label>
+        <input type="text" name="hsa_carthage_contribution"
+          class="form-control{% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
+          id="{{form.hsa_carthage_contribution.id_for_label}}"
+          value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
+          placeholder="Enter HSA Carthage Contribution"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.hsa_carthage_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
+          {% if form.fsa_medical_annual_ppp_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.fsa_medical_annual_ppp_contribution.label}}</h5>
+        </label>
+        <input type="text" name="fsa_medical_annual_ppp_contribution"
+          class="form-control{% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+          id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
+          value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
+          placeholder="Enter FSA Medical Annual or PPP Contribution"
+            {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pb-3">
+    <div class="container-fluid">
+      <div class="form-group">
+        <label for="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
+          {% if form.fsa_dependent_care_annual_ppp_contribution.errors %}
+            class="text-danger"
+          {% endif %}>
+          <h5>{{form.fsa_dependent_care_annual_ppp_contribution.label}}</h5>
+        </label>
+        <input type="text" class="form-control
+          {% if form.fsa_dependent_care_annual_ppp_contribution.errors %} is-invalid{% endif %}"
+          name="fsa_dependent_care_annual_ppp_contribution"
+          id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
+          value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
+          placeholder="Enter FSA Dependent Care Annual or PPP Contribution"
+          {% if not templates_debug %}required{% endif %}>
+        <small class="text-danger">
+          {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Section IV .form-row -->
