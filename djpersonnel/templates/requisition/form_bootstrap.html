@@ -77,7 +77,7 @@
               id="{{form.position_title.id_for_label}}"
               value="{{form.position_title.value|default_if_none:''}}"
               placeholder="Enter Position Title"
-              {% if not django_debug %} required{% endif %}>
+              {% if not templates_debug %} required{% endif %}>
             <small class="text-danger">
               {{form.position_title.errors|join:", "}}
             </small>
@@ -92,7 +92,7 @@
             <select class="form-control"
               id="{{form.department_name.id_for_label}}"
               name="department_name"
-              {% if not django_debug %} required{% endif %}>
+              {% if not templates_debug %} required{% endif %}>
             {% for value, text in form.fields.department_name.choices %}
               <option value="{{value}}"
                 {% if form.department_name.value and form.department_name.value == value %}
@@ -292,7 +292,7 @@
               id="{{form.hours_per_week.id_for_label}}"
               value="{{form.hours_per_week.value|default_if_none:''}}"
               placeholder="Enter Hours per Week"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.hours_per_week.errors|join:", "}}
             </small>
@@ -312,7 +312,7 @@
               value="{{form.min_salary_range.value|default_if_none:''}}"
               title="{{form.min_salary_range.help_text}}"
               placeholder="Enter Minimum Salary Range"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.min_salary_range.errors|join:", "}}
             </small>
@@ -328,7 +328,7 @@
               value="{{form.mid_salary_range.value|default_if_none:''}}"
               title="{{form.mid_salary_range.help_text}}"
               placeholder="Enter Midpoint Salary Range"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.mid_salary_range.errors|join:", "}}
             </small>
@@ -344,7 +344,7 @@
               value="{{form.max_salary_range.value|default_if_none:''}}"
               title="{{form.max_salary_range.help_text}}"
               placeholder="Enter Maximum Salary Range"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.max_salary_range.errors|join:", "}}
             </small>
@@ -358,7 +358,7 @@
               class="form-control{% if form.position_open_date.errors %} is-invalid{% endif %}"
               id="{{form.position_open_date.id_for_label}}"
               value="{{form.position_open_date.value|default:''}}"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.position_open_date.errors|join:", "}}
             </small>
@@ -372,7 +372,7 @@
               class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
               id="{{form.expected_start_date.id_for_label}}"
               value="{{form.expected_start_date.value|default:''}}"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.expected_start_date.errors|join:", "}}
             </small>
@@ -387,7 +387,7 @@
               id="{{form.publication_date.id_for_label}}"
               value="{{form.publication_date.value|default:''}}"
               title="{{form.publication_date.help_text}}"
-              {% if not django_debug %}required{% endif %}>
+              {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.publication_date.errors|join:", "}}
             </small>
@@ -520,7 +520,7 @@
             <select class="form-control"
               id="{{form.approver.id_for_label}}"
               name="approver"
-              {% if not django_debug %} required{% endif %}>
+              {% if not templates_debug %} required{% endif %}>
             {% for value, text in form.fields.approver.choices %}
               <option value="{{value}}"
                 {% if form.approver.value == value %}
