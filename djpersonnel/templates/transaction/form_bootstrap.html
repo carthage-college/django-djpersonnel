@@ -15,6 +15,7 @@
   */
   function hire(){
       $('.facNewhire, .staffNewhire').hide();
+      //$('.section3').show();
       var isFaculty = $('#id_employee_type_0').is(':checked'),
           isStaff = $('#id_employee_type_1').is(':checked'),
           isNewhireRehire = $('#id_newhire_rehire').is(':checked');
@@ -303,6 +304,7 @@
 
   // main jquery function that executes on page load
   $(document).ready(function() {
+    $('.section2').hide();
     // making sure that at least one checkbox is selected
     $('#checkBtn').click(function() {
       if (!$('.ckbselect').is(':checked')) {
@@ -332,6 +334,10 @@
       positionchange();
       leave();
       sabbatical();
+      if (this.value == 'Faculty' || this.value == 'Staff') {
+          console.log($(this).val());
+          $('.section2').show();
+      }
     });
     /*
        I am bringing these fields into the various functions so if the user
@@ -705,7 +711,7 @@
         </div>
         <!-- end Section I .form-row -->
         <!-- Section II .form-row -->
-        <div class="form-row mt-4">
+        <div class="form-row mt-4 section2">
           <div class="col-sm-12 card-header bg-secondary text-white">
             <h6>Section II - Complete for New Hires Only</h6>
           </div>
@@ -819,7 +825,7 @@
             <h6>Section III - Complete only applicable information.</h6>
           </div>
           <!-- Hidden unless faculty or staff and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
+          <div class="col-md-6 pb-3 facNewhire staffNewhire">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.position_title.id_for_label}}"
@@ -1092,26 +1098,26 @@
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
-                  <label for="id_{{form.position_grant_funded.name}}_0" class="form-check-label">
-                    <input class="form-check-input" value="Yes"
+                  <input class="form-check-input" value="Yes"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
                       {% if form.position_grant_funded.value == 'Yes' %}
                         checked
                       {% endif %}>
+                  <label for="id_{{form.position_grant_funded.name}}_0" class="form-check-label">
                       Yes
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <label for="id_{{form.position_grant_funded.name}}_1" class="form-check-label">
-                    <input class="form-check-input" value="No"
+                   <input class="form-check-input" value="No"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_1"
                       onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
                       {% if form.position_grant_funded.value == 'No' %}
                         checked
                       {% endif %}>
+                  <label for="id_{{form.position_grant_funded.name}}_1" class="form-check-label">
                       No
                   </label>
                 </div>
