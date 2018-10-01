@@ -10,8 +10,9 @@ from djpersonnel.transaction.forms import OperationForm
 
 from djzbar.decorators.auth import portal_auth_required
 from djzbar.utils.hr import get_position
-from djtools.utils.mail import send_mail
 from djauth.LDAPManager import LDAPManager
+from djtools.utils.mail import send_mail
+from djtools.utils.users import in_group
 
 
 @portal_auth_required(
@@ -19,13 +20,11 @@ from djauth.LDAPManager import LDAPManager
     redirect_url=reverse_lazy('access_denied')
 )
 def form_home(request):
+    user = request.user
     if request.method=='POST':
 
         form = OperationForm(request.POST, label_suffix='')
         if form.is_valid():
-
-            user = request.user
-
             # deal with level 3 approver
             lid = form.cleaned_data['approver']
             try:
@@ -77,8 +76,9 @@ def form_home(request):
     else:
         form = OperationForm(label_suffix='')
 
+    hr = in_group(user, settings.HR_GROUP)
     return render(
-        request, 'transaction/form_bootstrap.html', {'form': form,}
+        request, 'transaction/form_bootstrap.html', {'form': form,'hr':hr}
     )
 
 
