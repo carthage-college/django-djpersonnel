@@ -40,7 +40,7 @@
           class="form-control{% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_policy_amount.id_for_label}}"
           value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
-          placeholder="Enter Supplement Life Policy Amount"
+          placeholder="Supplement Life Policy Amount"
           {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.supplement_life_policy_amount.errors|join:", "}}
@@ -61,7 +61,7 @@
           class="form-control{% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_ppp_contribution.id_for_label}}"
           value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
-          placeholder="Enter Supplement Life PPP Contribution"
+          placeholder="Supplement Life PPP Contribution"
           {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.supplement_life_ppp_contribution.errors|join:", "}}
@@ -84,7 +84,7 @@
           name="health_insurance_plan_tier"
           id="{{form.health_insurance_plan_tier.id_for_label}}"
           value="{{form.health_insurance_plan_tier.value|default_if_none:''}}"
-          placeholder="Enter Health Insurance Plan &#38; Tier"
+          placeholder="Health Insurance Plan &#38; Tier"
           {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.health_insurance_plan_tier.errors|join:", "}}
@@ -147,7 +147,7 @@
           class="form-control{% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
           id="{{form.hsa_carthage_contribution.id_for_label}}"
           value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
-          placeholder="Enter HSA Carthage Contribution"
+          placeholder="HSA Carthage Contribution"
           {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.hsa_carthage_contribution.errors|join:", "}}
@@ -168,7 +168,7 @@
           class="form-control{% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
-          placeholder="Enter FSA Medical Annual or PPP Contribution"
+          placeholder="FSA Medical Annual or PPP Contribution"
             {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
@@ -190,7 +190,7 @@
           name="fsa_dependent_care_annual_ppp_contribution"
           id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
-          placeholder="Enter FSA Dependent Care Annual or PPP Contribution"
+          placeholder="FSA Dependent Care Annual or PPP Contribution"
           {% if not templates_debug %}required{% endif %}>
         <small class="text-danger">
           {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
