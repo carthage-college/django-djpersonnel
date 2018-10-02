@@ -49,22 +49,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isDepartmentChange = $('#id_department_change').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Department: " + isDepartmentChange);
-      console.log('I am in the department function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Department: " + isDepartmentChange);
+      //console.log('I am in the department function!');
       if(isFaculty == true && isDepartmentChange == true)
       {
-          console.log('Faculty and Department Change are checked');
+          //console.log('Faculty and Department Change are checked');
           $('.fac_staffDepartment').show();
       }
       else if(isStaff == true && isDepartmentChange == true)
       {
-          console.log('Staff and Department Change are checked');
+          //console.log('Staff and Department Change are checked');
           $('.fac_staffDepartment').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.fac_staffDepartment').hide();
       }
   }
@@ -73,22 +73,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isCompensationChange = $('#id_compensation_change').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Compensation: " + isCompensationChange);
-      console.log('I am in the compensation function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Compensation: " + isCompensationChange);
+      //console.log('I am in the compensation function!');
       if(isFaculty == true && isCompensationChange == true)
       {
-          console.log('Faculty and Compensation Change are checked');
+          //console.log('Faculty and Compensation Change are checked');
           $('.facCompensation').show();
       }
       else if(isStaff == true && isCompensationChange == true)
       {
-          console.log('Staff and Compensation Change are checked');
+          //console.log('Staff and Compensation Change are checked');
           $('.staffCompensation').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facCompensation, .staffCompensation, .hyde').hide();
           $('#id_temporary_interim_pay_0').prop('checked', false);
       }
@@ -98,22 +98,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isOnetimePayment = $('#id_onetime_payment').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Onetime Payment: " + isOnetimePayment);
-      console.log('I am in the onetime payment function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Onetime Payment: " + isOnetimePayment);
+      //console.log('I am in the onetime payment function!');
       if(isFaculty == true && isOnetimePayment == true)
       {
-          console.log('Faculty and One Time Payment are checked');
+          //console.log('Faculty and One Time Payment are checked');
           $('.staffOnetimePayment').show();
       }
       else if(isStaff == true && isOnetimePayment == true)
       {
-          console.log('Staff and One Time are checked');
+          //console.log('Staff and One Time are checked');
           $('.staffOnetimePayment').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facOnetimePayment, .staffOnetimePayment, .hyde').hide();
           $('#id_grant_pay_0').prop('checked', false);
           $('#id_grant_pay_1').prop('checked', false);
@@ -124,22 +124,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isSupervisor = $('#id_supervisor_change').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Supervisor Change: " + isSupervisor);
-      console.log('I am in the supervisor function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Supervisor Change: " + isSupervisor);
+      //console.log('I am in the supervisor function!');
       if(isFaculty == true && isSupervisor == true)
       {
-          console.log('Faculty and Supervisor Change are checked');
+          //console.log('Faculty and Supervisor Change are checked');
           $('.fac_staffSupervisor').show();
       }
       else if(isStaff == true && isSupervisor == true)
       {
-          console.log('Staff and Supervisor Change are checked');
+          //console.log('Staff and Supervisor Change are checked');
           $('.fac_staffSupervisor').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.fac_staffSupervisor').hide();
       }
   }
@@ -151,55 +151,55 @@
       isTermination = $('#id_termination').is(':checked');
       isVoluntary = $('#id_voluntary_involuntary_termination_0').is(':checked');
       isInvoluntary = $('#id_voluntary_involuntary_termination_1').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Voluntary Termination: " + isTermination + '; Radio Button Voluntary Termination: ' + isVoluntary);
-      console.log("Involuntary Termination: " + isTermination + '; Radio Button Involuntary Termination: ' + isInvoluntary);
-      console.log('I am in the termination function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Voluntary Termination: " + isTermination + '; Radio Button Voluntary Termination: ' + isVoluntary);
+      //console.log("Involuntary Termination: " + isTermination + '; Radio Button Involuntary Termination: ' + isInvoluntary);
+      //console.log('I am in the termination function!');
       if(isFaculty == true && isTermination == true)
       {
-          console.log('Staff and Termination are checked');
+          //console.log('Staff and Termination are checked');
           $('.facultyTermination').show();
       }
       if(isFaculty == true && isTermination == true && isVoluntary == true)
       {
-          console.log('Faculty and Termination and Voluntary are checked');
+          //console.log('Faculty and Termination and Voluntary are checked');
           $('.facultyTerminationVoluntary').show();
       }
       if(isFaculty == true && isTermination == true && isInvoluntary == true)
       {
-          console.log('Faculty and Termination and Involuntary are checked');
+          //console.log('Faculty and Termination and Involuntary are checked');
           $('.facultyTerminationInvoluntary').show();
       }
       if(isStaff == true && isTermination == true)
       {
-          console.log('Staff and Termination are checked');
+          //console.log('Staff and Termination are checked');
           $('.staffTermination').show();
       }
       if(isStaff == true && isTermination == true && isVoluntary == true)
       {
-          console.log('Staff and Termination and Voluntary are checked');
+          //console.log('Staff and Termination and Voluntary are checked');
           $('.staffTerminationVoluntary').show();
       }
       if(isStaff == true && isTermination == true && isInvoluntary == true)
       {
-          console.log('Staff and Termination and Involuntary are checked');
+          //console.log('Staff and Termination and Involuntary are checked');
           $('.staffTerminationInvoluntary').show();
       }
       if(isTermination == false && isVoluntary == true)
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
           $('#id_voluntary_involuntary_termination_0').prop('checked', false);
       }
       if(isTermination == false && isInvoluntary == true)
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
           $('#id_voluntary_involuntary_termination_1').prop('checked', false);
       }
       if(isTermination == false)
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
           $('#id_eligible_rehire_0').prop('checked', false);
           $('#id_eligible_rehire_1').prop('checked', false);
@@ -210,17 +210,17 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isStatusChange = $('#id_status_change').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Status: " + isStatusChange);
-      console.log('I am in the status function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Status: " + isStatusChange);
+      //console.log('I am in the status function!');
       if(isStaff == true && isStatusChange == true)
       {
-          console.log('Staff and Status Change are checked');
+          //console.log('Staff and Status Change are checked');
           $('.staffStatus').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.staffStatus').hide();
       }
   }
@@ -229,22 +229,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isPositionChange = $('#id_position_change').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Position: " + isPositionChange);
-      console.log('I am in the position function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Position: " + isPositionChange);
+      //console.log('I am in the position function!');
       if(isFaculty == true && isPositionChange == true)
       {
-          console.log('Faculty and Position Change are checked');
+          //console.log('Faculty and Position Change are checked');
           $('.fac_staffPosition').show();
       }
       else if(isStaff == true && isPositionChange == true)
       {
-          console.log('Staff and Position Change are checked');
+          //console.log('Staff and Position Change are checked');
           $('.fac_staffPosition').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.fac_staffPosition, .hyde').hide();
           $('#id_additional_supervisor_role_0').prop('checked', false);
           $('#id_additional_supervisor_role_1').prop('checked', false);
@@ -255,22 +255,22 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isLeave = $('#id_leave_of_absence').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Leave of Absence: " + isLeave);
-      console.log('I am in the leave of absence function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Leave of Absence: " + isLeave);
+      //console.log('I am in the leave of absence function!');
       if(isFaculty == true && isLeave == true)
       {
-          console.log('Faculty and Leave of Absence are checked');
+          //console.log('Faculty and Leave of Absence are checked');
           $('.fac_staffLeave').show();
       }
       else if(isStaff == true && isLeave == true)
       {
-          console.log('Staff and Leave of Absence are checked');
+          //console.log('Staff and Leave of Absence are checked');
           $('.fac_staffLeave').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.fac_staffLeave').hide();
       }
   }
@@ -279,17 +279,17 @@
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isSabbatical = $('#id_sabbatical').is(':checked');
-      console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      console.log("Sabbatical: " + isSabbatical);
-      console.log('I am in the sabbatical function!');
+      //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
+      //console.log("Sabbatical: " + isSabbatical);
+      //console.log('I am in the sabbatical function!');
       if(isFaculty == true && isSabbatical == true)
       {
-          console.log('Faculty and sabbatical are checked');
+          //console.log('Faculty and sabbatical are checked');
           $('.facSabbatical').show();
       }
       else
       {
-          console.log('Missing something to be checked');
+          //console.log('Missing something to be checked');
           $('.facSabbatical').hide();
       }
   }
@@ -395,7 +395,7 @@
     // used with select lists so when an item is selected
     // it will show the input field
     $('#id_department_name').on('change', function(){
-      console.log(this.value);
+      //console.log(this.value);
       if (this.value == 'EVS') {
         $('.shift').show();
       } else {
@@ -403,7 +403,7 @@
       }
     });
     $('#id_employment_types').on('change', function(){
-      console.log(this.value);
+      //console.log(this.value);
       if (this.value == 'Contract-ongoing' || this.value == 'Contract-terminal') {
         $('.contract').show();
       } else {
@@ -411,7 +411,7 @@
       }
     });
     $('#id_employment_types').on('change', function(){
-      console.log(this.value);
+      //console.log(this.value);
       if (this.value == 'Adjunct' || this.value == 'Adjunct') {
         $('.music').show();
       } else {
@@ -673,40 +673,26 @@
           <div class="col-md-6 pb-3">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.supervisor_name.id_for_label}}"
-                  {% if form.supervisor_name.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.supervisor_name.label}}</h5>
+                <label for="{{form.approver.id_for_label}}"
+                  {% if form.approver.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.approver.label}}</h5>
                 </label>
-                <input name="supervisor_name" placeholder="Supervisor's Name"
-                  class="form-control{% if form.supervisor_name.errors %} is-invalid{% endif %}"
-                  id="{{form.supervisor_name.id_for_label}}" type="text"
-                  value="{{form.supervisor_name.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                <select class="form-control" name="approver"
+                  id="{{form.approver.id_for_label}}">
+                  {% for value, text in form.fields.approver.choices %}
+                  <option value="{{value}}"
+                    {% if form.approver.value == value %}
+                    selected
+                    {% endif %}>
+                    {{text}}
+                  </option>
+                  {% endfor %}
+                </select>
                 <small class="text-danger">
-                  {{form.supervisor_name.errors|join:", "}}
+                  {{form.approver.errors|join:", "}}
                 </small>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 pb-3">
-            <label for="{{form.approver.id_for_label}}"
-              {% if form.approver.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.approver.label}}</h5>
-            </label>
-            <select class="form-control" name="approver"
-              id="{{form.approver.id_for_label}}">
-              {% for value, text in form.fields.approver.choices %}
-              <option value="{{value}}"
-                {% if form.approver.value == value %}
-                selected
-                {% endif %}>
-                {{text}}
-              </option>
-              {% endfor %}
-            </select>
-            <small class="text-danger">
-              {{form.approver.errors|join:", "}}
-            </small>
           </div>
         </div>
         <!-- end Section I .form-row -->
@@ -820,12 +806,12 @@
         </div>
         <!-- end Section II .form-row -->
         <!-- Section III .form-row -->
-        <div class="form-row mt-4">
+        <div class="form-row mt-4 section3">
           <div class="col-sm-12 card-header bg-secondary text-white">
             <h6>Section III - Complete only applicable information.</h6>
           </div>
           <!-- Hidden unless faculty or staff and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 facNewhire staffNewhire">
+          <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.position_title.id_for_label}}"
@@ -924,7 +910,7 @@
                     type="radio" name="pay_type" id="id_{{form.pay_type.name}}_0"
                     {% if form.pay_type.value == 'Exempt' %}checked{% endif %}>
                   <label for="id_{{form.pay_type.name}}_0" class="form-check-label">
-                    Exempt
+                    Exempt (salary)
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -932,7 +918,7 @@
                     type="radio" name="pay_type" id="id_{{form.pay_type.name}}_1"
                     {% if form.pay_type.value == 'Non-exempt' %}checked{% endif %}>
                   <label for="id_{{form.pay_type.name}}_1" class="form-check-label">
-                    Non-exempt
+                    Non-exempt (hourly)
                   </label>
                 </div>
               </div>
@@ -1352,7 +1338,7 @@
               <div class="form-group">
                 <label for="{{form.contract_years.id_for_label}}"
                   {% if form.contract_years.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.contract_years.label}}</h5>
+                  <h5>Number of years of contract</h5>
                 </label>
                 <input type="text" class="form-control
                   {% if form.contract_years.errors %} is-invalid{% endif %}"
@@ -1444,15 +1430,15 @@
               </label>
               <div class="form-group small">
                 <div class="form-check">
-                  <label for="id_{{form.teaching_appointment.name}}_0" class="form-check-label">
-                    <input class="form-check-input" value="Yes"
+                  <input class="form-check-input" value="Yes"
                       type="radio" name="teaching_appointment"
                       id="id_{{form.teaching_appointment.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                       {% if form.teaching_appointment.value == '1 Year' %}
                         checked
                       {% endif %}>
-                      Seven 4 credit courses during academic year
+                  <label for="id_{{form.teaching_appointment.name}}_0" class="form-check-label">
+                      1 Year: Seven 4 credit courses during academic year
                   </label>
                 </div>
                 <div class="form-check">
@@ -1462,7 +1448,7 @@
                     onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                     {% if form.teaching_appointment.value == '3 Year' %}checked{% endif %}>
                   <label for="id_{{form.teaching_appointment.name}}_1" class="form-check-label">
-                    Six courses during the first year,
+                    3 Year: Six courses during the first year,
                     Seven courses the second and third year
                   </label>
                 </div>
@@ -1473,7 +1459,7 @@
                     onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                     {% if form.teaching_appointment.value == 'Other' %}checked{% endif %}>
                   <label for="id_{{form.teaching_appointment.name}}_2" class="form-check-label">
-                    Other
+                    Other arrangement
                   </label>
                 </div>
               </div>
@@ -1670,7 +1656,7 @@
                   name="new_supervisor"
                   id="{{form.new_supervisor.id_for_label}}"
                   value="{{form.new_supervisor.value|default_if_none:''}}"
-                  placeholder="Number leave_of_absence_reason credits">
+                  placeholder="Name of new supervisor">
                 <small class="text-danger">
                   {{form.new_supervisor.errors|join:", "}}
                 </small>
@@ -1691,7 +1677,7 @@
                   class="form-control{% if form.old_supervisor.errors %} is-invalid{% endif %}"
                   id="{{form.old_supervisor.id_for_label}}"
                   value="{{form.old_supervisor.value|default_if_none:''}}"
-                  placeholder="Number old_department credits">
+                  placeholder="Name of old supervisor">
                 <small class="text-danger">
                   {{form.old_supervisor.errors|join:", "}}
                 </small>
@@ -1858,7 +1844,7 @@
                   class="form-control{% if form.returned_property.errors %} is-invalid{% endif %}"
                   id="{{form.returned_property.id_for_label}}"
                   value="{{form.returned_property.value|default_if_none:''}}"
-                  placeholder="Number returned_property credits">
+                  placeholder="Returned property">
                 <small class="text-danger">
                   {{form.returned_property.errors|join:", "}}
                 </small>
