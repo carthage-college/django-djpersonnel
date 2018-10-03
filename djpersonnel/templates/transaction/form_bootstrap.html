@@ -946,21 +946,18 @@
           <div class="col-md-6 pb-3 staffNewhire" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.pay_rate.id_for_label}}"
-                  {% if form.pay_rate.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.pay_rate.label}}</h5>
+                <label for="{{form.offered_compensation.id_for_label}}"
+                  {% if form.offered_compensation.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.offered_compensation.label}}</h5>
                 </label>
-                <select class="form-control" name="pay_rate"
-                  id="{{form.pay_rate.id_for_label}}">
-                  {% for value, text in form.fields.pay_rate.choices %}
-                    <option value="{{value}}"
-                      {% if form.pay_rate.value == value %}
-                        selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
+                <input type="text" name="offered_compensation"
+                  placeholder="Annual salary/rate of pay" class="form-control
+                  {% if form.offered_compensation.errors %} is-invalid{% endif %}"
+                  id="{{form.offered_compensation.id_for_label}}"
+                  value="{{form.offered_compensation.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.offered_compensation.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1897,6 +1894,25 @@
               </div>
             </div>
           </div>
+          <!-- Hidden unless faculty or staff and "compensation change" is checked -->
+          <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.new_compensation.id_for_label}}"
+                  {% if form.new_compensation.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.new_compensation.label}}</h5>
+                </label>
+                <input type="text" name="new_compensation"
+                  placeholder="New annual salary/rate of pay" class="form-control
+                  {% if form.new_compensation.errors %} is-invalid{% endif %}"
+                  id="{{form.new_compensation.id_for_label}}"
+                  value="{{form.new_compensation.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.new_compensation.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
           <!--
           Hidden unless faculty or staff and "compensation change" is checked
           -->
@@ -1914,25 +1930,6 @@
                   placeholder="Current annual salary/rate of pay">
                 <small class="text-danger">
                   {{form.current_compensation.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty or staff and "compensation change" is checked -->
-          <div class="col-md-6 pb-3 facCompensation staffCompensation" style="display:none">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.new_compensation.id_for_label}}"
-                  {% if form.new_compensation.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.new_compensation.label}}</h5>
-                </label>
-                <input type="text" name="new_compensation"
-                  placeholder="New annual salary/rate of pay" class="form-control
-                  {% if form.new_compensation.errors %} is-invalid{% endif %}"
-                  id="{{form.new_compensation.id_for_label}}"
-                  value="{{form.new_compensation.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.new_compensation.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -1985,26 +1982,26 @@
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
-                  <label for="id_{{form.temporary_interim_pay.name}}_0" class="form-check-label">
-                    <input class="form-check-input" value="Temporary Pay"
+                  <input class="form-check-input" value="Temporary Pay"
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
                       {% if form.temporary_interim_pay.value == 'Temporary Pay' %}
                         checked
                       {% endif %}>
+                  <label for="id_{{form.temporary_interim_pay.name}}_0" class="form-check-label">
                       Temporary Pay
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <label for="id_{{form.temporary_interim_pay.name}}_1" class="form-check-label">
-                    <input class="form-check-input" value="Interim Pay"
+                  <input class="form-check-input" value="Interim Pay"
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_1"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
                       {% if form.temporary_interim_pay.value == 'Interim Pay' %}
                         checked
                       {% endif %}>
+                  <label for="id_{{form.temporary_interim_pay.name}}_1" class="form-check-label">
                       Interim Pay
                   </label>
                 </div>
