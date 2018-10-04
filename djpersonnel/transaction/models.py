@@ -427,7 +427,7 @@ class Operation(models.Model):
         null=True, blank=True
     )
     temporary_interim_pay = models.CharField(
-        "Temporary interim pay",
+        verbose_name="Is this temporary/interim pay?",
         max_length=4,
         choices=BINARY_CHOICES,
         null=True, blank=True
