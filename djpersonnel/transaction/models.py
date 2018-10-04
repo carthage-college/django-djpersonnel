@@ -17,10 +17,6 @@ HIRE_CHOICES = (
     ('New Hire', 'New Hire'),
     ('Rehire', 'Rehire')
 )
-PAY_RATE_CHOICES = (
-    ('Annual Salary', 'Annual Salary'),
-    ('Hourly Rate', 'Hourly Rate')
-)
 PAY_CLASS_CHOICES = (
     ('Exempt', 'Exempt'),
     ('Non-exempt', 'Non-exempt')
@@ -182,10 +178,6 @@ class Operation(models.Model):
         verbose_name='Email Address',
         max_length=128
     )
-    supervisor_name = models.CharField(
-        verbose_name='Supervisor Name',
-        max_length=128
-    )
     employee_type = models.CharField(
         "Employee Type",
         max_length=16,
@@ -263,10 +255,10 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
-    pay_rate = models.CharField(
-        verbose_name='Pay rate/annual salary',
-        max_length=16,
-        choices=PAY_RATE_CHOICES,
+    offered_compensation = models.DecimalField(
+        verbose_name='Annual salary/rate of pay',
+        decimal_places=2,
+        max_digits=16,
         null=True, blank=True
     )
     expected_start_date = models.DateField(

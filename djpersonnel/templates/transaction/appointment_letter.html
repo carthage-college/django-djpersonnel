@@ -29,12 +29,11 @@
             reporting to {{data.level3_approver.first_name}}
             {{data.level3_approver.last_name}}.
             This position is designated as {{data.position_type}}
-            <strong>(insert exempt or non-exempt)</strong> at the
-            <strong>(insert annual salary or hourly rate)</strong>
-            of ${{data.new_compensation|intcomma}}.
+            {{data.pay_type}} at the {{data.pay_rate}} of
+            ${{data.offered_compensation|intcomma}}.
         </p>
         <p>
-            <i>Note: you can also list any arrangments in this section</i>
+            {{data.other_arrangements}}
         </p>
         <p>
             As we discussed during the interview process.
