@@ -1294,9 +1294,7 @@
                 </label>
                 <textarea rows="2" placeholder="{{form.other_arrangements.help_text}}"
                   class="form-control{% if form.other_arrangements.errors %} is-invalid{% endif %}"
-                  id="{{form.other_arrangements.id_for_label}}" name="other_arrangements">
-                  {{form.other_arrangements.value|default_if_none:''}}
-                </textarea>
+                  id="{{form.other_arrangements.id_for_label}}" name="other_arrangements">{{form.other_arrangements.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.other_arrangements.errors|join:", "}}
                 </small>
@@ -1396,9 +1394,7 @@
                 <textarea rows="2"
                   class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
                   id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
-                  placeholder="{{form.courses_teaching.help_text}}">
-                  {{form.courses_teaching.value|default_if_none:''}}
-                </textarea>
+                  placeholder="{{form.courses_teaching.help_text}}">{{form.courses_teaching.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.courses_teaching.errors|join:", "}}
                 </small>
@@ -1481,9 +1477,7 @@
                 <textarea rows="2" cols="6" name="teaching_appointment_arrangements"
                   class="form-control{% if form.teaching_appointment_arrangements.errors %} is-invalid{% endif %}"
                   id="{{form.teaching_appointment_arrangements.id_for_label}}"
-                  placeholder="{{form.teaching_appointment_arrangements.help_text}}">
-                  {{form.teaching_appointment_arrangements.value|default_if_none:''}}
-                </textarea>
+                  placeholder="{{form.teaching_appointment_arrangements.help_text}}">{{form.teaching_appointment_arrangements.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.teaching_appointment_arrangements.errors|join:", "}}
                 </small>
