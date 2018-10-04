@@ -1977,7 +1977,7 @@
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Temporary Pay"
+                  <input class="form-check-input" value="Yes"
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
@@ -1989,7 +1989,7 @@
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Interim Pay"
+                  <input class="form-check-input" value="No"
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_1"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
@@ -2095,7 +2095,7 @@
                   {% if form.department_account_number.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.department_account_number.label}}</h5>
                 </label>
-                <input type="number" name="department_account_number"
+                <input type="text" name="department_account_number"
                   placeholder="Returned property credits"
                   class="form-control{% if form.department_account_number.errors %} is-invalid{% endif %}"
                   id="{{form.department_account_number.id_for_label}}"
