@@ -77,9 +77,12 @@ def form_home(request):
         form = OperationForm(label_suffix='')
 
     hr = in_group(user, settings.HR_GROUP)
-    return render(
-        request, 'transaction/form_bootstrap.html', {'form': form,'hr':hr}
-    )
+
+    template = 'transaction/form_bootstrap.html'
+    if request.GET.get('switch'):
+        template = 'transaction/form.html'
+
+    return render(request, template, {'form': form,'hr':hr})
 
 
 @portal_auth_required(
