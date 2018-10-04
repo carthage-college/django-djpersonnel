@@ -209,11 +209,12 @@
       $('.staffStatus').hide();
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
-      isStatusChange = $('#id_status_change').is(':checked');
+      isStatusChange = $('#id_status_change').is(':checked'),
+      isNewhireRehire = $('#id_newhire_rehire').is(':checked');;
       //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
       //console.log("Status: " + isStatusChange);
       //console.log('I am in the status function!');
-      if(isStaff == true && isStatusChange == true)
+      if(isStaff == true && isNewhireRehire == true || isStatusChange == true)
       {
           //console.log('Staff and Status Change are checked');
           $('.staffStatus').show();
