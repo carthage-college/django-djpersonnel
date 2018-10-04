@@ -105,18 +105,8 @@ $(function() {
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>Section I - Employee Information</h6>
         </div>
-        <div class="col-sm-12">
-          <div class="container-fluid border border-secondary">
-            <div class="form-group">
-              <h6 class="block-title">
-                  {# field_name data 'employee_id_number' #}
-              </h6>
-              <p>{{data.employee_id_number}}</p>
-            </div>
-          </div>
-        </div>
         <div class="col-sm-4">
-          <div class="container-fluid border border-secondary">
+          <div class="container-fluid">
             <div class="form-group">
               <h6>{% field_name data 'last_name' %}</h6>
               <p>{{data.last_name}}</p>
@@ -136,31 +126,6 @@ $(function() {
             <div class="form-group">
               <h6>{% field_name data 'middle_name' %}</h6>
               <p>{{data.middle_name}}</p>
-            </div>
-          </div>
-        </div>
-        <!-- Section II -->
-        <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>Section II - Complete for New Hires Only</h6>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>
-                {% field_name data 'expected_start_date' %}
-              </h6>
-              <p>{{data.expected_start_date}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>
-                {% field_name data 'end_date' %}
-                (if applicable)
-              </h6>
-              <p>{{data.end_date}}</p>
             </div>
           </div>
         </div>
@@ -212,101 +177,6 @@ $(function() {
             </div>
           </div>
         </div>
-        <!-- Section III -->
-        <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>
-            Section III - Type of Action Please check applicable
-            action(s) and enter effective date.
-          </h6>
-        </div>
-        <div class="col-md-12">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>{% field_name data 'position_effective_date' %}</h6>
-              <p>{{data.position_effective_date}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-check">
-              {% if data.newhire_rehire == True %}
-                <i class="fa fa-check-square-o green" data-placement="top"></i>
-              {% else %}
-                <i class="fa fa-square-o" data-placement="top"></i>
-              {% endif %}
-              {% field_name data 'newhire_rehire' %}
-            </div>
-            <div class="form-check">
-              {% if data.onetime_payment == True %}
-                <i class="fa fa-check green" data-placement="top"></i>
-              {% else %}
-                <i class="fa fa-square-o" data-placement="top"></i>
-              {% endif %}
-              {% field_name data 'onetime_payment' %}
-            </div>
-            <div class="form-group">
-              <h6>
-                {% field_name data 'voluntary_involuntary_termination' %}
-              </h6>
-              <p>{{data.voluntary_involuntary_termination}}</p>
-            </div>
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="control-group">
-              <div class="form-check">
-                {% if data.position_change == True %}
-                  <i class="fa fa-check-square-o green" data-placement="top"></i>
-                {% else %}
-                  <i class="fa fa-square-o" data-placement="top"></i>
-                {% endif %}
-                {% field_name data 'position_change' %}
-              </div>
-              <div class="form-check">
-                {% if data.department_change == True %}
-                  <i class="fa fa-check-square-o green" data-placement="top"></i>
-                {% else %}
-                    <i class="fa fa-square-o" data-placement="top"></i>
-                {% endif %}
-                {% field_name data 'department_change' %}
-              </div>
-              <div class="form-check">
-                {% if data.compensation_change == True %}
-                  <i class="fa fa-check-square-o green" data-placement="top"></i>
-                {% else %}
-                  <i class="fa fa-square-o" data-placement="top"></i>
-                {% endif %}
-                {% field_name data 'compensation_change' %}
-              </div>
-              <div class="form-check">
-                {% if data.leave_of_absence == True %}
-                  <i class="fa fa-check-square-o green" data-placement="top"></i>
-                {% else %}
-                  <i class="fa fa-square-o" data-placement="top"></i>
-                {% endif %}
-                {% field_name data 'leave_of_absence' %}
-              </div>
-            </div>
-            <!-- /.control-group -->
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- /.col-sm-6 -->
-        <!-- Section IV -->
-        <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>Section IV - Complete only applicable information.</h6>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>{% field_name data 'position_title' %}</h6>
-              <p>{{data.position_title}}</p>
-            </div>
-          </div>
-        </div>
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -318,31 +188,198 @@ $(function() {
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>
-                {% field_name data 'compensation_change' %}
-              </h6>
-              <p>{{data.compensation_change}}</p>
+              <h6>{% field_name data 'employee_type' %}</h6>
+              <p>{{data.employee_type}}</p>
             </div>
           </div>
         </div>
+      </div><!-- end form row -->
+      <div class="form-row">
+        <!-- Section II -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>
+            Section II - Complete for New Hires Only.
+          </h6>
+        </div>
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.newhire_rehire == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'newhire_rehire' %}
+            </div>
+            <div class="form-check">
+              {% if data.department_change == True %}
+                <i class="fa fa-check green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'department_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.compensation_change == True %}
+                <i class="fa fa-check green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'compensation_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.onetime_payment == True %}
+                <i class="fa fa-check green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'onetime_payment' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.supervisor_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'supervisor_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.termination == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'termination' %}
+            </div>
+            <div class="form-check">
+              {% if data.status_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'status_change' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.position_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'position_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.leave_of_absence == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'leave_of_absence' %}
+            </div>
+            <div class="form-check">
+              {% if data.sabbatical == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'sabbatical' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+      </div>
+      <div class="form-row">
+        <!-- Section III -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section III - Complete only applicable information.</h6>
+        </div>
+        {% if data.position_title != None %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>
-                {% field_name data 'employee_type' %}
-              </h6>
-              <p>{{data.position_type}}</p>
+              <h6>{% field_name data 'position_title' %}</h6>
+              <p>{{data.position_title}}</p>
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if data.status_type != None %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'supervisor_name' %}</h6>
-              <p>{{data.supervisor_name}}</p>
+              <h6>{% field_name data 'status_type' %}</h6>
+              <p>{{data.status_type}}</p>
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if data.status_change_effective_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'status_change_effective_date' %}</h6>
+              <p>{{data.status_change_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.hire_type != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'hire_type' %}</h6>
+              <p>{{data.hire_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.pay_type != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'pay_type' %}</h6>
+              <p>{{data.pay_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.hours_per_week != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'hours_per_week' %}</h6>
+              <p>{{data.hours_per_week}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.offered_compensation != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'offered_compensation' %}</h6>
+              <p>{{data.offered_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.expected_start_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_start_date' %}</h6>
+              <p>{{data.expected_start_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.budget_account != None %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -351,6 +388,569 @@ $(function() {
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if data.supervise_others != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'supervise_others' %}</h6>
+              <p>{{data.supervise_others}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.standard_vacation_package != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'standard_vacation_package' %}</h6>
+              <p>{{data.standard_vacation_package}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.vacation_days != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'vacation_days' %}</h6>
+              <p>{{data.vacation_days}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.position_grant_funded != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_grant_funded' %}</h6>
+              <p>{{data.position_grant_funded}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_number != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_number' %}</h6>
+              <p>{{data.grant_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_amount != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_amount' %}</h6>
+              <p>{{data.grant_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.moving_expenses != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'moving_expenses' %}</h6>
+              <p>{{data.moving_expenses}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.moving_expenses_amount != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'moving_expenses_amount' %}</h6>
+              <p>{{data.moving_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.startup_expenses != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses' %}</h6>
+              <p>{{data.startup_expenses}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.startup_expenses_amount != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses_amount' %}</h6>
+              <p>{{data.startup_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'shift' %}</h6>
+              <p>{{data.shift}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if startup_expenses_amount.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses_amount' %}</h6>
+              <p>{{data.startup_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if other_arrangements.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'other_arrangements' %}</h6>
+              <p>{{data.other_arrangements}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if employment_types.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'employment_types' %}</h6>
+              <p>{{data.employment_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if contract_years.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'contract_years' %}</h6>
+              <p>{{data.contract_years}}</p>
+            </div>
+          </div>
+        </div>
+         {% endif %}
+        {% if music.shift != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'music' %}</h6>
+              <p>{{data.music}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.courses_teaching != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'courses_teaching' %}</h6>
+              <p>{{data.courses_teaching}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.number_of_credits != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'number_of_credits' %}</h6>
+              <p>{{data.number_of_credits}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.teaching_appointment != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'teaching_appointment' %}</h6>
+              <p>{{data.teaching_appointment}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.teaching_appointment_arrangements != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'teaching_appointment_arrangements' %}</h6>
+              <p>{{data.teaching_appointment_arrangements}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.program_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'program_types' %}</h6>
+              <p>{{data.program_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.leave_of_absence_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'leave_of_absence_date' %}</h6>
+              <p>{{data.leave_of_absence_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.expected_return_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_return_date' %}</h6>
+              <p>{{data.expected_return_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.leave_of_absence_reason != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'leave_of_absence_reason' %}</h6>
+              <p>{{data.leave_of_absence_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.new_department != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_department' %}</h6>
+              <p>{{data.new_department}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.old_department != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_department' %}</h6>
+              <p>{{data.old_department}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.new_supervisor != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_supervisor' %}</h6>
+              <p>{{data.new_supervisor}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if music.old_supervisor != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_supervisor' %}</h6>
+              <p>{{data.old_supervisor}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if music.voluntary_involuntary_termination != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'voluntary_involuntary_termination' %}</h6>
+              <p>{{data.voluntary_involuntary_termination}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if music.staff_leaving_voluntary_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'staff_leaving_voluntary_types' %}</h6>
+              <p>{{data.staff_leaving_voluntary_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.staff_leaving_involuntary_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'staff_leaving_involuntary_types' %}</h6>
+              <p>{{data.staff_leaving_involuntary_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.faculty_leaving_voluntary_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'faculty_leaving_voluntary_types' %}</h6>
+              <p>{{data.faculty_leaving_voluntary_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.faculty_leaving_involuntary_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'faculty_leaving_involuntary_types' %}</h6>
+              <p>{{data.faculty_leaving_involuntary_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.last_day_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'last_day_date' %}</h6>
+              <p>{{data.last_day_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.returned_property != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'returned_property' %}</h6>
+              <p>{{data.returned_property}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.eligible_rehire != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'eligible_rehire' %}</h6>
+              <p>{{data.eligible_rehire}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.vacation_days_accrued != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'vacation_days_accrued' %}</h6>
+              <p>{{data.vacation_days_accrued}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.new_compensation != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_compensation' %}</h6>
+              <p>{{data.new_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.current_compensation != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'current_compensation' %}</h6>
+              <p>{{data.current_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.salary_change_reason != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'salary_change_reason' %}</h6>
+              <p>{{data.salary_change_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.compensation_effective_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'compensation_effective_date' %}</h6>
+              <p>{{data.compensation_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.temporary_interim_pay != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'temporary_interim_pay' %}</h6>
+              <p>{{data.temporary_interim_pay}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.end_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'end_date' %}</h6>
+              <p>{{data.end_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.amount != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'amount' %}</h6>
+              <p>{{data.amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.amount_reason != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'amount_reason' %}</h6>
+              <p>{{data.amount_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.pay_after_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'pay_after_date' %}</h6>
+              <p>{{data.pay_after_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.department_account_number != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'department_account_number' %}</h6>
+              <p>{{data.department_account_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.grant_pay != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_pay' %}</h6>
+              <p>{{data.grant_pay}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.grant_pay_account_number != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_pay_account_number' %}</h6>
+              <p>{{data.grant_pay_account_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.sabbatical_types != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'sabbatical_types' %}</h6>
+              <p>{{data.sabbatical_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.academic_year != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'academic_year' %}</h6>
+              <p>{{data.academic_year}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.old_position != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_position' %}</h6>
+              <p>{{data.old_position}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.new_position != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_position' %}</h6>
+              <p>{{data.new_position}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.position_effective_date != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_effective_date' %}</h6>
+              <p>{{data.position_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.additional_supervisor_role != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'additional_supervisor_role' %}</h6>
+              <p>{{data.additional_supervisor_role}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if music.direct_reports != None %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'direct_reports' %}</h6>
+              <p>{{data.direct_reports}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div><!-- end form row -->
+      <div class="form-row">
         <!-- Section V -->
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>
@@ -436,8 +1036,7 @@ $(function() {
             </div>
           </div>
         </div>
-      </div>
-      <!-- end form row -->
+      </div><!-- end form row -->
     </div>
     <!-- end card body -->
     <div class="card-footer text-muted"></div>
