@@ -1973,7 +1973,7 @@
             <div class="container-fluid">
               <label for="id_{{form.temporary_interim_pay.name}}_0"
                 {% if form.temporary_interim_pay.errors %}class="text-danger"{% endif %}>
-                <h5>Interim Pay</h5>
+                <h5>{{form.temporary_interim_pay.label}}</h5>
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
@@ -1981,11 +1981,11 @@
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
-                      {% if form.temporary_interim_pay.value == 'Temporary Pay' %}
+                      {% if form.temporary_interim_pay.value == 'Yes' %}
                         checked
                       {% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_0" class="form-check-label">
-                      Temporary Pay
+                      Yes
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -1993,11 +1993,11 @@
                       type="radio" name="temporary_interim_pay"
                       id="id_{{form.temporary_interim_pay.name}}_1"
                       onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
-                      {% if form.temporary_interim_pay.value == 'Interim Pay' %}
+                      {% if form.temporary_interim_pay.value == 'No' %}
                         checked
                       {% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_1" class="form-check-label">
-                      Interim Pay
+                      No
                   </label>
                 </div>
               </div>
