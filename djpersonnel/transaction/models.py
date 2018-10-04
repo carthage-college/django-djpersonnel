@@ -26,10 +26,6 @@ SHIFT_CHOICES = (
     ('2nd Shift', '2nd Shift'),
     ('3rd Shift', '3rd Shift')
 )
-TERMINATION_CHOICES = (
-    ('Voluntary', 'Voluntary'),
-    ('Involuntary', 'Involuntary')
-)
 EMPLOYMENT_TYPE_CHOICES = (
     ('Adjunct', 'Adjunct'),
     ('Contract-ongoing', 'Contract-ongoing'),
@@ -46,23 +42,19 @@ PROGRAM_CHOICES = (
     ('7 Week Program', '7 Week Program'),
     ('Enrichment Program', 'Enrichment Program')
 )
-STAFF_LEAVING_VOLUNTARY_CHOICES = (
+TERMINATION_CHOICES = (
+    ('Voluntary', 'Voluntary'),
+    ('Involuntary', 'Involuntary')
+)
+TERMINATION_VOLUNTARY_CHOICES = (
     ('Alternate opportunity elsewhere', 'Alternate opportunity elsewhere'),
     ('Job dissatisfaction', 'Job dissatisfaction'),
+    ('Perusing other opportunity', 'Perusing other opportunity'),
     ('Relocation', 'Relocation'),
     ('Retirement', 'Retirement'),
     ('Other', 'Other')
 )
-STAFF_LEAVING_INVOLUNTARY_CHOICES = (
-    ('Contract expired', 'Contract expired'),
-    ('Deceased', 'Deceased'),
-    ('Gross misconduct', 'Gross misconduct')
-)
-FACULTY_LEAVING_VOLUNTARY_CHOICES = (
-    ('Perusing other opportunity', 'Perusing other opportunity'),
-    ('Retirement', 'Retirement')
-)
-FACULTY_LEAVING_INVOLUNTARY_CHOICES = (
+TERMINATION_INVOLUNTARY_CHOICES = (
     ('Contract expired', 'Contract expired'),
     ('Contract non-renwed', 'Contract non-renwed'),
     ('Deceased', 'Deceased'),
@@ -427,8 +419,8 @@ class Operation(models.Model):
         null=True, blank=True
     )
     temporary_interim_pay = models.CharField(
-        "Temporary interim pay",
-        max_length=4,
+        "Is this temporary/interim pay?",
+        max_length=16,
         choices=BINARY_CHOICES,
         null=True, blank=True
     )
@@ -484,39 +476,23 @@ class Operation(models.Model):
         null=True, blank=True
     )
     # Termination checkbox
-    # the following fields are used when the termination checkbox is checked
-    voluntary_involuntary_termination = models.CharField(
-        verbose_name='Voluntary/Involuntary',
+    termination_type = models.CharField(
+        verbose_name='Type of termination',
         max_length=16,
         choices=TERMINATION_CHOICES,
         null=True, blank=True
     )
-    # NOTE: if Staff, Termination are checked and 'Voluntary' then voluntary staff list
-    staff_leaving_voluntary_types = models.CharField(
+    # termination choices
+    termination_voluntary = models.CharField(
         "Reason for leaving",
         max_length=50,
-        choices=STAFF_LEAVING_VOLUNTARY_CHOICES,
+        choices=TERMINATION_VOLUNTARY_CHOICES,
         null=True, blank=True
     )
-    # NOTE: if Staff, Termination are checked and 'Voluntary' then involuntary staff list
-    staff_leaving_involuntary_types = models.CharField(
+    termination_involuntary = models.CharField(
         "Reason for leaving",
         max_length=50,
-        choices=STAFF_LEAVING_INVOLUNTARY_CHOICES,
-        null=True, blank=True
-    )
-    # NOTE: if Faculty, Termination are checked and 'Voluntary' then voluntary faculty list
-    faculty_leaving_voluntary_types = models.CharField(
-        "Reason for leaving",
-        max_length=50,
-        choices=FACULTY_LEAVING_VOLUNTARY_CHOICES,
-        null=True, blank=True
-    )
-    # NOTE: if Faculty, Termination are checked and 'Voluntary' then involuntary faculty list
-    faculty_leaving_involuntary_types = models.CharField(
-        "Reason for leaving",
-        max_length=50,
-        choices=FACULTY_LEAVING_INVOLUNTARY_CHOICES,
+        choices=TERMINATION_INVOLUNTARY_CHOICES,
         null=True, blank=True
     )
     last_day_date = models.DateField(
