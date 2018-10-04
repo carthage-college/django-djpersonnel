@@ -6,8 +6,22 @@
 {% block extra_javascript %}
 {{block.super}}
 <script type="text/javascript">
-  // main jquery function that executes on page load
+
+
+  /**
+   * simple function to show/hide an element based on the value
+   * of another dom object
+   */
+  function toggle($dis, val, dom) {
+     if ($dis.val() == val) {
+       $(dom).show();
+     } else {
+       $(dom).hide();
+     }
+  }
+
   $(function() {
+
     // making sure that at least one checkbox is selected
     $('#checkBtn').click(function() {
       if (!$('.ckbselect').is(':checked')) {
@@ -15,22 +29,146 @@
         return false;
       }
     });
-    $('#section2, .facstaff, .faculty-new, .staff-new, #facultyTerminationInvoluntary, #facultyTerminationVoluntary, #staffTerminationInvoluntary, #staffTerminationVoluntary, .staff-status, .payment, .sabbatical').hide();
+
+    // hide everything
+    var $hyde = '#section2, .facstaff, .faculty-new, .staff-new, #endDate,' +
+                '#grantPayAccountNumber, #terminationInvoluntary,' +
+                '#terminationVoluntary, .staff-status, .sabbatical'
+    $($hyde).hide();
+
+    // section 2 jquery reveal
     $('[name=employee_type]').click(function() {
-        $('#section2').slideDown();
+      $('#section2').slideDown();
     });
+
+    /* department change */
     $('#id_department_change').change(function() {
-       $('.department-change').toggle();
+      $('.department-change').toggle();
     });
+    {# django reveal #}
+    {% if form.department_change.value %}
+    $('.department-change').show();
+    {% endif %}
+    /* end department change */
+
+    /* compensation change */
+    var $intPay = $('input[name="temporary_interim_pay"]');
     $('#id_compensation_change').change(function() {
-       $('.compensation-change').toggle();
+      $('.compensation-change').toggle();
+      if (this.checked && $intPay.val() == 'Yes') {
+        $('#endDate').show();
+      } else {
+        $('#endDate').hide();
+        $intPay.prop('checked', false);
+      }
     });
+    $intPay.click(function() {
+      toggle($(this), 'Yes', '#endDate');
+    });
+    {# django reveal #}
+    {% if form.compensation_change.value %}
+    $('.compensation-change').show();
+    {% endif %}
+    {% if form.temporary_interim_pay.value == 'Yes' %}
+    $('#endDate').show();
+    {% endif %}
+    /* end compensation change */
+
+    /* onetime payment */
+    var $grantPay = $('input[name="grant_pay"]');
+    $('#id_onetime_payment').change(function() {
+      $('.onetime-payment').toggle();
+      if (this.checked && $grantPay.val() == 'Yes') {
+        $('#grantPayAccountNumber').show();
+      } else {
+        $('#grantPayAccountNumber').hide();
+        $grantPay.prop('checked', false);
+      }
+    });
+    $grantPay.click(function() {
+      toggle($(this), 'Yes', '#grantPayAccountNumber');
+    });
+    {# django reveal #}
+    {% if form.onetime_payment.value %}
+    $('.onetime-payment').show();
+    {% endif %}
+    {% if form.grant_pay.value == 'Yes' %}
+    $('#grantPayAccountNumber').show();
+    {% endif %}
+    /* end onetime payment */
+
+
+    /* supervisor change */
     $('#id_supervisor_change').change(function() {
-       $('.supervisor-change').toggle();
+      $('.supervisor-change').toggle();
     });
+    {# django reveal #}
+    {% if form.supervisor_change.value %}
+    $('.supervisor-change').show();
+    {% endif %}
+    /* end supervisor change */
+
+
+    /* termination */
+    var $terminationType = $('input[name="termination_type"]');
     $('#id_termination').change(function() {
-       $('.termination').toggle();
+      var $czech = $terminationType.prop('checked');
+      $('.termination').toggle();
+      if (this.checked && $czech && $terminationType.val() == 'Voluntary') {
+        $('#terminationVoluntary').show();
+        $('#terminationInvoluntary').hide();
+      } else if (this.checked && $czech && $terminationType.val() == 'Involuntary') {
+        $('#terminationVoluntary').hide();
+        $('#terminationInvoluntary').show();
+      } else {
+        $terminationType.prop('checked', false);
+      }
     });
+    $terminationType.click(function() {
+      if ($(this).val() == 'Voluntary') {
+        $('#terminationVoluntary').show();
+        $('#terminationInvoluntary').hide();
+      } else if ($(this).val() == 'Involuntary') {
+        $('#terminationVoluntary').hide();
+        $('#terminationInvoluntary').show();
+      }
+    });
+    {# django reveal #}
+    {% if form.termination.value %}
+    $('.termination').show();
+    {% endif %}
+    {% if form.termination_type.value == 'Voluntary' %}
+      $('#terminationVoluntary').show();
+      $('#terminationInvoluntary').hide();
+    {% else %}{% if form.termination_type.value == 'Involuntary' %}
+      $('#terminationVoluntary').hide();
+      $('#terminationInvoluntary').show();
+    {% endif %}{% endif %}
+    /* end termination */
+
+
+    $('#id_position_change').change(function() {
+      $('.position-change').toggle();
+    });
+    $('#id_leave_of_absence').change(function() {
+      $('.leave-of-absence').toggle();
+    });
+
+    {# django reveal #}
+
+    {# section 2 reveal #}
+    {% if form.employee_type.value %}
+    $('#section2').slideDown();
+    {% endif %}
+    {# checkboxes reveal #}
+    {% if form.position_change.value %}
+    $('.position-change').show();
+    {% endif %}
+    {% if form.leave_of_absence.value %}
+    $('.leave-of-absence').show();
+    {% endif %}
+
+    {# end django reveal #}
 
     // used with select lists so when an item is selected
     // it will show the input field
@@ -82,7 +220,6 @@
       <h3 class="text-center text-white">Personnel Action Form</h3>
     </div>
     <div class="card-body bg-light">
-      {{form.errors}}
       <form action="." method="post" class="form" role="form">
         {% csrf_token %}
         <!-- Section I .form-row -->
@@ -733,7 +870,6 @@
                   <input class="form-check-input" value="Yes"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_0"
-                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
                       {% if form.position_grant_funded.value == 'Yes' %}
                         checked
                       {% endif %}>
@@ -745,7 +881,6 @@
                    <input class="form-check-input" value="No"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_1"
-                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
                       {% if form.position_grant_funded.value == 'No' %}
                         checked
                       {% endif %}>
@@ -1164,7 +1299,7 @@
           <!--
           Hidden unless faculty or staff and "leave of absence" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff leave-of-absence">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.leave_of_absence_date.id_for_label}}"
@@ -1188,7 +1323,7 @@
           <!--
           Hidden unless faculty or staff and "leave of absence" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff leave-of-absence">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.expected_return_date.id_for_label}}"
@@ -1212,7 +1347,7 @@
           <!--
           Hidden unless faculty or staff and "leave of absence" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff leave-of-absence">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.leave_of_absence_reason.id_for_label}}"
@@ -1332,52 +1467,52 @@
           <!-- Hidden unless faculty or staff and "termination" is checked -->
           <div class="col-md-6 pb-3 facstaff termination">
             <div class="container-fluid">
-              <label for="id_{{form.voluntary_involuntary_termination.name}}_0"
-                {% if form.voluntary_involuntary_termination.errors %}class="text-danger"{% endif %}>
-                <h5>{{form.voluntary_involuntary_termination.label}}</h5>
+              <label for="id_{{form.termination_type.name}}_0"
+                {% if form.termination_type.errors %}class="text-danger"{% endif %}>
+                <h5>{{form.termination_type.label}}</h5>
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Voluntary"
-                    type="radio" name="voluntary_involuntary_termination"
-                    id="id_{{form.voluntary_involuntary_termination.name}}_0"
-                    {% if form.voluntary_involuntary_termination.value == 'Voluntary' %}
+                    type="radio" name="termination_type"
+                    id="id_{{form.termination_type.name}}_0"
+                    {% if form.termination_type.value == 'Voluntary' %}
                       checked
                     {% endif %}>
-                  <label for="id_{{form.voluntary_involuntary_termination.name}}_0"
+                  <label for="id_{{form.termination_type.name}}_0"
                     class="form-check-label">
-                    Voluntary Termination
+                    Voluntary
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Involuntary"
-                    type="radio" name="voluntary_involuntary_termination"
-                    id="id_{{form.voluntary_involuntary_termination.name}}_1"
-                    {% if form.voluntary_involuntary_termination.value == 'Involuntary' %}
+                    type="radio" name="termination_type"
+                    id="id_{{form.termination_type.name}}_1"
+                    {% if form.termination_type.value == 'Involuntary' %}
                       checked
                     {% endif %}>
-                  <label for="id_{{form.voluntary_involuntary_termination.name}}_1" class="form-check-label">
-                    Involuntary Termination
+                  <label for="id_{{form.termination_type.name}}_1" class="form-check-label">
+                    Involuntary
                   </label>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Hidden unless staff, termination and "Voluntary" is checked -->
-          <div class="col-md-6 pb-3" id="staffTerminationVoluntary">
+          <!-- Hidden unless termination and "Voluntary" is checked -->
+          <div class="col-md-6 pb-3" id="terminationVoluntary">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.staff_leaving_voluntary_types.id_for_label}}"
-                  {% if form.staff_leaving_voluntary_types.errors %}
+                <label for="{{form.termination_voluntary.id_for_label}}"
+                  {% if form.termination_voluntary.errors %}
                     class="text-danger"
                   {% endif %}>
                   <h5>Voluntary Reasons for Leaving</h5>
                 </label>
                 <select name="shift" class="form-control"
-                  id="{{form.staff_leaving_voluntary_types.id_for_label}}">
-                {% for value, text in form.fields.staff_leaving_voluntary_types.choices %}
+                  id="{{form.termination_voluntary.id_for_label}}">
+                {% for value, text in form.fields.termination_voluntary.choices %}
                   <option value="{{value}}"
-                    {% if form.staff_leaving_voluntary_types.value == value %}
+                    {% if form.termination_voluntary.value == value %}
                     selected
                     {% endif %}>
                     {{text}}
@@ -1388,74 +1523,22 @@
             </div>
           </div>
           <!--
-          Hidden unless staff, termination and "Involuntary" is checked
+          Hidden unless termination and "Involuntary" is checked
           -->
-          <div class="col-md-6 pb-3" id="staffTerminationInvoluntary">
+          <div class="col-md-6 pb-3" id="terminationInvoluntary">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.staff_leaving_involuntary_types.id_for_label}}"
-                  {% if form.staff_leaving_involuntary_types.errors %}
+                <label for="{{form.termination_involuntary.id_for_label}}"
+                  {% if form.termination_involuntary.errors %}
                     class="text-danger"
                   {% endif %}>
                   <h5>Involuntary Reasons for Leaving</h5>
                 </label>
                 <select name="shift" class="form-control"
-                  id="{{form.staff_leaving_involuntary_types.id_for_label}}">
-                  {% for value, text in form.fields.staff_leaving_involuntary_types.choices %}
+                  id="{{form.termination_involuntary.id_for_label}}">
+                  {% for value, text in form.fields.termination_involuntary.choices %}
                     <option value="{{value}}"
-                      {% if form.staff_leaving_involuntary_types.value == value %}
-                      selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          </div>
-          <!--
-          Hidden unless faculty, termination and "Voluntary" is checked
-          -->
-          <div class="col-md-6 pb-3" id="facultyTerminationVoluntary">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.faculty_leaving_voluntary_types.id_for_label}}"
-                  {% if form.faculty_leaving_voluntary_types.errors %}
-                    class="text-danger"
-                  {% endif %}>
-                  <h5>Voluntary Reasons for Leaving</h5>
-                </label>
-                <select name="shift" class="form-control"
-                  id="{{form.faculty_leaving_voluntary_types.id_for_label}}">
-                  {% for value, text in form.fields.faculty_leaving_voluntary_types.choices %}
-                    <option value="{{value}}"
-                      {% if form.faculty_leaving_voluntary_types.value == value %}
-                      selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          </div>
-          <!--
-          Hidden unless faculty, termination and "Involuntary" is checked
-          -->
-          <div class="col-md-6 pb-3" id="facultyTerminationInvoluntary">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.faculty_leaving_involuntary_types.id_for_label}}"
-                  {% if form.faculty_leaving_involuntary_types.errors %}
-                    class="text-danger"
-                  {% endif %}>
-                  <h5>Involuntary Reasons for Leaving</h5>
-                </label>
-                <select class="form-control" name="shift"
-                  id="{{form.faculty_leaving_involuntary_types.id_for_label}}">
-                  {% for value, text in form.fields.faculty_leaving_involuntary_types.choices %}
-                    <option value="{{value}}"
-                      {% if form.faculty_leaving_involuntary_types.value == value %}
+                      {% if form.termination_involuntary_types.value == value %}
                       selected
                       {% endif %}>
                       {{text}}
@@ -1644,34 +1727,28 @@
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="Temporary Pay"
+                    type="radio" name="temporary_interim_pay"
+                    id="id_{{form.temporary_interim_pay.name}}_0"
+                    {% if form.temporary_interim_pay.value == 'Yes' %}checked{% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_0" class="form-check-label">
-                    <input class="form-check-input" value="Temporary Pay"
-                      type="radio" name="temporary_interim_pay"
-                      id="id_{{form.temporary_interim_pay.name}}_0"
-                      onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
-                      {% if form.temporary_interim_pay.value == 'Temporary Pay' %}
-                        checked
-                      {% endif %}>
-                      Temporary Pay
+                    Yes
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="Interim Pay"
+                    type="radio" name="temporary_interim_pay"
+                    id="id_{{form.temporary_interim_pay.name}}_1"
+                    {% if form.temporary_interim_pay.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_1" class="form-check-label">
-                    <input class="form-check-input" value="Interim Pay"
-                      type="radio" name="temporary_interim_pay"
-                      id="id_{{form.temporary_interim_pay.name}}_1"
-                      onclick="javascript:toggleCheck('id_{{form.temporary_interim_pay.name}}_0','end_date');"
-                      {% if form.temporary_interim_pay.value == 'Interim Pay' %}
-                        checked
-                      {% endif %}>
-                      Interim Pay
+                    No
                   </label>
                 </div>
               </div>
             </div>
           </div>
           <!-- Hidden unless Temporary Interim Pay checked "Yes" -->
-          <div class="col-sm-6 pb-3 hyde" id="endDate">
+          <div class="col-sm-6 pb-3" id="endDate">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.end_date.id_for_label}}"
@@ -1692,7 +1769,7 @@
           Hidden unless faculty or staff and "request for onetime payment"
           is checked
           -->
-          <div class="col-md-6 pb-3 payment">
+          <div class="col-md-6 pb-3 facstaff onetime-payment">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.amount.id_for_label}}"
@@ -1713,7 +1790,7 @@
           Hidden unless faculty or staff and "request for onetime payment"
           is checked
           -->
-          <div class="col-md-6 pb-3 payment">
+          <div class="col-md-6 pb-3 facstaff onetime-payment">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.amount_reason.id_for_label}}"
@@ -1734,7 +1811,7 @@
           Hidden unless faculty or staff and "request for onetime payment"
           is checked
           -->
-          <div class="col-md-6 pb-3 payment">
+          <div class="col-md-6 pb-3 facstaff onetime-payment">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.pay_after_date.id_for_label}}"
@@ -1755,7 +1832,7 @@
           Hidden unless faculty or staff and "request for onetime payment"
           is checked
           -->
-          <div class="col-md-6 pb-3 payment">
+          <div class="col-md-6 pb-3 facstaff onetime-payment">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.department_account_number.id_for_label}}"
@@ -1776,7 +1853,7 @@
           Hidden unless faculty or staff and "request for onetime payment"
           is checked
           -->
-          <div class="col-md-6 pb-3 payment">
+          <div class="col-md-6 pb-3 facstaff onetime-payment">
             <div class="container-fluid">
               <label for="id_{{form.grant_pay.name}}_0"
                 {% if form.grant_pay.errors %}class="text-danger"{% endif %}>
@@ -1786,7 +1863,6 @@
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes" type="radio"
                     name="grant_pay" id="id_{{form.grant_pay.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.grant_pay.name}}_0','grant_pay_account_number');"
                     {% if form.grant_pay.value == 'Yes' %}checked {% endif %}>
                   <label for="id_{{form.grant_pay.name}}_0" class="form-check-label">
                     Yes
@@ -1795,7 +1871,6 @@
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
                     name="grant_pay" id="id_{{form.grant_pay.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.grant_pay.name}}_0','grant_pay_account_number');"
                     {% if form.grant_pay.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.grant_pay.name}}_1" class="form-check-label">
                     No
@@ -1805,7 +1880,7 @@
             </div>
           </div>
           <!-- Hidden unless Grant Pay checked "Yes" -->
-          <div class="col-md-6 pb-3 hyde" id="grantPayAccountNumber">
+          <div class="col-md-6 pb-3" id="grantPayAccountNumber">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.grant_number.id_for_label}}"
@@ -1866,9 +1941,9 @@
             </div>
           </div>
           <!--
-          Hidden unless faculty staff and "position/title change" is checked
+          Hidden unless faculty or staff and "position/title change" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff position-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.old_position.id_for_label}}"
@@ -1886,9 +1961,9 @@
             </div>
           </div>
           <!--
-          Hidden unless faculty staff and "position/title change" is checked
+          Hidden unless faculty or staff and "position/title change" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff position-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.new_position.id_for_label}}"
@@ -1906,10 +1981,9 @@
             </div>
           </div>
           <!--
-          Hidden unless faculty staff and "position/title change"
-          is checked
+          Hidden unless faculty or staff and "position/title change" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff">
+          <div class="col-md-6 pb-3 facstaff position-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.position_effective_date.id_for_label}}"
@@ -1926,8 +2000,10 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless faculty staff and "position/title change" is checked -->
-          <div class="col-md-6 pb-3 facstaff">
+          <!--
+          Hidden unless faculty or staff and "position/title change" is checked
+          -->
+          <div class="col-md-6 pb-3 facstaff position-change">
             <div class="container-fluid">
               <label for="id_{{form.additional_supervisor_role.name}}_0"
                 {% if form.additional_supervisor_role.errors %}class="text-danger"{% endif %}>
