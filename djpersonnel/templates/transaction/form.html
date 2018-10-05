@@ -7,7 +7,6 @@
 {{block.super}}
 <script type="text/javascript">
 
-
   /**
    * simple function to show/hide an element based on the value
    * of another dom object
@@ -31,41 +30,70 @@
     });
 
     // hide everything
-    var $hyde = '#section2, .facstaff, .faculty-new, .staff-new, #endDate,' +
+    var $hyde = '#section2, .facstaff, .faculty-new, .staff-new, .staff,' +
                 '#grantPayAccountNumber, #terminationInvoluntary,' +
-                '#terminationVoluntary, .staff-status, .sabbatical'
+                '#terminationVoluntary, #endDate, .sabbatical, #directReports'
     $($hyde).hide();
 
     // section 2 jquery reveal
     $('[name=employee_type]').click(function() {
       $('#section2').slideDown();
+      $dis = $(this);
+      $czech = $dis.prop('checked');
+      console.log($czech);
+      if ($czech && $dis.val() == "Staff") {
+        $('#sabbatical').hide();
+        $('#statusChange').show();
+        if ($('#id_status_change').prop('checked') || $('#id_newhire_rehire').prop('checked')) {
+          $('.status-change').show();
+        }
+      }
+      if ($czech && $dis.val() == "Faculty") {
+        $('#sabbatical').show();
+        $('#statusChange, .status-change').hide();
+        if ($('#id_sabbatical').prop('checked')) {
+          $('.sabbatical').show();
+        }
+      }
     });
-
+    {% if form.employee_type.value %}
+    $('#section2').slideDown();
+    {% if form.employee_type.value == 'Staff' %}
+    $('#sabbatical').hide();
+    $('#statusChange').show();
+    {% if form.status_change.value %}
+    $('.status-change').show();
+    {% endif %}{% endif %}
+    {% if form.employee_type.value == 'Faculty' %}
+    $('#sabbatical').show();
+    $('#statusChange').hide();
+    {% if form.sabbatical.value %}
+    $('.sabbatical').show();
+    {% endif %}{% endif %}{% endif %}
     /* department change */
     $('#id_department_change').change(function() {
       $('.department-change').toggle();
     });
-    {# django reveal #}
     {% if form.department_change.value %}
     $('.department-change').show();
     {% endif %}
     /* end department change */
-
     /* compensation change */
     var $intPay = $('input[name="temporary_interim_pay"]');
     $('#id_compensation_change').change(function() {
+      $czech = $initPay.prop('checked');
       $('.compensation-change').toggle();
-      if (this.checked && $intPay.val() == 'Yes') {
+      if (this.checked && $czech && $intPay.val() == 'Yes') {
         $('#endDate').show();
-      } else {
+      } else if (this.checked && $czech && $intPay.val() == 'No') {
         $('#endDate').hide();
-        $intPay.prop('checked', false);
+      } else {
+        $intPay.prop('cmecked', false);
       }
     });
     $intPay.click(function() {
       toggle($(this), 'Yes', '#endDate');
     });
-    {# django reveal #}
     {% if form.compensation_change.value %}
     $('.compensation-change').show();
     {% endif %}
@@ -73,22 +101,22 @@
     $('#endDate').show();
     {% endif %}
     /* end compensation change */
-
     /* onetime payment */
     var $grantPay = $('input[name="grant_pay"]');
     $('#id_onetime_payment').change(function() {
+      $czech = $grantPay.prop('checked');
       $('.onetime-payment').toggle();
-      if (this.checked && $grantPay.val() == 'Yes') {
+      if (this.checked && $czech && $grantPay.val() == 'Yes') {
         $('#grantPayAccountNumber').show();
-      } else {
+      } else if (this.checked && $czech && $grantPay.val() == 'No') {
         $('#grantPayAccountNumber').hide();
+      } else {
         $grantPay.prop('checked', false);
       }
     });
     $grantPay.click(function() {
       toggle($(this), 'Yes', '#grantPayAccountNumber');
     });
-    {# django reveal #}
     {% if form.onetime_payment.value %}
     $('.onetime-payment').show();
     {% endif %}
@@ -96,23 +124,18 @@
     $('#grantPayAccountNumber').show();
     {% endif %}
     /* end onetime payment */
-
-
     /* supervisor change */
     $('#id_supervisor_change').change(function() {
       $('.supervisor-change').toggle();
     });
-    {# django reveal #}
     {% if form.supervisor_change.value %}
     $('.supervisor-change').show();
     {% endif %}
     /* end supervisor change */
-
-
     /* termination */
     var $terminationType = $('input[name="termination_type"]');
     $('#id_termination').change(function() {
-      var $czech = $terminationType.prop('checked');
+      $czech = $terminationType.prop('checked');
       $('.termination').toggle();
       if (this.checked && $czech && $terminationType.val() == 'Voluntary') {
         $('#terminationVoluntary').show();
@@ -133,7 +156,6 @@
         $('#terminationInvoluntary').show();
       }
     });
-    {# django reveal #}
     {% if form.termination.value %}
     $('.termination').show();
     {% endif %}
@@ -145,30 +167,53 @@
       $('#terminationInvoluntary').show();
     {% endif %}{% endif %}
     /* end termination */
-
-
-    $('#id_position_change').change(function() {
-      $('.position-change').toggle();
+    /* status change */
+    $('#id_status_change').change(function() {
+      $('.status-change').toggle();
     });
-    $('#id_leave_of_absence').change(function() {
-      $('.leave-of-absence').toggle();
-    });
-
-    {# django reveal #}
-
-    {# section 2 reveal #}
-    {% if form.employee_type.value %}
-    $('#section2').slideDown();
+    {% if form.status_change.value %}
+    $('.status-change').show();
     {% endif %}
-    {# checkboxes reveal #}
+    /* end status change */
+    /* position change */
+    var $superRole = $('input[name="additional_supervisor_role"]');
+    $('#id_position_change').change(function() {
+      $czech = $superRole.prop('checked');
+      $('.position-change').toggle();
+      if (this.checked && $czech && $superRole.val() == 'Yes') {
+        $('#directReports').show();
+      } else if (this.checked && $czech && $superRole.val() == 'No') {
+        $('#directReports').hide();
+      } else {
+        $directReports.prop('checked', false);
+      }
+    });
+    $superRole.click(function() {
+      toggle($(this), 'Yes', '#directReports');
+    });
     {% if form.position_change.value %}
     $('.position-change').show();
     {% endif %}
+    {% if form.direct_reports.value == 'Yes' %}
+    $('#directReports').show();
+    {% endif %}
+    /* end position change */
+    /* leave of absence */
+    $('#id_leave_of_absence').change(function() {
+      $('.leave-of-absence').toggle();
+    });
     {% if form.leave_of_absence.value %}
     $('.leave-of-absence').show();
     {% endif %}
-
-    {# end django reveal #}
+    /* end department change */
+    /* status change */
+    $('#id_sabbatical').change(function() {
+      $('.sabbatical').toggle();
+    });
+    {% if form.sabbatical.value %}
+    $('.sabatical').show();
+    {% endif %}
+    /* end status change */
 
     // used with select lists so when an item is selected
     // it will show the input field
@@ -220,7 +265,8 @@
       <h3 class="text-center text-white">Personnel Action Form</h3>
     </div>
     <div class="card-body bg-light">
-      <form action="." method="post" class="form" role="form">
+      <form action="{% url 'transaction_form' %}{% if switch %}?switch={{switch}}{% endif %}"
+        method="post" class="form" role="form">
         {% csrf_token %}
         <!-- Section I .form-row -->
         <div class="form-row mt-4">
@@ -234,7 +280,7 @@
                   {% if form.last_name.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.last_name.label}}</h5>
                 </label>
-                <input type="text" name="last_name" placeholder="Last Name"
+                <input type="text" name="{{form.last_name.name}}" placeholder="Last Name"
                   class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
                   id="{{form.last_name.id_for_label}}"
                   value="{{form.last_name.value|default_if_none:''}}"
@@ -252,7 +298,7 @@
                   {% if form.first_name.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.first_name.label}}</h5>
                 </label>
-                <input type="text" name="first_name" placeholder="First Name"
+                <input type="text" name="{{form.first_name.name}}" placeholder="First Name"
                   class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
                   id="{{form.first_name.id_for_label}}"
                   value="{{form.first_name.value|default_if_none:''}}"
@@ -270,7 +316,7 @@
                   {% if form.middle_name.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.middle_name.label}}</h5>
                 </label>
-                <input type="text" name="middle_name" placeholder="Middle Name"
+                <input type="text" name="{{form.middle_name.name}}" placeholder="Middle Name"
                   class="form-control{% if form.middle_name.errors %} is-invalid{% endif %}"
                   id="{{form.middle_name.id_for_label}}"
                   value="{{form.middle_name.value|default_if_none:''}}"
@@ -288,7 +334,7 @@
                   {% if form.home_address.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.home_address.label}}</h5>
                 </label>
-                <input type="text" name="home_address" placeholder="Home Address"
+                <input type="text" name="{{form.home_address.name}}" placeholder="Home Address"
                   class="form-control{% if form.home_address.errors %} is-invalid{% endif %}"
                   id="{{form.home_address.id_for_label}}"
                   value="{{form.home_address.value|default_if_none:''}}"
@@ -306,7 +352,7 @@
                   {% if form.city.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.city.label}}</h5>
                 </label>
-                <input type="text" name="city" placeholder="City"
+                <input type="text" name="{{form.city.name}}" placeholder="City"
                   class="form-control{% if form.city.errors %} is-invalid{% endif %}"
                   id="{{form.city.id_for_label}}"
                   value="{{form.city.value|default_if_none:''}}"
@@ -324,7 +370,7 @@
                   {% if form.state.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.state.label}}</h5>
                 </label>
-                <select class="form-control" name="state"
+                <select class="form-control" name="{{form.state.name}}"
                   id="{{form.state.id_for_label}}"
                   {% if not templates_debug %}required{% endif %}>
                   {% for value, text in form.fields.state.choices %}
@@ -346,9 +392,9 @@
                   {% if form.postal_code.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.postal_code.label}}</h5>
                 </label>
-                <input type="text" name="postal_code" placeholder="Zip Code"
+                <input type="text" name="{{form.postal_code.name}}" placeholder="Zip Code"
                   class="form-control{% if form.postal_code.errors %} is-invalid{% endif %}"
-                  id="{{form.postal_code.id_for_label}}"
+                  id="{{form.postal_code.id_for_label}}" pattern="[0-9]{5}"
                   value="{{form.postal_code.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
@@ -364,7 +410,7 @@
                   {% if form.phone.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.phone.label}}</h5>
                 </label>
-                <input type="text" name="phone" placeholder="Phone Number"
+                <input type="phone" name="{{form.phone.name}}" placeholder="Phone Number"
                   id="{{form.phone.id_for_label}}"
                   class="form-control{% if form.phone.errors %} is-invalid{% endif %}"
                   value="{{form.phone.value|default_if_none:''}}"
@@ -382,7 +428,7 @@
                   {% if form.email.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.email.label}}</h5>
                 </label>
-                <input type="text" name="email" placeholder="Email Address"
+                <input type="email" name="{{form.email.name}}" placeholder="Email Address"
                   class="form-control{% if form.email.errors %} is-invalid{% endif %}"
                   id="{{form.email.id_for_label}}"
                   value="{{form.email.value|default_if_none:''}}"
@@ -400,7 +446,7 @@
                   {% if form.department_name.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.department_name.label}}</h5>
                 </label>
-                <select class="form-control" name="department_name"
+                <select class="form-control" name="{{form.department_name.name}}"
                   id="{{form.department_name.id_for_label}}"
                   {% if not templates_debug %}required{% endif %}>
                   {% for value, text in form.fields.department_name.choices %}
@@ -427,7 +473,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Faculty" type="radio"
-                    name="employee_type" id="id_{{form.employee_type.name}}_0"
+                    name="{{form.employee_type.name}}" id="id_{{form.employee_type.name}}_0"
                     {% if form.employee_type.value == 'Faculty' %}checked{% endif %}>
                   <label for="id_{{form.employee_type.name}}_0" class="form-check-label">
                     Faculty
@@ -435,7 +481,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Staff" type="radio"
-                    name="employee_type" id="id_{{form.employee_type.name}}_1"
+                    name="{{form.employee_type.name}}" id="id_{{form.employee_type.name}}_1"
                     {% if form.employee_type.value == 'Staff' %}checked{% endif %}>
                   <label for="id_{{form.employee_type.name}}_1" class="form-check-label">
                     Staff
@@ -456,7 +502,7 @@
                   {% if form.approver.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.approver.label}}</h5>
                 </label>
-                <select class="form-control" name="approver"
+                <select class="form-control" name="{{form.approver.name}}"
                   id="{{form.approver.id_for_label}}">
                   {% for value, text in form.fields.approver.choices %}
                   <option value="{{value}}"
@@ -540,7 +586,7 @@
                   {{form.termination.label}}
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check" id="statusChange">
                 <input class="form-check-input ckbselect" type="checkbox"
                   id="{{form.status_change.id_for_label}}"
                   name="{{form.status_change.name}}" value="1"
@@ -571,7 +617,7 @@
                   {{form.leave_of_absence.label}}
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check" id="sabbatical">
                 <input class="form-check-input ckbselect" type="checkbox"
                   id="{{form.sabbatical.id_for_label}}"
                   name="{{form.sabbatical.name}}" value="1"
@@ -597,7 +643,7 @@
                   {% if form.position_title.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.position_title.label}}</h5>
                 </label>
-                <input name="position_title" placeholder="Position Title"
+                <input name="{{form.position_title.name}}" placeholder="Position Title"
                   class="form-control{% if form.position_title.errors %} is-invalid{% endif %}"
                   id="{{form.position_title.id_for_label}}" type="text"
                   value="{{form.position_title.value|default_if_none:''}}">
@@ -610,14 +656,14 @@
           <!--
           Hidden unless staff and "newhire_rehire" or "status change" is checked
           -->
-          <div class="col-md-6 pb-3 staff-status">
+          <div class="col-sm-6 pb-3 staff status-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.status_type.id_for_label}}"
                   {% if form.status_type.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.status_type.label}}</h5>
                 </label>
-                <select class="form-control" name="status_type"
+                <select class="form-control" name="{{form.status_type.name}}"
                   id="{{form.status_type.id_for_label}}">
                   {% for value, text in form.fields.status_type.choices %}
                     <option value="{{value}}"
@@ -632,14 +678,14 @@
             </div>
           </div>
           <!-- Hidden unless staff and "status change" is checked -->
-          <div class="col-sm-6 pb-3 staff-status">
+          <div class="col-sm-6 pb-3 staff status-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.status_change_effective_date.id_for_label}}"
                   {% if form.status_change_effective_date.errors %}class="text-danger"{% endif %}>
                   <h5>Status change effective date</h5>
                 </label>
-                <input type="date" name="status_change_effective_date"
+                <input type="date" name="{{form.status_change_effective_date.name}}"
                   class="form-control{% if form.status_change_effective_date.errors %} is-invalid{% endif %}"
                   id="{{form.status_change_effective_date.id_for_label}}"
                   value="{{form.status_change_effective_date.value|default_if_none:''}}">
@@ -660,7 +706,7 @@
                   {% if form.hire_type.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.hire_type.label}}</h5>
                 </label>
-                <select class="form-control" name="hire_type"
+                <select class="form-control" name="{{form.hire_type.name}}"
                   id="{{form.hire_type.id_for_label}}">
                   {% for value, text in form.fields.hire_type.choices %}
                     <option value="{{value}}"
@@ -686,7 +732,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Exempt"
-                    type="radio" name="pay_type" id="id_{{form.pay_type.name}}_0"
+                    type="radio" name="{{form.pay_type.name}}" id="id_{{form.pay_type.name}}_0"
                     {% if form.pay_type.value == 'Exempt' %}checked{% endif %}>
                   <label for="id_{{form.pay_type.name}}_0" class="form-check-label">
                     Exempt (salary)
@@ -694,7 +740,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Non-exempt"
-                    type="radio" name="pay_type" id="id_{{form.pay_type.name}}_1"
+                    type="radio" name="{{form.pay_type.name}}" id="id_{{form.pay_type.name}}_1"
                     {% if form.pay_type.value == 'Non-exempt' %}checked{% endif %}>
                   <label for="id_{{form.pay_type.name}}_1" class="form-check-label">
                     Non-exempt (hourly)
@@ -713,7 +759,7 @@
                   {% if form.hours_per_week.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.hours_per_week.label}}</h5>
                 </label>
-                <input name="hours_per_week" placeholder="Hours worked per week"
+                <input name="{{form.hours_per_week.name}}" placeholder="Hours worked per week"
                   class="form-control{% if form.hours_per_week.errors %} is-invalid{% endif %}"
                   id="{{form.hours_per_week.id_for_label}}" type="number"
                   value="{{form.hours_per_week.value|default_if_none:''}}">
@@ -731,7 +777,7 @@
                   {% if form.pay_rate.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.pay_rate.label}}</h5>
                 </label>
-                <select class="form-control" name="pay_rate"
+                <select class="form-control" name="{{form.pay_rate.name}}"
                   id="{{form.pay_rate.id_for_label}}">
                   {% for value, text in form.fields.pay_rate.choices %}
                     <option value="{{value}}"
@@ -753,7 +799,7 @@
                   {% if form.expected_start_date.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.expected_start_date.label}}</h5>
                 </label>
-                <input type="date" name="expected_start_date"
+                <input type="date" name="{{form.expected_start_date.name}}"
                   class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
                   id="{{form.expected_start_date.id_for_label}}"
                   value="{{form.expected_start_date.value|default_if_none:''}}">
@@ -773,7 +819,7 @@
                   {% if form.budget_account.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.budget_account.label}}</h5>
                 </label>
-                <input type="text" name="budget_account" placeholder="Budget Account"
+                <input type="text" name="{{form.budget_account.name}}" placeholder="Budget Account"
                   class="form-control{% if form.budget_account.errors %} is-invalid{% endif %}"
                   id="{{form.budget_account.id_for_label}}"
                   value="{{form.budget_account.value|default_if_none:''}}">
@@ -793,7 +839,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes" type="radio"
-                    name="supervise_others" id="id_{{form.supervise_others.name}}_0"
+                    name="{{form.supervise_others.name}}" id="id_{{form.supervise_others.name}}_0"
                     {% if form.supervise_others.value == 'Yes' %}checked{% endif %}>
                   <label for="id_{{form.supervise_others.name}}_0" class="form-check-label">
                     Yes
@@ -801,7 +847,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
-                    name="supervise_others" id="id_{{form.supervise_others.name}}_1"
+                    name="{{form.supervise_others.name}}" id="id_{{form.supervise_others.name}}_1"
                     {% if form.supervise_others.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.supervise_others.name}}_1" class="form-check-label">
                     No
@@ -820,7 +866,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"
-                    type="radio" name="standard_vacation_package"
+                    type="radio" name="{{form.standard_vacation_package.name}}"
                     id="id_{{form.standard_vacation_package.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.standard_vacation_package.name}}_1','vacation_days');"
                     {% if form.standard_vacation_package.value == 'Yes' %}checked{% endif %}>
@@ -830,7 +876,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
-                    name="standard_vacation_package" id="id_{{form.standard_vacation_package.name}}_1"
+                    name="{{form.standard_vacation_package.name}}" id="id_{{form.standard_vacation_package.name}}_1"
                     onclick="javascript:toggleCheck('id_{{form.standard_vacation_package.name}}_1','vacation_days');"
                     {% if form.standard_vacation_package.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.standard_vacation_package.name}}_1" class="form-check-label">
@@ -848,7 +894,7 @@
                   {% if form.vacation_days.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.vacation_days.label}}</h5>
                 </label>
-                <input type="text" name="vacation_days" placeholder="Vacation days"
+                <input type="text" name="{{form.vacation_days.name}}" placeholder="Vacation days"
                   class="form-control{% if form.vacation_days.errors %} is-invalid{% endif %}"
                   id="{{form.vacation_days.id_for_label}}"
                   value="{{form.vacation_days.value|default_if_none:''}}">
@@ -868,7 +914,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"
-                      type="radio" name="position_grant_funded"
+                      type="radio" name="{{form.position_grant_funded.name}}"
                       id="id_{{form.position_grant_funded.name}}_0"
                       {% if form.position_grant_funded.value == 'Yes' %}
                         checked
@@ -879,7 +925,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                    <input class="form-check-input" value="No"
-                      type="radio" name="position_grant_funded"
+                      type="radio" name="{{form.position_grant_funded.name}}"
                       id="id_{{form.position_grant_funded.name}}_1"
                       {% if form.position_grant_funded.value == 'No' %}
                         checked
@@ -899,7 +945,7 @@
                   {% if form.grant_number.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.grant_number.label}}</h5>
                 </label>
-                <input type="number" placeholder="Grant number" name="grant_number"
+                <input type="number" placeholder="Grant number" name="{{form.grant_number.name}}"
                   class="form-control{% if form.grant_number.errors %} is-invalid{% endif %}"
                   id="{{form.grant_number.id_for_label}}"
                   value="{{form.grant_number.value|default_if_none:''}}">
@@ -918,7 +964,7 @@
                 </label>
                 <input type="text" class="form-control
                   {% if form.grant_amount.errors %} is-invalid{% endif %}"
-                  name="grant_amount" placeholder="Grant amount or percentage"
+                  name="{{form.grant_amount.name}}" placeholder="Grant amount or percentage"
                   id="{{form.grant_amount.id_for_label}}"
                   value="{{form.grant_amount.value|default_if_none:''}}">
                 <small class="text-danger">
@@ -940,7 +986,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"
-                    type="radio" name="moving_expenses"
+                    type="radio" name="{{form.moving_expenses.name}}"
                     id="id_{{form.moving_expenses.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.moving_expenses.name}}_0','moving_expenses_amount');"
                     {% if form.moving_expenses.value == 'Yes' %}
@@ -953,7 +999,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No"
-                    type="radio" name="moving_expenses"
+                    type="radio" name="{{form.moving_expenses.name}}"
                     id="id_{{form.moving_expenses.name}}_1"
                     onclick="javascript:toggleCheck('id_{{form.moving_expenses.name}}_0','moving_expenses_amount');"
                     {% if form.moving_expenses.value == 'No' %}
@@ -977,7 +1023,7 @@
                   {% endif %}>
                   <h5>{{form.moving_expenses_amount.label}}</h5>
                 </label>
-                <input type="text" name="moving_expenses_amount"
+                <input type="text" name="{{form.moving_expenses_amount.name}}"
                   class="form-control{% if form.moving_expenses_amount.errors %} is-invalid{% endif %}"
                   id="{{form.moving_expenses_amount.id_for_label}}"
                   value="{{form.moving_expenses_amount.value|default_if_none:''}}"
@@ -1001,7 +1047,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"
-                    type="radio" name="startup_expenses"
+                    type="radio" name="{{form.startup_expenses.name}}"
                     id="id_{{form.startup_expenses.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.startup_expenses.name}}_0','startup_expenses_amount');"
                     {% if form.moving_expenses.value == 'Yes' %}
@@ -1014,7 +1060,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No"
-                    type="radio" name="startup_expenses"
+                    type="radio" name="{{form.startup_expenses.name}}"
                     id="id_{{form.startup_expenses.name}}_1"
                     onclick="javascript:toggleCheck('id_{{form.startup_expenses.name}}_0','startup_expenses_amount');"
                     {% if form.moving_expenses.value == 'No' %}
@@ -1036,7 +1082,7 @@
                 </label>
                 <input type="text" class="form-control
                   {% if form.startup_expenses_amount.errors %} is-invalid{% endif %}"
-                  name="startup_expenses_amount"
+                  name="{{form.startup_expenses_amount.name}}"
                   id="{{form.startup_expenses_amount.id_for_label}}"
                   value="{{form.startup_expenses_amount.value|default_if_none:''}}"
                   placeholder="Enter amount for stratup expenses">
@@ -1054,7 +1100,8 @@
                   {% if form.shift.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.shift.label}}</h5>
                 </label>
-                <select class="form-control" id="{{form.shift.id_for_label}}" name="shift">
+                <select class="form-control" id="{{form.shift.id_for_label}}"
+                  name="{{form.shift.name}}">
                   {% for value, text in form.fields.shift.choices %}
                     <option value="{{value}}"
                       {% if form.shift.value == value %}selected{% endif %}>
@@ -1077,7 +1124,7 @@
                 </label>
                 <textarea rows="2" placeholder="{{form.other_arrangements.help_text}}"
                   class="form-control{% if form.other_arrangements.errors %} is-invalid{% endif %}"
-                  id="{{form.other_arrangements.id_for_label}}" name="other_arrangements">
+                  id="{{form.other_arrangements.id_for_label}}" name="{{form.other_arrangements.name}}">
                   {{form.other_arrangements.value|default_if_none:''}}
                 </textarea>
                 <small class="text-danger">
@@ -1098,7 +1145,7 @@
                 </label>
                 <select class="form-control"
                   id="{{form.employment_types.id_for_label}}"
-                  name="employment_types"
+                  name="{{form.employment_types.name}}"
                   {% if not templates_debug %}required{% endif %}>
                   {% for value, text in form.fields.employment_types.choices %}
                     <option value="{{value}}"
@@ -1125,7 +1172,7 @@
                 </label>
                 <input type="text" class="form-control
                   {% if form.contract_years.errors %} is-invalid{% endif %}"
-                  name="contract_years"
+                  name="{{form.contract_years.name}}"
                   id="{{form.contract_years.id_for_label}}"
                   value="{{form.contract_years.value|default_if_none:''}}"
                   placeholder="Number of years"
@@ -1145,7 +1192,7 @@
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Yes" name="music"
+                  <input class="form-check-input" value="Yes" name="{{form.music.name}}"
                     type="radio" id="id_{{form.music.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.music.name}}_0','courses_teaching');"
                     {% if form.music.value == 'Yes' %}checked{% endif %}>
@@ -1154,7 +1201,7 @@
                   </label>
                 </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" value="No" name="music"
+                    <input class="form-check-input" value="No" name="{{form.music.name}}"
                       type="radio" id="id_{{form.music.name}}_1"
                       onclick="javascript:toggleCheck('id_{{form.music.name}}_0','courses_teaching');"
                       {% if form.music.value == 'No' %}checked{% endif %}>
@@ -1178,7 +1225,7 @@
                 </label>
                 <textarea rows="2"
                   class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
-                  id="{{form.courses_teaching.id_for_label}}" name="courses_teaching"
+                  id="{{form.courses_teaching.id_for_label}}" name="{{form.courses_teaching.name}}"
                   placeholder="{{form.courses_teaching.help_text}}">
                   {{form.courses_teaching.value|default_if_none:''}}
                 </textarea>
@@ -1193,7 +1240,7 @@
                   {% if form.number_of_credits.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.number_of_credits.label}}</h5>
                 </label>
-                <input type="text" name="number_of_credits" placeholder="Number of credits"
+                <input type="text" name="{{form.number_of_credits.name}}" placeholder="Number of credits"
                   class="form-control{% if form.number_of_credits.errors %} is-invalid{% endif %}"
                   id="{{form.number_of_credits.id_for_label}}"
                   value="{{form.number_of_credits.value|default_if_none:''}}">
@@ -1214,7 +1261,7 @@
               <div class="form-group small">
                 <div class="form-check">
                   <input class="form-check-input" value="Yes"
-                      type="radio" name="teaching_appointment"
+                      type="radio" name="{{form.teaching_appointment.name}}"
                       id="id_{{form.teaching_appointment.name}}_0"
                       onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                       {% if form.teaching_appointment.value == '1 Year' %}
@@ -1226,7 +1273,7 @@
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" value="No"
-                    type="radio" name="teaching_appointment"
+                    type="radio" name="{{form.teaching_appointment.name}}"
                     id="id_{{form.teaching_appointment.name}}_1"
                     onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                     {% if form.teaching_appointment.value == '3 Year' %}checked{% endif %}>
@@ -1237,7 +1284,7 @@
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" value="No"
-                    type="radio" name="teaching_appointment"
+                    type="radio" name="{{form.teaching_appointment.name}}"
                     id="id_{{form.teaching_appointment.name}}_2"
                     onclick="javascript:toggleCheck('id_{{form.teaching_appointment.name}}_2','teaching_appointment_arrangements');"
                     {% if form.teaching_appointment.value == 'Other' %}checked{% endif %}>
@@ -1261,7 +1308,7 @@
                   {% endif %}>
                   <h5>{{form.teaching_appointment_arrangements.label}}</h5>
                 </label>
-                <textarea rows="2" cols="6" name="teaching_appointment_arrangements"
+                <textarea rows="2" cols="6" name="{{form.teaching_appointment_arrangements.name}}"
                   class="form-control{% if form.teaching_appointment_arrangements.errors %} is-invalid{% endif %}"
                   id="{{form.teaching_appointment_arrangements.id_for_label}}"
                   placeholder="{{form.teaching_appointment_arrangements.help_text}}">
@@ -1281,7 +1328,7 @@
                   {% if form.program_types.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.program_types.label}}</h5>
                 </label>
-                <select class="form-control" name="shift"
+                <select class="form-control" name="{{form.program_types.name}}"
                   id="{{form.program_types.id_for_label}}"
                   {% if not templates_debug %}required{% endif %}>
                 {% for value, text in form.fields.program_types.choices %}
@@ -1310,7 +1357,7 @@
                 </label>
                 <input type="date" class="form-control
                   {% if form.leave_of_absence_date.errors %} is-invalid{% endif %}"
-                  name="leave_of_absence_date"
+                  name="{{form.leave_of_absence_date.name}}"
                   id="{{form.leave_of_absence_date.id_for_label}}"
                   value="{{form.leave_of_absence_date.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
@@ -1334,7 +1381,7 @@
                 </label>
                 <input type="date" class="form-control
                   {% if form.expected_return_date.errors %} is-invalid{% endif %}"
-                  name="expected_return_date"
+                  name="{{form.expected_return_date.name}}"
                   id="{{form.expected_return_date.id_for_label}}"
                   value="{{form.expected_return_date.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
@@ -1356,7 +1403,7 @@
                   {% endif %}>
                   <h5>{{form.leave_of_absence_reason.label}}</h5>
                 </label>
-                <input type="text" name="leave_of_absence_reason"
+                <input type="text" name="{{form.leave_of_absence_reason.name}}"
                   class="form-control
                   {% if form.leave_of_absence_reason.errors %} is-invalid{% endif %}"
                   id="{{form.leave_of_absence_reason.id_for_label}}"
@@ -1387,7 +1434,7 @@
                   {% endif %}>
                   <h5>{{form.new_department.label}}</h5>
                 </label>
-                <select class="form-control" name="new_department"
+                <select class="form-control" name="{{form.new_department.name}}"
                   id="{{form.new_department.id_for_label}}">
                   {% for value, text in form.fields.department_name.choices %}
                     <option value="{{value}}"
@@ -1408,7 +1455,7 @@
                   {% if form.old_department.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.old_department.label}}</h5>
                 </label>
-                <select class="form-control" name="old_department"
+                <select class="form-control" name="{{form.old_department.name}}"
                   id="{{form.old_department.id_for_label}}">
                   {% for value, text in form.fields.department_name.choices %}
                     <option value="{{value}}"
@@ -1433,7 +1480,7 @@
                 </label>
                 <input type="text" class="form-control
                   {% if form.new_supervisor.errors %} is-invalid{% endif %}"
-                  name="new_supervisor"
+                  name="{{form.new_supervisor.name}}"
                   id="{{form.new_supervisor.id_for_label}}"
                   value="{{form.new_supervisor.value|default_if_none:''}}"
                   placeholder="Name of new supervisor">
@@ -1453,7 +1500,7 @@
                   {% if form.old_supervisor.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.old_supervisor.label}}</h5>
                 </label>
-                <input type="text" name="old_supervisor"
+                <input type="text" name="{{form.old_supervisor.name}}"
                   class="form-control{% if form.old_supervisor.errors %} is-invalid{% endif %}"
                   id="{{form.old_supervisor.id_for_label}}"
                   value="{{form.old_supervisor.value|default_if_none:''}}"
@@ -1474,7 +1521,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Voluntary"
-                    type="radio" name="termination_type"
+                    type="radio" name="{{form.termination_type.name}}"
                     id="id_{{form.termination_type.name}}_0"
                     {% if form.termination_type.value == 'Voluntary' %}
                       checked
@@ -1486,7 +1533,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Involuntary"
-                    type="radio" name="termination_type"
+                    type="radio" name="{{form.termination_type.name}}"
                     id="id_{{form.termination_type.name}}_1"
                     {% if form.termination_type.value == 'Involuntary' %}
                       checked
@@ -1508,7 +1555,7 @@
                   {% endif %}>
                   <h5>Voluntary Reasons for Leaving</h5>
                 </label>
-                <select name="shift" class="form-control"
+                <select name="{{form.termination_voluntary.name}}" class="form-control"
                   id="{{form.termination_voluntary.id_for_label}}">
                 {% for value, text in form.fields.termination_voluntary.choices %}
                   <option value="{{value}}"
@@ -1534,7 +1581,7 @@
                   {% endif %}>
                   <h5>Involuntary Reasons for Leaving</h5>
                 </label>
-                <select name="shift" class="form-control"
+                <select name="{{form.termination_involuntary.name}}" class="form-control"
                   id="{{form.termination_involuntary.id_for_label}}">
                   {% for value, text in form.fields.termination_involuntary.choices %}
                     <option value="{{value}}"
@@ -1556,7 +1603,7 @@
                   {% if form.last_day_date.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.last_day_date.label}}</h5>
                 </label>
-                <input type="date" name="last_day_date"
+                <input type="date" name="{{form.last_day_date.name}}"
                   class="form-control{% if form.last_day_date.errors %} is-invalid{% endif %}"
                   id="{{form.last_day_date.id_for_label}}"
                   value="{{form.last_day_date.value|default_if_none:''}}">
@@ -1574,7 +1621,7 @@
                   {% if form.returned_property.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.returned_property.label}}</h5>
                 </label>
-                <input type="text" name="returned_property"
+                <input type="text" name="{{form.returned_property.name}}"
                   class="form-control{% if form.returned_property.errors %} is-invalid{% endif %}"
                   id="{{form.returned_property.id_for_label}}"
                   value="{{form.returned_property.value|default_if_none:''}}"
@@ -1595,7 +1642,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"type="radio"
-                    name="eligible_rehire" id="id_{{form.eligible_rehire.name}}_0"
+                    name="{{form.eligible_rehire.name}}" id="id_{{form.eligible_rehire.name}}_0"
                     {% if form.eligible_rehire.value == 'Yes' %}checked{% endif %}>
                   <label for="id_{{form.eligible_rehire.name}}_0" class="form-check-label">
                     Yes
@@ -1603,7 +1650,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
-                    name="eligible_rehire" id="id_{{form.eligible_rehire.name}}_1"
+                    name="{{form.eligible_rehire.name}}" id="id_{{form.eligible_rehire.name}}_1"
                     {% if form.eligible_rehire.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.eligible_rehire.name}}_1" class="form-check-label">
                     No
@@ -1620,7 +1667,7 @@
                   {% if form.vacation_days_accrued.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.vacation_days_accrued.label}}</h5>
                 </label>
-                <input type="number" name="current_compensation"
+                <input type="number" name="{{form.current_compensation.name}}"
                   class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.vacation_days_accrued.id_for_label}}"
                   value="{{form.vacation_days_accrued.value|default_if_none:''}}"
@@ -1641,7 +1688,7 @@
                   {% if form.current_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.current_compensation.label}}</h5>
                 </label>
-                <input type="text" name="current_compensation"
+                <input type="text" name="{{form.current_compensation.name}}"
                   class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.current_compensation.id_for_label}}"
                   value="{{form.current_compensation.value|default_if_none:''}}"
@@ -1662,7 +1709,7 @@
                   {% if form.new_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.new_compensation.label}}</h5>
                 </label>
-                <input type="text" name="new_compensation"
+                <input type="text" name="{{form.new_compensation.name}}"
                   placeholder="New annual salary/rate of pay" class="form-control
                   {% if form.new_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.new_compensation.id_for_label}}"
@@ -1683,7 +1730,7 @@
                   {% if form.salary_change_reason.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.salary_change_reason.label}}</h5>
                 </label>
-                <input type="text" name="salary_change_reason"
+                <input type="text" name="{{form.salary_change_reason.name}}"
                   placeholder="Salary Change Reason" class="form-control
                   {% if form.salary_change_reason.errors %} is-invalid{% endif %}"
                   id="{{form.salary_change_reason.id_for_label}}"
@@ -1706,7 +1753,7 @@
                 </label>
                 <input type="date" class="form-control
                   {% if form.compensation_effective_date.errors %} is-invalid{% endif %}"
-                  name="effective_date"
+                  name="{{form.effective_date.name}}"
                   id="{{form.compensation_effective_date.id_for_label}}"
                   value="{{form.compensation_effective_date.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
@@ -1728,7 +1775,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Temporary Pay"
-                    type="radio" name="temporary_interim_pay"
+                    type="radio" name="{{form.temporary_interim_pay.name}}"
                     id="id_{{form.temporary_interim_pay.name}}_0"
                     {% if form.temporary_interim_pay.value == 'Yes' %}checked{% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_0" class="form-check-label">
@@ -1737,7 +1784,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Interim Pay"
-                    type="radio" name="temporary_interim_pay"
+                    type="radio" name="{{form.temporary_interim_pay.name}}"
                     id="id_{{form.temporary_interim_pay.name}}_1"
                     {% if form.temporary_interim_pay.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.temporary_interim_pay.name}}_1" class="form-check-label">
@@ -1755,7 +1802,7 @@
                   {% if form.end_date.errors %}class="text-danger"{% endif %}>
                   <h5>Interim Pay End Date</h5>
                 </label>
-                <input type="date" name="end_date"
+                <input type="date" name="{{form.end_date.name}}"
                   class="form-control{% if form.end_date.errors %} is-invalid{% endif %}"
                   id="{{form.end_date.id_for_label}}"
                   value="{{form.end_date.value|default_if_none:''}}">
@@ -1777,7 +1824,7 @@
                   <h5>{{form.amount.label}}</h5>
                 </label>
                 <input class="form-control {% if form.amount.errors %} is-invalid{% endif %}"
-                  type="text" name="amount" placeholder="Amount"
+                  type="text" name="{{form.amount.name}}" placeholder="Amount"
                   id="{{form.amount.id_for_label}}"
                   value="{{form.amount.value|default_if_none:''}}">
                 <small class="text-danger">
@@ -1797,7 +1844,7 @@
                   {% if form.amount.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.amount_reason.label}}</h5>
                 </label>
-                <input type="text" name="amount_reason" placeholder="Amount Reason"
+                <input type="text" name="{{form.amount_reason.name}}" placeholder="Amount Reason"
                   class="form-control{% if form.amount_reason.errors %} is-invalid{% endif %}"
                   id="{{form.amount_reason.id_for_label}}"
                   value="{{form.amount_reason.value|default_if_none:''}}">
@@ -1818,7 +1865,7 @@
                   {% if form.pay_after_date.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.pay_after_date.label}}</h5>
                 </label>
-                <input type="date" name="pay_after_date"
+                <input type="date" name="{{form.pay_after_date.name}}"
                   class="form-control{% if form.pay_after_date.errors %} is-invalid{% endif %}"
                   id="{{form.pay_after_date.id_for_label}}"
                   value="{{form.pay_after_date.value|default_if_none:''}}">
@@ -1839,7 +1886,7 @@
                   {% if form.department_account_number.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.department_account_number.label}}</h5>
                 </label>
-                <input type="number" name="department_account_number"
+                <input type="number" name="{{form.department_account_number.name}}"
                   placeholder="Returned property credits"
                   class="form-control{% if form.department_account_number.errors %} is-invalid{% endif %}"
                   id="{{form.department_account_number.id_for_label}}"
@@ -1862,7 +1909,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes" type="radio"
-                    name="grant_pay" id="id_{{form.grant_pay.name}}_0"
+                    name="{{form.grant_pay.name}}" id="id_{{form.grant_pay.name}}_0"
                     {% if form.grant_pay.value == 'Yes' %}checked {% endif %}>
                   <label for="id_{{form.grant_pay.name}}_0" class="form-check-label">
                     Yes
@@ -1870,7 +1917,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
-                    name="grant_pay" id="id_{{form.grant_pay.name}}_1"
+                    name="{{form.grant_pay.name}}" id="id_{{form.grant_pay.name}}_1"
                     {% if form.grant_pay.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.grant_pay.name}}_1" class="form-check-label">
                     No
@@ -1887,7 +1934,7 @@
                   {% if form.grant_number.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.grant_number.label}}</h5>
                 </label>
-                <input type="text" name="grant_number"
+                <input type="text" name="{{form.grant_number.name}}"
                   placeholder="Grant Pay Account Number"
                   class="form-control{% if form.grant_number.errors %} is-invalid{% endif %}"
                   id="{{form.grant_number.id_for_label}}"
@@ -1906,7 +1953,7 @@
                   {% if form.sabbatical_types.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.sabbatical_types.label}}</h5>
                 </label>
-                <select class="form-control" name="shift"
+                <select class="form-control" name="{{form.sabbatical_types.name}}"
                   id="{{form.sabbatical_types.id_for_label}}">
                   {% for value, text in form.fields.sabbatical_types.choices %}
                     <option value="{{value}}"
@@ -1930,7 +1977,7 @@
                   {% if form.academic_year.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.academic_year.label}}</h5>
                 </label>
-                <input type="text" name="academic_year" placeholder="Academic Year"
+                <input type="text" name="{{form.academic_year.name}}" placeholder="Academic Year"
                   class="form-control{% if form.academic_year.errors %} is-invalid{% endif %}"
                   id="{{form.academic_year.id_for_label}}"
                   value="{{form.academic_year.value|default_if_none:''}}">
@@ -1950,7 +1997,7 @@
                   {% if form.old_position.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.old_position.label}}</h5>
                 </label>
-                <input type="text" name="old_position" placeholder="Old Position"
+                <input type="text" name="{{form.old_position.name}}" placeholder="Old Position"
                   class="form-control{% if form.old_position.errors %} is-invalid{% endif %}"
                   id="{{form.old_position.id_for_label}}"
                   value="{{form.old_position.value|default_if_none:''}}">
@@ -1970,7 +2017,7 @@
                   {% if form.new_position.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.new_position.label}}</h5>
                 </label>
-                <input type="text" name="new_position" placeholder="New Position"
+                <input type="text" name="{{form.new_position.name}}" placeholder="New Position"
                   class="form-control{% if form.new_position.errors %} is-invalid{% endif %}"
                   id="{{form.new_position.id_for_label}}"
                   value="{{form.new_position.value|default_if_none:''}}">
@@ -1990,7 +2037,7 @@
                   {% if form.position_effective_date.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.position_effective_date.label}}</h5>
                 </label>
-                <input type="date" name="position_effective_date"
+                <input type="date" name="{{form.position_effective_date.name}}"
                   class="form-control{% if form.position_effective_date.errors %} is-invalid{% endif %}"
                   id="{{form.position_effective_date.id_for_label}}"
                   value="{{form.position_effective_date.value|default_if_none:''}}">
@@ -2012,7 +2059,7 @@
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes"
-                    type="radio" name="additional_supervisor_role"
+                    type="radio" name="{{form.additional_supervisor_role.name}}"
                     id="id_{{form.additional_supervisor_role.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                     {% if form.additional_supervisor_role.value == 'Yes' %}
@@ -2024,7 +2071,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="No" type="radio"
-                    name="additional_supervisor_role"
+                    name="{{form.additional_supervisor_role.name}}"
                     id="id_{{form.additional_supervisor_role.name}}_1"
                     onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                     {% if form.additional_supervisor_role.value == 'No' %}checked{% endif %}>
@@ -2035,8 +2082,8 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless Additional Supervisory Role checked "Yes" -->
-          <div class="col-md-6 pb-3 hyde" id="direct_reports">
+          <!-- Hidden unless Additional Supervisor Role checked "Yes" -->
+          <div class="col-md-6 pb-3" id="directReports">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.direct_reports.id_for_label}}"
@@ -2045,7 +2092,7 @@
                 </label>
                 <input type="text" placeholder="Names of direct reports"
                   class="form-control{% if form.direct_reports.errors %} is-invalid{% endif %}"
-                  id="{{form.direct_reports.id_for_label}}" name="direct_reports"
+                  id="{{form.direct_reports.id_for_label}}" name="{{form.direct_reports.name}}"
                   value="{{form.direct_reports.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
