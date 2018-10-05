@@ -40,7 +40,6 @@
       $('#section2').slideDown();
       $dis = $(this);
       $czech = $dis.prop('checked');
-      console.log($czech);
       if ($czech && $dis.val() == "Staff") {
         $('#sabbatical').hide();
         $('#statusChange').show();
@@ -81,8 +80,9 @@
     /* compensation change */
     var $intPay = $('input[name="temporary_interim_pay"]');
     $('#id_compensation_change').change(function() {
-      $czech = $initPay.prop('checked');
+      $czech = $intPay.prop('checked');
       $('.compensation-change').toggle();
+      console.log($intPay.val());
       if (this.checked && $czech && $intPay.val() == 'Yes') {
         $('#endDate').show();
       } else if (this.checked && $czech && $intPay.val() == 'No') {
@@ -194,7 +194,7 @@
     {% if form.position_change.value %}
     $('.position-change').show();
     {% endif %}
-    {% if form.direct_reports.value == 'Yes' %}
+    {% if form.additional_supervisor_role.value == 'Yes' %}
     $('#directReports').show();
     {% endif %}
     /* end position change */
@@ -1667,8 +1667,8 @@
                   {% if form.vacation_days_accrued.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.vacation_days_accrued.label}}</h5>
                 </label>
-                <input type="number" name="{{form.current_compensation.name}}"
-                  class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
+                <input type="number" name="{{form.vacation_days_accrued.name}}"
+                  class="form-control{% if form.vacation_days_accrued.errors %} is-invalid{% endif %}"
                   id="{{form.vacation_days_accrued.id_for_label}}"
                   value="{{form.vacation_days_accrued.value|default_if_none:''}}"
                   placeholder="Vacation days accrued">
@@ -1770,11 +1770,11 @@
             <div class="container-fluid">
               <label for="id_{{form.temporary_interim_pay.name}}_0"
                 {% if form.temporary_interim_pay.errors %}class="text-danger"{% endif %}>
-                <h5>Interim Pay</h5>
+                <h5>Is this temporary/interim pay?</h5>
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Temporary Pay"
+                  <input class="form-check-input" value="Yes"
                     type="radio" name="{{form.temporary_interim_pay.name}}"
                     id="id_{{form.temporary_interim_pay.name}}_0"
                     {% if form.temporary_interim_pay.value == 'Yes' %}checked{% endif %}>
@@ -1783,7 +1783,7 @@
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Interim Pay"
+                  <input class="form-check-input" value="No"
                     type="radio" name="{{form.temporary_interim_pay.name}}"
                     id="id_{{form.temporary_interim_pay.name}}_1"
                     {% if form.temporary_interim_pay.value == 'No' %}checked{% endif %}>
@@ -1800,7 +1800,7 @@
               <div class="form-group">
                 <label for="{{form.end_date.id_for_label}}"
                   {% if form.end_date.errors %}class="text-danger"{% endif %}>
-                  <h5>Interim Pay End Date</h5>
+                  <h5>Temporary/Interim Pay End Date</h5>
                 </label>
                 <input type="date" name="{{form.end_date.name}}"
                   class="form-control{% if form.end_date.errors %} is-invalid{% endif %}"
@@ -2061,7 +2061,6 @@
                   <input class="form-check-input" value="Yes"
                     type="radio" name="{{form.additional_supervisor_role.name}}"
                     id="id_{{form.additional_supervisor_role.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                     {% if form.additional_supervisor_role.value == 'Yes' %}
                       checked
                     {% endif %}>
@@ -2073,7 +2072,6 @@
                   <input class="form-check-input" value="No" type="radio"
                     name="{{form.additional_supervisor_role.name}}"
                     id="id_{{form.additional_supervisor_role.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.additional_supervisor_role.name}}_0','direct_reports');"
                     {% if form.additional_supervisor_role.value == 'No' %}checked{% endif %}>
                   <label for="id_{{form.additional_supervisor_role.name}}_1" class="form-check-label">
                     No
