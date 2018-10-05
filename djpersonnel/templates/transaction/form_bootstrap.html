@@ -144,65 +144,50 @@
       }
   }
   function termination(){
-      $('.facultyTermination, .facultyTerminationVoluntary, .facultyTerminationInvoluntary, .staffTermination, ' +
-          '.staffTerminationVoluntary, .staffTerminationInvoluntary').hide();
+      $('.faculty_staff_Termination, .terminationVoluntary, .terminationInvoluntary').hide();
       var isFaculty = $('#id_employee_type_0').is(':checked'),
       isStaff = $('#id_employee_type_1').is(':checked'),
       isTermination = $('#id_termination').is(':checked');
-      isVoluntary = $('#id_voluntary_involuntary_termination_0').is(':checked');
-      isInvoluntary = $('#id_voluntary_involuntary_termination_1').is(':checked');
+      isVoluntary = $('#id_termination_type_0').is(':checked');
+      isInvoluntary = $('#id_termination_type_1').is(':checked');
       //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
-      //console.log("Voluntary Termination: " + isTermination + '; Radio Button Voluntary Termination: ' + isVoluntary);
-      //console.log("Involuntary Termination: " + isTermination + '; Radio Button Involuntary Termination: ' + isInvoluntary);
+      //console.log("Termination: " + isTermination + '; Radio Button Voluntary Termination: ' + isVoluntary);
+      //console.log("Termination: " + isTermination + '; Radio Button Involuntary Termination: ' + isInvoluntary);
       //console.log('I am in the termination function!');
-      if(isFaculty == true && isTermination == true)
+      if((isFaculty == true || isStaff == true) && isTermination == true)
       {
-          //console.log('Staff and Termination are checked');
-          $('.facultyTermination').show();
+          //console.log('Faculty or Staff and Termination are checked');
+          $('.faculty_staff_Termination').show();
       }
-      if(isFaculty == true && isTermination == true && isVoluntary == true)
+      if((isFaculty == true || isStaff == true) && isTermination == true && isVoluntary == true)
       {
-          //console.log('Faculty and Termination and Voluntary are checked');
-          $('.facultyTerminationVoluntary').show();
+          //console.log('Faculty or Staff and Termination and Voluntary are checked');
+          $('.terminationVoluntary').show();
       }
-      if(isFaculty == true && isTermination == true && isInvoluntary == true)
+      if((isFaculty == true || isStaff == true) && isTermination == true && isInvoluntary == true)
       {
-          //console.log('Faculty and Termination and Involuntary are checked');
-          $('.facultyTerminationInvoluntary').show();
-      }
-      if(isStaff == true && isTermination == true)
-      {
-          //console.log('Staff and Termination are checked');
-          $('.staffTermination').show();
-      }
-      if(isStaff == true && isTermination == true && isVoluntary == true)
-      {
-          //console.log('Staff and Termination and Voluntary are checked');
-          $('.staffTerminationVoluntary').show();
-      }
-      if(isStaff == true && isTermination == true && isInvoluntary == true)
-      {
-          //console.log('Staff and Termination and Involuntary are checked');
-          $('.staffTerminationInvoluntary').show();
+          //console.log('Faculty or Staff and Termination and Involuntary are checked');
+          $('.terminationInvoluntary').show();
       }
       if(isTermination == false && isVoluntary == true)
       {
           //console.log('Missing something to be checked');
-          $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
-          $('#id_voluntary_involuntary_termination_0').prop('checked', false);
+          $('.terminationVoluntary, .terminationInvoluntary').hide();
+          $('#id_termination_type_0').prop('checked', false);
       }
       if(isTermination == false && isInvoluntary == true)
       {
           //console.log('Missing something to be checked');
-          $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
-          $('#id_voluntary_involuntary_termination_1').prop('checked', false);
+          $('.terminationVoluntary, .terminationInvoluntary').hide();
+          $('#id_termination_type_1').prop('checked', false);
       }
       if(isTermination == false)
       {
           //console.log('Missing something to be checked');
-          $('.facVoluntaryTermination, .staffVoluntaryTermination').hide();
+          $('.terminationInvoluntary, .terminationInvoluntary').hide();
           $('#id_eligible_rehire_0').prop('checked', false);
           $('#id_eligible_rehire_1').prop('checked', false);
+          $('#id_last_day_date').val('');
       }
   }
   function statuschange(){
@@ -345,7 +330,7 @@
        unchecks the check box it will reset the radio button if the user
        decides to recheck the same checkbox
     */
-    $("[name=voluntary_involuntary_termination]").click(function() {
+    $("[name=termination_type]").click(function() {
       termination();
     });
     $("[name=position_grant_funded]").click(function() {
@@ -1109,37 +1094,37 @@
             </div>
           </div>
           <!-- Hidden unless "Yes" is selected grant funded -->
-          <div class="col-md-12 pb-3 hyde" id="grant_number">
+          <div class="col-md-12 pb-3 hyde" id="grant_fund_number">
             <div class="col-md-6 pb-3">
               <div class="form-group">
-                <label for="{{form.grant_number.id_for_label}}"
-                  {% if form.grant_number.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.grant_number.label}}</h5>
+                <label for="{{form.grant_fund_number.id_for_label}}"
+                  {% if form.grant_fund_number.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.grant_fund_number.label}}</h5>
                 </label>
-                <input type="number" placeholder="Grant number" name="grant_number"
-                  class="form-control{% if form.grant_number.errors %} is-invalid{% endif %}"
-                  id="{{form.grant_number.id_for_label}}"
-                  value="{{form.grant_number.value|default_if_none:''}}">
+                <input type="text" placeholder="Grant fund number" name="grant_fund_number"
+                  class="form-control{% if form.grant_fund_number.errors %} is-invalid{% endif %}"
+                  id="{{form.grant_fund_number.id_for_label}}"
+                  value="{{form.grant_fund_number.value|default_if_none:''}}">
                 <small class="text-danger">
-                  {{form.grant_number.errors|join:", "}}
+                  {{form.grant_fund_number.errors|join:", "}}
                 </small>
               </div>
             </div>
             <div class="col-md-6 pb-3">
               <div class="form-group">
-                <label for="{{form.grant_amount.id_for_label}}"
-                  {% if form.grant_amount.errors %}
+                <label for="{{form.grant_fund_amount.id_for_label}}"
+                  {% if form.grant_fund_amount.errors %}
                     class="text-danger"
                   {% endif %}>
-                  <h5>{{form.grant_amount.label}}</h5>
+                  <h5>{{form.grant_fund_amount.label}}</h5>
                 </label>
                 <input type="text" class="form-control
-                  {% if form.grant_amount.errors %} is-invalid{% endif %}"
-                  name="grant_amount" placeholder="Grant amount or percentage"
-                  id="{{form.grant_amount.id_for_label}}"
-                  value="{{form.grant_amount.value|default_if_none:''}}">
+                  {% if form.grant_fund_amount.errors %} is-invalid{% endif %}"
+                  name="grant_fund_amount" placeholder="Grant fund amount or percentage"
+                  id="{{form.grant_fund_amount.id_for_label}}"
+                  value="{{form.grant_fund_amount.value|default_if_none:''}}">
                 <small class="text-danger">
-                  {{form.grant_amount.errors|join:", "}}
+                  {{form.grant_fund_amount.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -1677,33 +1662,33 @@
             </div>
           </div>
           <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none;">
+          <div class="col-md-6 pb-3 faculty_staff_Termination" style="display:none;">
             <div class="container-fluid">
-              <label for="id_{{form.voluntary_involuntary_termination.name}}_0"
-                {% if form.voluntary_involuntary_termination.errors %}class="text-danger"{% endif %}>
-                <h5>{{form.voluntary_involuntary_termination.label}}</h5>
+              <label for="id_{{form.termination_type.name}}_0"
+                {% if form.termination_type.errors %}class="text-danger"{% endif %}>
+                <h5>{{form.termination_type.label}}</h5>
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Voluntary"
-                    type="radio" name="voluntary_involuntary_termination"
-                    id="id_{{form.voluntary_involuntary_termination.name}}_0"
-                    {% if form.voluntary_involuntary_termination.value == 'Voluntary' %}
+                    type="radio" name="termination_type"
+                    id="id_{{form.termination_type.name}}_0"
+                    {% if form.termination_type.value == 'Voluntary' %}
                       checked
                     {% endif %}>
-                  <label for="id_{{form.voluntary_involuntary_termination.name}}_0"
+                  <label for="id_{{form.termination_type.name}}_0"
                     class="form-check-label">
                     Voluntary Termination
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Involuntary"
-                    type="radio" name="voluntary_involuntary_termination"
-                    id="id_{{form.voluntary_involuntary_termination.name}}_1"
-                    {% if form.voluntary_involuntary_termination.value == 'Involuntary' %}
+                    type="radio" name="termination_type"
+                    id="id_{{form.termination_type.name}}_1"
+                    {% if form.termination_type.value == 'Involuntary' %}
                       checked
                     {% endif %}>
-                  <label for="id_{{form.voluntary_involuntary_termination.name}}_1" class="form-check-label">
+                  <label for="id_{{form.termination_type.name}}_1" class="form-check-label">
                     Involuntary Termination
                   </label>
                 </div>
@@ -1711,20 +1696,20 @@
             </div>
           </div>
           <!-- Hidden unless staff, termination and "Voluntary" is checked -->
-          <div class="col-md-6 pb-3 staffTerminationVoluntary" style="display:none">
+          <div class="col-md-6 pb-3 terminationVoluntary" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.staff_leaving_voluntary_types.id_for_label}}"
-                  {% if form.staff_leaving_voluntary_types.errors %}
+                <label for="{{form.termination_voluntary.id_for_label}}"
+                  {% if form.termination_voluntary.errors %}
                     class="text-danger"
                   {% endif %}>
                   <h5>Voluntary Reasons for Leaving</h5>
                 </label>
-                <select name="shift" class="form-control"
-                  id="{{form.staff_leaving_voluntary_types.id_for_label}}">
-                {% for value, text in form.fields.staff_leaving_voluntary_types.choices %}
+                <select name="termination_voluntary" class="form-control"
+                  id="{{form.termination_voluntary.id_for_label}}">
+                {% for value, text in form.fields.termination_voluntary.choices %}
                   <option value="{{value}}"
-                    {% if form.staff_leaving_voluntary_types.value == value %}
+                    {% if form.termination_voluntary.value == value %}
                     selected
                     {% endif %}>
                     {{text}}
@@ -1735,68 +1720,20 @@
             </div>
           </div>
           <!-- Hidden unless staff, termination and "Involuntary" is checked -->
-          <div class="col-md-6 pb-3 staffTerminationInvoluntary" style="display:none">
+          <div class="col-md-6 pb-3 terminationInvoluntary" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.staff_leaving_involuntary_types.id_for_label}}"
-                  {% if form.staff_leaving_involuntary_types.errors %}
+                <label for="{{form.termination_involuntary.id_for_label}}"
+                  {% if form.termination_involuntary.errors %}
                     class="text-danger"
                   {% endif %}>
                   <h5>Involuntary Reasons for Leaving</h5>
                 </label>
-                <select name="shift" class="form-control"
-                  id="{{form.staff_leaving_involuntary_types.id_for_label}}">
-                  {% for value, text in form.fields.staff_leaving_involuntary_types.choices %}
+                <select name="termination_involuntary" class="form-control"
+                  id="{{form.termination_involuntary.id_for_label}}">
+                  {% for value, text in form.fields.termination_involuntary.choices %}
                     <option value="{{value}}"
-                      {% if form.staff_leaving_involuntary_types.value == value %}
-                      selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty, termination and "Voluntary" is checked -->
-          <div class="col-md-6 pb-3 facultyTerminationVoluntary" style="display:none">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.faculty_leaving_voluntary_types.id_for_label}}"
-                  {% if form.faculty_leaving_voluntary_types.errors %}
-                    class="text-danger"
-                  {% endif %}>
-                  <h5>Voluntary Reasons for Leaving</h5>
-                </label>
-                <select name="shift" class="form-control"
-                  id="{{form.faculty_leaving_voluntary_types.id_for_label}}">
-                  {% for value, text in form.fields.faculty_leaving_voluntary_types.choices %}
-                    <option value="{{value}}"
-                      {% if form.faculty_leaving_voluntary_types.value == value %}
-                      selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty, termination and "Involuntary" is checked -->
-          <div class="col-md-6 pb-3 facultyTerminationInvoluntary" style="display:none">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.faculty_leaving_involuntary_types.id_for_label}}"
-                  {% if form.faculty_leaving_involuntary_types.errors %}
-                    class="text-danger"
-                  {% endif %}>
-                  <h5>Involuntary Reasons for Leaving</h5>
-                </label>
-                <select class="form-control" name="shift"
-                  id="{{form.faculty_leaving_involuntary_types.id_for_label}}">
-                  {% for value, text in form.fields.faculty_leaving_involuntary_types.choices %}
-                    <option value="{{value}}"
-                      {% if form.faculty_leaving_involuntary_types.value == value %}
+                      {% if form.termination_involuntary.value == value %}
                       selected
                       {% endif %}>
                       {{text}}
@@ -1807,7 +1744,7 @@
             </div>
           </div>
           <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-sm-6 pb-3 facultyTermination staffTermination" style="display:none">
+          <div class="col-sm-6 pb-3 faculty_staff_Termination" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.last_day_date.id_for_label}}"
@@ -1825,7 +1762,7 @@
             </div>
           </div>
           <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
+          <div class="col-md-6 pb-3 faculty_staff_Termination" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.returned_property.id_for_label}}"
@@ -1844,7 +1781,7 @@
             </div>
           </div>
           <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
+          <div class="col-md-6 pb-3 faculty_staff_Termination" style="display:none">
             <div class="container-fluid">
               <label for="id_{{form.eligible_rehire.name}}_0"
                 {% if form.eligible_rehire.errors %}class="text-danger"{% endif %}>
@@ -1871,14 +1808,14 @@
             </div>
           </div>
           <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-md-6 pb-3 facultyTermination staffTermination" style="display:none">
+          <div class="col-md-6 pb-3 faculty_staff_Termination" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.vacation_days_accrued.id_for_label}}"
                   {% if form.vacation_days_accrued.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.vacation_days_accrued.label}}</h5>
                 </label>
-                <input type="number" name="current_compensation"
+                <input type="number" name="vacation_days_accrued"
                   class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.vacation_days_accrued.id_for_label}}"
                   value="{{form.vacation_days_accrued.value|default_if_none:''}}"
@@ -1958,7 +1895,7 @@
                 </label>
                 <input type="date" class="form-control
                   {% if form.compensation_effective_date.errors %} is-invalid{% endif %}"
-                  name="effective_date"
+                  name="compensation_effective_date"
                   id="{{form.compensation_effective_date.id_for_label}}"
                   value="{{form.compensation_effective_date.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
@@ -2009,7 +1946,7 @@
               <div class="form-group">
                 <label for="{{form.end_date.id_for_label}}"
                   {% if form.end_date.errors %}class="text-danger"{% endif %}>
-                  <h5>Interim Pay End Date</h5>
+                  <h5>{{form.end_date.label}}</h5>
                 </label>
                 <input type="date" name="end_date"
                   class="form-control{% if form.end_date.errors %} is-invalid{% endif %}"
@@ -2141,17 +2078,17 @@
           <div class="col-md-6 pb-3 hyde" id="grant_pay_account_number">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.grant_number.id_for_label}}"
-                  {% if form.grant_number.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.grant_number.label}}</h5>
+                <label for="{{form.grant_pay_account_number.id_for_label}}"
+                  {% if form.grant_pay_account_number.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.grant_pay_account_number.label}}</h5>
                 </label>
-                <input type="text" name="grant_number"
+                <input type="text" name="grant_pay_account_number"
                   placeholder="Grant Pay Account Number"
-                  class="form-control{% if form.grant_number.errors %} is-invalid{% endif %}"
-                  id="{{form.grant_number.id_for_label}}"
-                  value="{{form.grant_number.value|default_if_none:''}}">
+                  class="form-control{% if form.grant_pay_account_number.errors %} is-invalid{% endif %}"
+                  id="{{form.grant_pay_account_number.id_for_label}}"
+                  value="{{form.grant_pay_account_number.value|default_if_none:''}}">
                 <small class="text-danger">
-                  {{form.grant_number.errors|join:", "}}
+                  {{form.grant_pay_account_number.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -2164,7 +2101,7 @@
                   {% if form.sabbatical_types.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.sabbatical_types.label}}</h5>
                 </label>
-                <select class="form-control" name="shift"
+                <select class="form-control" name="sabbatical_types"
                   id="{{form.sabbatical_types.id_for_label}}">
                   {% for value, text in form.fields.sabbatical_types.choices %}
                     <option value="{{value}}"

@@ -213,7 +213,7 @@ $(function() {
             </div>
             <div class="form-check">
               {% if data.department_change == True %}
-                <i class="fa fa-check green" data-placement="top"></i>
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
               {% else %}
                 <i class="fa fa-square-o" data-placement="top"></i>
               {% endif %}
@@ -221,7 +221,7 @@ $(function() {
             </div>
             <div class="form-check">
               {% if data.compensation_change == True %}
-                <i class="fa fa-check green" data-placement="top"></i>
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
               {% else %}
                 <i class="fa fa-square-o" data-placement="top"></i>
               {% endif %}
@@ -229,7 +229,7 @@ $(function() {
             </div>
             <div class="form-check">
               {% if data.onetime_payment == True %}
-                <i class="fa fa-check green" data-placement="top"></i>
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
               {% else %}
                 <i class="fa fa-square-o" data-placement="top"></i>
               {% endif %}
@@ -299,7 +299,7 @@ $(function() {
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>Section III - Complete only applicable information.</h6>
         </div>
-        {% if data.position_title != None %}
+        {% if data.position_title %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -309,7 +309,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.status_type != None %}
+        {% if data.status_type %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -319,7 +319,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.status_change_effective_date != None %}
+        {% if data.status_change_effective_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -329,7 +329,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.hire_type != None %}
+        {% if data.hire_type %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -339,7 +339,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.pay_type != None %}
+        {% if data.pay_type %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -349,7 +349,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.hours_per_week != None %}
+        {% if data.hours_per_week %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -359,7 +359,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.offered_compensation != None %}
+        {% if data.offered_compensation %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -369,7 +369,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.expected_start_date != None %}
+        {% if data.expected_start_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -379,7 +379,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.budget_account != None %}
+        {% if data.budget_account %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -389,7 +389,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.supervise_others != None %}
+        {% if data.supervise_others %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -399,7 +399,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.standard_vacation_package != None %}
+        {% if data.standard_vacation_package %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -409,7 +409,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.vacation_days != None %}
+        {% if data.vacation_days %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -419,7 +419,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.position_grant_funded != None %}
+        {% if data.position_grant_funded %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -429,27 +429,27 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.grant_number != None %}
+        {% if data.grant_fund_number %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'grant_number' %}</h6>
-              <p>{{data.grant_number}}</p>
+              <h6>{% field_name data 'grant_fund_number' %}</h6>
+              <p>{{data.grant_fund_number}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-        {% if data.grant_amount != None %}
+        {% if data.grant_fund_amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'grant_amount' %}</h6>
-              <p>{{data.grant_amount}}</p>
+              <h6>{% field_name data 'grant_fund_amount' %}</h6>
+              <p>{{data.grant_fund_amount}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-        {% if data.moving_expenses != None %}
+        {% if data.moving_expenses %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -459,7 +459,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.moving_expenses_amount != None %}
+        {% if data.moving_expenses_amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -469,7 +469,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.startup_expenses != None %}
+        {% if data.startup_expenses %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -479,7 +479,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.startup_expenses_amount != None %}
+        {% if data.startup_expenses_amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -489,7 +489,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.shift != None %}
+        {% if data.shift %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -499,7 +499,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if startup_expenses_amount.shift != None %}
+        {% if data.startup_expenses_amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -509,7 +509,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if other_arrangements.shift != None %}
+        {% if data.other_arrangements %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -519,7 +519,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if employment_types.shift != None %}
+        {% if data.employment_types %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -529,7 +529,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if contract_years.shift != None %}
+        {% if data.contract_years %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -539,7 +539,7 @@ $(function() {
           </div>
         </div>
          {% endif %}
-        {% if music.shift != None %}
+        {% if data.music %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -549,7 +549,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.courses_teaching != None %}
+        {% if data.courses_teaching %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -559,7 +559,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.number_of_credits != None %}
+        {% if data.number_of_credits %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -569,7 +569,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.teaching_appointment != None %}
+        {% if data.teaching_appointment %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -579,7 +579,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.teaching_appointment_arrangements != None %}
+        {% if data.teaching_appointment_arrangements %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -589,7 +589,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.program_types != None %}
+        {% if data.program_types %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -599,7 +599,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.leave_of_absence_date != None %}
+        {% if data.leave_of_absence_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -609,7 +609,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.expected_return_date != None %}
+        {% if data.expected_return_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -619,7 +619,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.leave_of_absence_reason != None %}
+        {% if data.leave_of_absence_reason %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -629,7 +629,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.new_department != None %}
+        {% if data.new_department %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -639,7 +639,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.old_department != None %}
+        {% if data.old_department %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -649,7 +649,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.new_supervisor != None %}
+        {% if data.new_supervisor %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -659,7 +659,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-         {% if music.old_supervisor != None %}
+         {% if data.old_supervisor %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -669,57 +669,37 @@ $(function() {
           </div>
         </div>
         {% endif %}
-         {% if music.voluntary_involuntary_termination != None %}
+         {% if data.termination_type %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'voluntary_involuntary_termination' %}</h6>
-              <p>{{data.voluntary_involuntary_termination}}</p>
+              <h6>{% field_name data 'termination_type' %}</h6>
+              <p>{{data.termination_type}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-         {% if music.staff_leaving_voluntary_types != None %}
+         {% if data.termination_voluntary %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'staff_leaving_voluntary_types' %}</h6>
-              <p>{{data.staff_leaving_voluntary_types}}</p>
+              <h6>{% field_name data 'termination_voluntary' %}</h6>
+              <p>{{data.termination_voluntary}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-        {% if music.staff_leaving_involuntary_types != None %}
+        {% if data.termination_involuntary %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'staff_leaving_involuntary_types' %}</h6>
-              <p>{{data.staff_leaving_involuntary_types}}</p>
+              <h6>{% field_name data 'termination_involuntary' %}</h6>
+              <p>{{data.termination_involuntary}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-        {% if music.faculty_leaving_voluntary_types != None %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>{% field_name data 'faculty_leaving_voluntary_types' %}</h6>
-              <p>{{data.faculty_leaving_voluntary_types}}</p>
-            </div>
-          </div>
-        </div>
-        {% endif %}
-        {% if music.faculty_leaving_involuntary_types != None %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-group">
-              <h6>{% field_name data 'faculty_leaving_involuntary_types' %}</h6>
-              <p>{{data.faculty_leaving_involuntary_types}}</p>
-            </div>
-          </div>
-        </div>
-        {% endif %}
-        {% if music.last_day_date != None %}
+        {% if data.last_day_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -729,7 +709,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.returned_property != None %}
+        {% if data.returned_property %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -739,7 +719,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.eligible_rehire != None %}
+        {% if data.eligible_rehire %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -749,7 +729,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.vacation_days_accrued != None %}
+        {% if data.vacation_days_accrued %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -759,7 +739,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.new_compensation != None %}
+        {% if data.new_compensation %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -769,7 +749,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.current_compensation != None %}
+        {% if data.current_compensation %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -779,7 +759,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.salary_change_reason != None %}
+        {% if data.salary_change_reason %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -789,7 +769,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.compensation_effective_date != None %}
+        {% if data.compensation_effective_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -799,7 +779,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.temporary_interim_pay != None %}
+        {% if data.temporary_interim_pay %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -809,7 +789,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.end_date != None %}
+        {% if data.end_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -819,7 +799,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.amount != None %}
+        {% if data.amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -829,7 +809,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.amount_reason != None %}
+        {% if data.amount_reason %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -839,7 +819,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.pay_after_date != None %}
+        {% if data.pay_after_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -849,7 +829,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.department_account_number != None %}
+        {% if data.department_account_number %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -859,7 +839,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.grant_pay != None %}
+        {% if data.grant_pay %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -869,7 +849,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.grant_pay_account_number != None %}
+        {% if data.grant_pay_account_number %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -879,7 +859,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.sabbatical_types != None %}
+        {% if data.sabbatical_types %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -889,7 +869,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.academic_year != None %}
+        {% if data.academic_year %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -899,7 +879,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.old_position != None %}
+        {% if data.old_position %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -909,7 +889,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.new_position != None %}
+        {% if data.new_position %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -919,7 +899,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.position_effective_date != None %}
+        {% if data.position_effective_date %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -929,7 +909,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.additional_supervisor_role != None %}
+        {% if data.additional_supervisor_role %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
@@ -939,7 +919,7 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if music.direct_reports != None %}
+        {% if data.direct_reports %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
