@@ -291,13 +291,13 @@ class Operation(models.Model):
         null=True, blank=True
     )
     # NOTE: if 'Yes' to grant funded, then grant number
-    grant_number = models.CharField(
+    grant_fund_number = models.CharField(
         "What is the grant fund number?",
         max_length=25,
         null=True, blank=True
     )
     # NOTE: if 'Yes' to grant funded, then grant amount
-    grant_amount = models.CharField(
+    grant_fund_amount = models.CharField(
         "What is the percentage or amount?",
         max_length=25,
         null=True, blank=True
@@ -415,7 +415,7 @@ class Operation(models.Model):
         null=True, blank=True
     )
     compensation_effective_date = models.DateField(
-        verbose_name='Effective date',
+        verbose_name='Compensation Effective date',
         null=True, blank=True
     )
     temporary_interim_pay = models.CharField(
@@ -426,13 +426,13 @@ class Operation(models.Model):
     )
     # NOTE: if temporary_interim_pay 'Yes', provide the end date
     end_date = models.DateField(
-        verbose_name='End date',
+        verbose_name='Interim Pay End Date',
         null=True, blank=True
     )
     # Onetime Payment checkbox
     # the following fields are used when the onetime_payment checkbox is checked
     amount = models.DecimalField(
-        verbose_name='Amount',
+        verbose_name='Onetime Payment Amount',
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
@@ -519,7 +519,7 @@ class Operation(models.Model):
     # the following fields are used when the status_change checkbox is checked
     # NOTE: This uses the status_type field which is also used when New Hire/Rehire is checked
     status_change_effective_date = models.DateField(
-        verbose_name='Status Change date',
+        verbose_name='Status Change effective date',
         null=True, blank=True
     )
     # Position/Title Change
@@ -562,7 +562,7 @@ class Operation(models.Model):
     )
     leave_of_absence_reason = models.CharField(
         "Reason for the leave of absence?",
-        max_length=25,
+        max_length=100,
         null=True, blank=True
     )
     # Sabbatical
