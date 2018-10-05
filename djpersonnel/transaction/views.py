@@ -21,6 +21,7 @@ from djtools.utils.users import in_group
 )
 def form_home(request):
     user = request.user
+    switch = request.GET.get('switch')
     if request.method=='POST':
 
         form = OperationForm(request.POST, label_suffix='')
@@ -78,11 +79,13 @@ def form_home(request):
 
     hr = in_group(user, settings.HR_GROUP)
 
-    template = 'transaction/form_bootstrap.html'
-    if request.GET.get('switch'):
-        template = 'transaction/form.html'
+    template = 'transaction/form.html'
+    if switch:
+        template = 'transaction/form_{}.html'.format(switch)
 
-    return render(request, template, {'form': form,'hr':hr})
+    return render(
+        request, template, {'form': form,'hr':hr,'switch':switch}
+    )
 
 
 @portal_auth_required(
