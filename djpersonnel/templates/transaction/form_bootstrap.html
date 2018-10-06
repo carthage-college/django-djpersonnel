@@ -427,7 +427,8 @@
     </div>
     <div class="card-body bg-light">
       {{form.errors}}
-      <form action="." method="post" class="form" role="form">
+      <form action="{% url 'transaction_form' %}{% if switch %}?switch={{switch}}{% endif %}"
+        method="post" class="form" role="form">
         {% csrf_token %}
         <!-- Section I .form-row -->
         <div class="form-row mt-4">

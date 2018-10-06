@@ -337,8 +337,8 @@ class Operation(models.Model):
         choices=SHIFT_CHOICES,
         null=True, blank=True
     )
-    employment_types = models.CharField(
-        "Employment Types",
+    employment_type = models.CharField(
+        "Employment Type",
         max_length=255,
         choices=EMPLOYMENT_TYPE_CHOICES,
         null=True, blank=True
