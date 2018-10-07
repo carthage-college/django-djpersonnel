@@ -6,7 +6,6 @@
 {% block extra_javascript %}
 {{block.super}}
 <script type="text/javascript">
-
   /**
    * simple function to show/hide an element based on the value
    * of another dom object
@@ -20,8 +19,10 @@
   }
 
   $(function() {
+    // global variable for staff or faculty
+    var $employeeType;
 
-    /* make certain that at least one checkbox is checked */
+    // make certain that at least one checkbox is checked
     $('#checkBtn').click(function() {
       if (!$('.ckbselect').is(':checked')) {
         alert("You must check at least one checkbox.");
@@ -29,32 +30,42 @@
       }
     });
 
-    /* hide everything */
+    $('#id_department_name').on('change', function() {
+      if ($(this).val() == 'EVS' && $('#id_newhire_rehire').prop('checked') && $employeeType == "Staff") {
+        $('.shift').show();
+      }
+    });
+
+    // hide everything
     var $hyde = '#section2, .facstaff, .facstaff-new, .faculty-new,' +
-                '.staff-new, .staff, #grantPayAccountNumber,' +
+                '.staff-new, .staff, .shift, #grantPayAccountNumber,' +
                 '#terminationInvoluntary, #terminationVoluntary,' +
-                '.sabbatical, #directReports, #endDate,' +
+                '.sabbatical, #directReports, #endDate, .status-change,' +
                 '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
                 '#startupExpensesAmount, #contractType, #coursesTeaching,' +
                 '#teachingAppointment'
     $($hyde).hide();
-
     /* section II jquery reveal */
     $('[name=employee_type]').click(function() {
-      $('#section2').slideDown();
       $dis = $(this);
       $czech = $dis.prop('checked');
       if ($czech && $dis.val() == "Staff") {
+        $($hyde).hide();
+        $('input:checkbox').prop('checked', false);
+        $('#section2').slideDown();
         $('#sabbatical').hide();
         $('#statusChange').show();
         if ($('#id_status_change').prop('checked') || $('#id_newhire_rehire').prop('checked')) {
           $('.status-change').show();
         }
-        if ($('#id_department_name') == 'EVS') {
+        if ($('#id_department_name').val() == 'EVS' && $('#id_newhire_rehire').prop('checked')) {
           $('.shift').show();
         }
-      });
+      }
       if ($czech && $dis.val() == "Faculty") {
+        $($hyde).hide();
+        $('input:checkbox').removeAttr('checked');
+        $('#section2').slideDown();
         $('#sabbatical').show();
         $('.shift').hide();
         $('#statusChange, .status-change').hide();
@@ -62,6 +73,7 @@
           $('.sabbatical').show();
         }
       }
+      $employeeType = $dis.val();
     });
     {# section II django reveal #}
     {% if form.employee_type.value %}
@@ -91,50 +103,46 @@
     {% endif %}
     /* end department change */
     /* new hire or rehire */
-    var $employeeType = $('input[name="employee_type"]');
     $('#id_newhire_rehire').change(function() {
       $('.facstaff-new').show();
-      if (this.checked && $employeeType.val() == "Staff") {
+      if (this.checked && $employeeType == "Staff") {
         $('.faculty-new').hide();
         $('.staff-new').show();
-      } else if (this.checked && $employeeType.val() == "Faculty") {
+        if ($('#id_department_name').val() == 'EVS' && $employeeType == "Staff") {
+          $('.shift').show();
+        }
+      } else if (this.checked && $employeeType == "Faculty") {
         $('.faculty-new').show();
         $('.staff-new').hide();
+        $('.shift').hide();
       } else {
-        $employeeType.prop('cmecked', false);
         $('.facstaff-new').hide();
         $('.faculty-new').hide();
         $('.staff-new').hide();
+        $('.shift').hide();
       }
     });
-    // vacation days
     $('input[name="standard_vacation_package"]').click(function() {
-      toggle(this.value, 'No', '#vactionDays');
+      toggle(this.value, 'No', '#vacationDays');
     });
-    // grant funded
     $('input[name="position_grant_funded"]').click(function() {
       toggle(this.value, 'Yes', '#grantFundNumber');
     });
-    // moving expenses
     $('input[name="moving_expenses"]').click(function() {
       toggle(this.value, 'Yes', '#movingExpensesAmount');
     });
-    // startup expenses
     $('input[name="startup_expenses"]').click(function() {
       toggle(this.value, 'Yes', '#startupExpensesAmount');
     });
-    // contract type
     $('#id_employment_type').on('change', function() {
       $dis = this.value.substring(0, 8);
       toggle($dis, 'Contract', '#contractType');
     });
-    // adjunct courses teaching
     $('#id_employment_type').on('change', function() {
       toggle(this.value, 'Adjunct', '#coursesTeaching');
     });
-    // teaching appointment other
-    $('#id_teaching_appointment').on('change', function() {
-      toggle(this.value, 'Adjunct', '#teachingAppointment');
+    $('input[name="teaching_appointment"]').click(function() {
+      toggle(this.value, 'Other', '#teachingAppointment');
     });
     /* end new hire or rehire */
     /* compensation change */
@@ -147,7 +155,7 @@
       } else if (this.checked && $czech && $intPay.val() == 'No') {
         $('#endDate').hide();
       } else {
-        $intPay.prop('cmecked', false);
+        $intPay.prop('checked', false);
         $('#endDate').hide();
       }
     });
@@ -803,28 +811,6 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless staff and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 staff-new">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.pay_rate.id_for_label}}"
-                  {% if form.pay_rate.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.pay_rate.label}}</h5>
-                </label>
-                <select class="form-control" name="{{form.pay_rate.name}}"
-                  id="{{form.pay_rate.id_for_label}}">
-                  {% for value, text in form.fields.pay_rate.choices %}
-                    <option value="{{value}}"
-                      {% if form.pay_rate.value == value %}
-                        selected
-                      {% endif %}>
-                      {{text}}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          </div>
           <!-- Hidden unless faculty or staff and "newhire_rehire" is checked -->
           <div class="col-sm-6 pb-3 facstaff-new">
             <div class="container-fluid">
@@ -1124,8 +1110,8 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless staff and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 staff-new">
+          <!-- Hidden unless staff and EVS and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 shift">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.shift.id_for_label}}"
@@ -1290,7 +1276,7 @@
               </label>
               <div class="form-group small">
                 <div class="form-check">
-                  <input class="form-check-input" value="Yes"
+                  <input class="form-check-input" value="1 Year"
                       type="radio" name="{{form.teaching_appointment.name}}"
                       id="id_{{form.teaching_appointment.name}}_0"
                       {% if form.teaching_appointment.value == '1 Year' %}
@@ -1301,7 +1287,7 @@
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" value="No"
+                  <input class="form-check-input" value="3 year"
                     type="radio" name="{{form.teaching_appointment.name}}"
                     id="id_{{form.teaching_appointment.name}}_1"
                     {% if form.teaching_appointment.value == '3 Year' %}checked{% endif %}>
@@ -1311,7 +1297,7 @@
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" value="No"
+                  <input class="form-check-input" value="Other"
                     type="radio" name="{{form.teaching_appointment.name}}"
                     id="id_{{form.teaching_appointment.name}}_2"
                     {% if form.teaching_appointment.value == 'Other' %}checked{% endif %}>
@@ -1338,9 +1324,7 @@
                 <textarea rows="2" cols="6" name="{{form.teaching_appointment_arrangements.name}}"
                   class="form-control{% if form.teaching_appointment_arrangements.errors %} is-invalid{% endif %}"
                   id="{{form.teaching_appointment_arrangements.id_for_label}}"
-                  placeholder="{{form.teaching_appointment_arrangements.help_text}}">
-                  {{form.teaching_appointment_arrangements.value|default_if_none:''}}
-                </textarea>
+                  placeholder="{{form.teaching_appointment_arrangements.help_text}}">{{form.teaching_appointment_arrangements.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.teaching_appointment_arrangements.errors|join:", "}}
                 </small>
@@ -1457,7 +1441,7 @@
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.new_department.id_for_label}}"
-                  {% if form.new_department_name.errors %}
+                  {% if form.new_department.errors %}
                     class="text-danger"
                   {% endif %}>
                   <h5>{{form.new_department.label}}</h5>

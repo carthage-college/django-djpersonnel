@@ -26,6 +26,11 @@ SHIFT_CHOICES = (
     ('2nd Shift', '2nd Shift'),
     ('3rd Shift', '3rd Shift')
 )
+TEACHING_APPOINTMENT_CHOICES = (
+    ('1 year', '1 Year: Seven 4 credit courses during academic year'),
+    ('3 Year', '3 year: Six courses during the first year, Seven courses the second and third year'),
+    ('Other', 'Other arrangement')
+)
 EMPLOYMENT_TYPE_CHOICES = (
     ('Adjunct', 'Adjunct'),
     ('Contract-ongoing', 'Contract-ongoing'),
@@ -369,8 +374,8 @@ class Operation(models.Model):
     )
     teaching_appointment = models.CharField(
         "Teaching appointment",
-        max_length=6,
-        choices=BINARY_CHOICES,
+        max_length=8,
+        choices=TEACHING_APPOINTMENT_CHOICES,
         null=True, blank=True
     )
     teaching_appointment_arrangements = models.TextField(
