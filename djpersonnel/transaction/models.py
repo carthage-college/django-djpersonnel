@@ -661,5 +661,4 @@ class Operation(models.Model):
         return ('transaction_detail', [str(self.id)])
 
     def permissions(self, user):
-
         return get_permissions(self, user)

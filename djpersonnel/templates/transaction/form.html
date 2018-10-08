@@ -1457,6 +1457,9 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.new_department.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1477,6 +1480,9 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.old_department.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1554,6 +1560,11 @@
                     Involuntary
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.termination_type.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -1578,6 +1589,9 @@
                   </option>
                 {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.termination_voluntary.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1597,13 +1611,16 @@
                   id="{{form.termination_involuntary.id_for_label}}">
                   {% for value, text in form.fields.termination_involuntary.choices %}
                     <option value="{{value}}"
-                      {% if form.termination_involuntary_types.value == value %}
+                      {% if form.termination_involuntary.value == value %}
                       selected
                       {% endif %}>
                       {{text}}
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.termination_involuntary.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1903,6 +1920,7 @@
                   class="form-control{% if form.department_account_number.errors %} is-invalid{% endif %}"
                   id="{{form.department_account_number.id_for_label}}"
                   value="{{form.department_account_number.value|default_if_none:''}}">
+                <small class="text-danger">
                   {{form.department_account_number.errors|join:", "}}
                 </small>
               </div>
@@ -2119,7 +2137,7 @@
         <!-- Buttons .form-row -->
         <div class="form-row mt-4">
           <div class="col-12 pb-3 text-center">
-            <button class="btn btn-primary col-2" id="checkBtn"type="submit">
+            <button class="btn btn-primary col-2" id="checkBtn" type="submit">
               Submit
             </button>
           </div>
