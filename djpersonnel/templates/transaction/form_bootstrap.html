@@ -192,8 +192,7 @@
   }
   function statuschange(){
       $('.staffStatus').hide();
-      var isFaculty = $('#id_employee_type_0').is(':checked'),
-      isStaff = $('#id_employee_type_1').is(':checked'),
+      var isStaff = $('#id_employee_type_1').is(':checked'),
       isStatusChange = $('#id_status_change').is(':checked'),
       isNewhireRehire = $('#id_newhire_rehire').is(':checked');;
       //console.log("Faculty: " + isFaculty + '; Staff: ' + isStaff);
@@ -388,7 +387,7 @@
         $('.shift').hide();
       }
     });
-    $('#id_employment_types').on('change', function(){
+    $('#id_employment_type').on('change', function(){
       //console.log(this.value);
       if (this.value == 'Contract-ongoing' || this.value == 'Contract-terminal') {
         $('.contract').show();
@@ -396,7 +395,7 @@
         $('.contract').hide();
       }
     });
-    $('#id_employment_types').on('change', function(){
+    $('#id_employment_type').on('change', function(){
       //console.log(this.value);
       if (this.value == 'Adjunct' || this.value == 'Adjunct') {
         $('.music').show();
@@ -911,8 +910,8 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless "faculty or staff and newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 facNewhire staffNewhire" style="display:none">
+          <!-- Hidden unless "faculty or staff and newhire_rehire or status_change" is checked -->
+          <div class="col-md-6 pb-3 facNewhire staffNewhire staffStatus" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.hours_per_week.id_for_label}}"
@@ -1071,7 +1070,7 @@
                   <input class="form-check-input" value="Yes"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_0"
-                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
+                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_fund_number');"
                       {% if form.position_grant_funded.value == 'Yes' %}
                         checked
                       {% endif %}>
@@ -1289,19 +1288,19 @@
           <div class="col-md-6 pb-3 facNewhire" style="display:none">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.employment_types.id_for_label}}"
-                  {% if form.employment_types.errors %}
+                <label for="{{form.employment_type.id_for_label}}"
+                  {% if form.employment_type.errors %}
                     class="text-danger"
                   {% endif %}>
-                  <h5>{{form.employment_types.label}}</h5>
+                  <h5>{{form.employment_type.label}}</h5>
                 </label>
                 <select class="form-control"
-                  id="{{form.employment_types.id_for_label}}"
-                  name="employment_types"
+                  id="{{form.employment_type.id_for_label}}"
+                  name="employment_type"
                   {% if not templates_debug %}required{% endif %}>
-                  {% for value, text in form.fields.employment_types.choices %}
+                  {% for value, text in form.fields.employment_type.choices %}
                     <option value="{{value}}"
-                      {% if form.employment_types.value == value %}
+                      {% if form.employment_type.value == value %}
                       selected
                       {% endif %}>
                     {{text}}
