@@ -61,7 +61,7 @@ TERMINATION_VOLUNTARY_CHOICES = (
 )
 TERMINATION_INVOLUNTARY_CHOICES = (
     ('Contract expired', 'Contract expired'),
-    ('Contract non-renwed', 'Contract non-renwed'),
+    ('Contract non-renewed', 'Contract non-renewed'),
     ('Deceased', 'Deceased'),
     ('Gross misconduct', 'Gross misconduct')
 )
