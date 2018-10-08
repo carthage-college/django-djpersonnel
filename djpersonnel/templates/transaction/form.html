@@ -46,12 +46,12 @@
                 '#teachingAppointment'
     $($hyde).hide();
     /* section II jquery reveal */
-    $('[name=employee_type]').click(function() {
+    $('#id_employee_type').on('change', function() {
       $dis = $(this);
-      $czech = $dis.prop('checked');
-      if ($czech && $dis.val() == "Staff") {
+      if ($dis.val() == "Staff") {
         $($hyde).hide();
         $('input:checkbox').prop('checked', false);
+        $('input:radio').prop('checked', false);
         $('#section2').slideDown();
         $('#sabbatical').hide();
         $('#statusChange').show();
@@ -62,9 +62,10 @@
           $('.shift').show();
         }
       }
-      if ($czech && $dis.val() == "Faculty") {
+      if ($dis.val() == "Faculty") {
         $($hyde).hide();
-        $('input:checkbox').removeAttr('checked');
+        $('input:checkbox').prop('checked', false);
+        $('input:radio').prop('checked', false);
         $('#section2').slideDown();
         $('#sabbatical').show();
         $('.shift').hide();
@@ -509,27 +510,20 @@
           </div>
           <div class="col-md-6 pb-3">
             <div class="container-fluid">
-              <label for="id_{{form.employee_type.name}}_0"
-                {% if form.employee_type.errors %}class="text-danger"{% endif %}>
-                <h5>Check One</h5>
-              </label>
-              <div class="form-group small">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Faculty" type="radio"
-                    name="{{form.employee_type.name}}" id="id_{{form.employee_type.name}}_0"
-                    {% if form.employee_type.value == 'Faculty' %}checked{% endif %}>
-                  <label for="id_{{form.employee_type.name}}_0" class="form-check-label">
-                    Faculty
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Staff" type="radio"
-                    name="{{form.employee_type.name}}" id="id_{{form.employee_type.name}}_1"
-                    {% if form.employee_type.value == 'Staff' %}checked{% endif %}>
-                  <label for="id_{{form.employee_type.name}}_1" class="form-check-label">
-                    Staff
-                  </label>
-                </div>
+              <div class="form-group">
+                <label for="{{form.employee_type.id_for_label}}"
+                  {% if form.employee_type.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.employee_type.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.employee_type.name}}"
+                  id="{{form.employee_type.id_for_label}}"
+                  {% if not templates_debug %}required{% endif %}>
+                  {% for value, text in form.fields.employee_type.choices %}
+                    <option value="{{value}}"{% if form.employee_type.value == value %} selected{% endif %}>
+                      {{text}}
+                    </option>
+                  {% endfor %}
+                </select>
                 <p>
                   <small class="text-danger">
                   {{form.employee_type.errors|join:", "}}
@@ -769,7 +763,7 @@
             <div class="container-fluid">
               <label for="id_{{form.pay_type.name}}_0"
                 {% if form.pay_type.errors %}class="text-danger"{% endif %}>
-                <h5>Pay Classification</h5>
+                <h5>{{form.pay_type.label}}</h5>
               </label>
               <div class="form-group small">
                 <div class="form-check form-check-inline">
@@ -807,6 +801,25 @@
                   value="{{form.hours_per_week.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.hours_per_week.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden unless staff and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 staff-new">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.offered_compensation.id_for_label}}"
+                  {% if form.offered_compensation.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.offered_compensation.label}}</h5>
+                </label>
+                <input type="text" name="offered_compensation"
+                  placeholder="Annual salary/rate of pay" class="form-control
+                  {% if form.offered_compensation.errors %} is-invalid{% endif %}"
+                  id="{{form.offered_compensation.id_for_label}}"
+                  value="{{form.offered_compensation.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.offered_compensation.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -1163,8 +1176,7 @@
                 </label>
                 <select class="form-control"
                   id="{{form.employment_type.id_for_label}}"
-                  name="{{form.employment_type.name}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  name="{{form.employment_type.name}}">
                   {% for value, text in form.fields.employment_type.choices %}
                     <option value="{{value}}"
                       {% if form.employment_type.value == value %}
@@ -1193,8 +1205,7 @@
                   name="{{form.contract_years.name}}"
                   id="{{form.contract_years.id_for_label}}"
                   value="{{form.contract_years.value|default_if_none:''}}"
-                  placeholder="Number of years"
-                  {% if not templates_debug %}required{% endif %}>
+                  placeholder="Number of years">
                 <small class="text-danger">
                   {{form.contract_years.errors|join:", "}}
                 </small>
@@ -1340,8 +1351,7 @@
                   <h5>{{form.program_types.label}}</h5>
                 </label>
                 <select class="form-control" name="{{form.program_types.name}}"
-                  id="{{form.program_types.id_for_label}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  id="{{form.program_types.id_for_label}}">
                 {% for value, text in form.fields.program_types.choices %}
                   <option value="{{value}}"
                     {% if form.program_types.value == value %}
@@ -1371,8 +1381,7 @@
                   {% if form.leave_of_absence_date.errors %} is-invalid{% endif %}"
                   name="{{form.leave_of_absence_date.name}}"
                   id="{{form.leave_of_absence_date.id_for_label}}"
-                  value="{{form.leave_of_absence_date.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  value="{{form.leave_of_absence_date.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.leave_of_absence_date.errors|join:", "}}
                 </small>
@@ -1395,8 +1404,7 @@
                   {% if form.expected_return_date.errors %} is-invalid{% endif %}"
                   name="{{form.expected_return_date.name}}"
                   id="{{form.expected_return_date.id_for_label}}"
-                  value="{{form.expected_return_date.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  value="{{form.expected_return_date.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.expected_return_date.errors|join:", "}}
                 </small>
@@ -1420,8 +1428,7 @@
                   {% if form.leave_of_absence_reason.errors %} is-invalid{% endif %}"
                   id="{{form.leave_of_absence_reason.id_for_label}}"
                   value="{{form.leave_of_absence_reason.value|default_if_none:''}}"
-                  placeholder="Reason for leave of absence"
-                  {% if not templates_debug %}required{% endif %}>
+                  placeholder="Reason for leave of absence">
                 <small class="text-danger">
                   {{form.leave_of_absence_reason.errors|join:", "}}
                 </small>
@@ -1784,8 +1791,7 @@
                   {% if form.compensation_effective_date.errors %} is-invalid{% endif %}"
                   name="{{form.compensation_effective_date.name}}"
                   id="{{form.compensation_effective_date.id_for_label}}"
-                  value="{{form.compensation_effective_date.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  value="{{form.compensation_effective_date.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.compensation_effective_date.errors|join:", "}}
                 </small>
@@ -2121,8 +2127,7 @@
                 <input type="text" placeholder="Names of direct reports"
                   class="form-control{% if form.direct_reports.errors %} is-invalid{% endif %}"
                   id="{{form.direct_reports.id_for_label}}" name="{{form.direct_reports.name}}"
-                  value="{{form.direct_reports.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  value="{{form.direct_reports.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.direct_reports.errors|join:", "}}
                 </small>

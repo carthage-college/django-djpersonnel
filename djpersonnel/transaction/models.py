@@ -242,7 +242,7 @@ class Operation(models.Model):
         null=True, blank=True
     )
     pay_type = models.CharField(
-        "Exempt/Non-exempt",
+        "Pay Classification",
         max_length=16,
         choices=PAY_CLASS_CHOICES,
         null=True, blank=True
@@ -335,7 +335,7 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
-    # NOTE: if department = 'EVD', what shift
+    # NOTE: if department = 'EVS', what shift
     shift = models.CharField(
         verbose_name='What shift?',
         max_length=16,

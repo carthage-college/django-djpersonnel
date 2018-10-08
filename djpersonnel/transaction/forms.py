@@ -5,6 +5,22 @@ from djpersonnel.transaction.models import Operation
 from djpersonnel.core.utils import level3_choices
 
 REQUIRED_FIELDS = {
+    'newhire_rehird': [
+        'position_title',
+        'hire_type',
+        'pay_type',
+'hours_per_week',
+
+        'newhire_rehire',
+        'status_type',
+        'offered_compensation',
+        'expected_start_date'
+        'budget_account',
+        'department_name',
+        'position_grant_funded',
+        'moving_expenses',
+        'startup_expenses'
+    ],
     'department_change': [
         'new_department', 'old_department'
     ],
@@ -64,7 +80,7 @@ class OperationForm(forms.ModelForm):
                     if not cd.get(field):
                         self.add_error(field, "Required field")
 
-        # dependant fields
+        # dependent fields
         if cd.get('temporary_interim_pay') == 'Yes' and not cd.get('end_date'):
             self.add_error('end_date', "Please provide an end date")
 
