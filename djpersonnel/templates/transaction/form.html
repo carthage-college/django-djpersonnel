@@ -711,6 +711,9 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.status_type.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1692,6 +1695,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.eligible_rehire.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -1826,6 +1834,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.temporary_interim_pay.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -1959,6 +1972,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.grant_pay.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
