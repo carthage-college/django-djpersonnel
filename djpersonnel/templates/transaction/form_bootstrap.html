@@ -366,7 +366,7 @@
     $("#vacation_days").removeClass("hyde");
     {% endif %}
     {% if form.position_grant_funded.value == 'Yes' %}
-    $("#grant_amount").removeClass("hyde");
+    $("#grant_funded_amount").removeClass("hyde");
     {% endif %}
     {% if form.moving_expenses.value == 'Yes' %}
     $("#moving_expenses_amount").removeClass("hyde");
@@ -1082,7 +1082,7 @@
                    <input class="form-check-input" value="No"
                       type="radio" name="position_grant_funded"
                       id="id_{{form.position_grant_funded.name}}_1"
-                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_number');"
+                      onclick="javascript:toggleCheck('id_{{form.position_grant_funded.name}}_0','grant_fund_number');"
                       {% if form.position_grant_funded.value == 'No' %}
                         checked
                       {% endif %}>
