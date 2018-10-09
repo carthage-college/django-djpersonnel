@@ -5,21 +5,21 @@ from djpersonnel.transaction.models import Operation
 from djpersonnel.core.utils import level3_choices
 
 REQUIRED_FIELDS = {
-    'newhire_rehird': [
+    'newhire_rehire': [
         'position_title',
         'hire_type',
         'pay_type',
-'hours_per_week',
-
-        'newhire_rehire',
+        '''
         'status_type',
-        'offered_compensation',
+        'offered_compensation', // staff
+        'hours_per_week', // staff
         'expected_start_date'
         'budget_account',
         'department_name',
         'position_grant_funded',
         'moving_expenses',
         'startup_expenses'
+        '''
     ],
     'department_change': [
         'new_department', 'old_department'
@@ -40,7 +40,7 @@ REQUIRED_FIELDS = {
         'eligible_rehire', 'vacation_days_accrued'
     ],
     'status_change': [
-        'status_type', 'status_change_effective_date'
+        'status_type', 'status_change_effective_date', 'hours_per_week'
     ],
     'position_change': [
         'old_position', 'new_position', 'position_effective_date',
