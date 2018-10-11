@@ -573,7 +573,7 @@ class Operation(models.Model):
     # Sabbatical
     # the following fields are used when the sabbatical checkbox is checked
     sabbatical_types = models.CharField(
-        "Reason for sabbatical",
+        "Sabbatical duration",
         max_length=16,
         choices=SABBATICAL_TERM_CHOICES,
         null=True, blank=True

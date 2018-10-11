@@ -9,17 +9,10 @@ REQUIRED_FIELDS = {
         'position_title',
         'hire_type',
         'pay_type',
-        '''
-        'status_type',
-        'offered_compensation', // staff
-        'hours_per_week', // staff
-        'expected_start_date'
+        'expected_start_date',
         'budget_account',
-        'department_name',
         'position_grant_funded',
-        'moving_expenses',
-        'startup_expenses'
-        '''
+        'moving_expenses'
     ],
     'department_change': [
         'new_department', 'old_department'
@@ -55,6 +48,25 @@ REQUIRED_FIELDS = {
     ]
 }
 
+REQUIRED_FIELDS_NEWHIRE = {
+    'staff': [
+        'status_type',
+        'status_change_effective_date',
+        'hours_per_week',
+        'offered_compensation',
+        'supervise_others',
+        'standard_vacation_package',
+    ],
+    'faculty': [
+        'startup_expenses',
+        'teaching_appointment',
+        'employment_type',
+        'program_types'
+    ]
+}
+REQUIRED_FIELDS_ADJUNCT = ['courses_teaching','number_of_credits','music']
+
+
 
 class OperationForm(forms.ModelForm):
 
@@ -71,35 +83,85 @@ class OperationForm(forms.ModelForm):
             'level3_approver','declined','email_approved'
         ]
 
+    def dependent(self, field1, value, field2):
+        cd = self.cleaned_data
+
+        if cd.get(field1) == value and not cd.get(field2):
+            self.add_error(field2, "Required field")
+
     def clean(self):
         cd = self.cleaned_data
 
+        # all required fields
         for required, fields in REQUIRED_FIELDS.items():
             if cd.get(required):
                 for field in fields:
                     if not cd.get(field):
                         self.add_error(field, "Required field")
 
-        # dependent fields
-        if cd.get('temporary_interim_pay') == 'Yes' and not cd.get('end_date'):
-            self.add_error('end_date', "Please provide an end date")
+        # newhire/rehire
+        if cd.get('newhire_rehire'):
 
-        if cd.get('grant_pay') == 'Yes' and not cd.get('grant_pay_account_number'):
-            self.add_error(
-                'grant_pay_account_number', "Please provide an account number"
-            )
+            # required fields for all newhire/rehire
+            employee = cd.get('employee_type').lower()
+            if employee:
+                for field in REQUIRED_FIELDS_NEWHIRE[employee]:
+                    if not cd.get(field):
+                        self.add_error(field, "Required field")
 
-        if cd.get('additional_supervisor_role') == 'Yes' and not cd.get('direct_reports'):
-            self.add_error(
-                'direct_reports', "Please provide the names of direct reports"
-            )
+            # newhire
+            # moving expenses
+            field = 'moving_expenses_amount'
+            if cd.get('moving_expenses') == 'Yes' and not cd.get(field):
+                self.add_error(field, "Required field")
 
-        tt = cd.get('termination_type')
-        if (tt == 'Voluntary' or tt == 'Involuntary') and \
-          (not cd.get('termination_voluntary') or cd.get('termination_voluntary') == ''):
-            self.add_error(
-                'termination_{}'.format(tt.lower()), "Please select a reason"
-            )
+            # grant funded
+            if cd.get('position_grant_funded') == 'Yes':
+                fields = ['grant_fund_number', 'grant_fund_amount']
+                for field in fields:
+                    if not cd.get(field):
+                        self.add_error(field, "Required field")
+
+            # newhire faculty
+            if employee == 'faculty':
+                # newhire contract
+                field = 'contract_years'
+                et = cd.get('employment_type')
+                if et and 'Contract' in et:
+                    if not cd.get(field):
+                        self.add_error(field, "Required field")
+                # newhire adunct
+                elif et == 'Adjunct':
+                    for field in REQUIRED_FIELDS_ADJUNCT:
+                        if not cd.get(field):
+                            self.add_error(field, "Required field")
+                # teaching appointment
+                self.dependent(
+                    'teaching_appointment','Other','teaching_appointment_arrangements'
+                )
+                # startup expenses
+                self.dependent('startup_expenses','Yes','startup_expenses_amount')
+
+            # newhire staff
+            if employee == 'staff':
+                # vacation
+                self.dependent('standard_vacation_package','No','vacation_days')
+                # shift if department_name = EVS
+                self.dependent('department_name','EVS','shift')
+
+        # various dependent fields
+        if cd.get('compensation_change'):
+            self.dependent('temporary_interim_pay', 'Yes', 'end_date')
+        if cd.get('position_change'):
+            self.dependent('additional_supervisor_role', 'Yes', 'direct_reports')
+        if cd.get('onetime_payment'):
+            self.dependent('grant_pay', 'Yes', 'grant_pay_account_number')
+        if cd.get('termination'):
+            tt = cd.get('termination_type')
+            if (tt == 'Voluntary' or tt == 'Involuntary') and \
+              (not cd.get('termination_voluntary') or cd.get('termination_voluntary') == ''):
+                self.add_error(
+                    'termination_{}'.format(tt.lower()), "Please select a reason"
+                )
 
         return cd
-

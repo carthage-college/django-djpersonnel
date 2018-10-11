@@ -18,9 +18,53 @@
      }
   }
 
+  function newHireToggle(checked, employee) {
+      if (checked && employee == "Staff") {
+        $('.faculty-new').hide();
+        $('.staff-new').show();
+        $('#id_status_change').prop('checked', false);
+        $('#statusChange').hide();
+        if ($('#id_department_name').val() == 'EVS' && $employeeType == "Staff") {
+          $('.shift').show();
+        }
+      } else if (checked && employee == "Faculty") {
+        $('.faculty-new').show();
+        $('.staff-new').hide();
+        $('.shift').hide();
+      } else {
+        $("div[class$='-new']").hide();
+        $('.shift').hide();
+        $('#vacationDays').hide();
+        $('#grantFundNumber').hide();
+        $('#movingExpensesAmount').hide();
+        $('#id_status_change').prop('checked', false);
+        $('#statusChange').show();
+        $('.status-change').hide();
+        // reset radios
+        $("div[class$='-new']").find('input:radio').each(function () {
+            $(this).prop('checked', false);
+        });
+      }
+  }
+
+  // global for hide containers
+  var $hyde = '#section2, .facstaff, .facstaff-new, .faculty-new,' +
+              '.staff-new, .staff, .shift, #grantPayAccountNumber,' +
+              '#terminationInvoluntary, #terminationVoluntary,' +
+              '.sabbatical, #directReports, #endDate, .status-change,' +
+              '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
+              '#startupExpensesAmount, #contractYears, #coursesTeaching,' +
+              '#teachingAppointment';
+
+  // global for staff or faculty
+  {% if form.employee_type.value %}
+  var $employeeType = "{{form.employee_type.value}}";
+  {% else %}
+  var $employeeType;
+  {% endif %}
+
+  // execute onload
   $(function() {
-    // global variable for staff or faculty
-    var $employeeType;
 
     // make certain that at least one checkbox is checked
     $('#checkBtn').click(function() {
@@ -36,15 +80,9 @@
       }
     });
 
-    // hide everything
-    var $hyde = '#section2, .facstaff, .facstaff-new, .faculty-new,' +
-                '.staff-new, .staff, .shift, #grantPayAccountNumber,' +
-                '#terminationInvoluntary, #terminationVoluntary,' +
-                '.sabbatical, #directReports, #endDate, .status-change,' +
-                '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
-                '#startupExpensesAmount, #contractType, #coursesTeaching,' +
-                '#teachingAppointment'
+    // hide all the things
     $($hyde).hide();
+
     /* section II jquery reveal */
     $('#id_employee_type').on('change', function() {
       $dis = $(this);
@@ -95,33 +133,10 @@
       {% endif %}
     {% endif %}
     {# end section II display logic #}
-    /* department change */
-    $('#id_department_change').change(function() {
-      $('.department-change').toggle();
-    });
-    {% if form.department_change.value %}
-    $('.department-change').show();
-    {% endif %}
-    /* end department change */
     /* new hire or rehire */
     $('#id_newhire_rehire').change(function() {
       $('.facstaff-new').show();
-      if (this.checked && $employeeType == "Staff") {
-        $('.faculty-new').hide();
-        $('.staff-new').show();
-        if ($('#id_department_name').val() == 'EVS' && $employeeType == "Staff") {
-          $('.shift').show();
-        }
-      } else if (this.checked && $employeeType == "Faculty") {
-        $('.faculty-new').show();
-        $('.staff-new').hide();
-        $('.shift').hide();
-      } else {
-        $('.facstaff-new').hide();
-        $('.faculty-new').hide();
-        $('.staff-new').hide();
-        $('.shift').hide();
-      }
+      newHireToggle(this.checked, $employeeType)
     });
     $('input[name="standard_vacation_package"]').click(function() {
       toggle(this.value, 'No', '#vacationDays');
@@ -137,7 +152,7 @@
     });
     $('#id_employment_type').on('change', function() {
       $dis = this.value.substring(0, 8);
-      toggle($dis, 'Contract', '#contractType');
+      toggle($dis, 'Contract', '#contractYears');
     });
     $('#id_employment_type').on('change', function() {
       toggle(this.value, 'Adjunct', '#coursesTeaching');
@@ -145,7 +160,58 @@
     $('input[name="teaching_appointment"]').click(function() {
       toggle(this.value, 'Other', '#teachingAppointment');
     });
+    {% if form.newhire_rehire.value %}
+
+      $('.facstaff-new').show();
+      newHireToggle(true, $employeeType)
+
+      {# newhire all #}
+      {% if form.moving_expenses.value == 'Yes' %}
+        $('#movingExpensesAmount').show();
+      {% endif %}
+      {% if form.position_grant_funded.value == 'Yes' %}
+        $('#grantFundNumber').show();
+      {% endif %}
+      {# end newhire all #}
+
+      {# newhire staff #}
+      {% if form.employee_type.value == 'Staff' %}
+
+        {% if form.standard_vacation_package.value == 'No' %}
+          $('#vacationDays').show();
+        {% endif %}
+
+      {% endif %}
+      {# end newhire staff #}
+      {# newhire faculty #}
+      {% if form.employee_type.value == 'Faculty' %}
+
+        {% if 'Contract' in form.employment_type.value %}
+          $('#contractYears').show();
+        {% endif %}
+        {% if form.startup_expenses.value == 'Yes' %}
+          $('#startupExpensesAmount').show();
+        {% endif %}
+        {% if form.teaching_appointment.value == 'Other' %}
+          $('#teachingAppointment').show();
+        {% endif %}
+
+      {% endif %}
+      {# end newhire faculty #}
+
+    {% endif %}
+
     /* end new hire or rehire */
+
+
+    /* department change */
+    $('#id_department_change').change(function() {
+      $('.department-change').toggle();
+    });
+    {% if form.department_change.value %}
+    $('.department-change').show();
+    {% endif %}
+    /* end department change */
     /* compensation change */
     var $intPay = $('input[name="temporary_interim_pay"]');
     $('#id_compensation_change').change(function() {
@@ -756,6 +822,9 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.hire_type.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -785,6 +854,11 @@
                     Non-exempt (hourly)
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.pay_type.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -889,6 +963,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.supervise_others.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -917,6 +996,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.standard_vacation_package.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -972,12 +1056,17 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.position_grant_funded.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
           <!-- Hidden unless "Yes" is selected grant funded -->
           <div class="col-md-12 pb-3" id="grantFundNumber">
-            <div class="col-md-6 pb-3">
+            <div class="col-md-6 float-left">
               <div class="form-group">
                 <label for="{{form.grant_fund_number.id_for_label}}"
                   {% if form.grant_fund_number.errors %}class="text-danger"{% endif %}>
@@ -992,7 +1081,7 @@
                 </small>
               </div>
             </div>
-            <div class="col-md-6 pb-3">
+            <div class="col-md-6 float-left">
               <div class="form-group">
                 <label for="{{form.grant_fund_amount.id_for_label}}"
                   {% if form.grant_fund_amount.errors %}
@@ -1046,6 +1135,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.moving_expenses.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
@@ -1068,7 +1162,8 @@
                   {{form.moving_expenses_amount.errors|join:", "}}
                 </small>
                 <small>
-                  Note: All moving expenses are paid from the departmental budgets.
+                  Note: All moving expenses are paid from the departmental
+                  budgets.
                 </small>
               </div>
             </div>
@@ -1085,7 +1180,7 @@
                   <input class="form-check-input" value="Yes"
                     type="radio" name="{{form.startup_expenses.name}}"
                     id="id_{{form.startup_expenses.name}}_0"
-                    {% if form.moving_expenses.value == 'Yes' %}
+                    {% if form.startup_expenses.value == 'Yes' %}
                       checked
                     {% endif %}>
                   <label for="id_{{form.startup_expenses.name}}_0"
@@ -1097,7 +1192,7 @@
                   <input class="form-check-input" value="No"
                     type="radio" name="{{form.startup_expenses.name}}"
                     id="id_{{form.startup_expenses.name}}_1"
-                    {% if form.moving_expenses.value == 'No' %}
+                    {% if form.startup_expenses.value == 'No' %}
                       checked
                     {% endif %}>
                   <label for="id_{{form.startup_expenses.name}}_1"
@@ -1105,6 +1200,11 @@
                     No
                   </label>
                 </div>
+                <p>
+                  <small class="text-danger">
+                  {{form.startup_expenses.errors|join:", "}}
+                  </small>
+                </p>
               </div>
               <!-- Hidden unless 'Yes', provide how much -->
               <div class="form-group hyde" id="startupExpensesAmount">
@@ -1143,6 +1243,9 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.shift.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1158,9 +1261,7 @@
                 </label>
                 <textarea rows="2" placeholder="{{form.other_arrangements.help_text}}"
                   class="form-control{% if form.other_arrangements.errors %} is-invalid{% endif %}"
-                  id="{{form.other_arrangements.id_for_label}}" name="{{form.other_arrangements.name}}">
-                  {{form.other_arrangements.value|default_if_none:''}}
-                </textarea>
+                  id="{{form.other_arrangements.id_for_label}}" name="{{form.other_arrangements.name}}">{{form.other_arrangements.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.other_arrangements.errors|join:", "}}
                 </small>
@@ -1189,14 +1290,17 @@
                     </option>
                   {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.employment_type.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
           <!--
            Hidden unless faculty and "newhire_rehire" is checked
-           and contract-ongoing or contract terminal is selected
+           and contract-ongoing or contract-terminal is selected
           -->
-          <div class="col-md-6 pb-3" id="contractType">
+          <div class="col-md-6 pb-3" id="contractYears">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.contract_years.id_for_label}}"
@@ -1215,39 +1319,12 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless faculty and "newhire_rehire" is checked  -->
-          <div class="col-md-6 pb-3 faculty-new">
-            <div class="container-fluid">
-              <label for="id_{{form.music.name}}_0"
-                {% if form.music.errors %}class="text-danger"{% endif %}>
-                <h5>{{form.music.label}}</h5>
-              </label>
-              <div class="form-group small">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Yes" name="{{form.music.name}}"
-                    type="radio" id="id_{{form.music.name}}_0"
-                    {% if form.music.value == 'Yes' %}checked{% endif %}>
-                  <label for="id_{{form.music.name}}_0" class="form-check-label">
-                    Yes
-                  </label>
-                </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" value="No" name="{{form.music.name}}"
-                      type="radio" id="id_{{form.music.name}}_1"
-                      {% if form.music.value == 'No' %}checked{% endif %}>
-                    <label for="id_{{form.music.name}}_1" class="form-check-label">
-                      No
-                    </label>
-                  </div>
-              </div>
-            </div>
-          </div>
           <!--
           Hidden unless Adjunct is selected from employment type
           and "faculty and newhire_rehire" is checked
           -->
           <div class="col-md-12 pb-3" id="coursesTeaching">
-            <div class="container-fluid">
+            <div class="col-md-6 float-left">
               <div class="form-group">
                 <label for="{{form.courses_teaching.id_for_label}}"
                   {% if form.courses_teaching.errors %}class="text-danger"{% endif %}>
@@ -1264,7 +1341,33 @@
                 </small>
               </div>
             </div>
-            <div class="container-fluid">
+
+            <div class="col-md-6 float-left">
+              <div class="form-group small">
+                <label for="id_{{form.music.name}}_0"
+                {% if form.music.errors %}class="text-danger"{% endif %}>
+                <h5>{{form.music.label}}</h5>
+                </label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="Yes" name="{{form.music.name}}"
+                    type="radio" id="id_{{form.music.name}}_0"
+                    {% if form.music.value == 'Yes' %}checked{% endif %}>
+                  <label for="id_{{form.music.name}}_0" class="form-check-label">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="No" name="{{form.music.name}}"
+                    type="radio" id="id_{{form.music.name}}_1"
+                    {% if form.music.value == 'No' %}checked{% endif %}>
+                  <label for="id_{{form.music.name}}_1" class="form-check-label">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 float-left">
               <div class="form-group">
                 <label for="{{form.number_of_credits.id_for_label}}"
                   {% if form.number_of_credits.errors %}class="text-danger"{% endif %}>
@@ -1319,6 +1422,9 @@
                     Other arrangement
                   </label>
                 </div>
+                <small class="text-danger">
+                  {{form.teaching_appointment.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -1364,6 +1470,9 @@
                   </option>
                 {% endfor %}
                 </select>
+                <small class="text-danger">
+                  {{form.program_types.errors|join:", "}}
+                </small>
               </div>
             </div>
           </div>
@@ -2020,6 +2129,11 @@
                   If the sabbatical spans a full academic year then
                   the faculty member receives half of their annual salary.
                 </small>
+                <p>
+                  <small class="text-danger">
+                  {{form.sabbatical_types.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
