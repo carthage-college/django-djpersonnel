@@ -24,6 +24,7 @@
         $('.staff-new').show();
         $('#id_status_change').prop('checked', false);
         $('#statusChange').hide();
+        $('#statusChangeDate').hide();
         if ($('#id_department_name').val() == 'EVS' && $employeeType == "Staff") {
           $('.shift').show();
         }
@@ -37,7 +38,10 @@
         $('#vacationDays').hide();
         $('#grantFundNumber').hide();
         $('#movingExpensesAmount').hide();
+        $('#teachingAppointment').hide();
+        $('#coursesTeaching').hide();
         $('#id_status_change').prop('checked', false);
+        $('#id_employment_type').prop('selectedIndex',0);
         $('#statusChange').show();
         $('.status-change').hide();
         // reset radios
@@ -54,7 +58,7 @@
               '.sabbatical, #directReports, #endDate, .status-change,' +
               '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
               '#startupExpensesAmount, #contractYears, #coursesTeaching,' +
-              '#teachingAppointment';
+              '#teachingAppointment, #statusChangeDate'
 
   // global for staff or faculty
   {% if form.employee_type.value %}
@@ -308,9 +312,11 @@
     /* status change */
     $('#id_status_change').change(function() {
       $('.status-change').toggle();
+      $('#statusChangeDate').toggle();
     });
     {% if form.status_change.value %}
     $('.status-change').show();
+    $('#statusChangeDate').show();
     {% endif %}
     /* end status change */
     /* position change */
@@ -784,7 +790,7 @@
             </div>
           </div>
           <!-- Hidden unless staff and "status change" is checked -->
-          <div class="col-sm-6 pb-3 staff-new status-change">
+          <div class="col-sm-6 pb-3" id="statusChangeDate">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.status_change_effective_date.id_for_label}}"

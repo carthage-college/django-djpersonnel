@@ -3,6 +3,7 @@ from django import forms
 
 from djpersonnel.transaction.models import Operation
 from djpersonnel.core.utils import level3_choices
+from djtools.utils.convert import str_to_class
 
 REQUIRED_FIELDS = {
     'newhire_rehire': [
@@ -47,7 +48,6 @@ REQUIRED_FIELDS = {
         'sabbatical_types', 'academic_year'
     ]
 }
-
 REQUIRED_FIELDS_NEWHIRE = {
     'staff': [
         'status_type',
@@ -66,6 +66,51 @@ REQUIRED_FIELDS_NEWHIRE = {
 }
 REQUIRED_FIELDS_ADJUNCT = ['courses_teaching','number_of_credits','music']
 
+
+class NewhireRehireForm(forms.Form):
+
+    position_title = forms.CharField()
+    hire_type = forms.TypedChoiceField()
+    pay_type = forms.TypedChoiceField()
+    expected_start_date = forms.DateField()
+    budget_account = forms.CharField()
+    position_grant_funded = forms.TypedChoiceField()
+    #
+    moving_expenses = forms.TypedChoiceField()
+    moving_expenses_amount = forms.CharField(False)
+    #
+    # faculty
+    #
+    startup_expenses = forms.TypedChoiceField(required=False)
+    startup_expenses_amount = forms.CharField(required=False)
+    #
+    teaching_appointment = forms.TypedChoiceField(required=False)
+    teaching_appointment_arrangements = forms.CharField(required=False)
+    # depend on employment type = Adjunct
+    employment_type = forms.TypedChoiceField(required=False)
+    courses_teaching = forms.CharField(required=False)
+    number_of_credits = forms.CharField(required=False)
+    music = forms.TypedChoiceField(required=False)
+    # employment type = Contract-*
+    contract_years = forms.CharField(required=False)
+    # no dependencies
+    program_types = forms.TypedChoiceField(required=False)
+    #
+    # staff
+    #
+    status_type = forms.TypedChoiceField(required=False)
+    status_change_effective_date = forms.DateField(required=False)
+    #
+    hours_per_week = forms.CharField(required=False)
+    offered_compensation = forms.DecimalField(required=False)
+    supervise_others = forms.TypedChoiceField(required=False)
+    #
+    standard_vacation_package = forms.TypedChoiceField(required=False)
+    vacation_days = forms.CharField(required=False)
+    # department_name = 'EVS'
+    shift = forms.TypedChoiceField(required=False)
+
+newhire_rehire = NewhireRehireForm
 
 
 class OperationForm(forms.ModelForm):
@@ -98,6 +143,17 @@ class OperationForm(forms.ModelForm):
                 for field in fields:
                     if not cd.get(field):
                         self.add_error(field, "Required field")
+            else:
+                # set fields to null
+                '''
+                name = required.split
+                form = str_to_class(
+                    'djpersonnel.transaction.forms', required
+                )
+                for field in form.fields:
+                    cd.get(field) = None
+                '''
+                pass
 
         # newhire/rehire
         if cd.get('newhire_rehire'):
