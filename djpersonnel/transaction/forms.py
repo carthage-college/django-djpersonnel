@@ -51,7 +51,6 @@ REQUIRED_FIELDS = {
 REQUIRED_FIELDS_NEWHIRE = {
     'staff': [
         'status_type',
-        'status_change_effective_date',
         'hours_per_week',
         'offered_compensation',
         'supervise_others',
@@ -64,7 +63,6 @@ REQUIRED_FIELDS_NEWHIRE = {
         'program_types'
     ]
 }
-REQUIRED_FIELDS_ADJUNCT = ['courses_teaching','number_of_credits','music']
 
 
 class NewhireRehireForm(forms.Form):
@@ -74,7 +72,10 @@ class NewhireRehireForm(forms.Form):
     pay_type = forms.TypedChoiceField()
     expected_start_date = forms.DateField()
     budget_account = forms.CharField()
+    #
     position_grant_funded = forms.TypedChoiceField()
+    grant_fund_number = forms.CharField(required=False)
+    grant_fund_amount = forms.CharField(required=False)
     #
     moving_expenses = forms.TypedChoiceField()
     moving_expenses_amount = forms.CharField(False)
@@ -100,6 +101,7 @@ class NewhireRehireForm(forms.Form):
     #
     status_type = forms.TypedChoiceField(required=False)
     status_change_effective_date = forms.DateField(required=False)
+    other_arrangements = forms.CharField(required=False)
     #
     hours_per_week = forms.CharField(required=False)
     offered_compensation = forms.DecimalField(required=False)
@@ -109,8 +111,89 @@ class NewhireRehireForm(forms.Form):
     vacation_days = forms.CharField(required=False)
     # department_name = 'EVS'
     shift = forms.TypedChoiceField(required=False)
-
+# short cut for checkbox field name
 newhire_rehire = NewhireRehireForm
+
+
+class DepartmentChangeForm(forms.Form):
+    new_department = forms.TypedChoiceField()
+    old_department = forms.TypedChoiceField()
+# short cut for checkbox field name
+department_change = DepartmentChangeForm
+
+
+class CompensationChangeForm(forms.Form):
+    current_compensation = forms.CharField()
+    new_compensation = forms.CharField()
+    salary_change_reason = forms.CharField()
+    compensation_effective_date = forms.DateField()
+    temporary_interim_pay = forms.TypedChoiceField()
+    end_date = forms.DateField(required=False)
+# short cut for checkbox field name
+compensation_change = CompensationChangeForm
+
+
+class OnetimePaymentForm(forms.Form):
+    amount = forms.DecimalField()
+    amount_reason = forms.CharField()
+    pay_after_date = forms.DateField()
+    department_account_number = forms.CharField()
+    grant_pay = forms.TypedChoiceField()
+    grant_pay_account_number = forms.CharField(required=False)
+# short cut for checkbox field name
+onetime_payment = OnetimePaymentForm
+
+
+class SupervisorChangeForm(forms.Form):
+    new_supervisor = forms.CharField()
+    old_supervisor = forms.CharField()
+# short cut for checkbox field name
+supervisor_change = SupervisorChangeForm
+
+
+class TerminationForm(forms.Form):
+    termination_type = forms.TypedChoiceField()
+    last_day_datea = forms.DateField()
+    returned_property = forms.CharField()
+    eligible_rehire = forms.TypedChoiceField()
+    vacation_days_accrued = forms.CharField()
+    termination_voluntary = forms.TypedChoiceField(required=False)
+    termination_involuntary = forms.TypedChoiceField(required=False)
+# short cut for checkbox field name
+termination = TerminationForm
+
+
+class StatusChangeForm(forms.Form):
+    status_type = forms.TypedChoiceField()
+    status_change_effective_date = forms.DateField()
+    hours_per_week = forms.CharField()
+# short cut for checkbox field name
+status_change = StatusChangeForm
+
+
+class PositionChangeForm(forms.Form):
+    old_position = forms.CharField()
+    new_position = forms.CharField()
+    position_effective_date = forms.DateField()
+    additional_supervisor_role = forms.TypedChoiceField()
+    direct_reports = forms.CharField(required=False)
+# short cut for checkbox field name
+position_change = PositionChangeForm
+
+
+class LeaveOfAbsenceForm(forms.Form):
+    leave_of_absence_date = forms.DateField()
+    expected_return_date = forms.DateField()
+    leave_of_absence_reason = forms.CharField()
+# short cut for checkbox field name
+leave_of_absence = LeaveOfAbsenceForm
+
+
+class SabbaticalForm(forms.Form):
+    sabbatical_types = forms.TypedChoiceField()
+    academic_year = forms.CharField()
+# short cut for checkbox field name
+sabbatical = SabbaticalForm
 
 
 class OperationForm(forms.ModelForm):
@@ -145,15 +228,17 @@ class OperationForm(forms.ModelForm):
                         self.add_error(field, "Required field")
             else:
                 # set fields to null
-                '''
-                name = required.split
+                if cd.get('newhire_rehire') and required == 'status_change':
+                    # we only need effective date for 'status_change'
+                    edate = cd.get('status_change_effective_date')
+                    if edate:
+                        cd['status_change_effective_date'] = None
+                    continue
                 form = str_to_class(
-                    'djpersonnel.transaction.forms', required
+                    'djpersonnel.transaction.forms', required)(
                 )
                 for field in form.fields:
-                    cd.get(field) = None
-                '''
-                pass
+                    cd[field] = None
 
         # newhire/rehire
         if cd.get('newhire_rehire'):
@@ -188,9 +273,8 @@ class OperationForm(forms.ModelForm):
                         self.add_error(field, "Required field")
                 # newhire adunct
                 elif et == 'Adjunct':
-                    for field in REQUIRED_FIELDS_ADJUNCT:
-                        if not cd.get(field):
-                            self.add_error(field, "Required field")
+                    self.dependent('music', 'Yes', 'courses_teaching')
+                    self.dependent('music', 'Yes', 'number_of_credits')
                 # teaching appointment
                 self.dependent(
                     'teaching_appointment','Other','teaching_appointment_arrangements'

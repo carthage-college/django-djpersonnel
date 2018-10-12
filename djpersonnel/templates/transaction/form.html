@@ -380,6 +380,7 @@
   .form-check-label {font-size: .9em;}
   .form-check-inline {margin-right: 1.75rem;}
   .form-check-input {margin-left: 0;}
+  .alert{padding: .20rem 0 0 .75rem; margin-bottom: 0;}
 </style>
 {% endblock %}
 {% block content %}
@@ -388,7 +389,15 @@
     <div class="card-title">
       <h3 class="text-center text-white">Personnel Action Form</h3>
     </div>
-    <div class="card-body bg-light">
+    <div class="card-body bg-light bg-warning">
+    {% if form.errors %}{{form.errors}}
+      <div class="alert alert-danger">
+        <p>Please correct the error{{ form.errors|pluralize }} below.</p>
+      </div>
+    {% endif %}
+    <div class="col-sm-12 text-white">
+    {% include "includes/errors_text.html" %}
+    </div>
       <form action="{% url 'transaction_form' %}{% if switch %}?switch={{switch}}{% endif %}"
         method="post" class="form" role="form">
         {% csrf_token %}
@@ -879,7 +888,7 @@
           <!--
           Hidden unless staff and newhire_rehire" is checked
           -->
-          <div class="col-md-6 pb-3 staff-new status-change">
+          <div class="col-md-6 pb-3 facstaff-new status-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.hours_per_week.id_for_label}}"
@@ -888,7 +897,7 @@
                 </label>
                 <input name="{{form.hours_per_week.name}}" placeholder="Hours worked per week"
                   class="form-control{% if form.hours_per_week.errors %} is-invalid{% endif %}"
-                  id="{{form.hours_per_week.id_for_label}}" type="number"
+                  id="{{form.hours_per_week.id_for_label}}" type="decimal"
                   value="{{form.hours_per_week.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.hours_per_week.errors|join:", "}}
