@@ -365,10 +365,10 @@ class Operation(models.Model):
     # NOTE: if Music is 'Yes', then courses teaching and number of credits
     courses_teaching = models.TextField(
         null=True, blank=True,
-        help_text='What courses are you teaching?'
+        help_text='Courses teaching'
     )
     number_of_credits = models.CharField(
-        "What is the number of credits you are teaching?",
+        "Number of credits teaching",
         max_length=25,
         null=True, blank=True
     )

@@ -38,8 +38,11 @@
         $('#vacationDays').hide();
         $('#grantFundNumber').hide();
         $('#movingExpensesAmount').hide();
+        $('#startupExpensesAmount').hide();
         $('#teachingAppointment').hide();
-        $('#coursesTeaching').hide();
+        $('.adjunct').hide();
+        $('.adjunct-music').hide();
+        $('input[name="music"]').prop('checked', false);
         $('#id_status_change').prop('checked', false);
         $('#id_employment_type').prop('selectedIndex',0);
         $('#statusChange').show();
@@ -57,8 +60,8 @@
               '#terminationInvoluntary, #terminationVoluntary,' +
               '.sabbatical, #directReports, #endDate, .status-change,' +
               '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
-              '#startupExpensesAmount, #contractYears, #coursesTeaching,' +
-              '#teachingAppointment, #statusChangeDate'
+              '#startupExpensesAmount, .adjunct, .adjunct-music,' +
+              '#teachingAppointment, #statusChangeDate, #contractYears'
 
   // global for staff or faculty
   {% if form.employee_type.value %}
@@ -156,10 +159,15 @@
     });
     $('#id_employment_type').on('change', function() {
       $dis = this.value.substring(0, 8);
-      toggle($dis, 'Contract', '#contractYears');
+      if ($dis == 'Contract') {
+        toggle($dis, 'Contract', '#contractYears');
+      }
+      if (this.value == 'Adjunct') {
+        toggle(this.value, 'Adjunct', '.adjunct');
+      }
     });
-    $('#id_employment_type').on('change', function() {
-      toggle(this.value, 'Adjunct', '#coursesTeaching');
+    $('input[name="music"]').click(function() {
+      toggle(this.value, 'Yes', '.adjunct-music');
     });
     $('input[name="teaching_appointment"]').click(function() {
       toggle(this.value, 'Other', '#teachingAppointment');
@@ -1329,31 +1337,13 @@
           Hidden unless Adjunct is selected from employment type
           and "faculty and newhire_rehire" is checked
           -->
-          <div class="col-md-12 pb-3" id="coursesTeaching">
+          <div class="col-md-12 pb-3 adjunct">
             <div class="col-md-6 float-left">
-              <div class="form-group">
-                <label for="{{form.courses_teaching.id_for_label}}"
-                  {% if form.courses_teaching.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.courses_teaching.label}}</h5>
-                </label>
-                <textarea rows="2"
-                  class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
-                  id="{{form.courses_teaching.id_for_label}}" name="{{form.courses_teaching.name}}"
-                  placeholder="{{form.courses_teaching.help_text}}">
-                  {{form.courses_teaching.value|default_if_none:''}}
-                </textarea>
-                <small class="text-danger">
-                  {{form.courses_teaching.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-6 float-left">
-              <div class="form-group small">
-                <label for="id_{{form.music.name}}_0"
+              <label for="id_{{form.music.name}}_0"
                 {% if form.music.errors %}class="text-danger"{% endif %}>
                 <h5>{{form.music.label}}</h5>
-                </label>
+              </label>
+              <div class="form-group small">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" value="Yes" name="{{form.music.name}}"
                     type="radio" id="id_{{form.music.name}}_0"
@@ -1372,8 +1362,22 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-md-6 float-left">
+            <div class="col-md-6 float-left adjunct-music">
+              <div class="form-group">
+                <label for="{{form.courses_teaching.id_for_label}}"
+                  {% if form.courses_teaching.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.courses_teaching.label}}</h5>
+                </label>
+                <textarea rows="2"
+                  class="form-control{% if form.courses_teaching.errors %} is-invalid{% endif %}"
+                  id="{{form.courses_teaching.id_for_label}}" name="{{form.courses_teaching.name}}"
+                  placeholder="{{form.courses_teaching.help_text}}">{{form.courses_teaching.value|default_if_none:''}}</textarea>
+                <small class="text-danger">
+                  {{form.courses_teaching.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6 float-left adjunct-music">
               <div class="form-group">
                 <label for="{{form.number_of_credits.id_for_label}}"
                   {% if form.number_of_credits.errors %}class="text-danger"{% endif %}>
