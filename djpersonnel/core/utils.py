@@ -14,9 +14,12 @@ def level3_choices():
     level3 = do_sql(VEEPS)
     choices = [('','---select---')]
 
-    for l in level3:
-        name = '{}, {}'.format(l.lastname, l.firstname)
-        choices.append((str(l.id), name))
+    if level3:
+        for l in level3:
+            name = '{}, {}'.format(l.lastname, l.firstname)
+            choices.append((str(l.id), name))
+    else:
+        choices = None
     return choices
 
 
