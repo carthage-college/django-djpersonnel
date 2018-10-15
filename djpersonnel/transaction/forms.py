@@ -5,9 +5,6 @@ from djpersonnel.transaction.models import Operation
 from djpersonnel.core.utils import level3_choices
 from djtools.utils.convert import str_to_class
 
-import logging
-logger = logging.getLogger('debug_logger')
-
 REQUIRED_FIELDS = {
     'newhire_rehire': [
         'position_title',
@@ -225,10 +222,8 @@ class OperationForm(forms.ModelForm):
         # all required fields
         for required, fields in REQUIRED_FIELDS.items():
             if cd.get(required):
-                logger.debug("required = {}".format(required))
                 for field in fields:
                     if not cd.get(field):
-                        logger.debug("field = {}".format(field))
                         self.add_error(field, "Required field")
             else:
                 # set fields to null
