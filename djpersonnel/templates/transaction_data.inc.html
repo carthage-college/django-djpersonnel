@@ -70,7 +70,9 @@
             </div>
           {% endif %}
         </td>
-        <td><a href="mailto:{{t.created_by.email}}">{{t.created_by}}</a></td>
+        <td title="Created at: {{t.created_at}}">
+          <a href="mailto:{{t.created_by.email}}">{{t.created_by}}</a>
+        </td>
         {% if t.declined %}
         <td colspan="3" class="red text-center font-weight-bold">
             Transaction Declined

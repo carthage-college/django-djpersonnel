@@ -298,10 +298,10 @@ class OperationForm(forms.ModelForm):
             self.dependent('grant_pay', 'Yes', 'grant_pay_account_number')
         if cd.get('termination'):
             tt = cd.get('termination_type')
-            if (tt == 'Voluntary' or tt == 'Involuntary') and \
-              (not cd.get('termination_voluntary') or cd.get('termination_voluntary') == ''):
-                self.add_error(
-                    'termination_{}'.format(tt.lower()), "Please select a reason"
-                )
+            if tt:
+                if not cd.get('termination_{}'.format(tt.lower())):
+                    self.add_error(
+                        'termination_{}'.format(tt.lower()), "Please select a reason"
+                    )
 
         return cd
