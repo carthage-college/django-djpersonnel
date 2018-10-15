@@ -205,11 +205,11 @@ HR_GROUP='Human Resources'
 STAFF_GROUP='carthageStaffStatus'
 # approval level positions
 TposStruct = namedtuple('TposStruct', 'id email')
-LEVEL2_TPOS=2760 #VPFA
-LEVEL3_TPOS=2877 #Provost
+LEVEL2_TPOS=0 #VPFA
+LEVEL3_TPOS=0 #Provost
 TPOS_DEFAULT = {
-    LEVEL3_TPOS: TposStruct(id=1515446, email='dtimmerman@carthage.edu'),
-    LEVEL2_TPOS: TposStruct(id=730779, email='bthomey@carthage.edu'),
+    LEVEL3_TPOS: TposStruct(id=0, email=''),
+    LEVEL2_TPOS: TposStruct(id=0, email=''),
 }
 # tests
 TEST_USER_USERNAME = ''
