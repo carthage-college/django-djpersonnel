@@ -5,6 +5,9 @@ from djpersonnel.transaction.models import Operation
 from djpersonnel.core.utils import level3_choices
 from djtools.utils.convert import str_to_class
 
+import logging
+logger = logging.getLogger('debug_logger')
+
 REQUIRED_FIELDS = {
     'newhire_rehire': [
         'position_title',
@@ -100,7 +103,6 @@ class NewhireRehireForm(forms.Form):
     # staff
     #
     status_type = forms.TypedChoiceField(required=False)
-    status_change_effective_date = forms.DateField(required=False)
     other_arrangements = forms.CharField(required=False)
     #
     hours_per_week = forms.CharField(required=False)
@@ -223,8 +225,10 @@ class OperationForm(forms.ModelForm):
         # all required fields
         for required, fields in REQUIRED_FIELDS.items():
             if cd.get(required):
+                logger.debug("required = {}".format(required))
                 for field in fields:
                     if not cd.get(field):
+                        logger.debug("field = {}".format(field))
                         self.add_error(field, "Required field")
             else:
                 # set fields to null
@@ -233,6 +237,8 @@ class OperationForm(forms.ModelForm):
                     edate = cd.get('status_change_effective_date')
                     if edate:
                         cd['status_change_effective_date'] = None
+                    continue
+                elif cd.get('status_change') and required == 'newhire_rehire':
                     continue
                 form = str_to_class(
                     'djpersonnel.transaction.forms', required)(

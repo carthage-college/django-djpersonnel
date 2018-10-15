@@ -14,6 +14,9 @@ from djauth.LDAPManager import LDAPManager
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 
+import logging
+logger = logging.getLogger('debug_logger')
+
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
@@ -24,7 +27,9 @@ def form_home(request):
     switch = request.GET.get('switch')
     if request.method=='POST':
 
+        p = request.POST
         form = OperationForm(request.POST, label_suffix='')
+        logger.debug("post = {}".format(p['status_change_effective_date']))
         if form.is_valid():
             # deal with level 3 approver
             lid = form.cleaned_data['approver']
