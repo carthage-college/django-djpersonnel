@@ -1420,36 +1420,18 @@
                 <h5>{{form.teaching_appointment.label}}</h5>
               </label>
               <div class="form-group small">
+                {% for choice in form.teaching_appointment %}
                 <div class="form-check">
-                  <input class="form-check-input" value="1 Year"
-                      type="radio" name="{{form.teaching_appointment.name}}"
-                      id="id_{{form.teaching_appointment.name}}_0"
-                      {% if form.teaching_appointment.value == '1 Year' %}
-                        checked
-                      {% endif %}>
-                  <label for="id_{{form.teaching_appointment.name}}_0" class="form-check-label">
-                      1 Year: Seven 4 credit courses during academic year
+                  <input class="form-check-input"
+                      type="radio" name="{{ choice.data.name }}"
+                      id="{{ choice.id_for_label }}"
+                      value="{{ choice.data.value }}"
+                      {% if choice.data.selected %} checked{% endif %}>
+                  <label for="{{ choice.id_for_label }}" class="form-check-label">
+                    {{ choice.data.label }}
                   </label>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" value="3 year"
-                    type="radio" name="{{form.teaching_appointment.name}}"
-                    id="id_{{form.teaching_appointment.name}}_1"
-                    {% if form.teaching_appointment.value == '3 Year' %}checked{% endif %}>
-                  <label for="id_{{form.teaching_appointment.name}}_1" class="form-check-label">
-                    3 Year: Six courses during the first year,
-                    Seven courses the second and third year
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" value="Other"
-                    type="radio" name="{{form.teaching_appointment.name}}"
-                    id="id_{{form.teaching_appointment.name}}_2"
-                    {% if form.teaching_appointment.value == 'Other' %}checked{% endif %}>
-                  <label for="id_{{form.teaching_appointment.name}}_2" class="form-check-label">
-                    Other arrangement
-                  </label>
-                </div>
+                {% endfor %}
                 <small class="text-danger">
                   {{form.teaching_appointment.errors|join:", "}}
                 </small>

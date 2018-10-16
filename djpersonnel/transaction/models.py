@@ -28,7 +28,7 @@ SHIFT_CHOICES = (
 )
 TEACHING_APPOINTMENT_CHOICES = (
     ('1 year', '1 Year: Seven 4 credit courses during academic year'),
-    ('3 Year', '3 year: Six courses during the first year, Seven courses the second and third year'),
+    ('3 year', '3 Year: Six courses during the first year, Seven courses the second and third year'),
     ('Other', 'Other arrangement')
 )
 EMPLOYMENT_TYPE_CHOICES = (

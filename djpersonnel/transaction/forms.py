@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from djpersonnel.transaction.models import Operation
+from djpersonnel.transaction.models import Operation, TEACHING_APPOINTMENT_CHOICES
 from djpersonnel.core.utils import level3_choices
 from djtools.utils.convert import str_to_class
 
@@ -63,6 +63,7 @@ REQUIRED_FIELDS_NEWHIRE = {
         'program_types'
     ]
 }
+REQUIRED_FIELDS_GRANT_FUNDED = ['grant_fund_number', 'grant_fund_amount']
 
 
 class NewhireRehireForm(forms.Form):
@@ -88,11 +89,11 @@ class NewhireRehireForm(forms.Form):
     #
     teaching_appointment = forms.TypedChoiceField(required=False)
     teaching_appointment_arrangements = forms.CharField(required=False)
-    # depend on employment type = Adjunct
+    # if employment type = Adjunct then 'music' if 'yes' courses and credits
     employment_type = forms.TypedChoiceField(required=False)
+    music = forms.TypedChoiceField(required=False)
     courses_teaching = forms.CharField(required=False)
     number_of_credits = forms.CharField(required=False)
-    music = forms.TypedChoiceField(required=False)
     # employment type = Contract-*
     contract_years = forms.CharField(required=False)
     # no dependencies
@@ -197,6 +198,12 @@ sabbatical = SabbaticalForm
 
 class OperationForm(forms.ModelForm):
 
+    teaching_appointment = forms.ChoiceField(
+        label = "Teaching appointment",
+        widget=forms.RadioSelect,
+        choices=TEACHING_APPOINTMENT_CHOICES,
+        required = False
+    )
     approver = forms.ChoiceField(
         label="Who will approve this request for you?",
         choices=level3_choices()
@@ -215,6 +222,8 @@ class OperationForm(forms.ModelForm):
 
         if cd.get(field1) == value and not cd.get(field2):
             self.add_error(field2, "Required field")
+        elif cd.get(field1) != value:
+            cd[field2] = None
 
     def clean(self):
         cd = self.cleaned_data
@@ -253,29 +262,41 @@ class OperationForm(forms.ModelForm):
 
             # newhire
             # moving expenses
-            field = 'moving_expenses_amount'
-            if cd.get('moving_expenses') == 'Yes' and not cd.get(field):
-                self.add_error(field, "Required field")
+            self.dependent('moving_expenses', 'Yes', 'moving_expenses_amount')
 
             # grant funded
             if cd.get('position_grant_funded') == 'Yes':
-                fields = ['grant_fund_number', 'grant_fund_amount']
-                for field in fields:
+                for field in REQUIRED_FIELDS_GRANT_FUNDED:
                     if not cd.get(field):
                         self.add_error(field, "Required field")
+            if cd.get('position_grant_funded') == 'No':
+                for field in REQUIRED_FIELDS_GRANT_FUNDED:
+                    cd[field] = None
 
             # newhire faculty
             if employee == 'faculty':
-                # newhire contract
-                field = 'contract_years'
+
+                # employment type
+                contract_field = 'contract_years'
+                adjunct_fields = ['courses_teaching','number_of_credits']
+                et_fields = [contract_field] + adjunct_fields
                 et = cd.get('employment_type')
-                if et and 'Contract' in et:
-                    if not cd.get(field):
-                        self.add_error(field, "Required field")
-                # newhire adunct
-                elif et == 'Adjunct':
-                    self.dependent('music', 'Yes', 'courses_teaching')
-                    self.dependent('music', 'Yes', 'number_of_credits')
+                if et:
+                    # contract
+                    if 'Contract' in et:
+                        if not cd.get(contract_field):
+                            self.add_error(contract_field, "Required field")
+                        for field in adjunct_fields:
+                            cd[field] = None
+                    # adunct
+                    elif et == 'Adjunct':
+                        for field in adjunct_fields:
+                            self.dependent('music', 'Yes', field)
+                        cd[contract_field] = None
+                    else:
+                        for field in et_fields:
+                            cd[field] = None
+
                 # teaching appointment
                 self.dependent(
                     'teaching_appointment','Other','teaching_appointment_arrangements'
@@ -304,5 +325,9 @@ class OperationForm(forms.ModelForm):
                     self.add_error(
                         'termination_{}'.format(tt.lower()), "Please select a reason"
                     )
+                    if tt == "Involuntary":
+                        cd['termination_voluntary'] = None
+                    else:
+                        cd['termination_involuntary'] = None
 
         return cd
