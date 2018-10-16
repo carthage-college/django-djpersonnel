@@ -383,7 +383,7 @@ class Operation(models.Model):
         help_text='Teaching arrangements'
     )
     program_types = models.CharField(
-        "Program types",
+        "Faculty member teaches in the",
         max_length=30,
         choices=PROGRAM_CHOICES,
         null=True, blank=True
