@@ -162,9 +162,17 @@
       $dis = this.value.substring(0, 8);
       if ($dis == 'Contract') {
         toggle($dis, 'Contract', '#contractYears');
-      }
-      if (this.value == 'Adjunct') {
+        $('input[name="music"]').prop('checked', false);
+        $('.adjunct').hide();
+        $('.adjunct-music').hide();
+      } else if (this.value == 'Adjunct') {
         toggle(this.value, 'Adjunct', '.adjunct');
+        $('#contractYears').hide();
+      } else {
+        $('input[name="music"]').prop('checked', false);
+        $('.adjunct').hide();
+        $('.adjunct-music').hide();
+        $('#contractYears').hide();
       }
     });
     $('input[name="music"]').click(function() {
