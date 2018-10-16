@@ -11,6 +11,7 @@ REQUIRED_FIELDS = {
         'hire_type',
         'pay_type',
         'expected_start_date',
+        'offered_compensation',
         'budget_account',
         'position_grant_funded',
         'moving_expenses'
@@ -52,7 +53,6 @@ REQUIRED_FIELDS_NEWHIRE = {
     'staff': [
         'status_type',
         'hours_per_week',
-        'offered_compensation',
         'supervise_others',
         'standard_vacation_package',
     ],
@@ -72,6 +72,7 @@ class NewhireRehireForm(forms.Form):
     pay_type = forms.TypedChoiceField()
     expected_start_date = forms.DateField()
     budget_account = forms.CharField()
+    offered_compensation = forms.DecimalField()
     #
     position_grant_funded = forms.TypedChoiceField()
     grant_fund_number = forms.CharField(required=False)
@@ -103,7 +104,6 @@ class NewhireRehireForm(forms.Form):
     other_arrangements = forms.CharField(required=False)
     #
     hours_per_week = forms.CharField(required=False)
-    offered_compensation = forms.DecimalField(required=False)
     supervise_others = forms.TypedChoiceField(required=False)
     #
     standard_vacation_package = forms.TypedChoiceField(required=False)
