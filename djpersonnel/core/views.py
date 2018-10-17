@@ -138,7 +138,7 @@ def operation_status(request):
                 # an email to HR for final decision.
                 hr_group = []
                 to_approver = []
-                for u in User.objects.filter(groups__name=settings.HR_GROUP)
+                for u in User.objects.filter(groups__name=settings.HR_GROUP):
                     hr_group.append(u.email)
 
                 if perms['level1']:
