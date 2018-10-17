@@ -68,7 +68,7 @@ $(function() {
 {% block content %}
 <div class="container mb-4">
   {% if not data.declined %}
-  {% if data.created_by != request.user %}
+  {% if perms.approver %}
   <div class="row mb-4">
     <div class="col-lg-12 text-center">
       <div class="panel panel-default">

@@ -47,14 +47,13 @@ def form_home(request):
             data.save()
 
             # send email or display it for dev
-            template = 'transaction/email/created_by.html'
-            #template = 'transaction/email/approver.html'
             if not settings.DEBUG:
 
                 # email distribution list and bcc parameters
                 bcc = [settings.ADMINS[0][1],]
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
+                template = 'transaction/email/created_by.html'
                 # subject
                 subject = u"[PAF Submission] {}, {}".format(
                     data.created_by.last_name, data.created_by.first_name
@@ -67,8 +66,8 @@ def form_home(request):
                 # send approver email to VP or Provost
                 template = 'transaction/email/approver.html'
                 send_mail(
-                    request, [veep.email,], subject, data.created_by.email,
-                    template, data, bcc
+                    request, [level3_approver.email,], subject,
+                    data.created_by.email, template, data, bcc
                 )
 
                 return HttpResponseRedirect(
@@ -76,6 +75,8 @@ def form_home(request):
                 )
             else:
                 # display the email template
+                template = 'transaction/email/approver.html'
+                #template = 'transaction/email/created_by.html'
                 return render(
                     request, template, {'data': data,'form':form}
                 )
@@ -99,8 +100,14 @@ def form_home(request):
 )
 def detail(request, tid):
     data = get_object_or_404(Operation, id=tid)
+    user = request.user
+    perms = data.permissions(user)
+
+    if not perms['view']:
+        raise Http404
+
     return render(
-        request, 'transaction/detail.html', {'data':data}
+        request, 'transaction/detail.html', {'data':data,'perms':perms}
     )
 
 

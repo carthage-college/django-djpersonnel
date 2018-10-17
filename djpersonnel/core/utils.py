@@ -38,8 +38,9 @@ def get_permissions(obj, user):
         perms['level1'] = True
     elif user.id == LEVEL2.id:
         perms['view'] = True
-        perms['approver'] = True
-        perms['level2'] = True
+        if obj.notify_veep():
+            perms['approver'] = True
+            perms['level2'] = True
     elif obj.level3_approver == user:
         perms['view'] = True
         perms['approver'] = True
