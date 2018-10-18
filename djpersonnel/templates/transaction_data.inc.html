@@ -48,7 +48,7 @@
           <a href="{% url 'transaction_detail' t.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
           title="View PAF{% if t.position_title %}: {{t.position_title}}{% endif %}">
-            {{t.last_name}}</a>{{hr}} - {{t.newhire_rehire}}
+            {{t.last_name}}</a>
             {% if hr and t.newhire_rehire %}
             <div class="float-right">
             <a href="{% url 'transaction_appointment_letter' t.id %}">
