@@ -676,3 +676,18 @@ class Operation(models.Model):
             return True
         else:
             return False
+
+    def approved(self):
+        """
+        """
+        status = False
+        if self.level3 and self.level1:
+            if self.notify_veep():
+                if self.level2:
+                    status = True
+                else:
+                    status = False
+            else:
+                status = True
+
+        return status

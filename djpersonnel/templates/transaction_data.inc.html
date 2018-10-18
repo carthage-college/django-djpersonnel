@@ -75,6 +75,10 @@
         <td colspan="3" class="red text-center font-weight-bold">
             Transaction Declined
         </td>
+        {% else %}{% if t.approved %}
+        <td colspan="3" class="green text-center font-weight-bold">
+            Transaction Approved
+        </td>
         {% else %}
         <td class="text-center">
           {% if t.level3 %}
@@ -115,7 +119,7 @@
             title="HR have NOT approved this PAF"></i>
           {% endif %}
         </td>
-        {% endif %}
+        {% endif %}{% endif %}
         <td>
           {# for c in t.change_types #}
             {{c}}{# if not forloop.last #}, {# endif #}

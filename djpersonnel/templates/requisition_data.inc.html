@@ -77,6 +77,10 @@
         <td colspan="3" class="red text-center font-weight-bold">
             Requisition Declined
         </td>
+        {% else %}{% if r.approved %}
+        <td colspan="3" class="green text-center font-weight-bold">
+            Requisition Approved
+        </td>
         {% else %}
         <td class="text-center">
           {% if r.level3 %}
@@ -111,7 +115,7 @@
             title="HR have NOT approved this PRF"></i>
           {% endif %}
         </td>
-        {% endif %}
+        {% endif %}{% endif %}
         <td>{{r.publication_date|date:'Y-m-d'}}</td>
         <td>{{r.position_open_date|date:'Y-m-d'}}</td>
         <td>{{r.expected_start_date|date:'Y-m-d'}}</td>
