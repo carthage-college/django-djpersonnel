@@ -165,8 +165,8 @@ def operation_status(request):
                 bcc = settings.MANAGERS
                 frum = user.email
                 to_creator = [obj.created_by.email,]
-                subject = "[Personnel {} Form] {}: '{}'".format(
-                    app.capitalize(), status, obj.position_title
+                subject = "[Personnel {} Form] {}".format(
+                    app.capitalize(), status
                 )
                 template = '{}/email/{}_{}.html'.format(app, level, status)
 

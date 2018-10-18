@@ -69,7 +69,10 @@
           {% endif %}
         </td>
         <td title="Created at: {{t.created_at}}">
-          <a href="mailto:{{t.created_by.email}}">{{t.created_by}}</a>
+          <a href="mailto:{{t.created_by.email}}">
+            {{t.created_by.last_name}},
+            {{t.created_by.first_name}}
+          </a>
         </td>
         {% if t.declined %}
         <td colspan="3" class="red text-center font-weight-bold">
@@ -127,8 +130,8 @@
         </td>
         <td class="text-center">
           <a href="#" data-href="{% url 'transaction_delete' t.id %}"
-            data-title="PAF: {{t.position_title}}" data-toggle="modal"
-            data-target="#confirm-delete">
+            data-title="PAF (ID={{t.id}}) submitted by {{t.created_by.last_name}}, {{t.created_by.first_name}}"
+            data-toggle="modal" data-target="#confirm-delete">
             <i class="fa fa-trash-o red blue-tooltip"  data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
               title="Delete Personnel Action: {{t.position_title}}"></i>
