@@ -80,7 +80,9 @@ def list(request, mod):
             objects = None
 
     return render(
-        request, 'list.html', { 'objects': objects, 'mod':mod }
+        request, 'list.html', {
+            'hr': hr, 'objects': objects, 'mod':mod
+        }
     )
 
 
