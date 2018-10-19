@@ -72,7 +72,11 @@
             </div>
           {% endif %}
         </td>
-        <td><a href="mailto:{{r.created_by.email}}">{{r.created_by}}</a></td>
+        <td>
+          <a href="mailto:{{r.created_by.email}}">
+            {{r.created_by.last_name}}, {{r.created_by.first_name}}
+          </a>
+        </td>
         {% if r.declined %}
         <td colspan="3" class="red text-center font-weight-bold">
             Requisition Declined

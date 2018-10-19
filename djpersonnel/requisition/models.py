@@ -216,6 +216,7 @@ class Operation(models.Model):
         status = False
         if self.level3 and self.level2 and self.level1:
             status = True
+        return status
 
     def department(self):
         """

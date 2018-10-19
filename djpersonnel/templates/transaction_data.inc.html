@@ -70,8 +70,7 @@
         </td>
         <td title="Created at: {{t.created_at}}">
           <a href="mailto:{{t.created_by.email}}">
-            {{t.created_by.last_name}},
-            {{t.created_by.first_name}}
+            {{t.created_by.last_name}}, {{t.created_by.first_name}}
           </a>
         </td>
         {% if t.declined %}

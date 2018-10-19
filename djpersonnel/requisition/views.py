@@ -97,7 +97,7 @@ def detail(request, rid):
         raise Http404
 
     return render(
-        request, 'requisition/detail.html', {'data':data}
+        request, 'requisition/detail.html', {'data':data,'perms':perms}
     )
 
 

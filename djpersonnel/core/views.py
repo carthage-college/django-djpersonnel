@@ -2,22 +2,23 @@
 from django.conf import settings
 from django.apps import apps
 from django.db.models import Q
+from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
-
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import LEVEL2
 
 from djzbar.decorators.auth import portal_auth_required
+from djtools.utils.convert import str_to_class
 from djtools.utils.users import in_group
 from djtools.utils.mail import send_mail
 
-from openpyxl import load_workbook
+from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
 
@@ -206,72 +207,35 @@ def operation_status(request):
     return HttpResponse(message)
 
 
-'''
-def export_openxml(request):
-    """
-    Export data to OpenXML file
-    """
+def openxml(request, mod):
 
-    wb = load_workbook(
-        '{}/transaction/operation.xlsx'.format(settings.ROOT_DIR)
-    )
-    ws = wb.active
-    # this could all be accomplished by a list of lists but building a list
-    # for each row would be ugly. this seems more pythonic, and we can reuse
-    # for CSV export if need be.
-    t = loader.get_template('application/export.longitudinal.html')
-    c = {'exports': exports, 'program':program, 'year':TODAY.year}
-    data = smart_bytes(
-        t.render(c, request), encoding='utf-8',
-        strings_only=False, errors='strict'
+    wb = Workbook()
+    ws = wb.get_active_sheet()
+
+    model = str_to_class(
+        'djpersonnel.{}.models'.format(mod), 'Operation'
     )
 
-    # reader requires an object which supports the iterator protocol and
-    # returns a string each time its next() method is called. StringIO
-    # provides an in-memory, line by line stream of the template data.
-    #reader = csv.reader(io.StringIO(data), delimiter="|")
-    reader = csv.reader(BytesIO(data), delimiter="|")
-    for row in reader:
+    data = serializers.serialize('python', model.objects.all() )
+
+    head = False
+    headers = []
+    for d in data:
+        row = []
+        for n,v in d['fields'].items():
+            headers.append(model._meta.get_field(n).verbose_name.title())
+            row.append(v)
+        if not head:
+            ws.append(headers)
+            head = True
         ws.append(row)
 
-    # in memory response instead of save to file system
     response = HttpResponse(
         save_virtual_workbook(wb), content_type='application/ms-excel'
     )
 
     response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
-        program
+        mod
     )
 
     return response
-
-
-def openxml(request, division, department=''):
-
-    wb = load_workbook('{}template.xlsx'.format(settings.MEDIA_ROOT))
-
-    # obtain the active worksheet
-    template = wb.active
-
-        depts = division_departments(division)
-        for d in depts:
-            courses = sections(code=d.dept,year=YEAR,sess=get_session_term())
-            if courses:
-                ws = wb.copy_worksheet(template)
-                ws.title = d.dept
-                hoja = sheet(ws, division, d.dept, courses)
-        # remove the template sheet
-        wb.remove_sheet(template)
-
-    # in memory response instead of save to file system
-    response = HttpResponse(
-        save_virtual_workbook(wb), content_type='application/ms-excel'
-    )
-
-    name = '{}_{}_syllabi'.format(division, department)
-    response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
-        name
-    )
-
-    return response
-'''

@@ -48,6 +48,7 @@ $(function() {
       success: function(data) {
         spinner.stop(target);
         $.growlUI(data);
+        $('#operationStatus').hide();
       },
       error: function(data) {
         spinner.stop(target);
@@ -70,8 +71,8 @@ $(function() {
 {% block content %}
 <div class="container mb-4">
   {% if not data.declined %}
-  {% if data.created_by != request.user %}
-  <div class="row mb-4">
+  {% if perms.approver and not data.approved %}
+  <div class="row mb-4" id="operationStatus">
     <div class="col-lg-12 text-center">
       <div class="panel panel-default">
         <div class="panel-body">

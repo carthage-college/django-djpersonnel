@@ -120,6 +120,11 @@ $(function() {
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
           title="The 10 most recent PRF submissions are list below"></i>
+        |
+        <a href="{% url 'openxml' 'requisition' %}">
+          <i class="fa fa-file-excel-o blue-tooltip" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top"
+            title="Download PRF data as a Spreadsheet"></i></a>
       </h4>
       {% if requisitions %}
         {% include "requisition_data.inc.html" %}
@@ -137,7 +142,11 @@ $(function() {
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
           title="The 10 most recent PAF submissions are list below"></i>
-
+        |
+        <a href="{% url 'openxml' 'transaction' %}">
+          <i class="fa fa-file-excel-o blue-tooltip" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top"
+            title="Download PRF data as a Spreadsheet"></i></a>
       </h4>
       {% if transactions %}
         {% include "transaction_data.inc.html" %}

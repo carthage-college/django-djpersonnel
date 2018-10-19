@@ -11,9 +11,14 @@ urlpatterns = [
     ),
     # complete lising
     url(
-        r'^(?P<mod>[-\w]+)/list/$',
-        views.list, name='dashboard_list'
+        r'^(?P<mod>[-\w]+)/list/$', views.list, name='dashboard_list'
     ),
+
+    # export to openxml
+    url(
+        r'^(?P<mod>[-\w]+)/openxml/$', views.openxml, name='openxml'
+    ),
+
     # proposal status view for 'approve' or 'decline' actions
     url(
         r'^operation/status/$',
