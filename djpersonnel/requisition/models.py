@@ -7,7 +7,7 @@ from djpersonnel.core.utils import get_permissions
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
-from djzbar.utils.hr import departments_all_choices
+from djzbar.utils.hr import department, departments_all_choices
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
@@ -205,9 +205,18 @@ class Operation(models.Model):
 
     def approved(self):
         """
+        is the PRF approved?
         """
         status = False
         if self.level3 and self.level2 and self.level1:
             status = True
 
-        return status
+    def department(self):
+        """
+        Returns the full department name based on 3 or 4 letter code
+        """
+        name = self.department_name
+        dept = department(name)
+        if dept:
+            name = dept[0]
+        return name
