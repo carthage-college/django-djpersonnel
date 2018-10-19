@@ -203,6 +203,12 @@ class Operation(models.Model):
     def get_absolute_url(self):
         return ('requisition_detail', [str(self.id)])
 
+    def notify_veep(self):
+        """
+        VP of Business should be notified for all PRF for now
+        """
+        return True
+
     def approved(self):
         """
         """
