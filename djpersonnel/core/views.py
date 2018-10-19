@@ -135,18 +135,25 @@ def operation_status(request):
             if perms['approver'] and status in ['approved','declined']:
 
                 from djtools.fields import NOW
-
+                # we send an email to Level2 if money is involved
+                # and then to HR for final decision. if no money, we send
+                # an email to HR for final decision.
+                hr_group = []
                 to_approver = []
+                for u in User.objects.filter(groups__name=settings.HR_GROUP):
+                    hr_group.append(u.email)
+
                 if perms['level1']:
                     level = 'level1'
                 elif perms['level2']:
                     level = 'level2'
-                    users = User.objects.filter(groups__name=settings.HR_GROUP)
-                    for u in users:
-                        to_approver.append(u.email)
+                    to_approver = hr_group
                 elif perms['level3']:
                     level = 'level3'
-                    to_approver = [LEVEL2.email,]
+                    if not obj.notify_veep:
+                        to_approver = hr_group
+                    else:
+                        to_approver = [LEVEL2.email,]
 
                 if status == 'approved':
                     setattr(obj, level, True)
@@ -160,8 +167,8 @@ def operation_status(request):
                 bcc = settings.MANAGERS
                 frum = user.email
                 to_creator = [obj.created_by.email,]
-                subject = "[Personnel {} Form] {}: '{}'".format(
-                    app.capitalize(), status, obj.position_title
+                subject = "[Personnel {} Form] {}".format(
+                    app.capitalize(), status
                 )
                 template = '{}/email/{}_{}.html'.format(app, level, status)
 
@@ -177,7 +184,8 @@ def operation_status(request):
                     request, to_creator, subject, frum, template, obj, bcc
                 )
 
-                # notify the next approver
+                # notify the next approver if we have one and the submission
+                # has not been declined
                 if to_approver and status == 'approved':
                     send_mail(
                         request, to_approver, subject, frum,

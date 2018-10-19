@@ -203,3 +203,11 @@ class Operation(models.Model):
     def get_absolute_url(self):
         return ('requisition_detail', [str(self.id)])
 
+    def approved(self):
+        """
+        """
+        status = False
+        if self.level3 and self.level2 and self.level1:
+            status = True
+
+        return status

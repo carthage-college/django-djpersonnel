@@ -662,3 +662,32 @@ class Operation(models.Model):
 
     def permissions(self, user):
         return get_permissions(self, user)
+
+    def change_types(self):
+        """
+        """
+        return True
+
+    def notify_veep(self):
+        """
+        VP of Business should only be notified if money is involved
+        """
+        if self.newhire_rehire or self.compensation_change or self.onetime_payment:
+            return True
+        else:
+            return False
+
+    def approved(self):
+        """
+        """
+        status = False
+        if self.level3 and self.level1:
+            if self.notify_veep():
+                if self.level2:
+                    status = True
+                else:
+                    status = False
+            else:
+                status = True
+
+        return status

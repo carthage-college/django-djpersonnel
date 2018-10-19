@@ -41,5 +41,8 @@
 </p>
 {# debuging #}
 {% if data.to_approver %}
-{{data.to_approver}}
+approver = {{data.to_approver}}
+{% endif %}
+{% if templates_debug %}
+level 3 approver email = {{data.level3.email}}
 {% endif %}

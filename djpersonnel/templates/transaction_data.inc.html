@@ -33,13 +33,11 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Effective Date</th>
+        <th>Actions</th>
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="Delete this PRF"></i>
+            title="Delete this PAF"></i>
         </th>
       </tr>
     </thead>
@@ -71,11 +69,18 @@
           {% endif %}
         </td>
         <td title="Created at: {{t.created_at}}">
-          <a href="mailto:{{t.created_by.email}}">{{t.created_by}}</a>
+          <a href="mailto:{{t.created_by.email}}">
+            {{t.created_by.last_name}},
+            {{t.created_by.first_name}}
+          </a>
         </td>
         {% if t.declined %}
         <td colspan="3" class="red text-center font-weight-bold">
             Transaction Declined
+        </td>
+        {% else %}{% if t.approved %}
+        <td colspan="3" class="green text-center font-weight-bold">
+            Transaction Approved
         </td>
         {% else %}
         <td class="text-center">
@@ -90,15 +95,21 @@
           {% endif %}
         </td>
         <td class="text-center">
+        {% if t.notify_veep %}
           {% if t.level2 %}
             <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VPFA approved this PRF on {{t.level2_date}}"></i>
+            title="VPFA approved this PAF on {{t.level2_date}}"></i>
           {% else %}
             <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VPFA has NOT approved this PAF"></i>
           {% endif %}
+        {% else %}
+          <i class="fa fa-ban red blue-tooltip"
+          data-toggle="tooltip" data-placement="top" aria-hidden="true"
+          title="VPFA does not have to approve this PAF"></i>
+        {% endif %}
         </td>
         <td class="text-center">
           {% if t.level1 %}
@@ -108,20 +119,22 @@
           {% else %}
             <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="HR have NOT approved this PRF"></i>
+            title="HR have NOT approved this PAF"></i>
           {% endif %}
         </td>
-        {% endif %}
-        <td>{{t.expected_start_date|date:'Y-m-d'}}</td>
-        <td>{{t.end_date|date:'Y-m-d'}}</td>
-        <td>{{t.position_effective_date|date:'Y-m-d'}}</td>
+        {% endif %}{% endif %}
+        <td>
+          {# for c in t.change_types #}
+            {{c}}{# if not forloop.last #}, {# endif #}
+          {# endfor #}
+        </td>
         <td class="text-center">
           <a href="#" data-href="{% url 'transaction_delete' t.id %}"
-            data-title="PAF: {{t.position_title}}" data-toggle="modal"
-            data-target="#confirm-delete">
+            data-title="PAF (ID={{t.id}}) submitted by {{t.created_by.last_name}}, {{t.created_by.first_name}}"
+            data-toggle="modal" data-target="#confirm-delete">
             <i class="fa fa-trash-o red blue-tooltip"  data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
-              title="Delete Personnel Requisition: {{t.position_title}}"></i>
+              title="Delete Personnel Action: {{t.position_title}}"></i>
           </a>
         </td>
       </tr>
@@ -160,13 +173,11 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Effective Date</th>
+        <th>Actions</th>
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="Delete this PRF"></i>
+            title="Delete this PAF"></i>
         </th>
       </tr>
     </tfoot>
