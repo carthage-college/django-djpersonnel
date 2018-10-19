@@ -33,7 +33,7 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
-        <th>Actions</th>
+        <th style="width:30%;">Actions</th>
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
@@ -124,9 +124,9 @@
         </td>
         {% endif %}{% endif %}
         <td>
-          {# for c in t.change_types #}
-            {{c}}{# if not forloop.last #}, {# endif #}
-          {# endfor #}
+          {% for c in t.change_types %}
+            {{c}}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
         </td>
         <td class="text-center">
           <a href="#" data-href="{% url 'transaction_delete' t.id %}"
@@ -173,7 +173,7 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
-        <th>Actions</th>
+        <th style="width:30%;">Actions</th>
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"

@@ -665,8 +665,19 @@ class Operation(models.Model):
 
     def change_types(self):
         """
+        returns a list of change types that the user selected
         """
-        return True
+        clist = [
+            'newhire_rehire','department_change','compensation_change',
+            'onetime_payment','supervisor_change','termination',
+            'status_change','position_change','leave_of_absence'
+        ]
+        checks = []
+        for c in clist:
+            if getattr(self, c):
+                checks.append(self._meta.get_field(c).verbose_name.title())
+
+        return checks
 
     def notify_veep(self):
         """
@@ -679,6 +690,7 @@ class Operation(models.Model):
 
     def approved(self):
         """
+        is the submission approved at relevant all levels?
         """
         status = False
         if self.level3 and self.level1:
