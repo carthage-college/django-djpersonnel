@@ -17,6 +17,9 @@ from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.users import in_group
 from djtools.utils.mail import send_mail
 
+from openpyxl import load_workbook
+from openpyxl.writer.excel import save_virtual_workbook
+
 
 @portal_auth_required(
     session_var='DJVISION_AUTH',
@@ -201,3 +204,74 @@ def operation_status(request):
         message = "Requires HTTP POST"
 
     return HttpResponse(message)
+
+
+'''
+def export_openxml(request):
+    """
+    Export data to OpenXML file
+    """
+
+    wb = load_workbook(
+        '{}/transaction/operation.xlsx'.format(settings.ROOT_DIR)
+    )
+    ws = wb.active
+    # this could all be accomplished by a list of lists but building a list
+    # for each row would be ugly. this seems more pythonic, and we can reuse
+    # for CSV export if need be.
+    t = loader.get_template('application/export.longitudinal.html')
+    c = {'exports': exports, 'program':program, 'year':TODAY.year}
+    data = smart_bytes(
+        t.render(c, request), encoding='utf-8',
+        strings_only=False, errors='strict'
+    )
+
+    # reader requires an object which supports the iterator protocol and
+    # returns a string each time its next() method is called. StringIO
+    # provides an in-memory, line by line stream of the template data.
+    #reader = csv.reader(io.StringIO(data), delimiter="|")
+    reader = csv.reader(BytesIO(data), delimiter="|")
+    for row in reader:
+        ws.append(row)
+
+    # in memory response instead of save to file system
+    response = HttpResponse(
+        save_virtual_workbook(wb), content_type='application/ms-excel'
+    )
+
+    response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
+        program
+    )
+
+    return response
+
+
+def openxml(request, division, department=''):
+
+    wb = load_workbook('{}template.xlsx'.format(settings.MEDIA_ROOT))
+
+    # obtain the active worksheet
+    template = wb.active
+
+        depts = division_departments(division)
+        for d in depts:
+            courses = sections(code=d.dept,year=YEAR,sess=get_session_term())
+            if courses:
+                ws = wb.copy_worksheet(template)
+                ws.title = d.dept
+                hoja = sheet(ws, division, d.dept, courses)
+        # remove the template sheet
+        wb.remove_sheet(template)
+
+    # in memory response instead of save to file system
+    response = HttpResponse(
+        save_virtual_workbook(wb), content_type='application/ms-excel'
+    )
+
+    name = '{}_{}_syllabi'.format(division, department)
+    response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
+        name
+    )
+
+    return response
+'''
