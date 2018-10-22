@@ -86,6 +86,10 @@
       if ($(this).val() == 'EVS' && $('#id_newhire_rehire').prop('checked') && $employeeType == "Staff") {
         $('.shift').show();
       }
+      if ($(this).val() != 'EVS') {
+        $('.shift').hide();
+        $('#id_shift').prop('selectedIndex',0);
+      }
     });
 
     // hide all the things
