@@ -58,8 +58,6 @@ class RequisitionViewsTestCase(TestCase):
         data['level3_date'] = ''
         data['level3_approver'] = settings.TEST_LEVEL3_APPROVER_ID
         requi = self.client.post(earl, data)
-        print("requi response\n")
-        print(requi)
         requisitions = Operation.objects.filter(created_by = self.user)
         self.assertGreaterEqual(requisitions.count(), 1)
 

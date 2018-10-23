@@ -49,7 +49,7 @@ class TransactionOperationTestCase(TestCase):
     def test_form_returns_correct_html(self):
 
         response = self.client.get(reverse('transaction_form'))
-        self.assertTemplateUsed(response, 'transaction/form_bootstrap.html')
+        self.assertTemplateUsed(response, 'transaction/form.html')
         html = response.content.decode('utf8')
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertTrue(html.strip().endswith('</html>'))

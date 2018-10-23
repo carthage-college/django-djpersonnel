@@ -20,8 +20,6 @@ def _operation_status(user, app, status, oid):
     model = apps.get_model(app_label=app, model_name='Operation')
     obj = get_object_or_404(model, pk=oid)
     perms = obj.permissions(user)
-    print("permissions:\n")
-    print(perms)
     if not obj.declined:
         if perms['approver'] and status in ['approved','declined']:
 
@@ -47,8 +45,6 @@ def _operation_status(user, app, status, oid):
                 obj.declined = True
 
             obj.save()
-            print("obj title: {}".format(obj.position_title))
-            print(obj.__dict__)
 
             bcc = settings.MANAGERS
             frum = user.email
@@ -63,12 +59,6 @@ def _operation_status(user, app, status, oid):
                 if to_approver:
                     to_approver = [settings.MANAGERS[0][1],]
                     obj.to_approver = to_approver
-
-            print("bcc = {}".format(bcc))
-            print("from = {}".format(frum))
-            print("to_creator = {}".format(to_creator))
-            print("subject = {}".format(subject))
-            print("template = {}".format(template))
 
             '''
             # notify the creator of current status
@@ -92,9 +82,6 @@ def _operation_status(user, app, status, oid):
             message = "Access Denied"
     else:
         message = "Personnel {} has already been declined".format(app)
-
-    print("Message:\n")
-    print(message)
 
 
 class CoreViewsTestCase(TestCase):

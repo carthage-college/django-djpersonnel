@@ -15,10 +15,12 @@
 </p>
 
 <dl {{dl_detail}}>
+  {% if data.position_title %}
   <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
     {% field_name data 'position_title' %}
   </dt>
   <dd style="margin:2px 0; padding:5px 0;">{{data.position_title}}</dd>
+  {% endif %}
   <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
     {% field_name data 'department_name' %}
   </dt>

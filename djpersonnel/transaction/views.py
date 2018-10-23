@@ -66,7 +66,7 @@ def form_home(request):
                 # send approver email to VP or Provost
                 template = 'transaction/email/approver.html'
                 send_mail(
-                    request, [level3_approver.email,], subject,
+                    request, [data.level3_approver.email,], subject,
                     data.created_by.email, template, data, bcc
                 )
 
