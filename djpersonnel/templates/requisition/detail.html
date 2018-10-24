@@ -87,6 +87,9 @@ $(function() {
   </div>
   <!-- /.row -->
   {% endif %}
+  {% if data.approved %}
+    <h1 style="color: #5810d1;">APPROVED</h1>
+  {% endif %}
   {% else %}
     <h1 style="color: #5810d1;">DECLINED</h1>
   {% endif %}
