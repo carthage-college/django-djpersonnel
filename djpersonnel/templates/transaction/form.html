@@ -639,7 +639,8 @@
                   <h5>{{form.approver.label}}</h5>
                 </label>
                 <select class="form-control" name="{{form.approver.name}}"
-                  id="{{form.approver.id_for_label}}">
+                  id="{{form.approver.id_for_label}}"
+                  {% if not templates_debug %}required{% endif %}>
                   {% for value, text in form.fields.approver.choices %}
                   <option value="{{value}}"
                     {% if form.approver.value == value %}
