@@ -43,6 +43,22 @@ class OperationForm(forms.ModelForm):
 
         return cd['replacement_name']
 
+    def clean_hours_per_week(self):
+
+        cd = self.cleaned_data
+        if cd.get('salary_type') == 'Non-exempt' and not cd.get('hours_per_week'):
+            raise forms.ValidationError("You must provide hours per week.")
+
+        return cd['hours_per_week']
+
+    def clean_account_number(self):
+
+        cd = self.cleaned_data
+        if cd.get('budgeted_position') == 'Yes' and not cd.get('account_number'):
+            raise forms.ValidationError("You must provide an account number.")
+
+        return cd['account_number']
+
     def clean_applicant_system_people(self):
 
         cd = self.cleaned_data

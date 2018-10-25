@@ -21,7 +21,7 @@
     {% if form.budgeted_position.value == 'Yes' %}
     $("#account_number").removeClass("hyde");
     {% endif %}
-    {% if form.salary_type.value == 'Salary' %}
+    {% if form.salary_type.value == 'Non-exempt' %}
     $("#hours_per_week").removeClass("hyde");
     {% endif %}
     {% if form.applicant_system.value == 'Yes' %}
@@ -291,8 +291,7 @@
               class="form-control col-xs-2{% if form.hours_per_week.errors %} is-invalid{% endif %}"
               id="{{form.hours_per_week.id_for_label}}"
               value="{{form.hours_per_week.value|default_if_none:''}}"
-              placeholder="Enter Hours per Week"
-              {% if not templates_debug %}required{% endif %}>
+              placeholder="Enter Hours per Week">
             <small class="text-danger">
               {{form.hours_per_week.errors|join:", "}}
             </small>
@@ -487,7 +486,7 @@
                >{{form.speciality_sites_urls.value|default_if_none:''}}</textarea>
               <small class="text-danger">
                 {{form.speciality_sites_urls.errors|join:", "}}
-              </small>
+              </small><br>
               <small class="text-danger">
                 <strong>Please note:</strong>
                 departments will be charged for any
