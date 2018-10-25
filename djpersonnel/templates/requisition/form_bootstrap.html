@@ -121,6 +121,7 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
                     type="radio" name="new_position"
+                    {% if not templates_debug %} required{% endif %}
                     id="id_{{form.new_position.name}}_0"
                     onclick="javascript:toggleCheck('id_{{form.new_position.name}}_1','replacement');"
                     {% if form.new_position.value == 'Yes' %}
@@ -181,6 +182,7 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Yes"
                     type="radio" name="budgeted_position"
+                    {% if not templates_debug %} required{% endif %}
                     id="id_{{form.budgeted_position.name}}_0"
                          onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     {% if form.budgeted_position.value == 'Yes' %}
@@ -221,6 +223,7 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Exempt"
                     type="radio" name="salary_type"
+                    {% if not templates_debug %} required{% endif %}
                     onclick="javascript:toggleCheck('id_{{form.salary_type.name}}_1','hours_per_week');"
                     id="id_{{form.salary_type.name}}_0"
                     {% if form.salary_type.value == 'Exempt' %}
@@ -405,6 +408,7 @@
                   <input class="form-check-input" value="Yes"
                     type="radio" name="applicant_system"
                     id="id_{{form.applicant_system.name}}_0"
+                    {% if not templates_debug %} required{% endif %}
                     onclick="javascript:toggleCheck('id_{{form.applicant_system.name}}_0','applicant_system_people');"
                     {% if form.applicant_system.value == 'Yes' %}
                       checked
@@ -454,6 +458,7 @@
                   <input class="form-check-input" value="Yes"
                     type="radio" name="speciality_sites"
                     id="id_{{form.speciality_sites.name}}_0"
+                    {% if not templates_debug %} required{% endif %}
                     onclick="javascript:toggleCheck('id_{{form.speciality_sites.name}}_0','speciality_sites_urls');"
                     {% if form.speciality_sites.value == 'Yes' %}
                       checked
