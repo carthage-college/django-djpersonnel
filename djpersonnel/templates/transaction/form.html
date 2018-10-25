@@ -463,8 +463,7 @@
                 <input type="text" name="{{form.middle_name.name}}" placeholder="Middle Name"
                   class="form-control{% if form.middle_name.errors %} is-invalid{% endif %}"
                   id="{{form.middle_name.id_for_label}}"
-                  value="{{form.middle_name.value|default_if_none:''}}"
-                  {% if not templates_debug %}required{% endif %}>
+                  value="{{form.middle_name.value|default_if_none:''}}"<
                 <small class="text-danger">
                   {{form.middle_name.errors|join:", "}}
                 </small>
