@@ -81,7 +81,7 @@ def form_home(request):
         form = OperationForm(label_suffix='')
 
     return render(
-        request, 'requisition/form_bootstrap.html', {'form': form,}
+        request, 'requisition/form.html', {'form': form,}
     )
 
 
