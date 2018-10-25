@@ -6,17 +6,38 @@
 {% block extra_javascript %}
 {{block.super}}
 <script type="text/javascript">
-  function toggleCheck(domRadio, domInput) {
-    if (document.getElementById(domRadio).checked) {
-      document.getElementById(domInput).style.display = 'inherit';
-    } else {
-      document.getElementById(domInput).style.display = 'none';
-    }
+  /**
+   * simple function to show/hide an element based on the value
+   * of another dom object and then reset the value of dependent
+   * object if hide
+   */
+  function toggle(dis, val, dom) {
+     if (dis == val) {
+       $('#' + dom).show();
+     } else {
+       $('#' + dom).hide();
+       $('#id_' + dom).val('');
+     }
   }
   /* jquery code */
   $(function() {
+    $('input[name="new_position"]').click(function() {
+      toggle(this.value, 'No', 'replacement_name');
+    });
+    $('input[name="budgeted_position"]').click(function() {
+      toggle(this.value, 'Yes', 'account_number');
+    });
+    $('input[name="salary_type"]').click(function() {
+      toggle(this.value, 'Non-exempt', 'hours_per_week');
+    });
+    $('input[name="applicant_system"]').click(function() {
+      toggle(this.value, 'Yes', 'applicant_system_people');
+    });
+    $('input[name="speciality_sites"]').click(function() {
+      toggle(this.value, 'Yes', 'speciality_sites_urls');
+    });
     {% if form.new_position.value == 'No' %}
-    $("#replacement").removeClass("hyde");
+    $("#replacement_name").removeClass("hyde");
     {% endif %}
     {% if form.budgeted_position.value == 'Yes' %}
     $("#account_number").removeClass("hyde");
@@ -123,7 +144,6 @@
                     type="radio" name="new_position"
                     {% if not templates_debug %} required{% endif %}
                     id="id_{{form.new_position.name}}_0"
-                    onclick="javascript:toggleCheck('id_{{form.new_position.name}}_1','replacement');"
                     {% if form.new_position.value == 'Yes' %}
                       checked
                     {% endif %}>
@@ -136,7 +156,6 @@
                   <input class="form-check-input" value="No"
                     type="radio" name="new_position"
                     id="id_{{form.new_position.name}}_1"
-                    onclick="javascript:toggleCheck('id_{{form.new_position.name}}_1','replacement');"
                     {% if form.new_position.value == 'No' %}
                       checked
                     {% endif %}>
@@ -149,7 +168,7 @@
               </small>
               {% endif %}
               <!-- Hidden unless "No" is selected -->
-              <div class="form-check hyde" id="replacement">
+              <div class="form-check hyde" id="replacement_name">
                 <label for="{{form.replacement_name.id_for_label}}"
                   {% if form.replacement_name.errors %}class="text-danger"{% endif %}>
                   <h5>If 'Replacement', please provide name</h5>
@@ -184,7 +203,6 @@
                     type="radio" name="budgeted_position"
                     {% if not templates_debug %} required{% endif %}
                     id="id_{{form.budgeted_position.name}}_0"
-                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     {% if form.budgeted_position.value == 'Yes' %}
                       checked
                     {% endif %}>
@@ -197,7 +215,6 @@
                   <input class="form-check-input" value="No"
                     type="radio" name="budgeted_position"
                     id="id_{{form.budgeted_position.name}}_1"
-                         onclick="javascript:toggleCheck('id_{{form.budgeted_position.name}}_0','account_number');"
                     {% if form.budgeted_position.value == 'No' %}
                       checked
                     {% endif %}>
@@ -224,7 +241,6 @@
                   <input class="form-check-input" value="Exempt"
                     type="radio" name="salary_type"
                     {% if not templates_debug %} required{% endif %}
-                    onclick="javascript:toggleCheck('id_{{form.salary_type.name}}_1','hours_per_week');"
                     id="id_{{form.salary_type.name}}_0"
                     {% if form.salary_type.value == 'Exempt' %}
                       checked
@@ -237,7 +253,6 @@
                   class="form-check-label">
                   <input class="form-check-input" value="Non-exempt"
                     type="radio" name="salary_type"
-                    onclick="javascript:toggleCheck('id_{{form.salary_type.name}}_1','hours_per_week');"
                     id="id_{{form.salary_type.name}}_1"
                     {% if form.salary_type.value == 'Non-exempt' %}
                       checked
