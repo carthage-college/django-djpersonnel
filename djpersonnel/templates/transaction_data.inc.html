@@ -34,11 +34,13 @@
             title="HR approval"></i>
         </th>
         <th style="width:30%;">Actions</th>
+        {% if hr %}
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Delete this PAF"></i>
         </th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -127,6 +129,7 @@
             {{c}}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </td>
+        {% if hr %}
         <td class="text-center">
           <a href="#" data-href="{% url 'transaction_delete' t.id %}"
             data-title="PAF (ID={{t.id}}) submitted by {{t.created_by.last_name}}, {{t.created_by.first_name}}"
@@ -136,6 +139,7 @@
               title="Delete Personnel Action: {{t.position_title}}"></i>
           </a>
         </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
@@ -173,11 +177,13 @@
             title="HR approval"></i>
         </th>
         <th style="width:30%;">Actions</th>
+        {% if hr %}
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Delete this PAF"></i>
         </th>
+        {% endif %}
       </tr>
     </tfoot>
   </table>

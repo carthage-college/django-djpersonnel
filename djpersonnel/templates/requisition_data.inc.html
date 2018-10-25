@@ -36,11 +36,13 @@
         <th>Pub Date</th>
         <th>Open Date</th>
         <th>Start Date</th>
+        {% if hr %}
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Delete this PRF"></i>
         </th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -123,6 +125,7 @@
         <td>{{r.publication_date|date:'Y-m-d'}}</td>
         <td>{{r.position_open_date|date:'Y-m-d'}}</td>
         <td>{{r.expected_start_date|date:'Y-m-d'}}</td>
+        {% if hr %}
         <td class="text-center">
           <a href="#" data-href="{% url 'requisition_delete' r.id %}"
             data-title="PRF: {{r.position_title}}" data-toggle="modal"
@@ -132,6 +135,7 @@
               title="Delete Personnel Requisition: {{r.position_title}}"></i>
           </a>
         </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
@@ -171,11 +175,13 @@
         <th>Pub Date</th>
         <th>Open Date</th>
         <th>Start Date</th>
+        {% if hr %}
         <th class="text-center">
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Delete this PRF"></i>
         </th>
+        {% endif %}
       </tr>
     </tfoot>
   </table>
