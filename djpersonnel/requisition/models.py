@@ -159,7 +159,7 @@ class Operation(models.Model):
     )
     speciality_sites = models.CharField(
         """
-        Would you like to post to a speciality site that is not part
+        Would you like to post to a specialty site that is not part
         of the base package?
         """,
         max_length=4,
