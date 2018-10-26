@@ -97,7 +97,7 @@
               name="position_title"
               id="{{form.position_title.id_for_label}}"
               value="{{form.position_title.value|default_if_none:''}}"
-              placeholder="Enter Position Title"
+              placeholder="Position Title"
               {% if not templates_debug %} required{% endif %}>
             <small class="text-danger">
               {{form.position_title.errors|join:", "}}
@@ -177,7 +177,7 @@
                   class="form-control{% if form.replacement_name.errors %} is-invalid{% endif %}"
                   id="{{form.replacement_name.id_for_label}}"
                   value="{{form.replacement_name.value|default_if_none:''}}"
-                  placeholder="Enter Replacement Name">
+                  placeholder="Replacement Name">
                 <small class="text-danger">
                   {{form.replacement_name.errors|join:", "}}
                 </small>
@@ -185,7 +185,7 @@
             </div>
             <!-- /.form-group -->
           </div>
-          <div class="col-md-3 pb-1">
+          <div class="col-md-4 pb-1">
             <div class="form-group">
               <label for="id_{{form.budgeted_position.name}}_0"
                 {% if form.budgeted_position.errors %}
@@ -266,7 +266,7 @@
             </div>
             <!-- /.form-group -->
           </div>
-          <div class="col-md-3 pb-1">
+          <div class="col-md-2 pb-1">
             <div class="form-group">
               <!-- Hidden unless "Yes" is selected -->
               <div class="form-check hyde" id="account_number">
@@ -278,7 +278,7 @@
                   class="form-control{% if form.account_number.errors %} is-invalid{% endif %}"
                   id="{{form.account_number.id_for_label}}"
                   value="{{form.account_number.value|default_if_none:''}}"
-                  placeholder="Enter Account Number">
+                  placeholder="Account Number">
                 <small class="text-danger">
                   {{form.account_number.errors|join:", "}}
                 </small>
@@ -309,7 +309,7 @@
               class="form-control col-xs-2{% if form.hours_per_week.errors %} is-invalid{% endif %}"
               id="{{form.hours_per_week.id_for_label}}"
               value="{{form.hours_per_week.value|default_if_none:''}}"
-              placeholder="Enter Hours per Week">
+              placeholder="Hours per Week">
             <small class="text-danger">
               {{form.hours_per_week.errors|join:", "}}
             </small>
@@ -328,7 +328,7 @@
               id="{{form.min_salary_range.id_for_label}}"
               value="{{form.min_salary_range.value|default_if_none:''}}"
               title="{{form.min_salary_range.help_text}}"
-              placeholder="Enter Minimum Salary Range"
+              placeholder="Minimum Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.min_salary_range.errors|join:", "}}
@@ -344,7 +344,7 @@
               id="{{form.mid_salary_range.id_for_label}}"
               value="{{form.mid_salary_range.value|default_if_none:''}}"
               title="{{form.mid_salary_range.help_text}}"
-              placeholder="Enter Midpoint Salary Range"
+              placeholder="Midpoint Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.mid_salary_range.errors|join:", "}}
@@ -360,7 +360,7 @@
               id="{{form.max_salary_range.id_for_label}}"
               value="{{form.max_salary_range.value|default_if_none:''}}"
               title="{{form.max_salary_range.help_text}}"
-              placeholder="Enter Maximum Salary Range"
+              placeholder="Maximum Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.max_salary_range.errors|join:", "}}
