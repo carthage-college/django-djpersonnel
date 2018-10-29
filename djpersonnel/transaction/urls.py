@@ -40,4 +40,9 @@ urlpatterns = [
         r'^(?P<tid>\d+)/appointment-letter/$',
         views.appointment_letter, name='transaction_appointment_letter'
     ),
+    # transaction graduate assistant letter
+    url(
+        r'^(?P<tid>\d+)/graduate-assistant-letter/$',
+        views.graduate_assistant_letter, name='transaction_graduate_assistant_letter'
+    ),
 ]
