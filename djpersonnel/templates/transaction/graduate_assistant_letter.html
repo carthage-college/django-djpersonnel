@@ -1,0 +1,112 @@
+{% extends "minimal.html" %}
+{% load humanize %}
+{% block title %}
+    Graduate Assistant Letter &mdash;
+    Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+<link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+    <div>
+        <div class="col-lg-12 text-center">
+            <img src="https://www.carthage.edu/themes/korra/assets/images/carthage-logo-main.png" height="50">
+        </div>
+    </div>
+    <div>
+        <p>{% now "F j, Y" %}</p>
+        <p>
+            {{data.first_name}} {{data.last_name}}<br>
+            {{data.home_address}}<br>
+            {{data.city}}, {{data.state}} {{data.postal_code}}
+        </p>
+        <p>Dear {{data.first_name}},</p>
+        <p>
+            It is my pleasure to offer you the position of
+            of Graduate Assistant in department of {{data.department_name}}
+            for the 2018-2019 academic year. This letter will address the
+            terms of your position with Carthage College.
+
+            reporting to {{data.level3_approver.first_name}}
+            {{data.level3_approver.last_name}}.
+            This position is designated as {{data.position_type}}
+            {{data.pay_type}} at the {{data.pay_rate}} of
+            ${{data.offered_compensation|intcomma}}.
+        </p>
+        <p>
+            As a Graduate Assistant, you will be scheduled to work no more
+            than 20 hours each week beginning on DATE. Exact days and times
+            should be arranged with your supervisor. This appointment will be
+            a renewable contracted position for one academic year and will end
+            on DATE. During this time you must maintain a 3.0 GPA. Your earnings
+            will be paid on a bi-weekly basis totaling the stipend of (insert stipend amount).
+            This amount is in addition to the tuition remission benefit you will
+            receive as a Graduate Assistant. The college will cover up to two
+            4cr classes during the semester (fall, spring, and summer), and one
+            4cr course in the J-term. Your position will be reported as a taxable
+            benefit but is not benefits eligible. You cannot apply for additional
+            campus employment during this time with the exception of the summer
+            semester which begins in June and runs through August.
+        </p>
+        <p>
+            (If they select food allowance insert here) This position includes a
+            food allowance of up to 300 dollars per semester (fall, spring, summer).
+            Points will be added to your Carthage college ID card.
+        </p>
+        <p>
+            Please let me know if you should have any questions. If accepted,
+            please sign this letter and return to me.
+        </p>
+        <p>
+            Congratulations on your appointment, and I very much look forward to
+            working with you!
+        </p>
+        <div class="mt-3 pb-3">
+            <p>Sincerely,</p>
+            <p>
+                {{data.created_by.first_name}} {{data.created_by.last_name}}
+            </p>
+        </div>
+        <p>
+            I acknowledge that this offer of employment is not a contract for
+            employment for a specified period of time and that my employment
+            with Carthage College is “at will” and may be terminated at any time,
+            for any reason, by myself or Carthage College.
+        </p>
+        <p>
+            We ask you sign and return this letter, indicating acceptance
+            of the position.
+        </p>
+        <p>
+            I ____________________________________________________ accept
+            the position as stated above.
+        </p>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <p>
+                Signature _____________________________________________________
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <p class="float-right">
+                Date _________________________________________________________
+            </p>
+        </div>
+    </div>
+
+    <footer class="mt-5">
+        <div class="container">
+            <p class="m-0 text-center">
+                2001 Alford Park Drive |
+                Kenosha, Wisconsin 53140-1994 |
+                262-551-8500
+            </p>
+        </div>
+        <!-- /.container -->
+    </footer>
+</div>
+<!-- /.container -->
+{% endblock %}
