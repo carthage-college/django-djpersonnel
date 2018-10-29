@@ -145,4 +145,9 @@ def appointment_letter(request, tid):
     return render(
         request, 'transaction/appointment_letter.html', {'data':data}
     )
+def graduate_assistant_letter(request, tid):
+    data = get_object_or_404(Operation, id=tid)
+    return render(
+        request, 'transaction/graduate_assistant_letter.html', {'data':data}
+    )
 
