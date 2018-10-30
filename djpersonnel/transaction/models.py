@@ -8,6 +8,7 @@ from djpersonnel.core.utils import get_permissions
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
+import datetime
 
 STATUS_CHOICES = (
     ('Full-Time', 'Full-Time'),
@@ -74,7 +75,12 @@ EMPLOYEE_TYPE_CHOICES = (
     ('Faculty', 'Faculty'),
     ('Staff', 'Staff')
 )
-
+ACADEMIC_YEARS = [(
+    ('{0}-{1}'.format(x, x + 1)),
+    ('{0}-{1}'.format(x, x + 1))
+)
+for x in xrange(datetime.date.today().year, datetime.date.today().year + 10)]
+ACADEMIC_YEARS.insert(0,('','---year---'))
 
 class Operation(models.Model):
     """
@@ -262,6 +268,10 @@ class Operation(models.Model):
         verbose_name='Expected Start Date',
         null=True, blank=True
     )
+    expected_end_date = models.DateField(
+        verbose_name='Expected End Date',
+        null=True, blank=True
+    )
     budget_account = models.CharField(
         verbose_name='Budget Account',
         max_length=30,
@@ -386,6 +396,30 @@ class Operation(models.Model):
         "Faculty member teaches in the",
         max_length=30,
         choices=PROGRAM_CHOICES,
+        null=True, blank=True
+    )
+    first_seven_week_amount = models.DecimalField(
+        "First 7 week $ amount",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    second_seven_week_amount = models.DecimalField(
+        "Second 7 week $ amount",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    food_allowance = models.CharField(
+        "Food allowance?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+        null=True, blank=True
+    )
+    academic_years = models.CharField(
+        verbose_name='Academic Year',
+        max_length=16,
+        choices=ACADEMIC_YEARS,
         null=True, blank=True
     )
     # Department Change checkbox
