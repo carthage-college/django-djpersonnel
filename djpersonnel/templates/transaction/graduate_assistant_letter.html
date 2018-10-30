@@ -28,16 +28,10 @@
             of Graduate Assistant in department of {{data.department_name}}
             for the 2018-2019 academic year. This letter will address the
             terms of your position with Carthage College.
-
-            reporting to {{data.level3_approver.first_name}}
-            {{data.level3_approver.last_name}}.
-            This position is designated as {{data.position_type}}
-            {{data.pay_type}} at the {{data.pay_rate}} of
-            ${{data.offered_compensation|intcomma}}.
         </p>
         <p>
             As a Graduate Assistant, you will be scheduled to work no more
-            than 20 hours each week beginning on DATE. Exact days and times
+            than 20 hours each week beginning on {{data.expected_start_date}}. Exact days and times
             should be arranged with your supervisor. This appointment will be
             a renewable contracted position for one academic year and will end
             on DATE. During this time you must maintain a 3.0 GPA. Your earnings
@@ -53,7 +47,7 @@
         <p>
             (If they select food allowance insert here) This position includes a
             food allowance of up to 300 dollars per semester (fall, spring, summer).
-            Points will be added to your Carthage college ID card.
+            Points will be added to your Carthage College ID card.
         </p>
         <p>
             Please let me know if you should have any questions. If accepted,
@@ -69,19 +63,11 @@
                 {{data.created_by.first_name}} {{data.created_by.last_name}}
             </p>
         </div>
-        <p>
+        <p class="pb-5">
             I acknowledge that this offer of employment is not a contract for
             employment for a specified period of time and that my employment
             with Carthage College is “at will” and may be terminated at any time,
             for any reason, by myself or Carthage College.
-        </p>
-        <p>
-            We ask you sign and return this letter, indicating acceptance
-            of the position.
-        </p>
-        <p>
-            I ____________________________________________________ accept
-            the position as stated above.
         </p>
     </div>
     <div class="row mt-5">
