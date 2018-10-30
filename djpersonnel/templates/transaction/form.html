@@ -2167,6 +2167,30 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6 pb-3 sabbatical">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.academic_years.id_for_label}}"
+                  {% if form.academic_years.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_years.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.academic_years.name}}"
+                  id="{{form.academic_years.id_for_label}}">
+                {% for value, text in form.fields.academic_years.choices %}
+                  <option value="{{value}}"
+                    {% if form.academic_years.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.academic_years.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
           <!--
           Hidden unless faculty or staff and "position/title change" is checked
           -->
