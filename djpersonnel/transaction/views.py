@@ -21,7 +21,6 @@ from djtools.utils.users import in_group
 )
 def form_home(request):
     user = request.user
-    switch = request.GET.get('switch')
     if request.method=='POST':
 
         p = request.POST
@@ -81,12 +80,8 @@ def form_home(request):
 
     hr = in_group(user, settings.HR_GROUP)
 
-    template = 'transaction/form.html'
-    if switch:
-        template = 'transaction/form_{}.html'.format(switch)
-
     return render(
-        request, template, {'form': form,'hr':hr,'switch':switch}
+        request, 'transaction/form.html', {'form': form,'hr':hr}
     )
 
 

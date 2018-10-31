@@ -8,6 +8,7 @@ from djpersonnel.core.utils import get_permissions
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
+
 import datetime
 
 STATUS_CHOICES = (
@@ -75,12 +76,12 @@ EMPLOYEE_TYPE_CHOICES = (
     ('Faculty', 'Faculty'),
     ('Staff', 'Staff')
 )
-ACADEMIC_YEARS = [(
-    ('{0}-{1}'.format(x, x + 1)),
-    ('{0}-{1}'.format(x, x + 1))
-)
-for x in xrange(datetime.date.today().year, datetime.date.today().year + 10)]
+ACADEMIC_YEARS = [
+    (('{}-{}'.format(x, x + 1)), ('{}-{}'.format(x, x + 1)))
+    for x in xrange(datetime.date.today().year,datetime.date.today().year + 10)
+]
 ACADEMIC_YEARS.insert(0,('','---year---'))
+
 
 class Operation(models.Model):
     """

@@ -62,7 +62,8 @@
               '.sabbatical, #directReports, #endDate, .status-change,' +
               '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
               '#startupExpensesAmount, .adjunct, .adjunct-music,' +
-              '#teachingAppointment, #statusChangeDate, #contractYears'
+              '#teachingAppointment, #statusChangeDate, #contractYears,' +
+              '#graduateAssistant'
 
   // global for staff or faculty
   {% if form.employee_type.value %}
@@ -166,13 +167,27 @@
       $dis = this.value.substring(0, 8);
       if ($dis == 'Contract') {
         toggle($dis, 'Contract', '#contractYears');
-        $('input[name="music"]').prop('checked', false);
         $('.adjunct').hide();
         $('.adjunct-music').hide();
+        $('#graduateAssistant').hide();
+        $('#id_academic_years').prop('selectedIndex',0);
+        $('input[name="food_allowance"]').prop('checked', false);
+        $('input[name="music"]').prop('checked', false);
       } else if (this.value == 'Adjunct') {
         toggle(this.value, 'Adjunct', '.adjunct');
         $('#contractYears').hide();
+        $('#graduateAssistant').hide();
+        $('input[name="food_allowance"]').prop('checked', false);
+      } else if (this.value == 'Graduate Assistant') {
+        toggle(this.value, 'Graduate Assistant', '#graduateAssistant');
+        $('input[name="music"]').prop('checked', false);
+        $('.adjunct').hide();
+        $('.adjunct-music').hide();
+        $('#contractYears').hide();
       } else {
+        $('#graduateAssistant').hide();
+        $('#id_academic_years').prop('selectedIndex',0);
+        $('input[name="food_allowance"]').prop('checked', false);
         $('input[name="music"]').prop('checked', false);
         $('.adjunct').hide();
         $('.adjunct-music').hide();
@@ -210,9 +225,17 @@
       {# end newhire staff #}
       {# newhire faculty #}
       {% if form.employee_type.value == 'Faculty' %}
-
         {% if 'Contract' in form.employment_type.value %}
           $('#contractYears').show();
+        {% endif %}
+        {% if form.employment_type.value == 'Graduate Assistant' %}
+          $('#graduateAssistant').show();
+        {% endif %}
+        {% if form.employment_type.value == 'Adjunct' %}
+          $('.adjunct').show();
+          {% if form.music.value == 'Yes' %}
+          $('.adjunct-music').show();
+          {% endif %}
         {% endif %}
         {% if form.startup_expenses.value == 'Yes' %}
           $('#startupExpensesAmount').show();
@@ -220,15 +243,10 @@
         {% if form.teaching_appointment.value == 'Other' %}
           $('#teachingAppointment').show();
         {% endif %}
-
       {% endif %}
       {# end newhire faculty #}
-
     {% endif %}
-
     /* end new hire or rehire */
-
-
     /* department change */
     $('#id_department_change').change(function() {
       $('.department-change').toggle();
@@ -1354,6 +1372,109 @@
             </div>
           </div>
           <!--
+          Hidden unless Graduate Assistant is selected from employment type
+          and "faculty and newhire_rehire" is checked
+          -->
+          <div class="col-md-12 pb-3" id="graduateAssistant">
+            <!-- academic_years -->
+            <div class="col-md-6 float-left">
+              <div class="form-group">
+                <label for="{{form.academic_years.id_for_label}}"
+                  {% if form.academic_years.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_years.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.academic_years.name}}"
+                  id="{{form.academic_years.id_for_label}}">
+                {% for value, text in form.fields.academic_years.choices %}
+                  <option value="{{value}}"
+                    {% if form.academic_years.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.academic_years.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!-- expected_end_date -->
+            <div class="col-md-6 float-left">
+              <div class="form-group">
+                <label for="{{form.expected_end_date.id_for_label}}"
+                  {% if form.expected_end_date.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.expected_end_date.label}}</h5>
+                </label>
+                <input type="date" name="{{form.expected_end_date.name}}"
+                  class="form-control{% if form.expected_end_date.errors %} is-invalid{% endif %}"
+                  id="{{form.expected_end_date.id_for_label}}"
+                  value="{{form.expected_end_date.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.expected_end_date.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!-- first_seven_week_amount -->
+            <div class="col-md-6 float-left">
+              <div class="form-group">
+                <label for="{{form.first_seven_week_amount.id_for_label}}"
+                  {% if form.first_seven_week_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.first_seven_week_amount.label}}</h5>
+                </label>
+                <input class="form-control {% if form.first_seven_week_amount.errors %} is-invalid{% endif %}"
+                  type="number" name="{{form.first_seven_week_amount.name}}" placeholder="Do not include $ sign"
+                  id="{{form.first_seven_week_amount.id_for_label}}" step="0.01"
+                  value="{{form.first_seven_week_amount.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.first_seven_week_amount.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!-- second_seven_week_amount -->
+            <div class="col-md-6 float-left">
+              <div class="form-group">
+                <label for="{{form.second_seven_week_amount.id_for_label}}"
+                  {% if form.second_seven_week_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.second_seven_week_amount.label}}</h5>
+                </label>
+                <input class="form-control {% if form.second_seven_week_amount.errors %} is-invalid{% endif %}"
+                  type="number" name="{{form.second_seven_week_amount.name}}" placeholder="Do not include $ sign"
+                  id="{{form.second_seven_week_amount.id_for_label}}" step="0.01"
+                  value="{{form.second_seven_week_amount.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.second_seven_week_amount.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!-- food_allowance -->
+            <div class="col-md-6 float-left">
+              <label for="id_{{form.food_allowance.name}}_0"
+                {% if form.food_allowance.errors %}class="text-danger"{% endif %}>
+                <h5>{{form.food_allowance.label}}</h5>
+              </label>
+              <div class="form-group small">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="Yes" name="{{form.food_allowance.name}}"
+                    type="radio" id="id_{{form.food_allowance.name}}_0"
+                    {% if form.food_allowance.value == 'Yes' %}checked{% endif %}>
+                  <label for="id_{{form.food_allowance.name}}_0" class="form-check-label">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" value="No" name="{{form.food_allowance.name}}"
+                    type="radio" id="id_{{form.food_allowance.name}}_1"
+                    {% if form.food_allowance.value == 'No' %}checked{% endif %}>
+                  <label for="id_{{form.food_allowance.name}}_1" class="form-check-label">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-md-12 -->
+          <!--
           Hidden unless Adjunct is selected from employment type
           and "faculty and newhire_rehire" is checked
           -->
@@ -2170,15 +2291,15 @@
           <div class="col-md-6 pb-3 sabbatical">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.academic_years.id_for_label}}"
-                  {% if form.academic_years.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_years.label}}</h5>
+                <label for="{{form.academic_year.id_for_label}}"
+                  {% if form.academic_year.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_year.label}}</h5>
                 </label>
-                <select class="form-control" name="{{form.academic_years.name}}"
-                  id="{{form.academic_years.id_for_label}}">
-                {% for value, text in form.fields.academic_years.choices %}
+                <select class="form-control" name="{{form.academic_year.name}}"
+                  id="{{form.academic_year.id_for_label}}">
+                {% for value, text in form.fields.academic_year.choices %}
                   <option value="{{value}}"
-                    {% if form.academic_years.value == value %}
+                    {% if form.academic_year.value == value %}
                     selected
                     {% endif %}>
                   {{text}}
@@ -2186,7 +2307,7 @@
                 {% endfor %}
                 </select>
                 <small class="text-danger">
-                  {{form.academic_years.errors|join:", "}}
+                  {{form.academic_year.errors|join:", "}}
                 </small>
               </div>
             </div>

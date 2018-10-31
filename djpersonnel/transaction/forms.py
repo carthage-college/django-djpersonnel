@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from djpersonnel.transaction.models import Operation, TEACHING_APPOINTMENT_CHOICES
+from djpersonnel.transaction.models import (
+    ACADEMIC_YEARS, Operation, TEACHING_APPOINTMENT_CHOICES
+)
 from djpersonnel.core.utils import level3_choices
 from djtools.utils.convert import str_to_class
 
@@ -98,6 +100,12 @@ class NewhireRehireForm(forms.Form):
     number_of_credits = forms.CharField(required=False)
     # employment type = Contract-*
     contract_years = forms.CharField(required=False)
+    # eomployment type = Graduate Assistant
+    academic_years = forms.TypedChoiceField(required=False)
+    expected_end_date = forms.DateField()
+    food_allowance = forms.TypedChoiceField(required=False)
+    first_seven_week_amount = forms.CharField(required=False)
+    second_seven_week_amount = forms.CharField(required=False)
     # no dependencies
     program_types = forms.TypedChoiceField(required=False)
     #
@@ -209,6 +217,11 @@ class OperationForm(forms.ModelForm):
         label="Who will approve this request for you?",
         choices=level3_choices()
     )
+    academic_years = forms.ChoiceField(
+        label="Academic Year",
+        choices=ACADEMIC_YEARS,
+        required = False
+    )
 
     class Meta:
         model = Operation
@@ -280,7 +293,11 @@ class OperationForm(forms.ModelForm):
                 # employment type
                 contract_field = 'contract_years'
                 adjunct_fields = ['courses_teaching','number_of_credits']
-                et_fields = [contract_field] + adjunct_fields
+                graduate_fields = [
+                    'academic_years','expected_end_date','food_allowance',
+                    'first_seven_week_amount','second_seven_week_amount'
+                ]
+                et_fields = [contract_field] + adjunct_fields + graduate_fields
                 et = cd.get('employment_type')
                 if et:
                     # contract
@@ -289,11 +306,23 @@ class OperationForm(forms.ModelForm):
                             self.add_error(contract_field, "Required field")
                         for field in adjunct_fields:
                             cd[field] = None
+                        for field in graduate_fields:
+                            cd[field] = None
                     # adunct
                     elif et == 'Adjunct':
                         for field in adjunct_fields:
                             self.dependent('music', 'Yes', field)
                         cd[contract_field] = None
+                        for field in graduate_fields:
+                            cd[field] = None
+                    # graduate assistant
+                    elif et == 'Graduate Assistant':
+                        for field in graduate_fields:
+                            if not cd.get(field):
+                                self.add_error(field, "Required field")
+                        cd[contract_field] = None
+                        for field in adjunct_fields:
+                            cd[field] = None
                     else:
                         for field in et_fields:
                             cd[field] = None
