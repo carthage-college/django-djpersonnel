@@ -523,12 +523,12 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.employment_types %}
+        {% if data.employment_type %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'employment_types' %}</h6>
-              <p>{{data.employment_types}}</p>
+              <h6>{% field_name data 'employment_type' %}</h6>
+              <p>{{data.employment_type}}</p>
             </div>
           </div>
         </div>
@@ -599,6 +599,56 @@ $(function() {
             <div class="form-group">
               <h6>{% field_name data 'program_types' %}</h6>
               <p>{{data.program_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.expected_end_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_end_date' %}</h6>
+              <p>{{data.expected_end_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.first_seven_week_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'first_seven_week_amount' %}</h6>
+              <p>{{data.first_seven_week_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.second_seven_week_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'second_seven_week_amount' %}</h6>
+              <p>{{data.second_seven_week_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.food_allowance %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'food_allowance' %}</h6>
+              <p>{{data.food_allowance}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.academic_years %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'academic_years' %}</h6>
+              <p>{{data.academic_years}}</p>
             </div>
           </div>
         </div>
