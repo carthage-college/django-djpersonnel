@@ -51,20 +51,20 @@
           data-placement="top" class="blue-tooltip"
           title="View PAF{% if t.position_title %}: {{t.position_title}}{% endif %}">
             {{t.last_name}}</a>
-            <div class="float-right">
+             <div class="float-right">
+            {% if hr and t.employment_type == 'Graduate Assistant' %}
             <a href="{% url 'transaction_graduate_assistant_letter' t.id %}">
-            <i class="fa fa-address-card-o green blue-tooltip" data-toggle="tooltip"
+            <i class="fa fa-envelope-o green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
                title="Graduate Assistant Letter View"></i></a>
-            </div>
+            {% endif %}
             {% if hr and t.newhire_rehire %}
-            <div class="float-right">
             <a href="{% url 'transaction_appointment_letter' t.id %}">
             <i class="fa fa-address-card-o green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"
                title="Appointment Letter View"></i></a>
-            </div>
             {% endif %}
+            </div>
         </td>
         <td>
           {{t.first_name}}
