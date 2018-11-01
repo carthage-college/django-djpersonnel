@@ -34,7 +34,7 @@
             than 20 hours each week beginning on {{data.expected_start_date}}. Exact days and times
             should be arranged with your supervisor. This appointment will be
             a renewable contracted position for one academic year and will end
-            on DATE. During this time you must maintain a 3.0 GPA. Your earnings
+            on {{data.expected_end_date}}. During this time you must maintain a 3.0 GPA. Your earnings
             will be paid on a bi-weekly basis totaling the stipend of (insert stipend amount).
             This amount is in addition to the tuition remission benefit you will
             receive as a Graduate Assistant. The college will cover up to two
@@ -44,11 +44,12 @@
             campus employment during this time with the exception of the summer
             semester which begins in June and runs through August.
         </p>
+        {% if data.food_allowance %}
         <p>
-            (If they select food allowance insert here) This position includes a
-            food allowance of up to 300 dollars per semester (fall, spring, summer).
-            Points will be added to your Carthage College ID card.
+            This position includes a food allowance of up to 300 dollars per semester
+            (fall, spring, summer). Points will be added to your Carthage College ID card.
         </p>
+        {% endif %}
         <p>
             Please let me know if you should have any questions. If accepted,
             please sign this letter and return to me.
