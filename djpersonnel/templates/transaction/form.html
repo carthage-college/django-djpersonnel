@@ -1379,15 +1379,15 @@
             <!-- academic_years -->
             <div class="col-md-6 float-left">
               <div class="form-group">
-                <label for="{{form.academic_years.id_for_label}}"
-                  {% if form.academic_years.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_years.label}}</h5>
+                <label for="{{form.academic_term.id_for_label}}"
+                  {% if form.academic_term.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_term.label}}</h5>
                 </label>
-                <select class="form-control" name="{{form.academic_years.name}}"
-                  id="{{form.academic_years.id_for_label}}">
-                {% for value, text in form.fields.academic_years.choices %}
+                <select class="form-control" name="{{form.academic_term.name}}"
+                  id="{{form.academic_term.id_for_label}}">
+                {% for value, text in form.fields.academic_term.choices %}
                   <option value="{{value}}"
-                    {% if form.academic_years.value == value %}
+                    {% if form.academic_term.value == value %}
                     selected
                     {% endif %}>
                   {{text}}
@@ -1395,7 +1395,7 @@
                 {% endfor %}
                 </select>
                 <small class="text-danger">
-                  {{form.academic_years.errors|join:", "}}
+                  {{form.academic_term.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -2274,17 +2274,24 @@
           <div class="col-md-6 pb-3 sabbatical">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.academic_year.id_for_label}}"
-                  {% if form.academic_year.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_year.label}}</h5>
+                <label for="{{form.sabbatical_academic_years.id_for_label}}"
+                  {% if form.sabbatical_academic_years.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.sabbatical_academic_years.label}}</h5>
                 </label>
-                <input type="text" name="{{form.academic_year.name}}" placeholder="Academic Year"
-                  class="form-control{% if form.academic_year.errors %} is-invalid{% endif %}"
-                  id="{{form.academic_year.id_for_label}}"
-                  value="{{form.academic_year.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.academic_year.errors|join:", "}}
-                </small>
+                <select class="form-control" name="{{form.sabbatical_academic_years.name}}"
+                  id="{{form.sabbatical_academic_years.id_for_label}}">
+                  {% for value, text in form.fields.sabbatical_academic_years.choices %}
+                    <option value="{{value}}"
+                      {% if form.sabbatical_academic_years.value == value %}selected{% endif %}>
+                      {{text}}
+                    </option>
+                  {% endfor %}
+                </select>
+                <p>
+                  <small class="text-danger">
+                  {{form.sabbatical_academic_years.errors|join:", "}}
+                  </small>
+                </p>
               </div>
             </div>
           </div>
