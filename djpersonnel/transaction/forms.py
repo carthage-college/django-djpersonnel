@@ -49,7 +49,7 @@ REQUIRED_FIELDS = {
         'leave_of_absence_reason'
     ],
     'sabbatical': [
-        'sabbatical_types', 'academic_year'
+        'sabbatical_types', 'sabbatical_academic_years'
     ]
 }
 REQUIRED_FIELDS_NEWHIRE = {
@@ -101,7 +101,7 @@ class NewhireRehireForm(forms.Form):
     # employment type = Contract-*
     contract_years = forms.CharField(required=False)
     # eomployment type = Graduate Assistant
-    academic_years = forms.TypedChoiceField(required=False)
+    academic_term = forms.TypedChoiceField(required=False)
     expected_end_date = forms.DateField()
     food_allowance = forms.TypedChoiceField(required=False)
     first_seven_week_amount = forms.CharField(required=False)
@@ -200,7 +200,7 @@ leave_of_absence = LeaveOfAbsenceForm
 
 class SabbaticalForm(forms.Form):
     sabbatical_types = forms.TypedChoiceField()
-    academic_year = forms.CharField()
+    sabbatical_academic_years = forms.CharField()
 # short cut for checkbox field name
 sabbatical = SabbaticalForm
 
@@ -217,9 +217,9 @@ class OperationForm(forms.ModelForm):
         label="Who will approve this request for you?",
         choices=level3_choices()
     )
-    academic_years = forms.ChoiceField(
-        label="Academic Year",
-        choices=ACADEMIC_YEARS,
+    academic_term = forms.ChoiceField(
+        label="Academic Term",
+        choices=ACADEMIC_TERM_CHOICES,
         required = False
     )
 
