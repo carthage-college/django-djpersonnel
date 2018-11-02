@@ -102,7 +102,7 @@ class NewhireRehireForm(forms.Form):
     contract_years = forms.CharField(required=False)
     # eomployment type = Graduate Assistant
     academic_term = forms.TypedChoiceField(required=False)
-    expected_end_date = forms.DateField()
+    expected_end_date = forms.DateField(required=False)
     food_allowance = forms.TypedChoiceField(required=False)
     first_seven_week_amount = forms.CharField(required=False)
     second_seven_week_amount = forms.CharField(required=False)
@@ -216,11 +216,6 @@ class OperationForm(forms.ModelForm):
     approver = forms.ChoiceField(
         label="Who will approve this request for you?",
         choices=level3_choices()
-    )
-    academic_term = forms.ChoiceField(
-        label="Academic Term",
-        choices=ACADEMIC_TERM_CHOICES,
-        required = False
     )
 
     class Meta:

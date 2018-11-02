@@ -109,6 +109,7 @@ ACADEMIC_TERM_CHOICES = (
     ('YE', 'Summer')
 )
 
+
 class Operation(models.Model):
     """
     Data model for the personnel action form
