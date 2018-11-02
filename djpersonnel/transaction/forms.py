@@ -2,7 +2,7 @@
 from django import forms
 
 from djpersonnel.transaction.models import (
-    ACADEMIC_YEARS, Operation, TEACHING_APPOINTMENT_CHOICES
+    ACADEMIC_YEARS, Operation, TEACHING_APPOINTMENT_CHOICES, ACADEMIC_TERM_CHOICES
 )
 from djpersonnel.core.utils import level3_choices
 from djtools.utils.convert import str_to_class
