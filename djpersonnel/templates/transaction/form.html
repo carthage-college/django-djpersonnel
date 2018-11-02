@@ -2291,15 +2291,15 @@
           <div class="col-md-6 pb-3 sabbatical">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.academic_year.id_for_label}}"
-                  {% if form.academic_year.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_year.label}}</h5>
+                <label for="{{form.academic_years.id_for_label}}"
+                  {% if form.academic_years.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_years.label}}</h5>
                 </label>
-                <select class="form-control" name="{{form.academic_year.name}}"
-                  id="{{form.academic_year.id_for_label}}">
-                {% for value, text in form.fields.academic_year.choices %}
+                <select class="form-control" name="{{form.academic_years.name}}"
+                  id="{{form.academic_years.id_for_label}}">
+                {% for value, text in form.fields.academic_years.choices %}
                   <option value="{{value}}"
-                    {% if form.academic_year.value == value %}
+                    {% if form.academic_years.value == value %}
                     selected
                     {% endif %}>
                   {{text}}
@@ -2307,7 +2307,7 @@
                 {% endfor %}
                 </select>
                 <small class="text-danger">
-                  {{form.academic_year.errors|join:", "}}
+                  {{form.academic_years.errors|join:", "}}
                 </small>
               </div>
             </div>
