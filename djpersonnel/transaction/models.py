@@ -81,7 +81,33 @@ ACADEMIC_YEARS = [
     for x in xrange(datetime.date.today().year,datetime.date.today().year + 10)
 ]
 ACADEMIC_YEARS.insert(0,('','---year---'))
-
+ACADEMIC_TERM_CHOICES = (
+    ('RA', 'Fall'),
+    ('RB', 'J-Term'),
+    ('RC', 'Spring'),
+    ('RD', 'Summer Pre-Session'),
+    ('RE', 'Summer'),
+    ('AA', 'Fall I'),
+    ('AB', 'Fall II'),
+    ('AG', 'Winter'),
+    ('AK', 'Spring I'),
+    ('AM', 'Spring II'),
+    ('AS', 'Summer I'),
+    ('AT', 'Summer II'),
+    ('GE', 'Summer'),
+    ('GA', 'Fall'),
+    ('GB', 'J-Term'),
+    ('TA', 'Fall'),
+    ('PA', 'Fall'),
+    ('YA', 'Fall'),
+    ('GC', 'Spring'),
+    ('TC', 'Spring'),
+    ('PC', 'Spring'),
+    ('YC', 'Spring'),
+    ('TE', 'Summer'),
+    ('PE', 'Summer'),
+    ('YE', 'Summer')
+)
 
 class Operation(models.Model):
     """
@@ -417,10 +443,10 @@ class Operation(models.Model):
         choices=BINARY_CHOICES,
         null=True, blank=True
     )
-    academic_years = models.CharField(
-        verbose_name='Academic Year',
+    academic_term = models.CharField(
+        verbose_name='Academic Term',
         max_length=16,
-        choices=ACADEMIC_YEARS,
+        choices=ACADEMIC_TERM_CHOICES,
         null=True, blank=True
     )
     # Department Change checkbox
@@ -613,9 +639,10 @@ class Operation(models.Model):
         choices=SABBATICAL_TERM_CHOICES,
         null=True, blank=True
     )
-    academic_year = models.CharField(
-        "Academic year",
-        max_length=4,
+    sabbatical_academic_years = models.CharField(
+        verbose_name='Academic Year',
+        max_length=16,
+        choices=ACADEMIC_YEARS,
         null=True, blank=True
     )
     # the following fields are used at the bottom of the form by HR
