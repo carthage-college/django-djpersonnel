@@ -35,7 +35,11 @@
             should be arranged with your supervisor. This appointment will be
             a renewable contracted position for one academic year and will end
             on {{data.expected_end_date}}. During this time you must maintain a 3.0 GPA. Your earnings
-            will be paid on a bi-weekly basis totaling the stipend of (insert stipend amount).
+            will be paid on a bi-weekly basis totaling the stipend of {% if data.first_seven_week_amount %}
+            {{data.first_seven_week_amount}}.
+            {% else %}
+            {{data.second_seven_week_amount}}.
+            {% endif %}
             This amount is in addition to the tuition remission benefit you will
             receive as a Graduate Assistant. The college will cover up to two
             4cr classes during the semester (fall, spring, and summer), and one
