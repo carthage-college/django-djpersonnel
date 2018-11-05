@@ -289,7 +289,7 @@ class OperationForm(forms.ModelForm):
                 contract_field = 'contract_years'
                 adjunct_fields = ['courses_teaching','number_of_credits']
                 graduate_fields = [
-                    'academic_years','expected_end_date','food_allowance',
+                    'academic_term','expected_end_date','food_allowance',
                     'first_seven_week_amount','second_seven_week_amount'
                 ]
                 et_fields = [contract_field] + adjunct_fields + graduate_fields
