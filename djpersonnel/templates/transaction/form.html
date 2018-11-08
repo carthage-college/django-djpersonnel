@@ -49,11 +49,16 @@
         $('input[name="music"]').prop('checked', false);
         $('#id_status_change').prop('checked', false);
         $('#id_employment_type').prop('selectedIndex',0);
+        $('#statusChange').hide();
         $('.status-change').hide();
         // reset radios
         $("div[class$='-new']").find('input:radio').each(function () {
             $(this).prop('checked', false);
         });
+      }
+      console.log('checked = ' + checked);
+      if (!checked && employee == "Staff") {
+        $('#statusChange').show();
       }
       if (!checked && employee == "Faculty") {
         $('#statusChange').hide();
