@@ -32,6 +32,7 @@
         $('.faculty-new').show();
         $('.staff-new').hide();
         $('.shift').hide();
+        $('#statusChange').hide();
       } else {
         $("div[class$='-new']").hide();
         $('.shift').hide();
@@ -48,12 +49,14 @@
         $('input[name="music"]').prop('checked', false);
         $('#id_status_change').prop('checked', false);
         $('#id_employment_type').prop('selectedIndex',0);
-        $('#statusChange').show();
         $('.status-change').hide();
         // reset radios
         $("div[class$='-new']").find('input:radio').each(function () {
             $(this).prop('checked', false);
         });
+      }
+      if (!checked && employee == "Faculty") {
+        $('#statusChange').hide();
       }
   }
 
