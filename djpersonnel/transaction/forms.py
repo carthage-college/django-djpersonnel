@@ -53,15 +53,12 @@ REQUIRED_FIELDS = {
 }
 REQUIRED_FIELDS_NEWHIRE = {
     'staff': [
-        'status_type',
-        'supervise_others',
-        'standard_vacation_package',
+        'status_type', 'supervise_others', 'standard_vacation_package'
     ],
     'faculty': [
-        'startup_expenses',
-        'teaching_appointment',
-        'employment_type',
-        'program_types'
+        'startup_expenses', 'teaching_appointment', 'employment_type',
+        'program_types', 'academic_term',
+        'first_seven_week_amount', 'second_seven_week_amount'
     ]
 }
 REQUIRED_FIELDS_GRANT_FUNDED = ['grant_fund_number', 'grant_fund_amount']
@@ -91,6 +88,9 @@ class NewhireRehireForm(forms.Form):
     #
     teaching_appointment = forms.TypedChoiceField(required=False)
     teaching_appointment_arrangements = forms.CharField(required=False)
+    academic_term = forms.TypedChoiceField(required=False)
+    first_seven_week_amount = forms.CharField(required=False)
+    second_seven_week_amount = forms.CharField(required=False)
     # if employment type = Adjunct then 'music' if 'yes' courses and credits
     employment_type = forms.TypedChoiceField(required=False)
     music = forms.TypedChoiceField(required=False)
@@ -98,12 +98,9 @@ class NewhireRehireForm(forms.Form):
     number_of_credits = forms.CharField(required=False)
     # employment type = Contract-*
     contract_years = forms.CharField(required=False)
-    # eomployment type = Graduate Assistant
-    academic_term = forms.TypedChoiceField(required=False)
+    # employment type = Graduate Assistant
     expected_end_date = forms.DateField(required=False)
     food_allowance = forms.TypedChoiceField(required=False)
-    first_seven_week_amount = forms.CharField(required=False)
-    second_seven_week_amount = forms.CharField(required=False)
     # no dependencies
     program_types = forms.TypedChoiceField(required=False)
     #
@@ -235,7 +232,6 @@ class OperationForm(forms.ModelForm):
 
     def clean(self):
         cd = self.cleaned_data
-
         # needed everywhere
         employee = cd.get('employee_type').lower()
         # all required fields
@@ -289,8 +285,7 @@ class OperationForm(forms.ModelForm):
                 contract_field = 'contract_years'
                 adjunct_fields = ['courses_teaching','number_of_credits']
                 graduate_fields = [
-                    'academic_term','expected_end_date','food_allowance',
-                    'first_seven_week_amount','second_seven_week_amount'
+                    'expected_end_date','food_allowance',
                 ]
                 et_fields = [contract_field] + adjunct_fields + graduate_fields
                 et = cd.get('employment_type')

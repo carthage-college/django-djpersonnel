@@ -172,7 +172,6 @@
         $('.adjunct').hide();
         $('.adjunct-music').hide();
         $('#graduateAssistant').hide();
-        $('#id_academic_term').prop('selectedIndex',0);
         $('input[name="food_allowance"]').prop('checked', false);
         $('input[name="music"]').prop('checked', false);
       } else if (this.value == 'Adjunct') {
@@ -188,7 +187,6 @@
         $('#contractYears').hide();
       } else {
         $('#graduateAssistant').hide();
-        $('#id_academic_term').prop('selectedIndex',0);
         $('input[name="food_allowance"]').prop('checked', false);
         $('input[name="music"]').prop('checked', false);
         $('.adjunct').hide();
@@ -1361,6 +1359,92 @@
               </div>
             </div>
           </div>
+          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 faculty-new">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.academic_term.id_for_label}}"
+                  {% if form.academic_term.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_term.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.academic_term.name}}"
+                  id="{{form.academic_term.id_for_label}}">
+                {% for value, text in form.fields.academic_term.choices %}
+                  <option value="{{value}}"
+                    {% if form.academic_term.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.academic_term.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 faculty-new">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.program_types.id_for_label}}"
+                  {% if form.program_types.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.program_types.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.program_types.name}}"
+                  id="{{form.program_types.id_for_label}}">
+                {% for value, text in form.fields.program_types.choices %}
+                  <option value="{{value}}"
+                    {% if form.program_types.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.program_types.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 faculty-new">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.first_seven_week_amount.id_for_label}}"
+                  {% if form.first_seven_week_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.first_seven_week_amount.label}}</h5>
+                </label>
+                <input class="form-control {% if form.first_seven_week_amount.errors %} is-invalid{% endif %}"
+                  type="number" name="{{form.first_seven_week_amount.name}}" placeholder="Do not include $ sign"
+                  id="{{form.first_seven_week_amount.id_for_label}}" step="0.01" 
+                  value="{{form.first_seven_week_amount.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.first_seven_week_amount.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
+          <div class="col-md-6 pb-3 faculty-new">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.second_seven_week_amount.id_for_label}}"
+                  {% if form.second_seven_week_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.second_seven_week_amount.label}}</h5>
+                </label>
+                <input class="form-control {% if form.second_seven_week_amount.errors %} is-invalid{% endif %}"
+                  type="number" name="{{form.second_seven_week_amount.name}}" placeholder="Do not include $ sign"
+                  id="{{form.second_seven_week_amount.id_for_label}}" step="0.01"
+                  value="{{form.second_seven_week_amount.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.second_seven_week_amount.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
           <!--
            Hidden unless faculty and "newhire_rehire" is checked
            and contract-ongoing or contract-terminal is selected
@@ -1389,29 +1473,6 @@
           and "faculty and newhire_rehire" is checked
           -->
           <div class="col-md-12 pb-3" id="graduateAssistant">
-            <!-- academic_years -->
-            <div class="col-md-6 float-left">
-              <div class="form-group">
-                <label for="{{form.academic_term.id_for_label}}"
-                  {% if form.academic_term.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_term.label}}</h5>
-                </label>
-                <select class="form-control" name="{{form.academic_term.name}}"
-                  id="{{form.academic_term.id_for_label}}">
-                {% for value, text in form.fields.academic_term.choices %}
-                  <option value="{{value}}"
-                    {% if form.academic_term.value == value %}
-                    selected
-                    {% endif %}>
-                  {{text}}
-                  </option>
-                {% endfor %}
-                </select>
-                <small class="text-danger">
-                  {{form.academic_term.errors|join:", "}}
-                </small>
-              </div>
-            </div>
             <!-- expected_end_date -->
             <div class="col-md-6 float-left">
               <div class="form-group">
@@ -1425,38 +1486,6 @@
                   value="{{form.expected_end_date.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.expected_end_date.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-            <!-- first_seven_week_amount -->
-            <div class="col-md-6 float-left">
-              <div class="form-group">
-                <label for="{{form.first_seven_week_amount.id_for_label}}"
-                  {% if form.first_seven_week_amount.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.first_seven_week_amount.label}}</h5>
-                </label>
-                <input class="form-control {% if form.first_seven_week_amount.errors %} is-invalid{% endif %}"
-                  type="number" name="{{form.first_seven_week_amount.name}}" placeholder="Do not include $ sign"
-                  id="{{form.first_seven_week_amount.id_for_label}}" step="0.01"
-                  value="{{form.first_seven_week_amount.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.first_seven_week_amount.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-            <!-- second_seven_week_amount -->
-            <div class="col-md-6 float-left">
-              <div class="form-group">
-                <label for="{{form.second_seven_week_amount.id_for_label}}"
-                  {% if form.second_seven_week_amount.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.second_seven_week_amount.label}}</h5>
-                </label>
-                <input class="form-control {% if form.second_seven_week_amount.errors %} is-invalid{% endif %}"
-                  type="number" name="{{form.second_seven_week_amount.name}}" placeholder="Do not include $ sign"
-                  id="{{form.second_seven_week_amount.id_for_label}}" step="0.01"
-                  value="{{form.second_seven_week_amount.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.second_seven_week_amount.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -1593,31 +1622,6 @@
                   placeholder="{{form.teaching_appointment_arrangements.help_text}}">{{form.teaching_appointment_arrangements.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.teaching_appointment_arrangements.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless "faculty and newhire_rehire" is checked  -->
-          <div class="col-md-6 pb-3 faculty-new">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.program_types.id_for_label}}"
-                  {% if form.program_types.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.program_types.label}}</h5>
-                </label>
-                <select class="form-control" name="{{form.program_types.name}}"
-                  id="{{form.program_types.id_for_label}}">
-                {% for value, text in form.fields.program_types.choices %}
-                  <option value="{{value}}"
-                    {% if form.program_types.value == value %}
-                    selected
-                    {% endif %}>
-                  {{text}}
-                  </option>
-                {% endfor %}
-                </select>
-                <small class="text-danger">
-                  {{form.program_types.errors|join:", "}}
                 </small>
               </div>
             </div>
