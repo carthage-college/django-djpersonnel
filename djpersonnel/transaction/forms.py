@@ -34,7 +34,7 @@ REQUIRED_FIELDS = {
     ],
     'termination': [
         'termination_type', 'last_day_date', 'returned_property',
-        'eligible_rehire', 'vacation_days_accrued'
+        'eligible_rehire'
     ],
     'status_change': [
         'status_type', 'status_change_effective_date', 'hours_per_week'
@@ -164,7 +164,7 @@ class TerminationForm(forms.Form):
     last_day_datea = forms.DateField()
     returned_property = forms.CharField()
     eligible_rehire = forms.TypedChoiceField()
-    vacation_days_accrued = forms.CharField()
+    vacation_days_accrued = forms.CharField(required=False)
     termination_voluntary = forms.TypedChoiceField(required=False)
     termination_involuntary = forms.TypedChoiceField(required=False)
 # short cut for checkbox field name
@@ -236,6 +236,8 @@ class OperationForm(forms.ModelForm):
     def clean(self):
         cd = self.cleaned_data
 
+        # needed everywhere
+        employee = cd.get('employee_type').lower()
         # all required fields
         for required, fields in REQUIRED_FIELDS.items():
             if cd.get(required):
@@ -262,7 +264,6 @@ class OperationForm(forms.ModelForm):
         if cd.get('newhire_rehire'):
 
             # required fields for all newhire/rehire
-            employee = cd.get('employee_type').lower()
             if employee:
                 for field in REQUIRED_FIELDS_NEWHIRE[employee]:
                     if not cd.get(field):
@@ -353,5 +354,9 @@ class OperationForm(forms.ModelForm):
                         cd['termination_voluntary'] = None
                     else:
                         cd['termination_involuntary'] = None
+            if employee == 'staff':
+                field = 'vacation_days_accrued'
+                if not cd.get(field):
+                    self.add_error(field, "Required field")
 
         return cd

@@ -36,6 +36,7 @@
         $("div[class$='-new']").hide();
         $('.shift').hide();
         $('#vacationDays').hide();
+        $('#vacationDaysAccrued').hide();
         $('#grantFundNumber').hide();
         $('#movingExpensesAmount').hide();
         $('#startupExpensesAmount').hide();
@@ -64,7 +65,7 @@
               '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
               '#startupExpensesAmount, .adjunct, .adjunct-music,' +
               '#teachingAppointment, #statusChangeDate, #contractYears,' +
-              '#graduateAssistant'
+              '#graduateAssistant, #vacationDaysAccrued'
 
   // global for staff or faculty
   {% if form.employee_type.value %}
@@ -317,6 +318,12 @@
     $('#id_termination').change(function() {
       $czech = $terminationType.prop('checked');
       $('.termination').toggle();
+      if (this.checked) {
+        console.log($employeeType);
+        toggle($employeeType, 'Staff', '#vacationDaysAccrued');
+      } else {
+        $('#vacationDaysAccrued').hide();
+      }
       if (this.checked && $czech && $terminationType.val() == 'Voluntary') {
         $('#terminationVoluntary').show();
         $('#terminationInvoluntary').hide();
@@ -340,6 +347,11 @@
     });
     {% if form.termination.value %}
     $('.termination').show();
+    {% if form.employee_type.value == 'Staff' %}
+    $('#vacationDaysAccrued').show();
+    {% else %}
+    $('#vacationDaysAccrued').hide();
+    {% endif %}
     {% endif %}
     {% if form.termination_type.value == 'Voluntary' %}
       $('#terminationVoluntary').show();
@@ -1946,8 +1958,8 @@
               </div>
             </div>
           </div>
-          <!-- Hidden unless faculty or staff and "termination" is checked -->
-          <div class="col-md-6 pb-3 facstaff termination">
+          <!-- Hidden unless staff and "termination" is checked -->
+          <div class="col-md-6 pb-3 staff termination" id="vacationDaysAccrued">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.vacation_days_accrued.id_for_label}}"
