@@ -16,7 +16,6 @@ REQUIRED_FIELDS = {
         'offered_compensation',
         'budget_account',
         'position_grant_funded',
-        'hours_per_week',
         'moving_expenses'
     ],
     'department_change': [
@@ -77,7 +76,6 @@ class NewhireRehireForm(forms.Form):
     expected_start_date = forms.DateField()
     budget_account = forms.CharField()
     offered_compensation = forms.DecimalField()
-    hours_per_week = forms.CharField()
     #
     position_grant_funded = forms.TypedChoiceField()
     grant_fund_number = forms.CharField(required=False)
@@ -112,6 +110,7 @@ class NewhireRehireForm(forms.Form):
     # staff
     #
     status_type = forms.TypedChoiceField(required=False)
+    hours_per_week = forms.CharField(required=False)
     other_arrangements = forms.CharField(required=False)
     #
     supervise_others = forms.TypedChoiceField(required=False)
