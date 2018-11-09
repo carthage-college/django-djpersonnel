@@ -148,7 +148,7 @@ class Operation(models.Model):
     applicant_system = models.CharField(
         """
         Would you like any others to have access to the
-        applications in the Applicant Pro system? (Search Committee)
+        applications in the Applicant Pro system?
         """,
         max_length=4,
         choices=BINARY_CHOICES,
