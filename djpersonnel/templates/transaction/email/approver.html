@@ -3,7 +3,7 @@
 <p>Hello,</p>
 
 <p>
-  A new position transaction form has been submitted
+  A new personnel action form (PAF) form has been submitted
   and is awaiting your review. This form has been submitted by:
 </p>
 
@@ -12,6 +12,10 @@
     {{data.created_by.first_name}}
     {{data.created_by.last_name}}
   </a>
+</p>
+
+<p>
+  The requested position title and department are listed below.
 </p>
 
 <dl {{dl_detail}}>
@@ -28,9 +32,9 @@
 </dl>
 
 <p>
-  The details of this request can be
+  The details of this request can be viewed and approved
   <a href="https://{{server_url}}{{data.get_absolute_url}}">
-      viewed here
+      here
   </a>.
 </p>
 
