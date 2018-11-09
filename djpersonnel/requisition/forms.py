@@ -13,7 +13,7 @@ class OperationForm(forms.ModelForm):
     applicant_system = forms.ChoiceField(
         label="""
             Would you like any others to have access to the
-            applications in the Applicant Pro system?
+            applications in the Applicant Pro system? (Search Committee)
         """,
         choices=BINARY_CHOICES, widget=forms.RadioSelect()
     )
