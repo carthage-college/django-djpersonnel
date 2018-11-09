@@ -526,6 +526,9 @@
             </label>
             <input type="file" name="job_description" id="{{form.job_description.id_for_label}}"
               class="form-control{% if form.job_description.errors %} is-invalid{% endif %}">
+            <small>
+                All submission must be accompanied by a job description.
+              </small>
           </div>
           <div class="col-sm-5 pb-2">
             <label for="{{form.approver.id_for_label}}"
