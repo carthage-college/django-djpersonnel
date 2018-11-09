@@ -168,7 +168,7 @@ def operation_status(request):
 
                 obj.save()
 
-                bcc = settings.MANAGERS
+                bcc = [settings.ADMINS[0][1],]
                 frum = user.email
                 to_creator = [obj.created_by.email,]
                 subject = "[Personnel {} Form] {}".format(
