@@ -16,7 +16,7 @@ ON
     (id_rec.id = email_rec.id AND email_rec.aa = "EML1")
 WHERE
     job_rec.tpos_no IN (
-        2872,2876,2877,2902,3200,3238,3254,3561,3587,3644,3374,3375,3376
+        2872,2876,2902,3200,3238,3254,3561,3587,3644,3374,3375,3376
     )
 AND
     job_rec.end_date IS NULL

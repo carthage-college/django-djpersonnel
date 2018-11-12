@@ -16,6 +16,7 @@ REQUIRED_FIELDS = {
         'offered_compensation',
         'budget_account',
         'position_grant_funded',
+        'reporting_to',
         'moving_expenses'
     ],
     'department_change': [
