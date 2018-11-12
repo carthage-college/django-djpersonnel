@@ -693,6 +693,25 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6 pb-3">
+            <div class="container-fluid">
+              <div class="form-group">
+                <label for="{{form.reporting_to.id_for_label}}"
+                  {% if form.reporting_to.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.reporting_to.label}}</h5>
+                </label>
+                <input type="text" name="{{form.reporting_to.name}}"
+                  placeholder="Who will the new hire be reporting to?"
+                  class="form-control{% if form.reporting_to.errors %} is-invalid{% endif %}"
+                  id="{{form.reporting_to.id_for_label}}"
+                  value="{{form.reporting_to.value|default_if_none:''}}"
+                  {% if not templates_debug %}required{% endif %}>
+                <small class="text-danger">
+                  {{form.reporting_to.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- end Section I .form-row -->
         <!-- Section II .form-row -->
