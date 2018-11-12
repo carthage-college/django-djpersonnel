@@ -12,7 +12,7 @@ LEVEL2 = get_position(settings.LEVEL2_TPOS)
 
 def level3_choices():
 
-    level3 = do_sql(LEVEL3S)
+    level3 = do_sql(LEVEL3)
     choices = [('','---select---')]
 
     if level3:
