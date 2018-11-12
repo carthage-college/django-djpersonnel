@@ -1,8 +1,8 @@
 LEVEL3 = '''
 SELECT
-    id_rec.lastname, id_rec.firstname,
-    id_rec.id, job_rec.descr, job_rec.job_title,
-    email_rec.line1 as email,
+    trim(id_rec.lastname) as lastname, trim(id_rec.firstname) as firstname,
+    id_rec.id, trim(job_rec.descr) as description, trim(job_rec.job_title) as job_title,
+    trim(email_rec.line1) as email,
     job_rec.tpos_no
 FROM
     id_rec
@@ -16,7 +16,7 @@ ON
     (id_rec.id = email_rec.id AND email_rec.aa = "EML1")
 WHERE
     job_rec.tpos_no IN (
-        2483,2485,2872,2874,2876,2877,2930,3200,3238,3566,3587,3644
+        2872,2876,2877,2902,3200,3238,3254,3561,3587,3644,3374,3375,3376
     )
 AND
     job_rec.end_date IS NULL
