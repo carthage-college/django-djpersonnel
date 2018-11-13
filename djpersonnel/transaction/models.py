@@ -108,7 +108,11 @@ ACADEMIC_TERM_CHOICES = (
     ('PE', 'Summer'),
     ('YE', 'Summer')
 )
-
+SEVEN_WEEK_APPOINTMENT_CHOICES = (
+    ('First 7 week $ amount', 'First 7 week dollar amount'),
+    ('Second 7 week $ amount', 'Second 7 week dollar amount'),
+    ('No', 'No')
+)
 
 class Operation(models.Model):
     """
@@ -430,14 +434,14 @@ class Operation(models.Model):
         choices=PROGRAM_CHOICES,
         null=True, blank=True
     )
-    first_seven_week_amount = models.DecimalField(
-        "First 7 week $ amount",
-        decimal_places=2,
-        max_digits=16,
+    seven_week_appointment = models.CharField(
+        "Is this a 7 week appointment?",
+        max_length=35,
+        choices=SEVEN_WEEK_APPOINTMENT_CHOICES,
         null=True, blank=True
     )
-    second_seven_week_amount = models.DecimalField(
-        "Second 7 week $ amount",
+    seven_week_amount = models.DecimalField(
+        "7 week $ amount",
         decimal_places=2,
         max_digits=16,
         null=True, blank=True
