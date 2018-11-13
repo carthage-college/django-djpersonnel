@@ -243,7 +243,7 @@ LOGGING = {
         'custom': {
             'format': '%(asctime)s: %(levelname)s: %(message)s',
             'datefmt' : '%m/%d/%Y %I:%M:%S %p'
-        }
+        },
         'simple': {
             'format': '%(levelname)s %(message)s'
         },
