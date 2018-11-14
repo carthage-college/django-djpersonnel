@@ -46,6 +46,7 @@
         $('#contractYears').hide();
         $('.adjunct').hide();
         $('.adjunct-music').hide();
+        $('#adjunctMusicSevenAmount').hide();
         $('input[name="music"]').prop('checked', false);
         $('#id_status_change').prop('checked', false);
         $('#id_employment_type').prop('selectedIndex',0);
@@ -56,7 +57,6 @@
             $(this).prop('checked', false);
         });
       }
-      console.log('checked = ' + checked);
       if (!checked && employee == "Staff") {
         $('#statusChange').show();
       }
@@ -71,9 +71,9 @@
               '#terminationInvoluntary, #terminationVoluntary,' +
               '.sabbatical, #directReports, #endDate, .status-change,' +
               '#vacationDays, #grantFundNumber, #movingExpensesAmount,' +
-              '#startupExpensesAmount, .adjunct, .adjunct-music,' +
+              '.adjunct, .adjunct-music, #adjunctMusicSevenAmount,' +
               '#teachingAppointment, #statusChangeDate, #contractYears,' +
-              '#graduateAssistant, #vacationDaysAccrued'
+              '#graduateAssistant, #vacationDaysAccrued, #startupExpensesAmount'
 
   // global for staff or faculty
   {% if form.employee_type.value %}
@@ -179,6 +179,8 @@
         toggle($dis, 'Contract', '#contractYears');
         $('.adjunct').hide();
         $('.adjunct-music').hide();
+        $('#id_seven_week_appointment').prop('selectedIndex',0);
+        $('#adjunctMusicSevenAmount').hide();
         $('#graduateAssistant').hide();
         $('input[name="food_allowance"]').prop('checked', false);
         $('input[name="music"]').prop('checked', false);
@@ -192,6 +194,8 @@
         $('input[name="music"]').prop('checked', false);
         $('.adjunct').hide();
         $('.adjunct-music').hide();
+        $('#id_seven_week_appointment').prop('selectedIndex',0);
+        $('#adjunctMusicSevenAmount').hide();
         $('#contractYears').hide();
       } else {
         $('#graduateAssistant').hide();
@@ -199,11 +203,18 @@
         $('input[name="music"]').prop('checked', false);
         $('.adjunct').hide();
         $('.adjunct-music').hide();
+        $('#id_seven_week_appointment').prop('selectedIndex',0);
+        $('#adjunctMusicSevenAmount').hide();
         $('#contractYears').hide();
       }
     });
     $('input[name="music"]').click(function() {
       toggle(this.value, 'Yes', '.adjunct-music');
+    });
+    $('#id_seven_week_appointment').on('change', function() {
+        $dis = this.value.substring(4, 5);
+        console.log('$dis = ' + $dis);
+        toggle($dis, '7', '#adjunctMusicSevenAmount');
     });
     $('input[name="teaching_appointment"]').click(function() {
       toggle(this.value, 'Other', '#teachingAppointment');
@@ -243,6 +254,9 @@
           $('.adjunct').show();
           {% if form.music.value == 'Yes' %}
           $('.adjunct-music').show();
+          {% if form.seven_week_appointment.value|slice:"4:5" == '7' %}
+          $('#adjunctMusicSevenAmount').show();
+          {% endif %}
           {% endif %}
         {% endif %}
         {% if form.startup_expenses.value == 'Yes' %}
@@ -325,7 +339,6 @@
       $czech = $terminationType.prop('checked');
       $('.termination').toggle();
       if (this.checked) {
-        console.log($employeeType);
         toggle($employeeType, 'Staff', '#vacationDaysAccrued');
       } else {
         $('#vacationDaysAccrued').hide();
@@ -1390,31 +1403,6 @@
           <div class="col-md-6 pb-3 faculty-new">
             <div class="container-fluid">
               <div class="form-group">
-                <label for="{{form.academic_term.id_for_label}}"
-                  {% if form.academic_term.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.academic_term.label}}</h5>
-                </label>
-                <select class="form-control" name="{{form.academic_term.name}}"
-                  id="{{form.academic_term.id_for_label}}">
-                {% for value, text in form.fields.academic_term.choices %}
-                  <option value="{{value}}"
-                    {% if form.academic_term.value == value %}
-                    selected
-                    {% endif %}>
-                  {{text}}
-                  </option>
-                {% endfor %}
-                </select>
-                <small class="text-danger">
-                  {{form.academic_term.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 faculty-new">
-            <div class="container-fluid">
-              <div class="form-group">
                 <label for="{{form.program_types.id_for_label}}"
                   {% if form.program_types.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.program_types.label}}</h5>
@@ -1432,42 +1420,6 @@
                 </select>
                 <small class="text-danger">
                   {{form.program_types.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 faculty-new">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.first_seven_week_amount.id_for_label}}"
-                  {% if form.first_seven_week_amount.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.first_seven_week_amount.label}}</h5>
-                </label>
-                <input class="form-control {% if form.first_seven_week_amount.errors %} is-invalid{% endif %}"
-                  type="number" name="{{form.first_seven_week_amount.name}}" placeholder="Do not include $ sign"
-                  id="{{form.first_seven_week_amount.id_for_label}}" step="0.01" 
-                  value="{{form.first_seven_week_amount.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.first_seven_week_amount.errors|join:", "}}
-                </small>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden unless faculty and "newhire_rehire" is checked -->
-          <div class="col-md-6 pb-3 faculty-new">
-            <div class="container-fluid">
-              <div class="form-group">
-                <label for="{{form.second_seven_week_amount.id_for_label}}"
-                  {% if form.second_seven_week_amount.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.second_seven_week_amount.label}}</h5>
-                </label>
-                <input class="form-control {% if form.second_seven_week_amount.errors %} is-invalid{% endif %}"
-                  type="number" name="{{form.second_seven_week_amount.name}}" placeholder="Do not include $ sign"
-                  id="{{form.second_seven_week_amount.id_for_label}}" step="0.01"
-                  value="{{form.second_seven_week_amount.value|default_if_none:''}}">
-                <small class="text-danger">
-                  {{form.second_seven_week_amount.errors|join:", "}}
                 </small>
               </div>
             </div>
@@ -1572,6 +1524,12 @@
                 </div>
               </div>
             </div>
+            <!--
+            Hidden unless:
+                1) "faculty and newhire_rehire" is checked
+                2) Adjunct is selected from employment type
+                3) and they are a music professor
+            -->
             <div class="col-md-6 float-left adjunct-music">
               <div class="form-group">
                 <label for="{{form.courses_teaching.id_for_label}}"
@@ -1599,6 +1557,72 @@
                   value="{{form.number_of_credits.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.number_of_credits.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6 float-left adjunct-music">
+              <div class="form-group">
+                <label for="{{form.academic_term.id_for_label}}"
+                  {% if form.academic_term.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.academic_term.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.academic_term.name}}"
+                  id="{{form.academic_term.id_for_label}}">
+                {% for value, text in form.fields.academic_term.choices %}
+                  <option value="{{value}}"
+                    {% if form.academic_term.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.academic_term.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6 float-left adjunct-music">
+              <div class="form-group">
+                <label for="{{form.seven_week_appointment.id_for_label}}"
+                  {% if form.seven_week_appointment.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.seven_week_appointment.label}}</h5>
+                </label>
+                <select class="form-control" name="{{form.seven_week_appointment.name}}"
+                  id="{{form.seven_week_appointment.id_for_label}}">
+                {% for value, text in form.fields.seven_week_appointment.choices %}
+                  <option value="{{value}}"
+                    {% if form.seven_week_appointment.value == value %}
+                    selected
+                    {% endif %}>
+                  {{text}}
+                  </option>
+                {% endfor %}
+                </select>
+                <small class="text-danger">
+                  {{form.seven_week_appointment.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!--
+            Hidden unless:
+                1) "faculty and newhire_rehire" is checked
+                2) Adjunct is selected from employment type
+                3) they are a music professor
+                4) and one of the two seven_week_appointment is select
+            -->
+            <div class="col-md-6 float-left" id="adjunctMusicSevenAmount">
+              <div class="form-group">
+                <label for="{{form.seven_week_amount.id_for_label}}"
+                  {% if form.seven_week_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.seven_week_amount.label}}</h5>
+                </label>
+                <input class="form-control {% if form.seven_week_amount.errors %} is-invalid{% endif %}"
+                  type="number" name="{{form.seven_week_amount.name}}" placeholder="Do not include $ sign"
+                  id="{{form.seven_week_amount.id_for_label}}" step="0.01"-
+                  value="{{form.seven_week_amount.value|default_if_none:''}}">
+                <small class="text-danger">
+                  {{form.seven_week_amount.errors|join:", "}}
                 </small>
               </div>
             </div>

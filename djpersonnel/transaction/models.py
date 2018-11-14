@@ -109,9 +109,9 @@ ACADEMIC_TERM_CHOICES = (
     ('YE', 'Summer')
 )
 SEVEN_WEEK_APPOINTMENT_CHOICES = (
-    ('First 7 week $ amount', 'First 7 week dollar amount'),
-    ('Second 7 week $ amount', 'Second 7 week dollar amount'),
-    ('No', 'No')
+    ('No', 'No'),
+    ('1st 7 week', 'First 7 week'),
+    ('2nd 7 week', 'Second 7 week')
 )
 
 class Operation(models.Model):
@@ -401,14 +401,14 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
-    # NOTE: if 'Adjunct', then they fill out the following
+    # NOTE: if 'Adjunct', are they music professor?
     music = models.CharField(
-        "Music",
+        "Music professor?",
         max_length=4,
         choices=BINARY_CHOICES,
         null=True, blank=True
     )
-    # NOTE: if Music is 'Yes', then courses teaching and number of credits
+    # NOTE: if 'music' professor, then they fill out the following
     courses_teaching = models.TextField(
         null=True, blank=True,
         help_text='Courses teaching'
@@ -418,6 +418,25 @@ class Operation(models.Model):
         max_length=25,
         null=True, blank=True
     )
+    academic_term = models.CharField(
+        verbose_name='Academic Term',
+        max_length=16,
+        choices=ACADEMIC_TERM_CHOICES,
+        null=True, blank=True
+    )
+    seven_week_appointment = models.CharField(
+        "Is this a 7 week appointment?",
+        max_length=35,
+        choices=SEVEN_WEEK_APPOINTMENT_CHOICES,
+        null=True, blank=True
+    )
+    seven_week_amount = models.DecimalField(
+        "7 week $ amount",
+        decimal_places=2,
+        max_digits=16,
+        null=True, blank=True
+    )
+    # end adjunct music
     teaching_appointment = models.CharField(
         "Teaching appointment",
         max_length=8,
@@ -434,28 +453,10 @@ class Operation(models.Model):
         choices=PROGRAM_CHOICES,
         null=True, blank=True
     )
-    seven_week_appointment = models.CharField(
-        "Is this a 7 week appointment?",
-        max_length=35,
-        choices=SEVEN_WEEK_APPOINTMENT_CHOICES,
-        null=True, blank=True
-    )
-    seven_week_amount = models.DecimalField(
-        "7 week $ amount",
-        decimal_places=2,
-        max_digits=16,
-        null=True, blank=True
-    )
     food_allowance = models.CharField(
         "Food allowance?",
         max_length=4,
         choices=BINARY_CHOICES,
-        null=True, blank=True
-    )
-    academic_term = models.CharField(
-        verbose_name='Academic Term',
-        max_length=16,
-        choices=ACADEMIC_TERM_CHOICES,
         null=True, blank=True
     )
     # Department Change checkbox

@@ -58,8 +58,7 @@ REQUIRED_FIELDS_NEWHIRE = {
     ],
     'faculty': [
         'startup_expenses', 'teaching_appointment', 'employment_type',
-        'program_types', 'academic_term',
-        'first_seven_week_amount', 'second_seven_week_amount'
+        'program_types', 'academic_term'
     ]
 }
 REQUIRED_FIELDS_GRANT_FUNDED = ['grant_fund_number', 'grant_fund_amount']
@@ -89,14 +88,16 @@ class NewhireRehireForm(forms.Form):
     #
     teaching_appointment = forms.TypedChoiceField(required=False)
     teaching_appointment_arrangements = forms.CharField(required=False)
-    academic_term = forms.TypedChoiceField(required=False)
-    first_seven_week_amount = forms.CharField(required=False)
-    second_seven_week_amount = forms.CharField(required=False)
-    # if employment type = Adjunct then 'music' if 'yes' courses and credits
     employment_type = forms.TypedChoiceField(required=False)
+    # if employment type = Adjunct
     music = forms.TypedChoiceField(required=False)
+    # if 'music' is 'yes' then courses, credits, term, 7 week appointment
     courses_teaching = forms.CharField(required=False)
     number_of_credits = forms.CharField(required=False)
+    academic_term = forms.TypedChoiceField(required=False)
+    seven_week_appointment = forms.CharField(required=False)
+    # if 7 week appointment
+    seven_week_amount = forms.CharField(required=False)
     # employment type = Contract-*
     contract_years = forms.CharField(required=False)
     # employment type = Graduate Assistant
@@ -284,7 +285,10 @@ class OperationForm(forms.ModelForm):
 
                 # employment type
                 contract_field = 'contract_years'
-                adjunct_fields = ['courses_teaching','number_of_credits']
+                adjunct_fields = [
+                    'courses_teaching','number_of_credits',
+                    'academic_term','seven_week_appointment'
+                ]
                 graduate_fields = [
                     'expected_end_date','food_allowance',
                 ]
@@ -303,6 +307,9 @@ class OperationForm(forms.ModelForm):
                     elif et == 'Adjunct':
                         for field in adjunct_fields:
                             self.dependent('music', 'Yes', field)
+                        seven = cd.get('seven_week_appointment')
+                        if seven and seven != 'No' and not cd.get('seven_week_amount'):
+                            self.add_error('seven_week_amount', "Required field")
                         cd[contract_field] = None
                         for field in graduate_fields:
                             cd[field] = None
