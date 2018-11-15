@@ -197,6 +197,22 @@ $(function() {
             </div>
           </div>
         </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'level3_approver' %}</h6>
+              <p> {{data.level3_approver.first_name}} {{data.level3_approver.last_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'reporting_to' %}</h6>
+              <p>{{data.reporting_to}}</p>
+            </div>
+          </div>
+        </div>
       </div><!-- end form row -->
       <div class="form-row">
         <!-- Section II -->
@@ -613,22 +629,22 @@ $(function() {
           </div>
         </div>
         {% endif %}
-        {% if data.first_seven_week_amount %}
+        {% if data.seven_week_appointment %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'first_seven_week_amount' %}</h6>
-              <p>{{data.first_seven_week_amount}}</p>
+              <h6>{% field_name data 'seven_week_appointment' %}</h6>
+              <p>{{data.seven_week_appointment}}</p>
             </div>
           </div>
         </div>
         {% endif %}
-        {% if data.second_seven_week_amount %}
+        {% if data.seven_week_amount %}
         <div class="col-sm-6">
           <div class="container-fluid">
             <div class="form-group">
-              <h6>{% field_name data 'second_seven_week_amount' %}</h6>
-              <p>{{data.second_seven_week_amount}}</p>
+              <h6>{% field_name data 'seven_week_amount' %}</h6>
+              <p>{{data.seven_week_amount}}</p>
             </div>
           </div>
         </div>
