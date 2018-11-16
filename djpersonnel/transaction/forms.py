@@ -58,7 +58,7 @@ REQUIRED_FIELDS_NEWHIRE = {
     ],
     'faculty': [
         'startup_expenses', 'teaching_appointment', 'employment_type',
-        'program_types', 'academic_term'
+        'program_types'
     ]
 }
 REQUIRED_FIELDS_GRANT_FUNDED = ['grant_fund_number', 'grant_fund_amount']

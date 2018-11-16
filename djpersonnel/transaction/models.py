@@ -775,3 +775,13 @@ class Operation(models.Model):
                 status = True
 
         return status
+
+    def department(self):
+        """
+        Returns the full department name based on 3 or 4 letter code
+        """
+        name = self.department_name
+        dept = department(name)
+        if dept:
+            name = dept[0]
+        return name
