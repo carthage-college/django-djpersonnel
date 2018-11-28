@@ -86,10 +86,10 @@ $(function() {
   <!-- /.row -->
   {% endif %}
   {% if data.approved %}
-    <h1 style="color: #5810d1;">APPROVED</h1>
+  <h1 style="color: #5810d1;">APPROVED <span class="float-right">{{data.level1_date}}</span></h1>
   {% endif %}
   {% else %}
-    <h1 style="color: #ff0000;">DECLINED</h1>
+    <h1 style="color: #ff0000;">DECLINED <span class="float-right">{{data.updated_at}}</span></h1>
   {% endif %}
   <div class="col-md-12 card card bg-dark">
     <div class="card-title">
