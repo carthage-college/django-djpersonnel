@@ -114,6 +114,7 @@ SEVEN_WEEK_APPOINTMENT_CHOICES = (
     ('2nd 7 week', 'Second 7 week')
 )
 
+
 class Operation(models.Model):
     """
     Data model for the personnel action form

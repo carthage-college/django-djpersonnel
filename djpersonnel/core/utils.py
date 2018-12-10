@@ -1,26 +1,21 @@
 from django.conf import settings
+from django.contrib.auth.models import Group, User
 
 from djzbar.utils.informix import do_sql
 from djzbar.utils.hr import get_position
 
 from djtools.utils.users import in_group
 
-from djpersonnel.core.sql import LEVEL3
-
 LEVEL2 = get_position(settings.LEVEL2_TPOS)
 
 
 def level3_choices():
 
-    level3 = do_sql(LEVEL3)
     choices = [('','---select---')]
-
-    if level3:
-        for l in level3:
-            name = '{}, {}'.format(l.lastname, l.firstname)
-            choices.append((str(l.id), name))
-    else:
-        choices = None
+    level3 = settings.LEVEL3_GROUP
+    for u in User.objects.filter(groups__name=level3).order_by('last_name'):
+        name = '{}, {}'.format(u.last_name, u.first_name)
+        choices.append((str(u.id), name))
     return choices
 
 

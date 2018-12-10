@@ -18,5 +18,10 @@
         "model": "auth.group", "pk": 4, "fields": {
             "name": "Human Resources", "permissions": []
         }
+    },
+    {
+        "model": "auth.group", "pk": 5, "fields": {
+            "name": "Level 3", "permissions": []
+        }
     }
 ]

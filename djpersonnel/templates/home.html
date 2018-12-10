@@ -61,6 +61,14 @@ $(function() {
     </a>
   </li>
   {% endif %}
+  {% if hr %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Approvers">
+    <a class="nav-link" href="{% url 'approver_manager' %}">
+      <i class="fa fa-fw fa fa-gavel" aria-hidden="true"></i>
+      <span class="nav-link-text">Manage Approvers</span>
+    </a>
+  </li>
+  {% endif %}
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Personnel Requisiton Form (PRF)">
     <a class="nav-link" href="{% url 'requisition_form' %}">
       <i class="fa fa-fw fa fa-user-plus" aria-hidden="true"></i>

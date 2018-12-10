@@ -206,11 +206,7 @@ STAFF_GROUP='carthageStaffStatus'
 # approval level positions
 TposStruct = namedtuple('TposStruct', 'id email')
 LEVEL2_TPOS=0 #VPFA
-LEVEL3_TPOS=0 #Provost
-TPOS_DEFAULT = {
-    LEVEL3_TPOS: TposStruct(id=0, email=''),
-    LEVEL2_TPOS: TposStruct(id=0, email=''),
-}
+LEVEL3_GROUP='Level 3'
 # tests
 TEST_USER_USERNAME = ''
 TEST_USER_PASSWORD = ''

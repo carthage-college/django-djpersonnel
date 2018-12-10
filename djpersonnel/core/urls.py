@@ -18,7 +18,11 @@ urlpatterns = [
     url(
         r'^(?P<mod>[-\w]+)/openxml/$', views.openxml, name='openxml'
     ),
-
+    # approver manager
+    url(
+        r'^approver/$',
+        views.approver_manager, name='approver_manager'
+    ),
     # proposal status view for 'approve' or 'decline' actions
     url(
         r'^operation/status/$',

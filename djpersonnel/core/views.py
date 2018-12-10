@@ -3,14 +3,15 @@ from django.conf import settings
 from django.apps import apps
 from django.db.models import Q
 from django.core import serializers
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
-from djpersonnel.core.forms import DateCreatedForm
+from djpersonnel.core.forms import ApproverForm, DateCreatedForm
 from djpersonnel.core.utils import LEVEL2
 
 from djzbar.decorators.auth import portal_auth_required
@@ -87,6 +88,47 @@ def list(request, mod):
         request, 'list.html', {
             'hr': hr, 'objects': objects, 'mod':mod
         }
+    )
+
+
+@portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJVISION_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
+def approver_manager(request):
+    level3 = settings.LEVEL3_GROUP
+    if request.method == 'POST':
+        form = ApproverForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            try:
+                user = User.objects.get(email=user.email)
+                if in_group(user, level3):
+                    form.add_error(
+                        'email', "User is already in the Approvers group"
+                    )
+                else:
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        "User added to the Level 3 Approvers Group",
+                        extra_tags='alert-success'
+                    )
+                    form = ApproverForm()
+            except:
+                user.username = user.email.split('@')[0]
+                user.id = 666
+                user.set_password(User.objects.make_random_password(length=24))
+                user.save()
+            group = Group.objects.get(name=level3)
+            group.user_set.add(user)
+    else:
+        form = ApproverForm()
+
+    objects = User.objects.filter(groups__name=level3).order_by('last_name')
+
+    return render(
+        request, 'approver.html', {'form':form, 'objects':objects}
     )
 
 
