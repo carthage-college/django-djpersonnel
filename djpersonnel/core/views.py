@@ -103,7 +103,7 @@ def approver_manager(request):
     message = None
     banner = messages.SUCCESS
     tag = 'alert-success'
-    hr = in_group(user, settings.HR_GROUP)
+    hr = in_group(request.user, settings.HR_GROUP)
 
     if request.method == 'POST':
         form = ApproverForm(
