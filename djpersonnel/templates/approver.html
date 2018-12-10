@@ -1,0 +1,73 @@
+{% extends "home.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Approver Form &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<link href="/static/djsani/css/dashboard.css" rel="stylesheet" type="text/css">
+<link href="/static/djsani/css/main.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block extra_javascript %}
+<script>
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+});
+</script>
+{% endblock %}
+{% block content %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>
+                    Level 3 Approver Form
+                  </h2>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    {% include "includes/required_text.html" %}
+                    {% include "includes/errors_text.html" %}
+                    <form method="post" action=".">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                    </form>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            {% if objects %}
+            <div class="panel panel-default mt-3">
+                <div class="panel-heading">
+                  <h2>Level 3 Approvers</h2>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body" id="transaction-data-panel">
+                    <ol>
+                    {% for obj in objects %}
+                      <li>
+                        {{obj.last_name}}, {{obj.first_name}}
+                      </li>
+                    {% endfor %}
+                    </ol>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            {% endif %}
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+{% endblock content %}
+{% block footer %}{% endblock %}
