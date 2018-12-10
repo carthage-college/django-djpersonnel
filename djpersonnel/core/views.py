@@ -103,6 +103,7 @@ def approver_manager(request):
     message = None
     banner = messages.SUCCESS
     tag = 'alert-success'
+    hr = in_group(user, settings.HR_GROUP)
 
     if request.method == 'POST':
         form = ApproverForm(
@@ -164,7 +165,7 @@ def approver_manager(request):
     objects = User.objects.filter(groups__name=level3).order_by('last_name')
 
     return render(
-        request, 'approver.html', {'form':form, 'objects':objects}
+        request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects}
     )
 
 
