@@ -14,6 +14,7 @@ from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import LEVEL2
 
 from djtools.utils.users import in_group
+from djzbar.utils.hr import get_cid
 
 
 def _operation_status(user, app, status, oid):
@@ -111,6 +112,11 @@ class CoreViewsTestCase(TestCase):
         )
         self.oid = 7
         self.created_at_date = settings.TEST_CREATED_AT_DATE
+
+    def test_get_cid(self):
+        cid = get_cid(user.email)
+        print("here")
+        print("cid = {}".format(cid))
 
     def test_home(self):
 

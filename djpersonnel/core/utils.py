@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 
 from djzbar.utils.informix import do_sql
 from djzbar.utils.hr import get_position
-
+from djzbar.utils.hr import get_cid
 from djtools.utils.users import in_group
 
 LEVEL2 = get_position(settings.LEVEL2_TPOS)

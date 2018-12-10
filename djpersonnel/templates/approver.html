@@ -18,8 +18,9 @@ $(function() {
 {% block content %}
   {% if messages %}
     {% for message in messages %}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-      <div class=" alert {{message.tags}}">
+    <div class="col-lg-6 mb-3">
+      <div class="alert alert-dismissable alert-link {{message.tags}}">
+        <button class="close" type="button" data-dismiss="alert" aria-hidden="true">×</button>
         <strong>{{ message }}</strong>
       </div>
     </div>
@@ -35,8 +36,6 @@ $(function() {
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    {% include "includes/required_text.html" %}
-                    {% include "includes/errors_text.html" %}
                     <form method="post" action=".">
                         {% csrf_token %}
                         {% bootstrap_form form %}

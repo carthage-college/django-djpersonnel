@@ -18,6 +18,7 @@ from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.convert import str_to_class
 from djtools.utils.users import in_group
 from djtools.utils.mail import send_mail
+from djzbar.utils.hr import get_cid
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
@@ -97,33 +98,68 @@ def list(request, mod):
     redirect_url=reverse_lazy('access_denied')
 )
 def approver_manager(request):
+    user = None
     level3 = settings.LEVEL3_GROUP
+    message = None
+    banner = messages.SUCCESS
+    tag = 'alert-success'
+
     if request.method == 'POST':
-        form = ApproverForm(request.POST)
+        form = ApproverForm(
+            request.POST, use_required_attribute=settings.REQUIRED_ATTRIBUTE
+        )
         if form.is_valid():
-            user = form.save(commit=False)
+            email = form.cleaned_data['email']
             try:
-                user = User.objects.get(email=user.email)
+                user = User.objects.get(email=email)
                 if in_group(user, level3):
                     form.add_error(
-                        'email', "User is already in the Approvers group"
+                        'email', "{}, {} is already in the Approvers group".format(
+                            user.last_name, user.first_name
+                        )
+                    )
+                    message = "User is already in the Approvers group"
+                    banner = messages.ERROR
+                    tag = 'alert-danger'
+                else:
+                    message = "{}, {} added to the Approvers group".format(
+                        user.last_name, user.first_name
+                    )
+                    form = ApproverForm(
+                        use_required_attribute=settings.REQUIRED_ATTRIBUTE
+                    )
+            except:
+                cid = get_cid(email)
+                if cid:
+                    user = form.save(commit=False)
+                    user.username = user.email.split('@')[0]
+                    user.id = cid
+                    user.set_password(
+                        User.objects.make_random_password(length=24)
+                    )
+                    user.save()
+                    message = "{}, {} added to the Approvers group".format(
+                        user.last_name, user.first_name
+                    )
+                    form = ApproverForm(
+                        use_required_attribute=settings.REQUIRED_ATTRIBUTE
                     )
                 else:
-                    messages.add_message(
-                        request, messages.SUCCESS,
-                        "User added to the Level 3 Approvers Group",
-                        extra_tags='alert-success'
+                    form.add_error(
+                        'email', "There is no user with that email address"
                     )
-                    form = ApproverForm()
-            except:
-                user.username = user.email.split('@')[0]
-                user.id = 666
-                user.set_password(User.objects.make_random_password(length=24))
-                user.save()
-            group = Group.objects.get(name=level3)
-            group.user_set.add(user)
+                    message = "There is no user with that email address"
+                    banner = messages.ERROR
+                    tag = 'alert-danger'
+            if user:
+                group = Group.objects.get(name=level3)
+                group.user_set.add(user)
+            if message:
+                messages.add_message(
+                    request, banner, message, extra_tags=tag
+                )
     else:
-        form = ApproverForm()
+        form = ApproverForm(use_required_attribute=settings.REQUIRED_ATTRIBUTE)
 
     objects = User.objects.filter(groups__name=level3).order_by('last_name')
 
