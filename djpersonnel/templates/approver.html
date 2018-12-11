@@ -26,47 +26,47 @@ $(function() {
     </div>
     {% endfor %}
   {% endif %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h2>
-                    Level 3 Approver Form
-                  </h2>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <form method="post" action=".">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
-                    </form>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            {% if objects %}
-            <div class="panel panel-default mt-3">
-                <div class="panel-heading">
-                  <h2>Level 3 Approvers</h2>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body" id="transaction-data-panel">
-                    <ol>
-                    {% for obj in objects %}
-                      <li>
-                        {{obj.last_name}}, {{obj.first_name}}
-                      </li>
-                    {% endfor %}
-                    </ol>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            {% endif %}
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2>
+            Level 3 Approver Form
+          </h2>
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          <form method="post" action=".">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+          </form>
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+      {% if objects %}
+      <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+          <h2>Level 3 Approvers</h2>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body" id="transaction-data-panel">
+          <ol>
+          {% for obj in objects %}
+            <li>
+              {{obj.last_name}}, {{obj.first_name}}
+            </li>
+          {% endfor %}
+          </ol>
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+      {% endif %}
     </div>
-    <!-- /.row -->
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
 {% endblock content %}
 {% block footer %}{% endblock %}
