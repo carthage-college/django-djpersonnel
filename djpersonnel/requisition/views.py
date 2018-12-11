@@ -11,6 +11,7 @@ from djpersonnel.requisition.forms import OperationForm
 from djzbar.decorators.auth import portal_auth_required
 from djzbar.utils.hr import get_position
 from djtools.utils.mail import send_mail
+from djtools.utils.users import in_group
 from djauth.LDAPManager import LDAPManager
 
 
@@ -20,6 +21,7 @@ from djauth.LDAPManager import LDAPManager
 )
 def form_home(request):
 
+    user = request.user
     if request.method=='POST':
 
         form = OperationForm(
@@ -27,7 +29,6 @@ def form_home(request):
         )
         if form.is_valid():
 
-            user = request.user
             # deal with level 3 approver
             lid = form.cleaned_data['approver']
             try:
@@ -80,8 +81,9 @@ def form_home(request):
     else:
         form = OperationForm(label_suffix='')
 
+    hr = in_group(user, settings.HR_GROUP)
     return render(
-        request, 'requisition/form.html', {'form': form,}
+        request, 'requisition/form.html', {'hr':hr, 'form': form,}
     )
 
 
@@ -96,8 +98,9 @@ def detail(request, rid):
     if not perms['view']:
         raise Http404
 
+    hr = in_group(user, settings.HR_GROUP)
     return render(
-        request, 'requisition/detail.html', {'data':data,'perms':perms}
+        request, 'requisition/detail.html', {'hr':hr,'data':data,'perms':perms}
     )
 
 

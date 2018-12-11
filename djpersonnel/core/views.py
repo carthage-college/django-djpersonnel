@@ -23,6 +23,9 @@ from djzbar.utils.hr import get_cid
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
+import logging
+logger = logging.getLogger('debug_logfile')
+
 
 @portal_auth_required(
     session_var='DJVISION_AUTH',
@@ -92,6 +95,7 @@ def list(request, mod):
     )
 
 
+@csrf_exempt
 @portal_auth_required(
     group = settings.HR_GROUP,
     session_var='DJVISION_AUTH',
@@ -103,17 +107,40 @@ def approver_manager(request):
     message = None
     banner = messages.SUCCESS
     tag = 'alert-success'
-    hr = in_group(request.user, settings.HR_GROUP)
 
     if request.method == 'POST':
         form = ApproverForm(
             request.POST, use_required_attribute=settings.REQUIRED_ATTRIBUTE
         )
         if form.is_valid():
-            email = form.cleaned_data['email']
+            data = form.cleaned_data
             try:
-                user = User.objects.get(email=email)
-                if in_group(user, level3):
+                user = User.objects.get(email=data['email'])
+            except:
+                cid = get_cid(data['email'])
+                if cid:
+                    user = form.save(commit=False)
+                    user.username = user.email.split('@')[0]
+                    user.id = cid
+                    user.set_password(
+                        User.objects.make_random_password(length=24)
+                    )
+                    user.save()
+                else:
+                    form.add_error(
+                        'email', "There is no user with that email address"
+                    )
+                    message = "There is no user with that email address"
+                    banner = messages.ERROR
+                    tag = 'alert-danger'
+
+            if user:
+                group = Group.objects.get(name=level3)
+                logger.debug('cid = {}'.format(request.POST.get('cid')))
+                if request.POST.get('cid'):
+                    group.user_set.remove(user)
+                    logger.debug('user groups = {}'.format(user.groups.all()))
+                elif in_group(user, level3):
                     form.add_error(
                         'email', "{}, {} is already in the Approvers group".format(
                             user.last_name, user.first_name
@@ -123,38 +150,15 @@ def approver_manager(request):
                     banner = messages.ERROR
                     tag = 'alert-danger'
                 else:
+                    group.user_set.add(user)
                     message = "{}, {} added to the Approvers group".format(
                         user.last_name, user.first_name
                     )
                     form = ApproverForm(
                         use_required_attribute=settings.REQUIRED_ATTRIBUTE
                     )
-            except:
-                cid = get_cid(email)
-                if cid:
-                    user = form.save(commit=False)
-                    user.username = user.email.split('@')[0]
-                    user.id = cid
-                    user.set_password(
-                        User.objects.make_random_password(length=24)
-                    )
-                    user.save()
-                    message = "{}, {} added to the Approvers group".format(
-                        user.last_name, user.first_name
-                    )
-                    form = ApproverForm(
-                        use_required_attribute=settings.REQUIRED_ATTRIBUTE
-                    )
-                else:
-                    form.add_error(
-                        'email', "There is no user with that email address"
-                    )
-                    message = "There is no user with that email address"
-                    banner = messages.ERROR
-                    tag = 'alert-danger'
-            if user:
-                group = Group.objects.get(name=level3)
-                group.user_set.add(user)
+                group.save()
+
             if message:
                 messages.add_message(
                     request, banner, message, extra_tags=tag
@@ -162,12 +166,18 @@ def approver_manager(request):
     else:
         form = ApproverForm(use_required_attribute=settings.REQUIRED_ATTRIBUTE)
 
-    objects = User.objects.filter(groups__name=level3).order_by('last_name')
-
+    if request.POST.get('cid'):
+        response = HttpResponse('Success', content_type="text/plain; charset=utf-8")
+    else:
+        objects = User.objects.filter(groups__name=level3).order_by('last_name')
+        hr = in_group(request.user, settings.HR_GROUP)
+        response = render(
+            request, 'new_approver.html', {'hr': hr, 'form':form, 'objects':objects}
+        )
     return render(
         request, 'new_approver.html', {'hr': hr, 'form':form, 'objects':objects}
     )
-
+    return response
 
 @portal_auth_required(
     session_var='DJVISION_AUTH',

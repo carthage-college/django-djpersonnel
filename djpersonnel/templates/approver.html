@@ -9,9 +9,31 @@
 <link href="/static/djsani/css/main.css" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block extra_javascript %}
+<script type="text/javascript" language="javascript" src="https://malsup.github.io/min/jquery.blockUI.min.js"></script>
 <script>
 $(function() {
   $("body").toggleClass("sidenav-toggled");
+  $('.remove-approver').on('click', function(e){
+    e.preventDefault();
+    var $dis = $(this);
+    var $id = $dis.attr("data-cid");
+    var $em = $dis.attr("data-email");
+    var $ln = $dis.attr("data-last_name");
+    var $fn = $dis.attr("data-first_name");
+    var $html = $dis.html();
+    console.log('id = ' + $id);
+    $dis.html('<i class="fa fa-refresh fa-spin"></i>');
+    $.ajax({
+      type: "POST",
+      url: "{% url 'approver_manager' %}",
+      data: {"cid":$id,"email":$em,"last_name":$ln,"first_name":$fn},
+      success: function(data) {
+        $dis.parent().remove();
+        $.growlUI("Approver", "Removed");
+      }
+    });
+    return false;
+  });
 });
 </script>
 {% endblock %}
@@ -48,7 +70,12 @@ $(function() {
       {% if objects %}
       <div class="panel panel-default mt-3">
         <div class="panel-heading">
-          <h2>Level 3 Approvers</h2>
+          <h4>
+            Level 3 Approvers
+            <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
+              data-toggle="tooltip" data-placement="top" aria-hidden="true"
+              title="Click on the 'x' below to remove a user from the Approvers group"></i>
+          </h4>
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body" id="transaction-data-panel">
@@ -56,6 +83,10 @@ $(function() {
           {% for obj in objects %}
             <li>
               {{obj.last_name}}, {{obj.first_name}}
+              <a href="" class="remove-approver" data-cid="{{obj.id}}" data-email="{{obj.email}}"
+                data-last_name="{{obj.last_name}}" data-first_name="{{obj.first_name}}">
+                <i class="red fa fa-times" aria-hidden="true"
+                  title="Remove user from the Approver group"></i></a>
             </li>
           {% endfor %}
           </ol>

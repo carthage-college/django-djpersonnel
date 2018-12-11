@@ -79,7 +79,6 @@ def form_home(request):
         form = OperationForm(label_suffix='')
 
     hr = in_group(user, settings.HR_GROUP)
-
     return render(
         request, 'transaction/form.html', {'form': form,'hr':hr}
     )
@@ -97,8 +96,9 @@ def detail(request, tid):
     if not perms['view']:
         raise Http404
 
+    hr = in_group(user, settings.HR_GROUP)
     return render(
-        request, 'transaction/detail.html', {'data':data,'perms':perms}
+        request, 'transaction/detail.html', {'hr':hr,'data':data,'perms':perms}
     )
 
 
