@@ -1,0 +1,122 @@
+{% extends "home.html" %}
+{% load bootstrap4 %}
+{% block title %}
+    Approver Form &mdash; Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<link href="/static/djsani/css/dashboard.css" rel="stylesheet" type="text/css">
+<link href="/static/djsani/css/main.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block extra_javascript %}
+<script>
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+});
+</script>
+{% endblock %}
+{% block content %}
+<!-- Content Section -->
+<div class="container">
+  <h1 class="page-header">Level 3 Approver Form</h1>
+    <!-- BUTTON TO TRIGGER THE ACTION -->
+    <p>
+      <button class="btn btn-success pull-right" data-toggle="modal" data-target="#add_new_record_modal">
+        <span class="fa fa-plus"></span>
+        Add New Approver
+      </button>
+    </p>
+    <br>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in objects %}
+          <tr>
+            <td>{{ obj.id }}</td>
+            <td>{{ obj.last_name }}</td>
+            <td>{{ obj.first_name }}</td>
+            <td>{{ obj.email }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="text-center bg-warning">No Level 3 Approvers</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+<!-- /Content Section -->
+
+<!-- Bootstrap Modals -->
+<!-- Modal - Add New Record/User -->
+<div class="modal fade" id="add_new_record_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Add New Approver</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <form method="post" action=".">
+              {% csrf_token %}
+              <div class="modal-body">
+
+                  <div class="form-group">
+                      <label for="{{form.first_name.id_for_label}}"
+                        {% if form.first_name.errors %}class="text-danger"{% endif %}>
+                        <h5>{{form.first_name.label}}</h5>
+                      </label>
+                      <input type="text" name="{{form.first_name.name}}" placeholder="First Name"
+                             class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                             id="{{form.first_name.id_for_label}}" value="{{form.first_name.value|default_if_none:''}}"
+                             {% if not templates_debug %}required{% endif %}>
+                      <small class="text-danger">
+                        {{form.first_name.errors|join:", "}}
+                      </small>
+                  </div>
+                  <div class="form-group">
+                      <label for="{{form.last_name.id_for_label}}"
+                        {% if form.last_name.errors %}class="text-danger"{% endif %}>
+                        <h5>{{form.last_name.label}}</h5>
+                      </label>
+                      <input type="text" name="{{form.last_name.name}}" placeholder="Last Name"
+                             class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
+                             id="{{form.last_name.id_for_label}}" value="{{form.last_name.value|default_if_none:''}}"
+                             {% if not templates_debug %}required{% endif %}>
+                      <small class="text-danger">
+                        {{form.last_name.errors|join:", "}}
+                      </small>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="{{form.email.id_for_label}}"
+                        {% if form.email.errors %}class="text-danger"{% endif %}>
+                        <h5>{{form.email.label}}</h5>
+                      </label>
+                      <input type="text" name="{{form.email.name}}" placeholder="Email Address"
+                             class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                             id="{{form.email.id_for_label}}" value="{{form.email.value|default_if_none:''}}"
+                             {% if not templates_debug %}required{% endif %}>
+                      <small class="text-danger">
+                        {{form.email.errors|join:", "}}
+                      </small>
+                  </div>
+
+              </div>
+        </form>
+            <div class="modal-footer">
+                <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // Modal -->
+{% endblock content %}
+{% block footer %}{% endblock %}
