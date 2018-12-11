@@ -165,7 +165,7 @@ def approver_manager(request):
     objects = User.objects.filter(groups__name=level3).order_by('last_name')
 
     return render(
-        request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects}
+        request, 'new_approver.html', {'hr': hr, 'form':form, 'objects':objects}
     )
 
 
