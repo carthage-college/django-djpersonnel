@@ -142,7 +142,7 @@ class Operation(models.Model):
     # supervisor/chair has submitted the form and
     # the following are status levels for various approvers
 
-    # VP of Area or Provost
+    # VP of Area or Dean
     level3 = models.BooleanField(default=False)
     level3_approver = models.ForeignKey(
         User,
@@ -167,6 +167,13 @@ class Operation(models.Model):
         "Level 1 Signed Date",
         null=True, blank=True
     )
+    # Provost only for faculty hires
+    provost = models.BooleanField(default=False)
+    provost_date = models.DateTimeField(
+        "Provost signed date",
+        null=True, blank=True
+    )
+    provost_required = models.BooleanField(default=False)
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
     # set to True when levels are completed.

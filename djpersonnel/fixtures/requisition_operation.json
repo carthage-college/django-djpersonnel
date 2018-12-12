@@ -6,6 +6,7 @@
             "updated_at": "2018-09-05T12:08:04", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,
             "level2_date": null, "level1": false, "level1_date": null,
+            "provost": false, "provost_date": null, "provost_required": false,
             "declined": false, "email_approved": false, "position_title":
             "Bender Unit 22", "department_name": "MAIN", "new_position": "No",
             "replacement_name": "Kir Kroker", "budgeted_position": "Yes",
@@ -27,6 +28,7 @@
             "updated_at": "2018-09-06T08:43:02", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,
             "level2_date": null, "level1": false, "level1_date": null,
+            "provost": false, "provost_date": null, "provost_required": false,
             "declined": false, "email_approved": false,
             "position_title": "Grade 36 Bureaucrat", "department_name": "INEF",
             "new_position": "No", "replacement_name": "Kir Kroker",

@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.core.forms import DateCreatedForm
-from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import get_deans, LEVEL2
 
 from djtools.utils.users import in_group
 from djzbar.utils.hr import get_cid
@@ -115,8 +115,11 @@ class CoreViewsTestCase(TestCase):
 
     def test_get_cid(self):
         cid = get_cid(user.email)
-        print("here")
         print("cid = {}".format(cid))
+
+    def test_get_deans(self):
+        deans = get_deans()
+        print("deans = {}".format(deans))
 
     def test_home(self):
 
