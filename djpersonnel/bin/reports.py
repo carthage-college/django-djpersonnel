@@ -20,9 +20,6 @@ from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
 
 import argparse
-import logging
-
-logger = logging.getLogger('debug_logfile')
 
 '''
 Various reports on database activity

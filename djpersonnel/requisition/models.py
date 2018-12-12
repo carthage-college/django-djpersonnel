@@ -72,7 +72,6 @@ class Operation(models.Model):
         "Provost signed date",
         null=True, blank=True
     )
-    provost_required = models.BooleanField(default=False)
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
     # set to True when all levels are completed.

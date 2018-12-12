@@ -12,7 +12,7 @@ from django.shortcuts import render, get_object_or_404
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.core.forms import ApproverForm, DateCreatedForm
-from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import get_deans, LEVEL2, PROVOST
 
 from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.convert import str_to_class
@@ -36,12 +36,16 @@ def home(request):
     dashboard home page view
     """
 
+    deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
         requisitions = Requisition.objects.all().order_by('-created_at')[:10]
         transactions = Transaction.objects.all().order_by('-created_at')[:10]
+    elif user.id == PROVOST.id:
+        requisitions = Requisition.objects.filter(pk__in=deans).order_by('-created_at')[:10]
+        transactions = Transaction.objects.filter(pk__in=deans).order_by('-created_at')[:10]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
