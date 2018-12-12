@@ -12,7 +12,7 @@ from django.shortcuts import render, get_object_or_404
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.core.forms import ApproverForm, DateCreatedForm
-from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import get_deans, LEVEL2, PROVOST
 
 from djzbar.decorators.auth import portal_auth_required
 from djtools.utils.convert import str_to_class
@@ -36,12 +36,20 @@ def home(request):
     dashboard home page view
     """
 
+    deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
         requisitions = Requisition.objects.all().order_by('-created_at')[:10]
         transactions = Transaction.objects.all().order_by('-created_at')[:10]
+    elif user.id == PROVOST.id:
+        requisitions = Requisition.objects.filter(
+            level3_approver__pk__in=deans
+        ).order_by('-created_at')[:10]
+        transactions = Transaction.objects.filter(
+            level3_approver__pk__in=deans
+        ).order_by('-created_at')[:10]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
@@ -223,6 +231,8 @@ def operation_status(request):
         obj = get_object_or_404(model, id=oid)
         perms = obj.permissions(user)
         if not obj.declined:
+            # we should verify that the user has permission to approve/decline
+            # this specific object but we can worry about that later
             if perms['approver'] and status in ['approved','declined']:
 
                 from djtools.fields import NOW
@@ -239,12 +249,17 @@ def operation_status(request):
                 elif perms['level2']:
                     level = 'level2'
                     to_approver = hr_group
+                elif perms['provost']:
+                    level = 'provost'
+                    to_approver = [LEVEL2.email,]
                 elif perms['level3']:
                     level = 'level3'
-                    if not obj.notify_veep:
-                        to_approver = hr_group
-                    else:
+                    if obj.notify_provost and not obj.provost:
+                        to_approver = [PROVOST.email,]
+                    elif obj.notify_level2 and not obj.level2:
                         to_approver = [LEVEL2.email,]
+                    else:
+                        to_approver = hr_group
 
                 if status == 'approved':
                     setattr(obj, level, True)

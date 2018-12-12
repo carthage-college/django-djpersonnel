@@ -10,6 +10,7 @@ from djtools.fields import BINARY_CHOICES
 
 class OperationForm(forms.ModelForm):
 
+
     applicant_system = forms.ChoiceField(
         label="""
             Would you like any others to have access to the
@@ -21,10 +22,13 @@ class OperationForm(forms.ModelForm):
         label="Is this a new position?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect()
     )
-    approver = forms.ChoiceField(
-        label="Who will approve this request for you?",
-        choices=level3_choices()
-    )
+
+    def __init__(self, *args, **kwargs):
+        super(OperationForm, self).__init__(*args, **kwargs)
+        self.fields['approver'] = forms.ChoiceField(
+            label="Who will approve this request for you?",
+            choices=level3_choices()
+        )
 
     class Meta:
         model = Operation

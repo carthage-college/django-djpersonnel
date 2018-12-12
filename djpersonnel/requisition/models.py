@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
-from djpersonnel.core.utils import get_permissions
+from djpersonnel.core.utils import get_deans, get_permissions
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
@@ -47,7 +47,6 @@ class Operation(models.Model):
         User,
         verbose_name="Level 3 Approver",
         related_name='prf_operation_approver',
-        editable=settings.DEBUG,
         null=True, blank=True
     )
     level3_date = models.DateTimeField(
@@ -72,7 +71,6 @@ class Operation(models.Model):
         "Provost signed date",
         null=True, blank=True
     )
-    provost_required = models.BooleanField(default=False)
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
     # set to True when all levels are completed.
@@ -210,11 +208,21 @@ class Operation(models.Model):
     def get_absolute_url(self):
         return ('requisition_detail', [str(self.id)])
 
-    def notify_veep(self):
+    def notify_level2(self):
         """
-        VP of Business should be notified for all PRF for now
+        Level 2 should be notified for all PRF for now
         """
         return True
+
+    def notify_provost(self):
+        """
+        Provost must approve submissions that are approved by a division dean
+        at level 3
+        """
+        if self.level3_approver.id in get_deans():
+            return True
+        else:
+            return False
 
     def approved(self):
         """
@@ -223,6 +231,11 @@ class Operation(models.Model):
         status = False
         if self.level3 and self.level2 and self.level1:
             status = True
+            if self.notify_provost():
+                if self.provost:
+                    status = True
+                else:
+                    status = False
         return status
 
     def department(self):
