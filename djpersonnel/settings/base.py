@@ -204,15 +204,10 @@ PRF_EMAIL_LIST=[]
 HR_GROUP='Human Resources'
 STAFF_GROUP='carthageStaffStatus'
 # approval level positions
-TposStruct = namedtuple('TposStruct', 'id email')
 DEANS_TPOS=[]
 PROVOST_TPOS=0
 LEVEL2_TPOS=0 #VPFA
 LEVEL3_GROUP='Level 3'
-TPOS_DEFAULT = {
-    PROVOST_TPOS: TposStruct(id=0, email=''),
-    LEVEL2_TPOS: TposStruct(id=0, email=''),
-}
 # tests
 TEST_USER_USERNAME = ''
 TEST_USER_PASSWORD = ''
