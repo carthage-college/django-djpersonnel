@@ -231,6 +231,8 @@ def operation_status(request):
         obj = get_object_or_404(model, id=oid)
         perms = obj.permissions(user)
         if not obj.declined:
+            # we should verify that the user has permission to approve/decline
+            # this specific object but we can worry about that later
             if perms['approver'] and status in ['approved','declined']:
 
                 from djtools.fields import NOW
@@ -247,12 +249,17 @@ def operation_status(request):
                 elif perms['level2']:
                     level = 'level2'
                     to_approver = hr_group
+                elif perms['provost']:
+                    level = 'provost'
+                    to_approver = [LEVEL2.email,]
                 elif perms['level3']:
                     level = 'level3'
-                    if not obj.notify_veep:
-                        to_approver = hr_group
-                    else:
+                    if obj.notify_provost and not obj.provost:
+                        to_approver = [PROVOST.email,]
+                    elif obj.notify_level2 and not obj.level2:
                         to_approver = [LEVEL2.email,]
+                    else:
+                        to_approver = hr_group
 
                 if status == 'approved':
                     setattr(obj, level, True)

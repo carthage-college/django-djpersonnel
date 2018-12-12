@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
-from djpersonnel.core.utils import get_permissions
+from djpersonnel.core.utils import get_deans, get_permissions
 
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
@@ -757,11 +757,21 @@ class Operation(models.Model):
 
         return checks
 
-    def notify_veep(self):
+    def notify_level2(self):
         """
-        VP of Business should only be notified if money is involved
+        Level 2 should only be notified if money is involved
         """
         if self.newhire_rehire or self.compensation_change or self.onetime_payment:
+            return True
+        else:
+            return False
+
+    def notify_provost(self):
+        """
+        Provost must approve submissions that are approved by a division dean
+        at level 3
+        """
+        if self.level3_approver.id in get_deans():
             return True
         else:
             return False
@@ -772,13 +782,18 @@ class Operation(models.Model):
         """
         status = False
         if self.level3 and self.level1:
-            if self.notify_veep():
+            if self.notify_level2():
                 if self.level2:
                     status = True
                 else:
                     status = False
             else:
                 status = True
+            if self.notify_provost():
+                if self.provost:
+                    status = True
+                else:
+                    status = False
 
         return status
 
