@@ -10,7 +10,7 @@ from collections import namedtuple
 from djzbar.settings import INFORMIX_EARL_TEST as INFORMIX_EARL
 
 # Debug
-DEBUG = False
+DEBUG = True
 INFORMIX_DEBUG = 'debug'
 # include html5 form attributes in input fields
 REQUIRED_ATTRIBUTE = True
