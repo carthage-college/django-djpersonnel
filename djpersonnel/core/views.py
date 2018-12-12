@@ -44,8 +44,12 @@ def home(request):
         requisitions = Requisition.objects.all().order_by('-created_at')[:10]
         transactions = Transaction.objects.all().order_by('-created_at')[:10]
     elif user.id == PROVOST.id:
-        requisitions = Requisition.objects.filter(pk__in=deans).order_by('-created_at')[:10]
-        transactions = Transaction.objects.filter(pk__in=deans).order_by('-created_at')[:10]
+        requisitions = Requisition.objects.filter(
+            level3_approver__pk__in=deans
+        ).order_by('-created_at')[:10]
+        transactions = Transaction.objects.filter(
+            level3_approver__pk__in=deans
+        ).order_by('-created_at')[:10]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)

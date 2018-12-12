@@ -133,8 +133,8 @@ CACHES = {
         #}
     }
 }
-'''
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+'''
 # LDAP Constants
 LDAP_SERVER = ''
 LDAP_SERVER_PWM = ''

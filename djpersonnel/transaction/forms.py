@@ -5,6 +5,7 @@ from djpersonnel.transaction.models import (
     ACADEMIC_YEARS, Operation, TEACHING_APPOINTMENT_CHOICES
 )
 from djpersonnel.core.utils import level3_choices
+
 from djtools.utils.convert import str_to_class
 
 REQUIRED_FIELDS = {
@@ -211,10 +212,13 @@ class OperationForm(forms.ModelForm):
         choices=TEACHING_APPOINTMENT_CHOICES,
         required = False
     )
-    approver = forms.ChoiceField(
-        label="Who will approve this request for you?",
-        choices=level3_choices()
-    )
+
+    def __init__(self, *args, **kwargs):
+        super(OperationForm, self).__init__(*args, **kwargs)
+        self.fields['approver'] = forms.ChoiceField(
+            label="Who will approve this request for you?",
+            choices=level3_choices()
+        )
 
     class Meta:
         model = Operation

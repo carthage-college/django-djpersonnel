@@ -148,7 +148,6 @@ class Operation(models.Model):
         User,
         verbose_name="Level 3 Approver",
         related_name='paf_operation_approver',
-        editable=settings.DEBUG,
         null=True, blank=True
     )
     level3_date = models.DateField(
