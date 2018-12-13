@@ -28,7 +28,7 @@ $(function() {
       url: "{% url 'approver_manager' %}",
       data: {"cid":$id,"email":$em,"last_name":$ln,"first_name":$fn},
       success: function(data) {
-        $dis.parent().remove();
+        $dis.closest('li').remove();
         $.growlUI("Approver", "Removed");
       }
     });
@@ -63,13 +63,14 @@ $(function() {
            title="Click on the 'x' below to remove a user from the Approvers group">
         </i>
       </h4>
-      <ol class="list-group mb-3">
+      <ol class="list-group">
         {% for obj in objects %}
           <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <span class="text-muted">$12</span>
-            <div>
-              <h6 class="my-0">{{obj.last_name}}, {{obj.first_name}}</h6>
-            </div>
+            <span class="text-muted">{{obj.id}}</span>
+            <span>
+            {{obj.last_name}}, {{obj.first_name}}
+              </span>
+
             <span>
               <a href="" class="remove-approver" data-cid="{{obj.id}}" data-email="{{obj.email}}"
                 data-last_name="{{obj.last_name}}" data-first_name="{{obj.first_name}}">
