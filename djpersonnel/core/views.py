@@ -180,7 +180,7 @@ def approver_manager(request):
         objects = User.objects.filter(groups__name=level3).order_by('last_name')
         hr = in_group(request.user, settings.HR_GROUP)
         response = render(
-            request, 'new_approver.html', {'hr': hr, 'form':form, 'objects':objects}
+            request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects}
         )
     return response
 
