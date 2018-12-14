@@ -8,6 +8,7 @@ from djpersonnel.core.utils import get_deans, get_permissions
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
 from djzbar.utils.hr import departments_all_choices
+from djzbar.utils.hr import department, departments_all_choices
 
 import datetime
 
