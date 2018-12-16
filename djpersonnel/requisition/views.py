@@ -44,7 +44,7 @@ def form_home(request):
             data.level3_approver = level3
             data.save()
 
-            # send email a creator and approver or display it for dev
+            # send email to creator and approver or display it for dev
             template = 'requisition/email/approver.html'
             if not settings.DEBUG:
 

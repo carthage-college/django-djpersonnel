@@ -58,7 +58,7 @@ def form_home(request):
                     template, data, bcc
                 )
 
-                # send approver email to VP or Provost
+                # send email to level3 approver
                 template = 'transaction/email/approver.html'
                 send_mail(
                     request, [data.level3_approver.email,], subject,
