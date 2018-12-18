@@ -3,8 +3,11 @@ Your request for a new or replacement position has been approved
 by your area VP/Dean.
 </p>
 <p>
-It has now been sent onto the next step for approval
-by the Provost.
+{% if data.notify_provost %}
+    It has now been sent onto the next step for approval by the Provost.
+{% else %}
+    It has now been sent onto the next step for approval by the Vice President of Finance and Administration.
+{% endif %}
 </p>
 {# debuging #}
 {% if data.to_creator %}
