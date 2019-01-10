@@ -183,22 +183,16 @@ $(function() {
             <p>{{data.max_salary_range}}</p>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="container-fluid">
-            <h6>{% field_name data 'position_open_date' %}</h6>
-            <p>{{data.position_open_date}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="container-fluid">
-            <h6>{% field_name data 'expected_start_date' %}</h6>
-            <p>{{data.expected_start_date}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <div class="container-fluid">
             <h6>{% field_name data 'publication_date' %}</h6>
             <p>{{data.publication_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'expected_start_date' %}</h6>
+            <p>{{data.expected_start_date}}</p>
           </div>
         </div>
         <div class="col-sm-12">
