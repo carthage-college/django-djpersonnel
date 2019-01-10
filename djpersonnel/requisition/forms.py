@@ -63,6 +63,14 @@ class OperationForm(forms.ModelForm):
 
         return cd['account_number']
 
+    def clean_grant_fund_amount(self):
+
+        cd = self.cleaned_data
+        if cd.get('position_grant_funded') == 'Yes' and not cd.get('grant_fund_amount'):
+            raise forms.ValidationError("You must provide a percentage or amount.")
+
+        return cd['grant_fund_amount']
+
     def clean_applicant_system_people(self):
 
         cd = self.cleaned_data
