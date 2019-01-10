@@ -16,8 +16,7 @@
           {% if form.benefit_change_effective_date.errors %} is-invalid{% endif %}"
           name="benefit_change_effective_date"
           id="{{form.benefit_change_effective_date.id_for_label}}"
-          value="{{form.benefit_change_effective_date.value|default_if_none:''}}"
-          {% if not templates_debug %}required{% endif %}>
+          value="{{form.benefit_change_effective_date.value|default_if_none:''}}">
         <small class="text-danger">
           {{form.benefit_change_effective_date.errors|join:", "}}
         </small>
@@ -37,8 +36,7 @@
           class="form-control{% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_policy_amount.id_for_label}}"
           value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
-          placeholder="Supplement Life Policy Amount"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="Supplement Life Policy Amount">
         <small class="text-danger">
           {{form.supplement_life_policy_amount.errors|join:", "}}
         </small>
@@ -58,8 +56,7 @@
           class="form-control{% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_ppp_contribution.id_for_label}}"
           value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
-          placeholder="Supplement Life PPP Contribution"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="Supplement Life PPP Contribution">
         <small class="text-danger">
           {{form.supplement_life_ppp_contribution.errors|join:", "}}
         </small>
@@ -81,8 +78,7 @@
           name="health_insurance_plan_tier"
           id="{{form.health_insurance_plan_tier.id_for_label}}"
           value="{{form.health_insurance_plan_tier.value|default_if_none:''}}"
-          placeholder="Health Insurance Plan &#38; Tier"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="Health Insurance Plan &#38; Tier">
         <small class="text-danger">
           {{form.health_insurance_plan_tier.errors|join:", "}}
         </small>
@@ -102,8 +98,7 @@
           class="form-control{% if form.cc_health_insurance_compensation_contribution.errors %} is-invalid{% endif %}"
           id="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
           value="{{form.cc_health_insurance_compensation_contribution.value|default_if_none:''}}"
-          placeholder="Carthage Health Insurance Compensation Contribution"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="Carthage Health Insurance Compensation Contribution">
         <small class="text-danger">
           {{form.cc_health_insurance_compensation_contribution.errors|join:", "}}
         </small>
@@ -123,8 +118,7 @@
           class="form-control{% if form.hsa_annual_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.hsa_annual_ppp_contribution.id_for_label}}"
           value="{{form.hsa_annual_ppp_contribution.value|default_if_none:''}}"
-          placeholder="HSA Annual or PPP Contribution"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="HSA Annual or PPP Contribution">
         <small class="text-danger">
           {{form.hsa_annual_ppp_contribution.errors|join:", "}}
         </small>
@@ -144,8 +138,7 @@
           class="form-control{% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
           id="{{form.hsa_carthage_contribution.id_for_label}}"
           value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
-          placeholder="HSA Carthage Contribution"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="HSA Carthage Contribution">
         <small class="text-danger">
           {{form.hsa_carthage_contribution.errors|join:", "}}
         </small>
@@ -165,8 +158,7 @@
           class="form-control{% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
-          placeholder="FSA Medical Annual or PPP Contribution"
-            {% if not templates_debug %}required{% endif %}>
+          placeholder="FSA Medical Annual or PPP Contribution">
         <small class="text-danger">
           {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
         </small>
@@ -187,8 +179,7 @@
           name="fsa_dependent_care_annual_ppp_contribution"
           id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
-          placeholder="FSA Dependent Care Annual or PPP Contribution"
-          {% if not templates_debug %}required{% endif %}>
+          placeholder="FSA Dependent Care Annual or PPP Contribution">
         <small class="text-danger">
           {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
         </small>
