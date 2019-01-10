@@ -2486,9 +2486,8 @@
               <textarea rows="2" cols="150"
               class="form-control{% if form.comments.errors %} is-invalid{% endif %}"
               id="{{form.comments.id_for_label}}" name="{{form.comments.name}}"
-              placeholder="{{form.comments.help_text}}">
-                {{form.comments.value|default_if_none:''}}
-              </textarea>
+              placeholder="{{form.comments.help_text}}"
+              >{{form.comments.value|default_if_none:''}}</textarea>
               <small class="text-danger">
                 {{form.comments.errors|join:", "}}
               </small>
