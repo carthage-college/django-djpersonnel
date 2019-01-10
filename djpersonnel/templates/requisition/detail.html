@@ -216,11 +216,23 @@ $(function() {
           </div>
         </div>
         {% if data.job_description %}
-        <div class="col-sm-12">
+        <div class="col-sm-6">
           <h6>
             {% field_name data 'job_description' %}
             <a class="fa-wrap"
               href="{{media_url}}{{data.job_description}}"
+              target="_blank">
+              <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
+              aria-hidden="true"></i></a>
+          </h6>
+        </div>
+        {% endif %}
+        {% if data.ad_copy %}
+        <div class="col-sm-6">
+          <h6>
+            {% field_name data 'ad_copy' %}
+            <a class="fa-wrap"
+              href="{{media_url}}{{data.ad_copy}}"
               target="_blank">
               <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
               aria-hidden="true"></i></a>
