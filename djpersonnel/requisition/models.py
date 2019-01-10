@@ -7,6 +7,7 @@ from djpersonnel.core.utils import get_deans, get_permissions
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
+#from djtools.fields.validators import MimetypeValidator
 from djzbar.utils.hr import department, departments_all_choices
 
 SALARY_CHOICES = (
@@ -110,6 +111,23 @@ class Operation(models.Model):
         max_length=30,
         null=True, blank=True
     )
+    position_grant_funded = models.CharField(
+        "Is this position grant funded?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
+    # NOTE: if 'Yes' to grant funded, then grant number
+    grant_fund_number = models.CharField(
+        "What is the grant fund number?",
+        max_length=25,
+        null=True, blank=True
+    )
+    # NOTE: if 'Yes' to grant funded, then grant amount
+    grant_fund_amount = models.CharField(
+        "What is the percentage or amount?",
+        max_length=200,
+        null=True, blank=True
+    )
     salary_type = models.CharField(
         "This position is",
         max_length=16,
@@ -139,9 +157,6 @@ class Operation(models.Model):
         decimal_places=2,
         max_digits=16,
         help_text="List the maximum salary range for this position"
-    )
-    position_open_date = models.DateField(
-        "Open/available Date"
     )
     expected_start_date = models.DateField(
         "Expected Start Date"
@@ -179,6 +194,15 @@ class Operation(models.Model):
     job_description = models.FileField(
         "Job Description",
         upload_to=upload_to_path,
+        #validators=[MimetypeValidator('application/pdf')],
+        max_length=768,
+        help_text="PDF or Word format",
+        null=True, blank=True
+    )
+    ad_copy = models.FileField(
+        "Ad Copy",
+        upload_to=upload_to_path,
+        #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
         help_text="PDF or Word format",
         null=True, blank=True
