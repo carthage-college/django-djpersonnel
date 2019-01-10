@@ -2476,6 +2476,25 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12 pb-3">
+          <div class="container-fluid">
+            <div class="form-group">
+              <label for="{{form.comments.id_for_label}}"
+                {% if form.comments.errors %}class="text-danger"{% endif %}>
+                <h5>Notes/Comments</h5>
+              </label>
+              <textarea rows="2" cols="150"
+              class="form-control{% if form.comments.errors %} is-invalid{% endif %}"
+              id="{{form.comments.id_for_label}}" name="{{form.comments.name}}"
+              placeholder="{{form.comments.help_text}}">
+                {{form.comments.value|default_if_none:''}}
+              </textarea>
+              <small class="text-danger">
+                {{form.comments.errors|join:", "}}
+              </small>
+            </div>
+          </div>
+        </div>
         <!-- end Section III .form-row -->
         {% if hr %}
           {% include "transaction/section4.inc.html" %}
