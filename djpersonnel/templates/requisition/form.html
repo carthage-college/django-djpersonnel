@@ -26,6 +26,9 @@
     $('input[name="budgeted_position"]').click(function() {
       toggle(this.value, 'Yes', 'account_number');
     });
+    $('input[name="position_grant_funded"]').click(function() {
+      toggle(this.value, 'Yes', 'grant_fund_amount');
+    });
     $('input[name="salary_type"]').click(function() {
       toggle(this.value, 'Non-exempt', 'hours_per_week');
     });
@@ -40,6 +43,9 @@
     {% endif %}
     {% if form.budgeted_position.value == 'Yes' %}
     $("#account_number").removeClass("hyde");
+    {% endif %}
+    {% if form.position_grant_funded.value == 'Yes' %}
+    $("#grant_fund_amount").removeClass("hyde");
     {% endif %}
     {% if form.salary_type.value == 'Non-exempt' %}
     $("#hours_per_week").removeClass("hyde");
@@ -184,7 +190,7 @@
             </div>
             <!-- /.form-group -->
           </div>
-          <div class="col-md-4 pb-1">
+          <div class="col-md-6 pb-1">
             <div class="form-group">
               <label for="id_{{form.budgeted_position.name}}_0"
                 {% if form.budgeted_position.errors %}
@@ -225,8 +231,89 @@
                 Please choose "Yes" or "No"
               </small>
               {% endif %}
+              <!-- Hidden unless "Yes" is selected -->
+              <div class="form-check hyde" id="account_number">
+                <label for="{{form.account_number.id_for_label}}"
+                  {% if form.account_number.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.account_number.label}}</h5>
+                </label>
+                <input type="text" name="account_number"
+                  class="form-control{% if form.account_number.errors %} is-invalid{% endif %}"
+                  id="{{form.account_number.id_for_label}}"
+                  value="{{form.account_number.value|default_if_none:''}}"
+                  placeholder="Account Number">
+                <small class="text-danger">
+                  {{form.account_number.errors|join:", "}}
+                </small>
+              </div>
             </div>
             <!-- /.form-group -->
+          </div>
+          <div class="col-md-6 pb-1">
+            <div class="form-group">
+              <label for="id_{{form.position_grant_funded.name}}_0"
+                {% if form.position_grant_funded.errors %}
+                  class="d-block text-danger"
+                {% else %}
+                  class="d-block"
+                {% endif %}
+                >
+                <h5>{{form.position_grant_funded.label}}</h5>
+              </label>
+              <div class="form-check form-check-inline">
+                <label for="id_{{form.position_grant_funded.name}}_0"
+                  class="form-check-label">
+                  <input class="form-check-input" value="Yes"
+                    type="radio" name="position_grant_funded"
+                    {% if not templates_debug %} required{% endif %}
+                    id="id_{{form.position_grant_funded.name}}_0"
+                    {% if form.position_grant_funded.value == 'Yes' %}
+                      checked
+                    {% endif %}>
+                    Yes
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label for="id_{{form.position_grant_funded.name}}_1"
+                  class="form-check-label">
+                  <input class="form-check-input" value="No"
+                    type="radio" name="position_grant_funded"
+                    id="id_{{form.position_grant_funded.name}}_1"
+                    {% if form.position_grant_funded.value == 'No' %}
+                      checked
+                    {% endif %}>
+                    No
+                </label>
+              </div>
+              {% if form.position_grant_funded.errors %}
+              <small class="text-danger">
+                Please choose "Yes" or "No"
+              </small>
+              {% endif %}
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <!-- Hidden unless "Yes" is selected -->
+          <div class="col-md-6 pb-1 hyde" id="grant_fund_amount">
+            <div class="form-group">
+              <div class="form-check">
+                <label for="{{form.grant_fund_amount.id_for_label}}"
+                  {% if form.grant_fund_amount.errors %}class="text-danger"{% endif %}>
+                  <h5>{{form.grant_fund_amount.label}}</h5>
+                </label>
+                <input type="text" name="grant_fund_amount"
+                  class="form-control{% if form.grant_fund_amount.errors %} is-invalid{% endif %}"
+                  id="{{form.grant_fund_amount.id_for_label}}"
+                  value="{{form.grant_fund_amount.value|default_if_none:''}}"
+                  placeholder="Please specify grant(s) and dollar or percentage amounts">
+                <small class="text-danger">
+                  {{form.grant_fund_amount.errors|join:", "}}
+                </small>
+              </div>
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <div class="col-md-6 pb-1">
             <div class="form-group">
               <label for="id_{{form.salary_type.name}}_0"
                 {% if form.salary_type.errors %}
@@ -262,26 +349,6 @@
               <small class="text-danger">
                 {{form.salary_type.errors|join:", "}}
               </small>
-            </div>
-            <!-- /.form-group -->
-          </div>
-          <div class="col-md-2 pb-1">
-            <div class="form-group">
-              <!-- Hidden unless "Yes" is selected -->
-              <div class="form-check hyde" id="account_number">
-                <label for="{{form.account_number.id_for_label}}"
-                  {% if form.account_number.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.account_number.label}}</h5>
-                </label>
-                <input type="text" name="account_number"
-                  class="form-control{% if form.account_number.errors %} is-invalid{% endif %}"
-                  id="{{form.account_number.id_for_label}}"
-                  value="{{form.account_number.value|default_if_none:''}}"
-                  placeholder="Account Number">
-                <small class="text-danger">
-                  {{form.account_number.errors|join:", "}}
-                </small>
-              </div>
             </div>
             <!-- /.form-group -->
           </div>
@@ -500,22 +567,35 @@
               </small>
             </div>
           </div>
-          <div class="col-sm-5 pb-2">
-            <label for="{{form.job_description.id_for_label}}">
+          <div class="col-sm-6 pb-2">
+            <label for="{{form.job_description.id_for_label}}"
+            {% if form.job_description.errors %}class="text-danger"{% endif %}>
               <h5>
                 {{form.job_description.label}}
                 <small class="text-danger">
-                  ({{form.job_description.help_text}})
+                  {{form.job_description.errors|join:", "}}
                 </small>
               </h5>
             </label>
             <input type="file" name="job_description" id="{{form.job_description.id_for_label}}"
               class="form-control{% if form.job_description.errors %} is-invalid{% endif %}">
             <small>
-                All submission must be accompanied by a job description.
-              </small>
+                All submission must be accompanied by a job description. ({{form.job_description.help_text}})
+            </small>
           </div>
-          <div class="col-sm-5 pb-2">
+          <div class="col-sm-6 pb-2">
+            <label for="{{form.ad_copy.id_for_label}}">
+              <h5>
+                {{form.ad_copy.label}}
+              </h5>
+            </label>
+            <input type="file" name="ad_copy" id="{{form.ad_copy.id_for_label}}"
+              class="form-control{% if form.ad_copy.errors %} is-invalid{% endif %}">
+            <small>
+              ({{form.ad_copy.help_text}})
+            </small>
+          </div>
+          <div class="col-sm-6 pb-2">
             <label for="{{form.approver.id_for_label}}"
               {% if form.approver.errors %}class="text-danger"{% endif %}>
               <h5>
