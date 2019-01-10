@@ -365,35 +365,7 @@
               {{form.max_salary_range.errors|join:", "}}
             </small>
           </div>
-          <div class="col-sm-4 pb-3">
-            <label for="{{form.position_open_date.id_for_label}}"
-            {% if form.position_open_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.position_open_date.label}}</h5>
-            </label>
-            <input type="date" name="position_open_date"
-              class="form-control{% if form.position_open_date.errors %} is-invalid{% endif %}"
-              id="{{form.position_open_date.id_for_label}}"
-              value="{{form.position_open_date.value|default:''}}"
-              {% if not templates_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.position_open_date.errors|join:", "}}
-            </small>
-          </div>
-          <div class="col-sm-4 pb-3">
-            <label for="{{form.expected_start_date.id_for_label}}"
-            {% if form.expected_start_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.expected_start_date.label}}</h5>
-            </label>
-            <input type="date" name="expected_start_date"
-              class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
-              id="{{form.expected_start_date.id_for_label}}"
-              value="{{form.expected_start_date.value|default:''}}"
-              {% if not templates_debug %}required{% endif %}>
-            <small class="text-danger">
-              {{form.expected_start_date.errors|join:", "}}
-            </small>
-          </div>
-          <div class="col-sm-4 pb-3">
+          <div class="col-sm-6 pb-3">
             <label for="{{form.publication_date.id_for_label}}"
             {% if form.publication_date.errors %}class="text-danger"{% endif %}>
               <h5>{{form.publication_date.label}}</h5>
@@ -406,6 +378,20 @@
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.publication_date.errors|join:", "}}
+            </small>
+          </div>
+          <div class="col-sm-6 pb-3">
+            <label for="{{form.expected_start_date.id_for_label}}"
+            {% if form.expected_start_date.errors %}class="text-danger"{% endif %}>
+              <h5>{{form.expected_start_date.label}}</h5>
+            </label>
+            <input type="date" name="expected_start_date"
+              class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
+              id="{{form.expected_start_date.id_for_label}}"
+              value="{{form.expected_start_date.value|default:''}}"
+              {% if not templates_debug %}required{% endif %}>
+            <small class="text-danger">
+              {{form.expected_start_date.errors|join:", "}}
             </small>
           </div>
           <div class="col-sm-12 pb-2">
