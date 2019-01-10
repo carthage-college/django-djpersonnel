@@ -107,7 +107,7 @@ $(function() {
       <div class="form-row">
         <!-- Section I -->
         <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>Section I - Employee Information</h6>
+          <h6>Section I</h6>
         </div>
         <div class="col-sm-4">
           <div class="container-fluid">
@@ -218,7 +218,7 @@ $(function() {
         <!-- Section II -->
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>
-            Section II - Complete for New Hires Only.
+            Section II
           </h6>
         </div>
         <div class="col-md-4 mt-3 pb-3">
@@ -317,7 +317,7 @@ $(function() {
       <div class="form-row">
         <!-- Section III -->
         <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>Section III - Complete only applicable information.</h6>
+          <h6>Section III</h6>
         </div>
         {% if data.position_title %}
         <div class="col-sm-6">
@@ -995,6 +995,16 @@ $(function() {
             <div class="form-group">
               <h6>{% field_name data 'direct_reports' %}</h6>
               <p>{{data.direct_reports}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.comments %}
+        <div class="col-sm-12">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'comments' %}</h6>
+              <p>{{data.comments}}</p>
             </div>
           </div>
         </div>
