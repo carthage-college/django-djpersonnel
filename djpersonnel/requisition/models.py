@@ -66,12 +66,6 @@ class Operation(models.Model):
         "Level 1 Signed Date",
         null=True, blank=True
     )
-    # Provost only for faculty hires
-    provost = models.BooleanField(default=False)
-    provost_date = models.DateTimeField(
-        "Provost signed date",
-        null=True, blank=True
-    )
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
     # set to True when all levels are completed.
@@ -255,11 +249,6 @@ class Operation(models.Model):
         status = False
         if self.level3 and self.level2 and self.level1:
             status = True
-            if self.notify_provost():
-                if self.provost:
-                    status = True
-                else:
-                    status = False
         return status
 
     def department(self):

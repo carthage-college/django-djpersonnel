@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.transaction.models import Operation
 from djpersonnel.transaction.forms import OperationForm
+from djpersonnel.core.utils import PROVOST
 
 from djzbar.decorators.auth import portal_auth_required
 from djzbar.utils.hr import get_position
@@ -58,10 +59,13 @@ def form_home(request):
                     template, data, bcc
                 )
 
-                # send email to level3 approver
+                # send email to level3 approver and Provost if need be
                 template = 'transaction/email/approver.html'
+                to_list = [level3.email,]
+                if data.notify_provost():
+                    to_list.append(PROVOST.email)
                 send_mail(
-                    request, [data.level3_approver.email,], subject,
+                    request, to_list, subject,
                     data.created_by.email, template, data, bcc
                 )
 

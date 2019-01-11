@@ -84,6 +84,18 @@ def list(request, mod):
             objects = Transaction.objects.all()
         else:
             objects = None
+    # Provost can view all objects created by Deans
+    elif user.id == PROVOST.id:
+        if mod == 'requisition':
+            objects = Requisition.objects.filter(
+                level3_approver__pk__in=deans
+            ).order_by('-created_at')
+        elif mod == 'transaction':
+            objects = Transaction.objects.filter(
+                level3_approver__pk__in=deans
+            ).order_by('-created_at')
+        else:
+            objects = None
     else:
         if mod == 'requisition':
             objects = Requisition.objects.filter(
@@ -249,14 +261,9 @@ def operation_status(request):
                 elif perms['level2']:
                     level = 'level2'
                     to_approver = hr_group
-                elif perms['provost']:
-                    level = 'provost'
-                    to_approver = [LEVEL2.email,]
                 elif perms['level3']:
                     level = 'level3'
-                    if obj.notify_provost and not obj.provost:
-                        to_approver = [PROVOST.email,]
-                    elif obj.notify_level2 and not obj.level2:
+                    if obj.notify_level2 and not obj.level2:
                         to_approver = [LEVEL2.email,]
                     else:
                         to_approver = hr_group
