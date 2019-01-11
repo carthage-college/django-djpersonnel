@@ -1,7 +1,7 @@
 [
     {
         "model": "requisition.operation", "pk": 1, "fields": {
-            "created_by": 666, "updated_by": 666,
+            "created_by": 1217657, "updated_by": 1217657,
             "created_at": "2018-09-05T12:08:04",
             "updated_at": "2018-09-05T12:08:04", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,
@@ -13,7 +13,6 @@
             "account_number": "8675309", "salary_type": "Non-exempt",
             "hours_per_week": "37.5", "min_salary_range": "33333.00",
             "mid_salary_range": "44444.00", "max_salary_range": "55555.00",
-            "position_open_date": "2018-02-02",
             "expected_start_date": "2018-05-01",
             "publication_date": "2018-04-20", "applicant_system": "Yes",
             "applicant_system_people": "larry kurkowski",
@@ -23,7 +22,7 @@
         }
     },{
         "model": "requisition.operation", "pk": 7, "fields": {
-            "created_by": 666, "updated_by": 666,
+            "created_by": 1217657, "updated_by": 1217657,
             "created_at": "2018-09-06T08:43:02",
             "updated_at": "2018-09-06T08:43:02", "level3": false,
             "level3_approver": 1470526, "level3_date": null, "level2": false,
@@ -35,7 +34,7 @@
             "budgeted_position": "Yes", "account_number": "8675309",
             "salary_type": "Non-exempt", "hours_per_week": "37.5",
             "min_salary_range": "33333.00", "mid_salary_range": "44444.00",
-            "max_salary_range": "55555.00", "position_open_date": "2018-02-02",
+            "max_salary_range": "55555.00",
             "expected_start_date": "2018-05-01",
             "publication_date": "2018-04-20", "applicant_system": "Yes",
             "applicant_system_people": "Hermes Conrad",
