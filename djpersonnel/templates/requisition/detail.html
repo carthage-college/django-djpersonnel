@@ -139,29 +139,51 @@ $(function() {
             <p>{{data.budgeted_position}}</p>
           </div>
           <!-- /.form-group -->
+          <!-- Hidden unless "Yes" is selected -->
+          {% if data.budgeted_position == 'Yes' %}
           <div class="container-fluid">
-            <h6>{% field_name data 'salary_type' %}</h6>
-            <p>{{data.salary_type}}</p>
+            <h6>{% field_name data 'account_number' %}</h6>
+            <p>{{data.account_number}}</p>
           </div>
+          {% endif %}
           <!-- /.form-group -->
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="container-fluid">
-            <!-- Hidden unless "Yes" is selected -->
-            <div class="form-check {% if data.budgeted_position == 'No' %} hyde{% endif %}" id="account_number">
-              <h6>{% field_name data 'account_number' %}</h6>
-              <p>{{data.account_number}}</p>
+            <div class="form-check">
+              <h6>{% field_name data 'position_grant_funded' %}</h6>
+              <p>{{data.position_grant_funded}}</p>
             </div>
           </div>
           <!-- /.form-group -->
         </div>
+        <!-- Hidden unless "Yes" is selected -->
+        {% if data.position_grant_funded == 'Yes' %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-check">
+              <h6>{% field_name data 'grant_fund_amount' %}</h6>
+              <p>{{data.grant_fund_amount}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        {% endif %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'salary_type' %}</h6>
+            <p>{{data.salary_type}}</p>
+          </div>
+        </div>
         <!-- Hidden unless "Salary" is selected -->
-        <div class="{% if data.budgeted_position == 'Non-exempt' %} hyde{% endif %} pb-4" id="hours_per_week">
-          <div class="col-sm-12">
+        {% if data.budgeted_position == 'Yes' %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
             <h6>{% field_name data 'hours_per_week' %}</h6>
             <p>{{data.hours_per_week}}</p>
           </div>
         </div>
+        {% endif %}
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>Job Salary Range (consult Human Resources)</h6>
         </div>
@@ -201,9 +223,11 @@ $(function() {
             <p>{{data.applicant_system}}</p>
           </div>
           <!-- Hidden unless "Yes" is selected -->
-          <div class="form-check {% if data.applicant_system == 'No' %}hyde{% endif %}" id="applicant_system_people">
+          {% if data.applicant_system == 'No' %}
+          <div class="form-check">
             <p>{{data.applicant_system_people}}</p>
           </div>
+          {% endif %}
         </div>
         <div class="col-sm-12">
           <h6>{% field_name data 'speciality_sites' %}</h6>
@@ -211,9 +235,11 @@ $(function() {
             <p>{{data.speciality_sites}}</p>
           </div>
           <!-- Hidden unless "Yes" is selected -->
-          <div class="form-check {% if data.speciality_sites == 'No' %}hyde{% endif %}" id="speciality_sites_urls">
+          {% if data.speciality_sites == 'No' %}
+          <div class="form-check">
             <p>{{data.speciality_sites_urls}}</p>
           </div>
+          {% endif %}
         </div>
         {% if data.job_description %}
         <div class="col-sm-6">
