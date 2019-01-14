@@ -110,17 +110,10 @@ class Operation(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
     )
-    # NOTE: if 'Yes' to grant funded, then grant number
-    grant_fund_number = models.CharField(
-        "What is the grant fund number?",
-        max_length=25,
-        null=True, blank=True
-    )
     # NOTE: if 'Yes' to grant funded, then grant amount
-    grant_fund_amount = models.CharField(
-        "What is the percentage or amount?",
-        max_length=200,
-        null=True, blank=True
+    grant_fund_amount = models.TextField(
+        null=True, blank=True,
+        help_text='Please specify grant(s) and dollar or percentage amounts'
     )
     salary_type = models.CharField(
         "This position is",
