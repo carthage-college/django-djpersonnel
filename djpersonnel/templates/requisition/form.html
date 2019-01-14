@@ -299,13 +299,12 @@
               <div class="form-check">
                 <label for="{{form.grant_fund_amount.id_for_label}}"
                   {% if form.grant_fund_amount.errors %}class="text-danger"{% endif %}>
-                  <h5>{{form.grant_fund_amount.label}}</h5>
+                  <h5>Please specify grant(s) and dollar or percentage amounts</h5>
                 </label>
-                <input type="text" name="grant_fund_amount"
-                  class="form-control{% if form.grant_fund_amount.errors %} is-invalid{% endif %}"
-                  id="{{form.grant_fund_amount.id_for_label}}"
-                  value="{{form.grant_fund_amount.value|default_if_none:''}}"
-                  placeholder="Please specify grant(s) and dollar or percentage amounts">
+                <textarea rows="2" class="form-control{% if form.grant_fund_amount.errors %} is-invalid{% endif %}"
+                  id="{{form.grant_fund_amount.id_for_label}}" name="{{form.grant_fund_amount.name}}"
+                  placeholder="{{form.grant_fund_amount.help_text}}"
+                  >{{form.grant_fund_amount.value|default_if_none:''}}</textarea>
                 <small class="text-danger">
                   {{form.grant_fund_amount.errors|join:", "}}
                 </small>
