@@ -34,7 +34,6 @@
             title="HR approval"></i>
         </th>
         <th>Pub Date</th>
-        <th>Open Date</th>
         <th>Start Date</th>
         {% if hr %}
         <th class="text-center">
@@ -80,11 +79,11 @@
           </a>
         </td>
         {% if r.declined %}
-        <td colspan="4" class="red text-center font-weight-bold">
+        <td colspan="3" class="red text-center font-weight-bold">
             Requisition Declined
         </td>
         {% else %}{% if r.approved %}
-        <td colspan="4" class="green text-center font-weight-bold">
+        <td colspan="3" class="green text-center font-weight-bold">
             Requisition Approved
         </td>
         {% else %}
@@ -123,7 +122,6 @@
         </td>
         {% endif %}{% endif %}
         <td>{{r.publication_date|date:'Y-m-d'}}</td>
-        <td>{{r.position_open_date|date:'Y-m-d'}}</td>
         <td>{{r.expected_start_date|date:'Y-m-d'}}</td>
         {% if hr %}
         <td class="text-center">
@@ -173,7 +171,6 @@
             title="HR approval"></i>
         </th>
         <th>Pub Date</th>
-        <th>Open Date</th>
         <th>Start Date</th>
         {% if hr %}
         <th class="text-center">
