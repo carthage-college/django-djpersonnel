@@ -791,8 +791,8 @@ class Operation(models.Model):
         """
         Returns the full department name based on 3 or 4 letter code
         """
-        name = self.department_name
-        dept = department(name)
-        if dept:
-            name = dept[0]
-        return name
+        return {
+            'name': department(self.department_name)[0],
+            'old': department(self.old_department)[0],
+            'new': department(self.new_department)[0],
+        }
