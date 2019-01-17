@@ -792,7 +792,7 @@ class Operation(models.Model):
         Returns the full department name based on 3 or 4 letter code
         """
         return {
-            'name': department(self.department_name)[0],
-            'old': department(self.old_department)[0],
-            'new': department(self.new_department)[0],
+            'name': department(self.department_name),
+            'old': department(self.old_department),
+            'new': department(self.new_department)
         }
