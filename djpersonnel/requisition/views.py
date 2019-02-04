@@ -58,7 +58,7 @@ def form_home(request):
                 )
                 template = 'requisition/email/created_by.html'
                 send_mail(
-                    request, to_list, subject, settings.PRF_EMAIL_LIST[0],
+                    request, to_list, subject, settings.HR_EMAIL,
                     template, data, bcc
                 )
 

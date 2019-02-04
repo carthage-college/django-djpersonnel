@@ -251,10 +251,8 @@ def operation_status(request):
                 # we send an email to Level2 if money is involved
                 # and then to HR for final decision. if no money, we send
                 # an email to HR for final decision.
-                hr_group = []
+                hr_group = [settings.HR_EMAIL,]
                 to_approver = []
-                for u in User.objects.filter(groups__name=settings.HR_GROUP):
-                    hr_group.append(u.email)
 
                 if perms['level1']:
                     level = 'level1'

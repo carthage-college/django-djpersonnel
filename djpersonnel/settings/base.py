@@ -199,8 +199,7 @@ BOOTSTRAP4 = {
     'required_css_class': 'required',
 }
 # apps
-PAF_EMAIL_LIST=[]
-PRF_EMAIL_LIST=[]
+HR_EMAIL=''
 HR_GROUP='Human Resources'
 STAFF_GROUP='carthageStaffStatus'
 # approval level positions

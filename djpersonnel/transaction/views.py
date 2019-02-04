@@ -55,7 +55,7 @@ def form_home(request):
                     data.created_by.last_name, data.created_by.first_name
                 )
                 send_mail(
-                    request, to_list, subject, settings.PAF_EMAIL_LIST[0],
+                    request, to_list, subject, settings.HR_EMAIL,
                     template, data, bcc
                 )
 
