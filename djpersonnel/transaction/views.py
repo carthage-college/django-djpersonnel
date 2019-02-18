@@ -46,7 +46,7 @@ def form_home(request):
             if not settings.DEBUG:
 
                 # email distribution list and bcc parameters
-                bcc = [settings.ADMINS[0][1],]
+                bcc = [settings.ADMINS[0][1],settings.HR_EMAIL]
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
                 template = 'transaction/email/created_by.html'

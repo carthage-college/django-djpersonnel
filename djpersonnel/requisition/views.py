@@ -51,7 +51,7 @@ def form_home(request):
 
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
-                bcc = [settings.ADMINS[0][1],]
+                bcc = [settings.ADMINS[0][1],settings.HR_EMAIL]
                 # subject
                 subject = "[PRF Submission] {}, {}".format(
                     data.created_by.last_name, data.created_by.first_name
