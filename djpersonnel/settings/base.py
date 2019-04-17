@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'djpersonnel.requisition',
     # needed for template tags
     'djtools',
+    'loginas',
 ]
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,7 +94,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            #'/data2/django_templates/djkorra/',
             '/data2/django_templates/djbootmin/',
             '/data2/django_templates/djcher/',
             '/data2/django_templates/django-djskins/',

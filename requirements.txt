@@ -7,3 +7,4 @@ bootstrap_admin==0.4.0
 django-bootstrap4==0.0.8
 informixdb==2.5
 openpyxl==2.6.1
+django-loginas==0.3.6
