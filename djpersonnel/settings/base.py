@@ -93,7 +93,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            #'/data2/django_templates/djkorra/',
             '/data2/django_templates/djbootmin/',
             '/data2/django_templates/djcher/',
             '/data2/django_templates/django-djskins/',
