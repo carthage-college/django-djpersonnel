@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'djpersonnel.requisition',
     # needed for template tags
     'djtools',
+    'loginas',
 ]
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
