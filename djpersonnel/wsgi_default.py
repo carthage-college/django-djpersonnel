@@ -7,8 +7,6 @@ import sys
 # python
 sys.path.append('/data2/python_venv/2.7/djpersonnel/lib/python2.7/')
 sys.path.append('/data2/python_venv/2.7/djpersonnel/lib/python2.7/site-packages/')
-sys.path.append('/data2/python_venv/2.7/djpersonnel/lib/django_projects/')
-sys.path.append('/data2/python_venv/2.7/djpersonnel/lib/django-djpersonnel/')
 # django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djpersonnel.settings.production")
 os.environ.setdefault('PYTHON_EGG_CACHE', '')

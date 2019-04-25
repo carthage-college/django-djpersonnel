@@ -184,6 +184,15 @@ $(function() {
           </div>
         </div>
         {% endif %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'level3_approver' %}</h6>
+            <p>
+            {{data.level3_approver.last_name}},
+            {{data.level3_approver.first_name}}
+            </p>
+          </div>
+        </div>
         <div class="col-sm-12 card-header bg-secondary text-white">
           <h6>Job Salary Range (consult Human Resources)</h6>
         </div>
