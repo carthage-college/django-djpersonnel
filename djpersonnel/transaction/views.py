@@ -75,7 +75,6 @@ def form_home(request):
             else:
                 # display the email template
                 template = 'transaction/email/approver.html'
-                #template = 'transaction/email/created_by.html'
                 return render(
                     request, template, {'data': data,'form':form}
                 )
