@@ -122,6 +122,9 @@ def list(request, mod):
     redirect_url=reverse_lazy('access_denied')
 )
 def approver_manager(request):
+    """
+    approver crud
+    """
     user = None
     level3 = settings.LEVEL3_GROUP
     message = None
@@ -134,6 +137,7 @@ def approver_manager(request):
         )
         if form.is_valid():
             data = form.cleaned_data
+            # fetch user or create one if they do not exist
             try:
                 user = User.objects.get(email=data['email'])
             except:
@@ -156,10 +160,10 @@ def approver_manager(request):
 
             if user:
                 group = Group.objects.get(name=level3)
-                logger.debug('cid = {}'.format(request.POST.get('cid')))
+                # if we have a college ID, then we remove the user from
+                # the approver group
                 if request.POST.get('cid'):
                     group.user_set.remove(user)
-                    logger.debug('user groups = {}'.format(user.groups.all()))
                 elif in_group(user, level3):
                     form.add_error(
                         'email', "{}, {} is already in the Approvers group".format(
@@ -227,11 +231,11 @@ def search(request):
     redirect_url=reverse_lazy('access_denied')
 )
 def operation_status(request):
-    '''
+    """
     scope:    set the status on a operation
     options:  approve, decline
     method:   AJAX POST
-    '''
+    """
 
     # requires POST request
     if request.POST:
