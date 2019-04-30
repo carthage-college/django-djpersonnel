@@ -9,11 +9,14 @@ Apps for management of personnel and workflows
 Workflow:
 Ability for supervisor to complete the form electronically
 
-Form will be routed to supervisors for approval (When there is information in the compensation box)
+Form will be routed to supervisors for approval (When there is information in
+the compensation box)
 
-Form will be routed to CFO for approval (The CFO is skipped if there is no compensation)
+Form will be routed to CFO for approval (The CFO is skipped if there is no
+compensation)
 
-Any new hires or changes in bonus or compensation must also be approved by the CFO 
+Any new hires or changes in bonus or compensation must also be approved by the
+CFO
 
 Form will be routed to HR
 
@@ -25,9 +28,31 @@ Approval through email
 
 Ability to show progress through approval workflow
 
-Ability for the supervisor to timestamp a capture user of major events (creation, approvals, rejections) 
+Ability for the supervisor to timestamp a capture user of major events (
+creation, approvals, rejections)
 
-HR is CCed on all forms approved at the end of approval workflow 
+HR is CCed on all forms approved at the end of approval workflow
+
+# From Abby Heinrichs
+
+Typically department chairs will make hires. This would then be approved by the
+Dean. There are four individuals with this level of approval. Corinne Ness,
+Deanna Byrnes, Jackie Easley, and Bill Miller. It is unrealistic to think that
+David Timmerman would have the time to approve all of these forms.
+David should have a way to see the faculty PAFs on the dashboard but should not
+be bothered with the administrative stuff.
+
+There could be many people that fill out one of these forms but they should
+only be approved by the VP's and then the 4 Deans. They are the only ones that
+can send through new hires.
+
+Example:
+
+Psychology department hires a new adjunct. Leslie cameron fills out all of the
+info as she is the one that knows the most about the person that she
+interviewed, then she would select to have it approved by her supervisor who is
+Deanna Byrnes. Deanna can say yep this looks good or nope something has to
+change.
 
 # Form Matrix
 Staff and New Hire are selected

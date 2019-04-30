@@ -1,4 +1,3 @@
-LEVEL3 = '''
 SELECT
     trim(id_rec.lastname) as lastname, trim(id_rec.firstname) as firstname,
     id_rec.id, trim(job_rec.descr) as description, trim(job_rec.job_title) as job_title,
@@ -22,4 +21,3 @@ AND
     job_rec.end_date IS NULL
 ORDER BY
     id_rec.lastname
-'''

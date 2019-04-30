@@ -227,8 +227,8 @@ class Operation(models.Model):
 
     def notify_provost(self):
         """
-        Provost must approve submissions that are approved by a division dean
-        at level 3
+        Provost must be notified about submissions that are approved by a
+        division dean at level 3
         """
         if self.level3_approver.id in get_deans():
             return True
