@@ -37,7 +37,7 @@ HR is CCed on all forms approved at the end of approval workflow
 
 Typically department chairs will make hires. This would then be approved by the
 Dean. There are four individuals with this level of approval. Corinne Ness,
-Deanna Byrnes, Jackie Easley, and Bill Miller. It is unrealistic to think that
+Jackie Easley, Deanna Byrnes, and Bill Miller. It is unrealistic to think that
 David Timmerman would have the time to approve all of these forms.
 David should have a way to see the faculty PAFs on the dashboard but should not
 be bothered with the administrative stuff.
