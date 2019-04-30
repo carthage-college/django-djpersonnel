@@ -45,10 +45,13 @@
 <p>
   Thank you.
 </p>
-{# debuging #}
 {% if data.to_approver %}
 approver = {{data.to_approver}}
 {% endif %}
+{# debuging #}
 {% if templates_debug %}
 level 3 approver email = {{data.level3.email}}
+<hr>
+<h2>Created By Email</h2>
+{% include "transaction/email/created_by.html" %}
 {% endif %}
