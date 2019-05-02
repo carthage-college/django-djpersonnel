@@ -126,7 +126,7 @@ def approver_manager(request):
     approver crud
     """
     user = None
-    level3 = settings.LEVEL3_GROUP
+    level3_group = settings.LEVEL3_GROUP
     message = None
     banner = messages.SUCCESS
     tag = 'alert-success'
@@ -159,12 +159,12 @@ def approver_manager(request):
                     tag = 'alert-danger'
 
             if user:
-                group = Group.objects.get(name=level3)
+                group = Group.objects.get(name=level3_group)
                 # if we have a college ID, then we remove the user from
                 # the approver group
                 if request.POST.get('cid'):
                     group.user_set.remove(user)
-                elif in_group(user, level3):
+                elif in_group(user, level3_group):
                     form.add_error(
                         'email', "{}, {} is already in the Approvers group".format(
                             user.last_name, user.first_name
@@ -193,7 +193,7 @@ def approver_manager(request):
     if request.POST.get('cid'):
         response = HttpResponse('Success', content_type="text/plain; charset=utf-8")
     else:
-        objects = User.objects.filter(groups__name=level3).order_by('last_name')
+        objects = User.objects.filter(groups__name=level3_group).order_by('last_name')
         hr = in_group(request.user, settings.HR_GROUP)
         response = render(
             request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects}
@@ -255,24 +255,28 @@ def operation_status(request):
                 # we send an email to Level2 if money is involved
                 # and then to HR for final decision. if no money, we send
                 # an email to HR for final decision.
-                hr_group = [settings.HR_EMAIL,]
-                to_approver = []
+                hr_list = [settings.HR_EMAIL,]
+                to_approver = hr_list
 
-                if perms['level1']:
-                    level = 'level1'
-                elif perms['level2']:
-                    level = 'level2'
-                    to_approver = hr_group
-                elif perms['level3']:
-                    level = 'level3'
-                    if obj.notify_level2 and not obj.level2:
-                        to_approver = [LEVEL2.email,]
-                    else:
-                        to_approver = hr_group
+                # we will always use the first level in the list unless
+                # 1. VPFA is a level3 approver; or
+                # 2. HR is a level3 approver and no budget impact
+                try:
+                    level = perms['level'][1]
+                except:
+                    level = perms['level'][0]
+                template = '{}/email/{}_{}.html'.format(app, level, status)
+
+                # VPFA will be notified only if the submission does not impact
+                # the budget and she is not the  level3 approver
+                if 'level3' in perms['level'] and obj.notify_level2 \
+                  and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
+                    to_approver = [LEVEL2.email,]
 
                 if status == 'approved':
-                    setattr(obj, level, True)
-                    setattr(obj, '{}_date'.format(level), NOW)
+                    for level in perms['level']:
+                        setattr(obj, level, True)
+                        setattr(obj, '{}_date'.format(level), NOW)
 
                 if status == 'declined':
                     obj.declined = True
@@ -285,7 +289,6 @@ def operation_status(request):
                 subject = "[Personnel {} Form] {}".format(
                     app.capitalize(), status
                 )
-                template = '{}/email/{}_{}.html'.format(app, level, status)
 
                 if settings.DEBUG:
                     obj.to_creator = to_creator

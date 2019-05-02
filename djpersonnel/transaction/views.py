@@ -59,7 +59,9 @@ def form_home(request):
                     template, data, bcc
                 )
 
-                # send email to level3 approver and Provost if need be
+                # send email to level3 approver and Provost, if need be
+                # (the latter of whom just needs notification and
+                # does not approve anything
                 template = 'transaction/email/approver.html'
                 to_list = [level3.email,]
                 if data.notify_provost():
