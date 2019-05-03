@@ -53,7 +53,6 @@ def get_permissions(obj, user):
     # Provost (does not approve any submissions: is notified, and can view)
     elif user.id == PROVOST.id:
         perms['view'] = True
-        #perms['approver'] = True
         perms['provost'] = True
     # VPFA might also be a level 3 approver, but does not approve submissions
     # that do not impact the budget

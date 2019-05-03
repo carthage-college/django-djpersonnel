@@ -3,8 +3,13 @@
     by your area VP/Dean.
 </p>
 <p>
+{% if data.notify_provost %}
     It has now been sent on to the next step for approval by the
     Vice President of Finance and Administration.
+{% else %}
+    It has now been sent to the Human Resources department
+    for final approval.
+{% endif %}
 </p>
 {% if data.notify_provost %}
 <p>

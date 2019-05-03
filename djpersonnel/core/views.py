@@ -255,10 +255,9 @@ def operation_status(request):
                 # we send an email to Level2 if money is involved
                 # and then to HR for final decision. if no money, we send
                 # an email to HR for final decision.
-                hr_list = [settings.HR_EMAIL,]
-                to_approver = hr_list
+                to_approver = [settings.HR_EMAIL,]
 
-                # we will always use the first level in the list unless
+                # we will always use the first level in the list unless:
                 # 1. VPFA is a level3 approver; or
                 # 2. HR is a level3 approver and no budget impact
                 try:
@@ -268,9 +267,8 @@ def operation_status(request):
                 template = '{}/email/{}_{}.html'.format(app, level, status)
 
                 # VPFA will be notified only if the submission does not impact
-                # the budget and she is not the  level3 approver
-                if 'level3' in perms['level'] and obj.notify_level2 \
-                  and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
+                # the budget and she is not the level3 approver
+                if obj.notify_level2 and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
                     to_approver = [LEVEL2.email,]
 
                 if status == 'approved':
@@ -293,18 +291,17 @@ def operation_status(request):
                 if settings.DEBUG:
                     obj.to_creator = to_creator
                     to_creator = [settings.MANAGERS[0][1],]
-                    if to_approver:
-                        obj.to_approver = to_approver
-                        to_approver = [settings.MANAGERS[0][1],]
+                    obj.to_approver = to_approver
+                    to_approver = [settings.MANAGERS[0][1],]
 
                 # notify the creator of current status
                 send_mail(
                     request, to_creator, subject, frum, template, obj, bcc
                 )
 
-                # notify the next approver if we have one and the submission
-                # has not been declined
-                if to_approver and status == 'approved':
+                # notify the next approver if it is not completely approved
+                # and the submission has not been declined
+                if not obj.approved and status == 'approved':
                     send_mail(
                         request, to_approver, subject, frum,
                         '{}/email/approver.html'.format(app), obj, bcc
