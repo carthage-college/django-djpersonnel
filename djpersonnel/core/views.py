@@ -252,6 +252,16 @@ def operation_status(request):
             if perms['approver'] and status in ['approved','declined']:
 
                 from djtools.fields import NOW
+                if status == 'approved':
+                    for level in perms['level']:
+                        setattr(obj, level, True)
+                        setattr(obj, '{}_date'.format(level), NOW)
+
+                if status == 'declined':
+                    obj.declined = True
+
+                obj.save()
+
                 # we send an email to Level2 if money is involved
                 # and then to HR for final decision. if no money, we send
                 # an email to HR for final decision.
@@ -270,16 +280,6 @@ def operation_status(request):
                 # the budget and she is not the level3 approver
                 if obj.notify_level2 and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
                     to_approver = [LEVEL2.email,]
-
-                if status == 'approved':
-                    for level in perms['level']:
-                        setattr(obj, level, True)
-                        setattr(obj, '{}_date'.format(level), NOW)
-
-                if status == 'declined':
-                    obj.declined = True
-
-                obj.save()
 
                 bcc = [settings.ADMINS[0][1],]
                 frum = user.email
@@ -301,7 +301,7 @@ def operation_status(request):
 
                 # notify the next approver if it is not completely approved
                 # and the submission has not been declined
-                if not obj.approved and status == 'approved':
+                if not obj.approved() and status == 'approved':
                     send_mail(
                         request, to_approver, subject, frum,
                         '{}/email/approver.html'.format(app), obj, bcc

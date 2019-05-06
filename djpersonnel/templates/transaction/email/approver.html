@@ -50,7 +50,7 @@ approver = {{data.to_approver}}
 {% endif %}
 {# debuging #}
 {% if templates_debug %}
-level 3 approver email = {{data.level3.email}}
+level 3 approver email = {{data.level3_approver.email}}
 <hr>
 <h2>Created By Email</h2>
 {% include "transaction/email/created_by.html" %}
