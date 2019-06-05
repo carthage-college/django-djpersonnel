@@ -50,19 +50,19 @@ class Operation(models.Model):
         related_name='prf_operation_approver',
         null=True, blank=True
     )
-    level3_date = models.DateTimeField(
+    level3_date = models.DateField(
         "Level 3 signed date",
         null=True, blank=True
     )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
-    level2_date = models.DateTimeField(
+    level2_date = models.DateField(
         "Level 2 signed date",
         null=True, blank=True
     )
     # HR
     level1 = models.BooleanField(default=False)
-    level1_date = models.DateTimeField(
+    level1_date = models.DateField(
         "Level 1 Signed Date",
         null=True, blank=True
     )
