@@ -29,4 +29,4 @@ urlpatterns = [
         views.operation_status, name='operation_status'
     ),
 ]
-urlpatterns += url("admin/", include('loginas.urls')),
+urlpatterns += url('admin/', include('loginas.urls')),
