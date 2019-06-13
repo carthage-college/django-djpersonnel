@@ -28,7 +28,7 @@ logger = logging.getLogger('debug_logfile')
 
 
 @portal_auth_required(
-    session_var='DJVISION_AUTH',
+    session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def home(request):
@@ -66,7 +66,7 @@ def home(request):
 
 
 @portal_auth_required(
-    session_var='DJVISION_AUTH',
+    session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def list(request, mod):
@@ -118,7 +118,7 @@ def list(request, mod):
 @csrf_exempt
 @portal_auth_required(
     group = settings.HR_GROUP,
-    session_var='DJVISION_AUTH',
+    session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def approver_manager(request):
@@ -202,7 +202,7 @@ def approver_manager(request):
 
 
 @portal_auth_required(
-    session_var='DJVISION_AUTH',
+    session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def search(request):
@@ -227,7 +227,7 @@ def search(request):
 
 @csrf_exempt
 @portal_auth_required(
-    session_var='DJVISION_AUTH',
+    session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
 def operation_status(request):
