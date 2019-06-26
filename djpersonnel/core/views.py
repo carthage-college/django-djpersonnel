@@ -23,9 +23,6 @@ from djzbar.utils.hr import get_cid
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
-import logging
-logger = logging.getLogger('debug_logfile')
-
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
