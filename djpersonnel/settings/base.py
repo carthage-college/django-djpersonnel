@@ -305,6 +305,16 @@ LOGGING = {
         }
     },
     'loggers': {
+        'djpersonnel': {
+            'handlers':['debug_logfile'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'djpersonnel.core': {
+            'handlers':['debug_logfile'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
         'provisioning_logger': {
             'handlers': ['error_logfile'],
             'level': 'ERROR'
