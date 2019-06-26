@@ -4,6 +4,8 @@ from django.views.generic import RedirectView, TemplateView
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 
+from djpersonnel.core.views import home
+
 from djauth.views import loggedout
 
 admin.autodiscover()
@@ -56,6 +58,6 @@ urlpatterns = [
     ),
     # redirect home to dashboard
     url(
-        r'^$', RedirectView.as_view(url=reverse_lazy('dashboard_home'))
+        r'^$', home, name='dashboard_home'
     )
 ]
