@@ -994,7 +994,7 @@
                   {% if form.offered_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.offered_compensation.label}}</h5>
                 </label>
-                <input type="text" name="offered_compensation"
+                <input type="number" name="offered_compensation"
                   placeholder="Annual salary/rate of pay" class="form-control
                   {% if form.offered_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.offered_compensation.id_for_label}}"
@@ -2043,7 +2043,7 @@
                   {% if form.current_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.current_compensation.label}}</h5>
                 </label>
-                <input type="text" name="{{form.current_compensation.name}}"
+                <input type="number" name="{{form.current_compensation.name}}"
                   class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.current_compensation.id_for_label}}"
                   value="{{form.current_compensation.value|default_if_none:''}}"
@@ -2064,7 +2064,7 @@
                   {% if form.new_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.new_compensation.label}}</h5>
                 </label>
-                <input type="text" name="{{form.new_compensation.name}}"
+                <input type="number" name="{{form.new_compensation.name}}"
                   placeholder="New annual salary/rate of pay" class="form-control
                   {% if form.new_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.new_compensation.id_for_label}}"
