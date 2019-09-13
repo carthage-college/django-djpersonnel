@@ -71,6 +71,7 @@ def list(request, mod):
     complete listing of all objects
     """
 
+    deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
