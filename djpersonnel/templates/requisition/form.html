@@ -618,6 +618,22 @@
             {% endfor %}
             </select>
           </div>
+          <div class="col-8">
+            <div class="form-group">
+              <div class="form-check">
+              <label for="{{form.plan_timeline.id_for_label}}"
+                {% if form.plan_timeline.errors %}class="text-danger"{% endif %}>
+                <h5>{{form.plan_timeline.label}}</h5>
+              </label>
+              <textarea rows="4" id="id_plan_timeline" name="plan_timeline"
+                class="form-control{% if form.plan_timeline.errors %} is-invalid{% endif %}"
+                style="width:100% !important;">{{form.plan_timeline.value|default_if_none:''}}</textarea>
+              <small class="text-danger">
+                {{form.plan_timeline.errors|join:", "}}
+              </small>
+              </div>
+            </div>
+          </div>
           <div class="col-12 pb-2 text-center">
             <button class="btn btn-primary" style="width:200px;" type="submit">
               Submit

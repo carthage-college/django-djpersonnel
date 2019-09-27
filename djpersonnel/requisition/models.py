@@ -194,6 +194,10 @@ class Operation(models.Model):
         help_text="PDF or Word format",
         null=True, blank=True
     )
+    plan_timeline = models.TextField(
+        "Recruitment Plan and Timeline",
+        help_text='Please specify grant(s) and dollar or percentage amounts'
+    )
 
     class Meta:
         ordering  = ['-created_at']
