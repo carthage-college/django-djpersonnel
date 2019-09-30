@@ -40,9 +40,10 @@ def form_home(request, rid=None):
             data.updated_by = user
             data.save()
 
-            # send email to creator and approver or display it for dev
+            # send email to creator and approver or display it for dev,
+            # and do not send it if we are updating the object
             template = 'requisition/email/approver.html'
-            if not settings.DEBUG:
+            if not settings.DEBUG and not obj:
 
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email,]
@@ -78,11 +79,11 @@ def form_home(request, rid=None):
                     request, template, {'data': data,'form':form}
                 )
     else:
-        form = OperationForm(instance=obj, label_suffix='', use_required_attribute=False)
+        form = OperationForm(instance=obj,label_suffix='',use_required_attribute=False)
 
     hr = in_group(user, settings.HR_GROUP)
     return render(
-        request,'requisition/form.html',{'hr':hr, 'form': form,'obj':obj}
+        request,'requisition/form.html',{'hr':hr, 'form': form,}
     )
 
 
