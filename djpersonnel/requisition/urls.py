@@ -16,13 +16,10 @@ urlpatterns = [
         ),
         name='requisition_form_success'
     ),
-    #
-    # dashboard URLs
-    #
     # requisition update
     url(
         r'^(?P<rid>\d+)/update/$',
-        views.update, name='requisition_update'
+        views.form_home, name='requisition_update'
     ),
     # requisition detail
     url(

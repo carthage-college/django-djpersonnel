@@ -41,6 +41,11 @@
             data-placement="top" aria-hidden="true"
             title="Delete this PRF"></i>
         </th>
+        <th class="text-center">
+          <i class="fa fa-pencil green blue-tooltip"  data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update this PRF"></i>
+        </th>
         {% endif %}
       </tr>
     </thead>
@@ -58,7 +63,7 @@
               title="This is a new position"></i>
             {% else %}
             <i class="fa fa-user green blue-tooltip" data-toggle="tooltip"
-              data-placement="top" aria-hidden="true"
+              data-placement="top" aria-hidden="true" style="margin-right:6px;"
               title="This position replaces '{{r.replacement_name}}'"></i>
             {% endif %}
             </div>
@@ -133,6 +138,14 @@
               title="Delete Personnel Requisition: {{r.position_title}}"></i>
           </a>
         </td>
+        <td class="text-center">
+          <a href="{% url 'requisition_update' r.id %}"
+            data-title="PRF: {{r.position_title}}">
+            <i class="fa fa-pencil green blue-tooltip"  data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="Update Personnel Requisition: {{r.position_title}}"></i>
+          </a>
+        </td>
         {% endif %}
       </tr>
       {% endfor %}
@@ -177,6 +190,11 @@
           <i class="fa fa-trash green blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Delete this PRF"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-pencil green blue-tooltip"  data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update this PRF"></i>
         </th>
         {% endif %}
       </tr>

@@ -396,6 +396,7 @@
               placeholder="Minimum Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
+              {{form.min_salary_range.help_text}}<br>
               {{form.min_salary_range.errors|join:", "}}
             </small>
           </div>
@@ -412,6 +413,7 @@
               placeholder="Midpoint Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
+              {{form.mid_salary_range.help_text}}<br>
               {{form.mid_salary_range.errors|join:", "}}
             </small>
           </div>
@@ -428,18 +430,19 @@
               placeholder="Maximum Salary Range"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
+              {{form.max_salary_range.help_text}}<br>
               {{form.max_salary_range.errors|join:", "}}
             </small>
           </div>
           <div class="col-sm-6 pb-3">
             <label for="{{form.publication_date.id_for_label}}"
             {% if form.publication_date.errors %}class="text-danger"{% endif %}>
-              <h5>{{form.publication_date.label}}</h5>
+            <h5>{{form.publication_date.label}}</h5>
             </label>
             <input type="date" name="publication_date"
               class="form-control{% if form.publication_date.errors %} is-invalid{% endif %}"
               id="{{form.publication_date.id_for_label}}"
-              value="{{form.publication_date.value|default:''}}"
+              value="{{form.publication_date.value|date:'Y-m-d'|default:''}}"
               title="{{form.publication_date.help_text}}"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
@@ -454,7 +457,7 @@
             <input type="date" name="expected_start_date"
               class="form-control{% if form.expected_start_date.errors %} is-invalid{% endif %}"
               id="{{form.expected_start_date.id_for_label}}"
-              value="{{form.expected_start_date.value|default:''}}"
+              value="{{form.expected_start_date.value|date:'Y-m-d'|default:''}}"
               {% if not templates_debug %}required{% endif %}>
             <small class="text-danger">
               {{form.expected_start_date.errors|join:", "}}
@@ -576,10 +579,10 @@
                 </small>
               </h5>
             </label>
-            <input type="file" name="job_description" id="{{form.job_description.id_for_label}}"
-              class="form-control{% if form.job_description.errors %} is-invalid{% endif %}">
-            <small>
-                All submission must be accompanied by a job description. ({{form.job_description.help_text}})
+            {{form.job_description}}
+            <small class="text-danger">
+              <br>
+              {{form.job_description.help_text}}
             </small>
           </div>
           <div class="col-sm-6 pb-2">
@@ -588,32 +591,31 @@
                 {{form.ad_copy.label}}
               </h5>
             </label>
-            <input type="file" name="ad_copy" id="{{form.ad_copy.id_for_label}}"
-              class="form-control{% if form.ad_copy.errors %} is-invalid{% endif %}">
-            <small>
+            {{form.ad_copy}}
+            <small class="text-danger"><br>
               ({{form.ad_copy.help_text}})
             </small>
           </div>
           <div class="col-sm-6 pb-2">
-            <label for="{{form.approver.id_for_label}}"
-              {% if form.approver.errors %}class="text-danger"{% endif %}>
+            <label for="{{form.level3_approver.id_for_label}}"
+              {% if form.level3_approver.errors %}class="text-danger"{% endif %}>
               <h5>
-                {{form.approver.label}}
+                {{form.level3_approver.label}}
                 <small class="text-danger">
-                  {{form.approver.errors|join:", "}}
+                  {{form.level3_approver.errors|join:", "}}
                 </small>
               </h5>
             </label>
             <select class="form-control"
-              id="{{form.approver.id_for_label}}"
-              name="approver"
+              id="{{form.level3_approver.id_for_label}}"
+              name="level3_approver"
               {% if not templates_debug %} required{% endif %}>
-            {% for value, text in form.fields.approver.choices %}
+            {% for value, text in form.fields.level3_approver.choices %}
               <option value="{{value}}"
-                {% if form.approver.value == value %}
+                {% if form.level3_approver.value|lower == value %}
                   selected
                 {% endif %}>
-                {{text}}
+              {{text}}
               </option>
             {% endfor %}
             </select>

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.contrib.auth.models import User
 
 from djpersonnel.requisition.models import Operation
 from djpersonnel.core.utils import level3_choices
@@ -25,7 +26,7 @@ class OperationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OperationForm, self).__init__(*args, **kwargs)
-        self.fields['approver'] = forms.ChoiceField(
+        self.fields['level3_approver'] = forms.ChoiceField(
             label="Who will approve this request for you?",
             choices=level3_choices()
         )
@@ -36,7 +37,8 @@ class OperationForm(forms.ModelForm):
         exclude = [
             'created_by','updated_by','created_at','updated_at',
             'level1,level1_date','level2,level2_date','level3,level3_date',
-            'level3_approver','decline','email_approved'
+            #'level3_approver','decline','email_approved'
+            'decline','email_approved'
         ]
 
     def clean_replacement_name(self):
@@ -90,3 +92,15 @@ class OperationForm(forms.ModelForm):
                 "the speciality site(s)."))
 
         return cd['speciality_sites_urls']
+
+    def clean_level3_approver(self):
+        cd = self.cleaned_data
+        approver = cd.get('level3_approver')
+
+        if approver:
+            cd['level3_approver'] = User.objects.get(pk=approver)
+        else:
+            cd['level3_approver'] = None
+
+        #return cd
+        return cd['level3_approver']

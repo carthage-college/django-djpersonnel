@@ -131,19 +131,19 @@ class Operation(models.Model):
         "Minimum Salary Range",
         decimal_places=2,
         max_digits=16,
-        help_text="List the minimum salary range for this position"
+        help_text="Format: 00000.00 with no comma or $ sign"
     )
     mid_salary_range = models.DecimalField(
         "Midpoint Salary Range",
         decimal_places=2,
         max_digits=16,
-        help_text="List the midpoint salary range for this position"
+        help_text="Format: 00000.00 with no comma or $ sign"
     )
     max_salary_range = models.DecimalField(
         "Maximum Salary Range",
         decimal_places=2,
         max_digits=16,
-        help_text="List the maximum salary range for this position"
+        help_text="Format: 00000.00 with no comma or $ sign"
     )
     expected_start_date = models.DateField(
         "Expected Start Date"
@@ -183,8 +183,10 @@ class Operation(models.Model):
         upload_to=upload_to_path,
         #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
-        help_text="PDF or Word format",
-        null=True, blank=True
+        help_text="""
+            All submission must be accompanied by a job description.
+            (PDF or Word format)
+        """, null=True, blank=True
     )
     ad_copy = models.FileField(
         "Ad Copy",

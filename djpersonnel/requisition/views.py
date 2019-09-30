@@ -20,29 +20,24 @@ from djauth.LDAPManager import LDAPManager
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied')
 )
-def form_home(request):
-
+def form_home(request, rid=None):
     user = request.user
-    if request.method=='POST':
+    obj = None
+    if rid:
+        obj = get_object_or_404(Operation, pk=rid)
+        # only HR folks can update PRF at the moment
+        if not in_group(user, settings.HR_GROUP):
+            return HttpResponseRedirect(reverse_lazy('access_denied'))
 
+    if request.method=='POST':
         form = OperationForm(
-            data=request.POST, files=request.FILES, label_suffix=''
+            data=request.POST,instance=obj,files=request.FILES,label_suffix='',
+            use_required_attribute=False
         )
         if form.is_valid():
-
-            # deal with level 3 approver
-            lid = form.cleaned_data['approver']
-            try:
-                level3 = User.objects.get(pk=lid)
-            except:
-                l = LDAPManager()
-                luser = l.search(lid)
-                level3 = l.dj_create(luser)
-
             data = form.save(commit=False)
             data.created_by = user
             data.updated_by = user
-            data.level3_approver = level3
             data.save()
 
             # send email to creator and approver or display it for dev
@@ -66,7 +61,7 @@ def form_home(request):
                 # (the latter of whom just needs notification and
                 # does not approve anything
                 template = 'requisition/email/approver.html'
-                to_list = [level3.email,]
+                to_list = [data.level3_approver.email,]
                 if data.notify_provost():
                     to_list.append(PROVOST.email)
                 send_mail(
@@ -83,11 +78,11 @@ def form_home(request):
                     request, template, {'data': data,'form':form}
                 )
     else:
-        form = OperationForm(label_suffix='')
+        form = OperationForm(instance=obj, label_suffix='', use_required_attribute=False)
 
     hr = in_group(user, settings.HR_GROUP)
     return render(
-        request, 'requisition/form.html', {'hr':hr, 'form': form,}
+        request,'requisition/form.html',{'hr':hr, 'form': form,'obj':obj}
     )
 
 
@@ -96,7 +91,7 @@ def form_home(request):
     redirect_url=reverse_lazy('access_denied')
 )
 def detail(request, rid):
-    data = get_object_or_404(Operation, id=rid)
+    data = get_object_or_404(Operation, pk=rid)
     user = request.user
     perms = data.permissions(user)
     if not perms['view']:
@@ -114,7 +109,7 @@ def detail(request, rid):
     redirect_url=reverse_lazy('access_denied')
 )
 def delete(request, rid):
-    obj = get_object_or_404(Operation, id=rid)
+    obj = get_object_or_404(Operation, pk=rid)
     title = obj.position_title
     obj.delete()
 
@@ -130,12 +125,3 @@ def delete(request, rid):
 
     return HttpResponseRedirect(redirect)
 
-
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
-)
-def update(request, pid):
-    return render(
-        request, 'requisition/update.html', {}
-    )
