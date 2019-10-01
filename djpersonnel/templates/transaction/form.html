@@ -300,6 +300,20 @@
     {% if form.temporary_interim_pay.value == 'Yes' %}
     $('#endDate').show();
     {% endif %}
+    $(document).on('keyup paste', '#id_current_compensation', function() {
+        var $cur = $("#id_current_compensation").val();
+        var $gnu = $("#id_new_compensation").val();
+        //var $change = ((($gnu - $cur)/$cur)*100).toFixed();
+        var $change = Math.round((($gnu - $cur)/$cur)*100);
+        $("#compensation-change").text($change);
+    });
+    $(document).on('keyup paste', '#id_new_compensation', function() {
+        var $cur = $("#id_current_compensation").val();
+        var $gnu = $("#id_new_compensation").val();
+        //var $change = ((($gnu - $cur)/$cur)*100).toFixed();
+        var $change = Math.round((($gnu - $cur)/$cur)*100);
+        $("#compensation-change").text($change);
+    });
     /* end compensation change */
     /* onetime payment */
     var $grantPay = $('input[name="grant_pay"]');
@@ -994,12 +1008,13 @@
                   {% if form.offered_compensation.errors %}class="text-danger"{% endif %}>
                   <h5>{{form.offered_compensation.label}}</h5>
                 </label>
-                <input type="number" name="offered_compensation"
+                <input type="number" name="offered_compensation" step="0.01"
                   placeholder="Annual salary/rate of pay" class="form-control
                   {% if form.offered_compensation.errors %} is-invalid{% endif %}"
                   id="{{form.offered_compensation.id_for_label}}"
                   value="{{form.offered_compensation.value|default_if_none:''}}">
                 <small class="text-danger">
+                  {{form.offered_compensation.help_text}}<br>
                   {{form.offered_compensation.errors|join:", "}}
                 </small>
               </div>
@@ -1178,7 +1193,7 @@
                 </label>
                 <input type="number" placeholder="Grant number" name="{{form.grant_fund_number.name}}"
                   class="form-control{% if form.grant_fund_number.errors %} is-invalid{% endif %}"
-                  id="{{form.grant_fund_number.id_for_label}}"
+                  id="{{form.grant_fund_number.id_for_label}}" step="0.01"
                   value="{{form.grant_fund_number.value|default_if_none:''}}">
                 <small class="text-danger">
                   {{form.grant_fund_number.errors|join:", "}}
@@ -1620,9 +1635,10 @@
                 </label>
                 <input class="form-control {% if form.seven_week_amount.errors %} is-invalid{% endif %}"
                   type="number" name="{{form.seven_week_amount.name}}" placeholder="Do not include $ sign"
-                  id="{{form.seven_week_amount.id_for_label}}" step="0.01"-
+                  id="{{form.seven_week_amount.id_for_label}}" step="0.01"
                   value="{{form.seven_week_amount.value|default_if_none:''}}">
                 <small class="text-danger">
+                  {{form.offered_compensation.help_text}}<br>
                   {{form.seven_week_amount.errors|join:", "}}
                 </small>
               </div>
@@ -2036,7 +2052,7 @@
           <!--
           Hidden unless faculty or staff and "compensation change" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff compensation-change">
+          <div class="col-md-5 pb-3 facstaff compensation-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.current_compensation.id_for_label}}"
@@ -2045,19 +2061,24 @@
                 </label>
                 <input type="number" name="{{form.current_compensation.name}}"
                   class="form-control{% if form.current_compensation.errors %} is-invalid{% endif %}"
-                  id="{{form.current_compensation.id_for_label}}"
+                  id="{{form.current_compensation.id_for_label}}" step="0.01"
                   value="{{form.current_compensation.value|default_if_none:''}}"
                   placeholder="Current annual salary/rate of pay">
                 <small class="text-danger">
+                  {{form.offered_compensation.help_text}}<br>
                   {{form.current_compensation.errors|join:", "}}
                 </small>
               </div>
             </div>
           </div>
+          <div class="col-md-1 pb-3 facstaff compensation-change" style="text-align:center;">
+            <span id="compensation-change">0</span>%
+            <br>change
+          </div>
           <!--
           Hidden unless faculty or staff and "compensation change" is checked
           -->
-          <div class="col-md-6 pb-3 facstaff compensation-change">
+          <div class="col-md-5 pb-3 facstaff compensation-change">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.new_compensation.id_for_label}}"
@@ -2067,9 +2088,10 @@
                 <input type="number" name="{{form.new_compensation.name}}"
                   placeholder="New annual salary/rate of pay" class="form-control
                   {% if form.new_compensation.errors %} is-invalid{% endif %}"
-                  id="{{form.new_compensation.id_for_label}}"
+                  id="{{form.new_compensation.id_for_label}}" step="0.01"
                   value="{{form.new_compensation.value|default_if_none:''}}">
                 <small class="text-danger">
+                  {{form.offered_compensation.help_text}}<br>
                   {{form.new_compensation.errors|join:", "}}
                 </small>
               </div>
@@ -2183,10 +2205,11 @@
                   <h5>{{form.amount.label}}</h5>
                 </label>
                 <input class="form-control {% if form.amount.errors %} is-invalid{% endif %}"
-                  type="text" name="{{form.amount.name}}" placeholder="Amount"
-                  id="{{form.amount.id_for_label}}"
+                  type="number" name="{{form.amount.name}}" placeholder="Amount"
+                  id="{{form.amount.id_for_label}}" step="0.01"
                   value="{{form.amount.value|default_if_none:''}}">
                 <small class="text-danger">
+                  {{form.amount.help_text}}<br>
                   {{form.amount.errors|join:", "}}
                 </small>
               </div>

@@ -220,7 +220,7 @@ class Operation(models.Model):
         choices=EMPLOYEE_TYPE_CHOICES,
     )
     reporting_to = models.CharField(
-        verbose_name='To Whom will the new hire be reporting?',
+        verbose_name='To whom will the new hire be reporting?',
         max_length=255
     )
     # NOTE: the choices will bring up a set of fields to filled out
@@ -299,6 +299,7 @@ class Operation(models.Model):
         verbose_name='Annual salary/rate of pay',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     expected_start_date = models.DateField(
@@ -435,6 +436,7 @@ class Operation(models.Model):
         "7 week $ amount",
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     # end adjunct music
@@ -478,12 +480,14 @@ class Operation(models.Model):
         verbose_name='Current annual salary/rate of pay',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     new_compensation = models.DecimalField(
         verbose_name='New annual salary/rate of pay',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     salary_change_reason = models.CharField(
@@ -512,6 +516,7 @@ class Operation(models.Model):
         verbose_name='Onetime Payment Amount',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     amount_reason = models.CharField(
@@ -665,12 +670,14 @@ class Operation(models.Model):
         verbose_name='Supplement Life Policy Amount',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     supplement_life_ppp_contribution = models.DecimalField(
         verbose_name='Supplement Life PPP Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     health_insurance_plan_tier = models.CharField(
@@ -682,30 +689,35 @@ class Operation(models.Model):
         verbose_name='Carthage Health Insurance Compensation Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     hsa_annual_ppp_contribution = models.DecimalField(
         verbose_name='HSA Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     hsa_carthage_contribution = models.DecimalField(
         verbose_name='HSA Carthage Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     fsa_medical_annual_ppp_contribution = models.DecimalField(
         verbose_name='FSA Medical Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     fsa_dependent_care_annual_ppp_contribution = models.DecimalField(
         verbose_name='FSA Dependent Care Annual PPP Contribution',
         decimal_places=2,
         max_digits=16,
+        help_text="Format: 00000.00 with no comma or $ sign",
         null=True, blank=True
     )
     comments = models.TextField(

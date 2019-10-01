@@ -32,12 +32,13 @@
           {% endif %}>
           <h5>{{form.supplement_life_policy_amount.label}}</h5>
         </label>
-        <input type="text" name="supplement_life_policy_amount"
+        <input type="number" name="supplement_life_policy_amount" step="0.01"
           class="form-control{% if form.supplement_life_policy_amount.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_policy_amount.id_for_label}}"
           value="{{form.supplement_life_policy_amount.value|default_if_none:''}}"
           placeholder="Supplement Life Policy Amount">
         <small class="text-danger">
+          {{form.supplement_life_policy_amount.help_text}}<br>
           {{form.supplement_life_policy_amount.errors|join:", "}}
         </small>
       </div>
@@ -52,12 +53,13 @@
           {% endif %}>
           <h5>{{form.supplement_life_ppp_contribution.label}}</h5>
         </label>
-        <input type="text" name="supplement_life_ppp_contribution"
+        <input type="number" name="supplement_life_ppp_contribution" step="0.01"
           class="form-control{% if form.supplement_life_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.supplement_life_ppp_contribution.id_for_label}}"
           value="{{form.supplement_life_ppp_contribution.value|default_if_none:''}}"
           placeholder="Supplement Life PPP Contribution">
         <small class="text-danger">
+          {{form.supplement_life_ppp_contribution.help_text}}<br>
           {{form.supplement_life_ppp_contribution.errors|join:", "}}
         </small>
       </div>
@@ -94,12 +96,13 @@
           {% endif %}>
           <h5>{{form.cc_health_insurance_compensation_contribution.label}}</h5>
         </label>
-        <input type="text" name="cc_health_insurance_compensation_contribution"
+        <input type="number" name="cc_health_insurance_compensation_contribution" step="0.01"
           class="form-control{% if form.cc_health_insurance_compensation_contribution.errors %} is-invalid{% endif %}"
           id="{{form.cc_health_insurance_compensation_contribution.id_for_label}}"
           value="{{form.cc_health_insurance_compensation_contribution.value|default_if_none:''}}"
           placeholder="Carthage Health Insurance Compensation Contribution">
         <small class="text-danger">
+          {{form.cc_health_insurance_compensation_contribution.help_text}}<br>
           {{form.cc_health_insurance_compensation_contribution.errors|join:", "}}
         </small>
       </div>
@@ -114,12 +117,13 @@
           {% endif %}>
           <h5>{{form.hsa_annual_ppp_contribution.label}}</h5>
         </label>
-        <input type="text" name="hsa_annual_ppp_contribution"
+        <input type="number" name="hsa_annual_ppp_contribution" step="0.01"
           class="form-control{% if form.hsa_annual_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.hsa_annual_ppp_contribution.id_for_label}}"
           value="{{form.hsa_annual_ppp_contribution.value|default_if_none:''}}"
           placeholder="HSA Annual or PPP Contribution">
         <small class="text-danger">
+          {{form.hsa_annual_ppp_contribution.help_text}}<br>
           {{form.hsa_annual_ppp_contribution.errors|join:", "}}
         </small>
       </div>
@@ -134,12 +138,13 @@
           {% endif %}>
           <h5>{{form.hsa_carthage_contribution.label}}</h5>
         </label>
-        <input type="text" name="hsa_carthage_contribution"
+        <input type="number" name="hsa_carthage_contribution" step="0.01"
           class="form-control{% if form.hsa_carthage_contribution.errors %} is-invalid{% endif %}"
           id="{{form.hsa_carthage_contribution.id_for_label}}"
           value="{{form.hsa_carthage_contribution.value|default_if_none:''}}"
           placeholder="HSA Carthage Contribution">
         <small class="text-danger">
+          {{form.hsa_carthage_contribution.help_text}}<br>
           {{form.hsa_carthage_contribution.errors|join:", "}}
         </small>
       </div>
@@ -154,12 +159,13 @@
           {% endif %}>
           <h5>{{form.fsa_medical_annual_ppp_contribution.label}}</h5>
         </label>
-        <input type="text" name="fsa_medical_annual_ppp_contribution"
+        <input type="number" name="fsa_medical_annual_ppp_contribution" step="0.01"
           class="form-control{% if form.fsa_medical_annual_ppp_contribution.errors %} is-invalid{% endif %}"
           id="{{form.fsa_medical_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_medical_annual_ppp_contribution.value|default_if_none:''}}"
           placeholder="FSA Medical Annual or PPP Contribution">
         <small class="text-danger">
+          {{form.fsa_medical_annual_ppp_contribution.help_text}}<br>
           {{form.fsa_medical_annual_ppp_contribution.errors|join:", "}}
         </small>
       </div>
@@ -174,13 +180,14 @@
           {% endif %}>
           <h5>{{form.fsa_dependent_care_annual_ppp_contribution.label}}</h5>
         </label>
-        <input type="text" class="form-control
+        <input type="number" class="form-control
           {% if form.fsa_dependent_care_annual_ppp_contribution.errors %} is-invalid{% endif %}"
-          name="fsa_dependent_care_annual_ppp_contribution"
+          name="fsa_dependent_care_annual_ppp_contribution" step="0.01"
           id="{{form.fsa_dependent_care_annual_ppp_contribution.id_for_label}}"
           value="{{form.fsa_dependent_care_annual_ppp_contribution.value|default_if_none:''}}"
           placeholder="FSA Dependent Care Annual or PPP Contribution">
         <small class="text-danger">
+          {{form.fsa_dependent_care_annual_ppp_contribution.help_text}}<br>
           {{form.fsa_dependent_care_annual_ppp_contribution.errors|join:", "}}
         </small>
       </div>
