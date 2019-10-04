@@ -1,30 +1,28 @@
-from django.conf.urls import include, url
+from django.urls import include, path, re_path
 
 from djpersonnel.core import views
 
 
 urlpatterns = [
     # complete lising
-    url(
-        r'^(?P<mod>[-\w]+)/list/', views.list, name='dashboard_list'
+    re_path(
+        r'^(?P<mod>[-\w]+)/list/$', views.list, name='dashboard_list'
     ),
     # export to openxml
-    url(
-        r'^(?P<mod>[-\w]+)/openxml/', views.openxml, name='openxml'
+    re_path(
+        r'^(?P<mod>[-\w]+)/openxml/$', views.openxml, name='openxml'
     ),
     # approver manager
-    url(
-        r'^approver/',
-        views.approver_manager, name='approver_manager'
+    path(
+        'approver/', views.approver_manager, name='approver_manager'
     ),
     # proposal status view for 'approve' or 'decline' actions
-    url(
-        r'^operation/status/',
-        views.operation_status, name='operation_status'
+    path(
+        'operation/status/', views.operation_status, name='operation_status'
     ),
     # dashboard home listing display
-    url(
-        r'^', views.home, name='dashboard_home'
+    path(
+        '', views.home, name='dashboard_home'
     ),
 ]
-urlpatterns += url('admin/', include('loginas.urls')),
+urlpatterns += path('admin/', include('loginas.urls')),

@@ -2,7 +2,7 @@
 from django import forms
 
 from djpersonnel.transaction.models import (
-    ACADEMIC_YEARS, Operation, TEACHING_APPOINTMENT_CHOICES
+    Operation, TEACHING_APPOINTMENT_CHOICES
 )
 from djpersonnel.core.utils import level3_choices
 
@@ -80,7 +80,7 @@ class NewhireRehireForm(forms.Form):
     grant_fund_amount = forms.CharField(required=False)
     #
     moving_expenses = forms.TypedChoiceField()
-    moving_expenses_amount = forms.CharField(False)
+    moving_expenses_amount = forms.CharField(required=False)
     #
     # faculty
     #
@@ -239,7 +239,9 @@ class OperationForm(forms.ModelForm):
     def clean(self):
         cd = self.cleaned_data
         # needed everywhere
-        employee = cd.get('employee_type').lower()
+        employee_type = cd.get('employee_type')
+        if employee_type:
+            employee = employee_type.lower()
         # all required fields
         for required, fields in REQUIRED_FIELDS.items():
             if cd.get(required):

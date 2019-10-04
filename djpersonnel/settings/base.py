@@ -7,13 +7,8 @@ import os
 from datetime import datetime
 from collections import namedtuple
 
-from djzbar.settings import INFORMIX_EARL_TEST as INFORMIX_EARL
-# sqlserver connection string
-MSSQL_EARL = ''
-
 # Debug
 DEBUG = True
-INFORMIX_DEBUG = 'debug'
 # include html5 form attributes in input fields
 REQUIRED_ATTRIBUTE = True
 ADMINS = (
@@ -37,11 +32,14 @@ LIVEWHALE_API_URL = 'https://{}'.format(SERVER_URL)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-STATIC_URL = '/static/djpersonnel/'
 ROOT_URL = '/apps/personnel/'
+
 MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
+#MEDIA_URL = '{}assets/'.format(STATIC_URL)
+MEDIA_URL = '/media/djsapo/'
 STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
-MEDIA_URL = '{}assets/'.format(STATIC_URL)
+STATIC_URL = '/static/djpersonnel/'
+
 UPLOADS_DIR = '{}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{}files/'.format(MEDIA_URL)
 ROOT_URLCONF = 'djpersonnel.urls'
@@ -52,6 +50,10 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+# sqlserver connection string
+MSSQL_EARL = ''
+# informix connection string
+INFORMIX_ODBC = ''
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
@@ -80,7 +82,7 @@ INSTALLED_APPS = [
     'djtools',
     'loginas',
 ]
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

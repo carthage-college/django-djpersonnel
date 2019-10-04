@@ -2,15 +2,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.transaction.models import Operation
 from djpersonnel.transaction.forms import OperationForm
 from djpersonnel.core.utils import PROVOST
 
-from djzbar.decorators.auth import portal_auth_required
-from djzbar.utils.hr import get_position
+from djimix.decorators.auth import portal_auth_required
 from djauth.LDAPManager import LDAPManager
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group

@@ -8,7 +8,7 @@ from djpersonnel.core.utils import get_deans, get_permissions
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
 #from djtools.fields.validators import MimetypeValidator
-from djzbar.utils.hr import department, departments_all_choices
+from djimix.people.departments import department, departments_all_choices
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
@@ -24,13 +24,13 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='prf_operation_created_by',
-        editable=settings.DEBUG
+        on_delete=models.CASCADE, editable=settings.DEBUG
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='prf_operation_updated_by',
-        editable=settings.DEBUG,
+        on_delete=models.CASCADE, editable=settings.DEBUG,
         null=True, blank=True
     )
     created_at = models.DateTimeField(
@@ -48,7 +48,7 @@ class Operation(models.Model):
         User,
         verbose_name="Level 3 Approver",
         related_name='prf_operation_approver',
-        null=True, blank=True
+        on_delete=models.CASCADE, null=True, blank=True
     )
     level3_date = models.DateField(
         "Level 3 signed date",
@@ -221,7 +221,6 @@ class Operation(models.Model):
 
         return get_permissions(self, user)
 
-    @models.permalink
     def get_absolute_url(self):
         return ('requisition_detail', [str(self.id)])
 

@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
 from djpersonnel.requisition.models import Operation

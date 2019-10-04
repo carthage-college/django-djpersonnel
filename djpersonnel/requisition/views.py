@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
@@ -9,8 +9,7 @@ from djpersonnel.requisition.models import Operation
 from djpersonnel.requisition.forms import OperationForm
 from djpersonnel.core.utils import PROVOST
 
-from djzbar.decorators.auth import portal_auth_required
-from djzbar.utils.hr import get_position
+from djimix.decorators.auth import portal_auth_required
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 from djauth.LDAPManager import LDAPManager

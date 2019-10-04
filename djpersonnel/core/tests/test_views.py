@@ -14,7 +14,7 @@ from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import get_deans, LEVEL2
 
 from djtools.utils.users import in_group
-from djzbar.utils.hr import get_cid
+from djimix.people.utils import get_cid
 
 import logging
 

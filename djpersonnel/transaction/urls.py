@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path, re_path
 from django.views.generic import TemplateView
 
 from djpersonnel.transaction import views
@@ -6,12 +6,12 @@ from djpersonnel.transaction import views
 
 urlpatterns = [
     # transaction form
-    url(
-        r'^$',
+    path(
+        '',
         views.form_home, name='transaction_form'
     ),
-    url(
-        r'^success/$',
+    path(
+        'success/',
         TemplateView.as_view(
             template_name='transaction/success.html'
         ),
@@ -21,27 +21,24 @@ urlpatterns = [
     # dashboard URLs
     #
     # transaction detail
-    url(
-        r'^(?P<tid>\d+)/detail/$',
-        views.detail, name='transaction_detail'
+    re_path(
+        r'^(?P<tid>\d+)/detail/$', views.detail, name='transaction_detail'
     ),
     # transaction update
-    url(
-        r'^(?P<tid>\d+)/update/$',
-        views.update, name='transaction_update'
+    re_path(
+        r'^(?P<tid>\d+)/update/$', views.update, name='transaction_update'
     ),
     # requisition delete
-    url(
-        r'^(?P<tid>\d+)/delete/$',
-        views.delete, name='transaction_delete'
+    re_path(
+        r'^(?P<tid>\d+)/delete/$', views.delete, name='transaction_delete'
     ),
     # transaction appointment letter
-    url(
+    re_path(
         r'^(?P<tid>\d+)/appointment-letter/$',
         views.appointment_letter, name='transaction_appointment_letter'
     ),
     # transaction graduate assistant letter
-    url(
+    re_path(
         r'^(?P<tid>\d+)/graduate-assistant-letter/$',
         views.graduate_assistant_letter, name='transaction_graduate_assistant_letter'
     ),

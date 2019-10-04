@@ -36,7 +36,7 @@ class TransactionOperationTestCase(TestCase):
         data['approver'] = self.level3_approver_id
         form = OperationForm(data)
         v = form.is_valid()
-        print form.errors
+        print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_operation_form_invalid_data(self):

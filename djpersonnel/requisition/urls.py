@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path, re_path
 from django.views.generic import TemplateView
 
 from djpersonnel.requisition import views
@@ -6,29 +6,26 @@ from djpersonnel.requisition import views
 
 urlpatterns = [
     # requisition create
-    url(
-        r'^$', views.form_home, name='requisition_form'
+    path(
+        '', views.form_home, name='requisition_form'
     ),
-    url(
-        r'^success/$',
+    path(
+        'success/',
         TemplateView.as_view(
             template_name='requisition/success.html'
         ),
         name='requisition_form_success'
     ),
     # requisition update
-    url(
-        r'^(?P<rid>\d+)/update/$',
-        views.form_home, name='requisition_update'
+    re_path(
+        r'^(?P<rid>\d+)/update/$', views.form_home, name='requisition_update'
     ),
     # requisition detail
-    url(
-        r'^(?P<rid>\d+)/detail/$',
-        views.detail, name='requisition_detail'
+    re_path(
+        r'^(?P<rid>\d+)/detail/$', views.detail, name='requisition_detail'
     ),
     # requisition delete
-    url(
-        r'^(?P<rid>\d+)/delete/$',
-        views.delete, name='requisition_delete'
+    re_path(
+        r'^(?P<rid>\d+)/delete/$', views.delete, name='requisition_delete'
     ),
 ]

@@ -7,8 +7,7 @@ from djpersonnel.core.utils import get_deans, get_permissions
 
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
-from djzbar.utils.hr import departments_all_choices
-from djzbar.utils.hr import department, departments_all_choices
+from djimix.people.departments import department, departments_all_choices
 
 import datetime
 
@@ -79,7 +78,7 @@ EMPLOYEE_TYPE_CHOICES = (
 )
 ACADEMIC_YEARS = [
     (('{}-{}'.format(x, x + 1)), ('{}-{}'.format(x, x + 1)))
-    for x in xrange(datetime.date.today().year,datetime.date.today().year + 10)
+    for x in range(datetime.date.today().year,datetime.date.today().year + 10)
 ]
 ACADEMIC_YEARS.insert(0,('','---year---'))
 ACADEMIC_TERM_CHOICES = (
@@ -124,13 +123,13 @@ class Operation(models.Model):
         User,
         verbose_name="Created by",
         related_name='paf_operation_created_by',
-        editable=False
+        on_delete=models.CASCADE, editable=settings.DEBUG,
     )
     updated_by = models.ForeignKey(
         User,
         verbose_name="Updated by",
         related_name='paf_operation_updated_by',
-        editable=False,
+        on_delete=models.CASCADE, editable=settings.DEBUG,
         null=True, blank=True
     )
     created_at = models.DateTimeField(
@@ -149,7 +148,7 @@ class Operation(models.Model):
         User,
         verbose_name="Level 3 Approver",
         related_name='paf_operation_approver',
-        null=True, blank=True
+        on_delete=models.CASCADE,null=True, blank=True
     )
     level3_date = models.DateField(
         "Level 3 signed date",
@@ -743,7 +742,6 @@ class Operation(models.Model):
     def get_slug(self):
         return 'files/transaction/'
 
-    @models.permalink
     def get_absolute_url(self):
         return ('transaction_detail', [str(self.id)])
 

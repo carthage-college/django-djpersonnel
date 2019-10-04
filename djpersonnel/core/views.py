@@ -6,7 +6,7 @@ from django.core import serializers
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import Group, User
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from djpersonnel.requisition.models import Operation as Requisition
@@ -14,11 +14,11 @@ from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.core.forms import ApproverForm, DateCreatedForm
 from djpersonnel.core.utils import get_deans, LEVEL2, PROVOST
 
-from djzbar.decorators.auth import portal_auth_required
+from djimix.decorators.auth import portal_auth_required
 from djtools.utils.convert import str_to_class
 from djtools.utils.users import in_group
 from djtools.utils.mail import send_mail
-from djzbar.utils.hr import get_cid
+from djimix.people.utils import get_cid
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook

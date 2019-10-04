@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 
-from djzbar.utils.hr import get_position
+from djimix.people.utils import get_position
 from djtools.utils.users import in_group
 
 LEVEL2 = get_position(settings.LEVEL2_TPOS)
