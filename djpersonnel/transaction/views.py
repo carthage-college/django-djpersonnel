@@ -7,7 +7,6 @@ from django.shortcuts import render, get_object_or_404
 
 from djpersonnel.transaction.models import Operation
 from djpersonnel.transaction.forms import OperationForm
-from djpersonnel.core.utils import PROVOST
 
 from djimix.decorators.auth import portal_auth_required
 from djauth.LDAPManager import LDAPManager
@@ -57,14 +56,9 @@ def form_home(request):
                     request, to_list, subject, settings.HR_EMAIL,
                     template, data, bcc
                 )
-
-                # send email to level3 approver and Provost, if need be
-                # (the latter of whom just needs notification and
-                # does not approve anything
+                # send email to level3 approver
                 template = 'transaction/email/approver.html'
                 to_list = [level3.email,]
-                if data.notify_provost():
-                    to_list.append(PROVOST.email)
                 send_mail(
                     request, to_list, subject,
                     data.created_by.email, template, data, bcc
@@ -144,9 +138,15 @@ def appointment_letter(request, tid):
     return render(
         request, 'transaction/appointment_letter.html', {'data':data}
     )
+
+
+@portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied')
+)
 def graduate_assistant_letter(request, tid):
     data = get_object_or_404(Operation, id=tid)
     return render(
         request, 'transaction/graduate_assistant_letter.html', {'data':data}
     )
-

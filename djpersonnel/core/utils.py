@@ -50,10 +50,16 @@ def get_permissions(obj, user):
         perms['view'] = True
         perms['approver'] = True
         perms['level'].append('level1')
-    # Provost (does not approve any submissions: is notified, and can view)
-    elif user.id == PROVOST.id:
+    # Provost:
+    #   1) approves PAF for faculty submissions only (not PRF...for now)
+    #   2) will be an approver for level3 or provost but not both
+    #   3) provost level is between levels 3 and 2
+    elif user.id == PROVOST.id and not perms['approver']:
         perms['view'] = True
-        perms['provost'] = True
+        if obj._meta.verbose_name.title() == "Transaction":
+            perms['approver'] = True
+            perms['provost'] = True
+            perms['level'].append('provost')
     # VPFA might also be a level 3 approver, but does not approve submissions
     # that do not impact the budget
     elif user.id == LEVEL2.id:

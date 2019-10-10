@@ -245,8 +245,8 @@ def operation_status(request):
         obj = get_object_or_404(model, id=oid)
         perms = obj.permissions(user)
         if not obj.declined:
-            # we should verify that the user has permission to approve/decline
-            # this specific object but we can worry about that later
+            # we verify that the user has permission to approve/decline
+            # in the permissions method
             if perms['approver'] and status in ['approved','declined']:
 
                 from djtools.fields import NOW
@@ -267,7 +267,8 @@ def operation_status(request):
 
                 # we will always use the first level in the list unless:
                 # 1. VPFA is a level3 approver; or
-                # 2. HR is a level3 approver and no budget impact
+                # 2. provost is a level3 approver and PAF from faculty
+                # 3. HR is a level3 approver and no budget impact
                 try:
                     level = perms['level'][1]
                 except:

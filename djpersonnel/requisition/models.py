@@ -204,6 +204,8 @@ class Operation(models.Model):
     class Meta:
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
+        verbose_name = "Requisition"
+        verbose_name_plural = "Requisitions"
 
     def get_slug(self):
         return 'files/requisition/'

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models, connection
 from django.contrib.auth.models import User
 
-from djpersonnel.core.utils import get_deans, get_permissions
+from djpersonnel.core.utils import get_deans, get_permissions, PROVOST
 
 from djtools.fields import STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
@@ -155,7 +155,11 @@ class Operation(models.Model):
         null=True, blank=True
     )
     # Provost
-
+    provost = models.BooleanField(default=False)
+    provost_date = models.DateField(
+        "Provost signed date",
+        null=True, blank=True
+    )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
@@ -729,6 +733,8 @@ class Operation(models.Model):
     class Meta:
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
+        verbose_name = "Transaction"
+        verbose_name_plural = "Transactions"
 
     def __unicode__(self):
         """
@@ -775,7 +781,7 @@ class Operation(models.Model):
 
     def notify_provost(self):
         """
-        Provost must be notified about submissions that are approved by a
+        Provost must approve submissions that are approved by a
         division dean at level 3
         """
         if self.level3_approver.id in get_deans():
@@ -788,14 +794,15 @@ class Operation(models.Model):
         is the submission approved at relevant all levels?
         """
         status = False
+        # level 3 and level 1 are minimum requirements for approval
         if self.level3 and self.level1:
-            if self.notify_level2():
-                if self.level2:
-                    status = True
-                else:
+            status = True
+            if self.notify_provost():
+                if not self.provost:
                     status = False
-            else:
-                status = True
+            if self.notify_level2():
+                if not self.level2:
+                    status = False
 
         return status
 

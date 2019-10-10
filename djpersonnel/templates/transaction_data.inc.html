@@ -26,6 +26,11 @@
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
+            title="Provost approval"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
             title="VPFA approval"></i>
         </th>
         <th class="text-center">
@@ -82,11 +87,11 @@
           </a>
         </td>
         {% if t.declined %}
-        <td colspan="3" class="red text-center font-weight-bold">
+        <td colspan="4" class="red text-center font-weight-bold">
             Declined
         </td>
         {% else %}{% if t.approved %}
-        <td colspan="3" class="green text-center font-weight-bold">
+        <td colspan="4" class="green text-center font-weight-bold">
             Approved
         </td>
         {% else %}
@@ -100,6 +105,23 @@
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
             title="VP or Dean has NOT approved this PAF"></i>
           {% endif %}
+        </td>
+        <td class="text-center">
+        {% if t.notify_provost %}
+          {% if t.provost %}
+            <i class="fa fa-check green blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="Provost approved this PAF on {{t.provost_date}}"></i>
+          {% else %}
+            <i class="fa fa-times red blue-tooltip"
+            data-toggle="tooltip" data-placement="top" aria-hidden="true"
+            title="Provost has NOT approved this PAF"></i>
+          {% endif %}
+        {% else %}
+          <i class="fa fa-ban red blue-tooltip"
+          data-toggle="tooltip" data-placement="top" aria-hidden="true"
+          title="Provost does not have to approve this PAF"></i>
+        {% endif %}
         </td>
         <td class="text-center">
         {% if t.notify_level2 %}
@@ -171,6 +193,11 @@
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="VP or Dean approval"></i>
+        </th>
+        <th class="text-center">
+          <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Provost approval"></i>
         </th>
         <th class="text-center">
           <i class="fa fa-thumbs-up green blue-tooltip" data-toggle="tooltip"

@@ -1,7 +1,12 @@
 <p>
-    Your personnel action request has been approved.
-    by your area VP/Dean.
+    The first step of your personnel action request has been approved.
 </p>
+{% if data.notify_provost %}
+<p>
+    It has now been sent on to the next step for approval by the
+    the Provost.
+</p>
+{% else %}
 <p>
 {% if data.notify_level2 %}
     It has now been sent on to the next step for approval by the
@@ -10,11 +15,6 @@
     It has now been sent to the Human Resources department
     for final approval.
 {% endif %}
-</p>
-{% if data.notify_provost %}
-<p>
-    The Provost will be notified as well but will not need to
-    approve this request.
 </p>
 {% endif %}
 {# debuging #}
