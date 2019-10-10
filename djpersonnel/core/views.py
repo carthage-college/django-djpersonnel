@@ -260,11 +260,6 @@ def operation_status(request):
 
                 obj.save()
 
-                # we send an email to Level2 if money is involved
-                # and then to HR for final decision. if no money, we send
-                # an email to HR for final decision.
-                to_approver = [settings.HR_EMAIL,]
-
                 # we will always use the first level in the list unless:
                 # 1. VPFA is a level3 approver; or
                 # 2. provost is a level3 approver and PAF from faculty
@@ -275,10 +270,21 @@ def operation_status(request):
                     level = perms['level'][0]
                 template = '{}/email/{}_{}.html'.format(app, level, status)
 
+                # we send an email to Level2 if money is involved
+                # and then to HR for final decision. if no money, we send an
+                # email to Provost if need be and then to HR for final approval.
+                #
                 # VPFA will be notified only if the submission does not impact
-                # the budget and she is not the level3 approver
-                if obj.notify_level2 and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
+                # the budget and she is not the level3 approver.
+                # at the moment, the VPFA is not a LEVEL3 approver
+                # so that last AND clause in elif will never be True but LEVEL2
+                # might become a LEVEL3 approver in the future
+                if obj.notify_provost and not obj.provost:
+                    to_approver = [PROVOST.email,]
+                elif obj.notify_level2 and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
                     to_approver = [LEVEL2.email,]
+                else:
+                    to_approver = [settings.HR_EMAIL,]
 
                 bcc = [settings.ADMINS[0][1],]
                 frum = user.email
