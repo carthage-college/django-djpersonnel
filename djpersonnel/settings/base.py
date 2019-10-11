@@ -36,7 +36,7 @@ ROOT_URL = '/apps/personnel/'
 
 MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
 #MEDIA_URL = '{}assets/'.format(STATIC_URL)
-MEDIA_URL = '/media/djsapo/'
+MEDIA_URL = '/media/djpersonnel/'
 STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
 STATIC_URL = '/static/djpersonnel/'
 
