@@ -33,7 +33,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 ROOT_URL = '/apps/personnel/'
-
 MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
 #MEDIA_URL = '{}assets/'.format(STATIC_URL)
 MEDIA_URL = '/media/djpersonnel/'
