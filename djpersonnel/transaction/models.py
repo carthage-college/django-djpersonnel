@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.urls import reverse
 from django.db import models, connection
 from django.contrib.auth.models import User
 
@@ -749,7 +750,9 @@ class Operation(models.Model):
         return 'files/transaction/'
 
     def get_absolute_url(self):
-        return ('transaction_detail', [str(self.id)])
+        return 'https://{}{}'.format(
+            settings.SERVER_URL, reverse('transaction_detail', args=(self.id,))
+        )
 
     def permissions(self, user):
         return get_permissions(self, user)

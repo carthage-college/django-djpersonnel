@@ -33,10 +33,15 @@
 
 <p>
   The details of this request can be viewed and approved
-  <a href="https://{{server_url}}{{data.get_absolute_url}}">
-      here
-  </a>.
+  <a href="{{data.get_absolute_url}}">here</a>.
 </p>
+{% if templates_debug %}
+{% if data.to_creator %}
+<p>
+  {{data.get_absolute_url}}
+</p>
+{% endif %}
+{% endif %}
 
 <p>
   Please take a moment to review this submission and approve or deny it.

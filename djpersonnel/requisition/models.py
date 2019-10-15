@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.urls import reverse
 from django.db import models, connection
 from django.contrib.auth.models import User
 
@@ -224,7 +225,9 @@ class Operation(models.Model):
         return get_permissions(self, user)
 
     def get_absolute_url(self):
-        return ('requisition_detail', [str(self.id)])
+        return 'https://{}{}'.format(
+            settings.SERVER_URL, reverse('transaction_detail', args=(self.id,))
+        )
 
     def notify_level2(self):
         """
