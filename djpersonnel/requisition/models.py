@@ -226,7 +226,7 @@ class Operation(models.Model):
 
     def get_absolute_url(self):
         return 'https://{}{}'.format(
-            settings.SERVER_URL, reverse('transaction_detail', args=(self.id,))
+            settings.SERVER_URL, reverse('requisition_detail', args=(self.id,))
         )
 
     def notify_level2(self):

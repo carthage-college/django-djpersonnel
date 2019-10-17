@@ -279,7 +279,7 @@ def operation_status(request):
                 # at the moment, the VPFA is not a LEVEL3 approver
                 # so that last AND clause in elif will never be True but LEVEL2
                 # might become a LEVEL3 approver in the future
-                if obj.notify_provost and not obj.provost:
+                if app != 'requisition' and obj.notify_provost and not obj.provost:
                     to_approver = [PROVOST.email,]
                 elif obj.notify_level2 and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
                     to_approver = [LEVEL2.email,]
