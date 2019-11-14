@@ -1,4 +1,5 @@
 {% extends "home.html" %}
+{% load livewhale_api %}
 {% block title %}
     Personnel Action Form &mdash; Human Resources &mdash; Carthage College
 {% endblock %}
@@ -469,6 +470,8 @@
       <h3 class="text-center text-white">Personnel Action Form</h3>
     </div>
     <div class="card-body bg-light bg-warning">
+      {% get_lw_content as intro blurbs 2854 %}
+      {{intro.body|safe}}
       {% if form.errors %}
       <div class="alert alert-danger">
         <p>Please correct the error{{ form.errors|pluralize }} below.</p>
