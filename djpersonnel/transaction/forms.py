@@ -18,6 +18,10 @@ REQUIRED_FIELDS = {
         'position_grant_funded',
         'reporting_to',
         'moving_expenses',
+        'home_address',
+        'city',
+        'state',
+        'postal_code',
     ],
     'department_change': [
         'new_department', 'old_department',
@@ -131,7 +135,7 @@ class NewhireRehireForm(forms.Form):
     #
     standard_vacation_package = forms.TypedChoiceField(required=False)
     vacation_days = forms.CharField(required=False)
-    # department_name: 'EVS'
+    # department_name 'EVS'
     shift = forms.TypedChoiceField(required=False)
 
 
@@ -140,6 +144,8 @@ newhire_rehire = NewhireRehireForm
 
 
 class DepartmentChangeForm(forms.Form):
+    """Transfer to another department."""
+
     new_department = forms.TypedChoiceField()
     old_department = forms.TypedChoiceField()
 
@@ -149,35 +155,49 @@ department_change = DepartmentChangeForm
 
 
 class CompensationChangeForm(forms.Form):
+    """Change in the human's compensation."""
+
     current_compensation = forms.CharField()
     new_compensation = forms.CharField()
     salary_change_reason = forms.CharField()
     compensation_effective_date = forms.DateField()
     temporary_interim_pay = forms.TypedChoiceField()
     end_date = forms.DateField(required=False)
+
+
 # short cut for checkbox field name
 compensation_change = CompensationChangeForm
 
 
 class OnetimePaymentForm(forms.Form):
+    """Pay out to a human's one time only."""
+
     amount = forms.DecimalField()
     amount_reason = forms.CharField()
     pay_after_date = forms.DateField()
     department_account_number = forms.CharField()
     grant_pay = forms.TypedChoiceField()
     grant_pay_account_number = forms.CharField(required=False)
+
+
 # short cut for checkbox field name
 onetime_payment = OnetimePaymentForm
 
 
 class SupervisorChangeForm(forms.Form):
+    """Change of supervisor for the human."""
+
     new_supervisor = forms.CharField()
     old_supervisor = forms.CharField()
+
+
 # short cut for checkbox field name
 supervisor_change = SupervisorChangeForm
 
 
 class TerminationForm(forms.Form):
+    """Terminate a human."""
+
     termination_type = forms.TypedChoiceField()
     last_day_datea = forms.DateField()
     returned_property = forms.CharField()
@@ -185,68 +205,95 @@ class TerminationForm(forms.Form):
     vacation_days_accrued = forms.CharField(required=False)
     termination_voluntary = forms.TypedChoiceField(required=False)
     termination_involuntary = forms.TypedChoiceField(required=False)
+
+
 # short cut for checkbox field name
 termination = TerminationForm
 
 
 class StatusChangeForm(forms.Form):
+    """Change of status for the human."""
+
     status_type = forms.TypedChoiceField()
     status_change_effective_date = forms.DateField()
     hours_per_week = forms.CharField()
+
+
 # short cut for checkbox field name
 status_change = StatusChangeForm
 
 
 class PositionChangeForm(forms.Form):
+    """Change of position for the human."""
+
     old_position = forms.CharField()
     new_position = forms.CharField()
     position_effective_date = forms.DateField()
     additional_supervisor_role = forms.TypedChoiceField()
     direct_reports = forms.CharField(required=False)
+
+
 # short cut for checkbox field name
 position_change = PositionChangeForm
 
 
 class LeaveOfAbsenceForm(forms.Form):
+    """Request leave of absence for the human."""
+
     leave_of_absence_date = forms.DateField()
     expected_return_date = forms.DateField()
     leave_of_absence_reason = forms.CharField()
+
+
 # short cut for checkbox field name
 leave_of_absence = LeaveOfAbsenceForm
 
 
 class SabbaticalForm(forms.Form):
+    """Request a sabbatical for the human."""
+
     sabbatical_types = forms.TypedChoiceField()
     sabbatical_academic_years = forms.CharField()
+
+
 # short cut for checkbox field name
 sabbatical = SabbaticalForm
 
 
 class OperationForm(forms.ModelForm):
+    """Personnel Action Form (PAF)."""
 
     teaching_appointment = forms.ChoiceField(
-        label = "Teaching appointment",
+        label="Teaching appointment",
         widget=forms.RadioSelect,
         choices=TEACHING_APPOINTMENT_CHOICES,
-        required = False
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
         super(OperationForm, self).__init__(*args, **kwargs)
         self.fields['approver'] = forms.ChoiceField(
             label="Who will approve this request for you?",
-            choices=level3_choices()
+            choices=level3_choices(),
         )
 
     class Meta:
         model = Operation
         exclude = [
-            'created_by','updated_by','created_at','updated_at',
-            'level1,level1_date','level2,level2_date','level3,level3_date',
-            'level3_approver','declined','email_approved'
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
+            'level1,level1_date',
+            'level2,level2_date',
+            'level3,level3_date',
+            'level3_approver',
+            'declined',
+            'email_approved',
         ]
 
     def dependent(self, field1, value, field2):
+        """Deal with dependent fields."""
         cd = self.cleaned_data
 
         if cd.get(field1) == value and not cd.get(field2):
@@ -306,7 +353,6 @@ class OperationForm(forms.ModelForm):
 
             # newhire faculty
             if employee == 'faculty':
-
                 # employment type
                 contract_field = 'contract_years'
                 adjunct_fields = [
