@@ -1,71 +1,59 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys
-# env
-sys.path.append('/usr/lib/python2.7/dist-packages/')
-sys.path.append('/usr/lib/python2.7/')
-sys.path.append('/usr/local/lib/python2.7/dist-packages/')
-sys.path.append('/data2/django_1.11/')
-sys.path.append('/data2/django_projects/')
-sys.path.append('/data2/django_third/')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djpersonnel.settings.shell')
+import argparse
+import os
+import sys
 
 import django
+
+
 django.setup()
 
-from django.conf import settings
-
-from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
+from djpersonnel.transaction.models import Operation as Transaction
 
-import argparse
+# env
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djpersonnel.settings.shell')
 
-'''
-Various reports on database activity
-'''
 
 # set up command-line options
 desc = """
-Accepts as input...
+    Accepts as input Transaction or Requistion.
 """
 
 # RawTextHelpFormatter method allows for new lines in help text
 parser = argparse.ArgumentParser(
-    description=desc, formatter_class=argparse.RawTextHelpFormatter
+    description=desc, formatter_class=argparse.RawTextHelpFormatter,
 )
 
 parser.add_argument(
-    '-m', '--model',
+    '-m',
+    '--model',
     required=True,
     help="Transaction or Requisition",
-    dest='model'
+    dest='model',
 )
 parser.add_argument(
     '--test',
     action='store_true',
     help="Dry run?",
-    dest='test'
+    dest='test',
 )
 
-def main():
-    '''
-    main function
-    '''
 
+def main():
+    """Various reports on database activity."""
     if test:
-        print("Model = {}".format(model))
+        print("Model = {0}".format(model))
 
     if model == 'transaction':
-        objects = Transaction.objects.all()
+        actions = Transaction.objects.all()
     elif model == 'requisition':
-        objects = Requisition.objects.all()
-    count = objects.count()
+        actions = Requisition.objects.all()
+    count = actions.count()
     print(count)
 
-######################
-# shell command line
-######################
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -76,4 +64,3 @@ if __name__ == '__main__':
         print(args)
 
     sys.exit(main())
-

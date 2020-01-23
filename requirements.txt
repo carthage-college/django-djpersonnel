@@ -1,9 +1,10 @@
-Django==2.2.8
+Django==2.2.9
+django-loginas==0.3.6
+django-bootstrap4==1.0.1
+bootstrap_admin==0.4.3
 mysqlclient==1.4.2
 python-ldap==3.2.0
-pyodbc==4.0.27
-bootstrap_admin==0.4.3
-django-bootstrap4==1.0.1
+pyodbc==4.0.28
 openpyxl==3.0.0
 pycryptodome==3.8.1
-django-loginas==0.3.6
+wemake-python-styleguide==0.13.3

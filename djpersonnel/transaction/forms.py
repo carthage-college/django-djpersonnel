@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from django import forms
-
-from djpersonnel.transaction.models import (
-    Operation, TEACHING_APPOINTMENT_CHOICES
-)
 from djpersonnel.core.utils import level3_choices
-
+from djpersonnel.transaction.models import TEACHING_APPOINTMENT_CHOICES
+from djpersonnel.transaction.models import Operation
 from djtools.utils.convert import str_to_class
+
 
 REQUIRED_FIELDS = {
     'newhire_rehire': [
@@ -18,54 +17,69 @@ REQUIRED_FIELDS = {
         'budget_account',
         'position_grant_funded',
         'reporting_to',
-        'moving_expenses'
+        'moving_expenses',
     ],
     'department_change': [
-        'new_department', 'old_department'
+        'new_department', 'old_department',
     ],
     'compensation_change': [
-        'current_compensation', 'new_compensation', 'salary_change_reason',
-        'compensation_effective_date', 'temporary_interim_pay'
+        'current_compensation',
+        'new_compensation',
+        'salary_change_reason',
+        'compensation_effective_date',
+        'temporary_interim_pay',
     ],
     'onetime_payment': [
-        'amount', 'amount_reason', 'pay_after_date',
-        'department_account_number', 'grant_pay'
+        'amount',
+        'amount_reason',
+        'pay_after_date',
+        'department_account_number',
+        'grant_pay',
     ],
     'supervisor_change': [
-        'new_supervisor', 'old_supervisor'
+        'new_supervisor', 'old_supervisor',
     ],
     'termination': [
-        'termination_type', 'last_day_date', 'returned_property',
-        'eligible_rehire'
+        'termination_type',
+        'last_day_date',
+        'returned_property',
+        'eligible_rehire',
     ],
     'status_change': [
-        'status_type', 'status_change_effective_date', 'hours_per_week'
+        'status_type', 'status_change_effective_date', 'hours_per_week',
     ],
     'position_change': [
-        'old_position', 'new_position', 'position_effective_date',
-        'additional_supervisor_role'
+        'old_position',
+        'new_position',
+        'position_effective_date',
+        'additional_supervisor_role',
     ],
     'leave_of_absence': [
-        'leave_of_absence_date', 'expected_return_date',
-        'leave_of_absence_reason'
+        'leave_of_absence_date',
+        'expected_return_date',
+        'leave_of_absence_reason',
     ],
     'sabbatical': [
-        'sabbatical_types', 'sabbatical_academic_years'
-    ]
+        'sabbatical_types',
+        'sabbatical_academic_years',
+    ],
 }
 REQUIRED_FIELDS_NEWHIRE = {
     'staff': [
-        'status_type', 'supervise_others', 'standard_vacation_package'
+        'status_type', 'supervise_others', 'standard_vacation_package',
     ],
     'faculty': [
-        'startup_expenses', 'teaching_appointment', 'employment_type',
-        'program_types'
-    ]
+        'startup_expenses',
+        'teaching_appointment',
+        'employment_type',
+        'program_types',
+    ],
 }
 REQUIRED_FIELDS_GRANT_FUNDED = ['grant_fund_number', 'grant_fund_amount']
 
 
 class NewhireRehireForm(forms.Form):
+    """New hire or rehire form."""
 
     # required for both faculty and staff
     position_title = forms.CharField()
@@ -117,8 +131,10 @@ class NewhireRehireForm(forms.Form):
     #
     standard_vacation_package = forms.TypedChoiceField(required=False)
     vacation_days = forms.CharField(required=False)
-    # department_name = 'EVS'
+    # department_name: 'EVS'
     shift = forms.TypedChoiceField(required=False)
+
+
 # short cut for checkbox field name
 newhire_rehire = NewhireRehireForm
 
@@ -126,6 +142,8 @@ newhire_rehire = NewhireRehireForm
 class DepartmentChangeForm(forms.Form):
     new_department = forms.TypedChoiceField()
     old_department = forms.TypedChoiceField()
+
+
 # short cut for checkbox field name
 department_change = DepartmentChangeForm
 
