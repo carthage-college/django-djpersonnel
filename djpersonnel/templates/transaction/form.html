@@ -551,6 +551,7 @@
                   value="{{form.home_address.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
+                  {{form.home_address.help_text}}<br>
                   {{form.home_address.errors|join:", "}}
                 </small>
               </div>
@@ -569,6 +570,7 @@
                   value="{{form.city.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
+                  {{form.city.help_text}}<br>
                   {{form.city.errors|join:", "}}
                 </small>
               </div>
@@ -591,6 +593,7 @@
                   {% endfor %}
                 </select>
                 <small class="text-danger">
+                  {{form.state.help_text}}<br>
                   {{form.state.errors|join:", "}}
                 </small>
               </div>
@@ -609,6 +612,7 @@
                   value="{{form.postal_code.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
+                  {{form.postal_code.help_text}}<br>
                   {{form.postal_code.errors|join:", "}}
                 </small>
               </div>
@@ -738,6 +742,7 @@
                   value="{{form.reporting_to.value|default_if_none:''}}"
                   {% if not templates_debug %}required{% endif %}>
                 <small class="text-danger">
+                  {{form.reporting_to.help_text}}<br>
                   {{form.reporting_to.errors|join:", "}}
                 </small>
               </div>

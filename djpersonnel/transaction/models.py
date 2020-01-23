@@ -196,20 +196,33 @@ class Operation(models.Model):
         verbose_name="Middle Name", max_length=50, null=True, blank=True,
     )
     home_address = models.CharField(
-        verbose_name="Home address", max_length=128, null=True, blank=True,
+        verbose_name="Home address",
+        help_text="New Hire/Rehire only",
+        max_length=128,
+        null=True,
+        blank=True,
     )
     city = models.CharField(
-        verbose_name="City", max_length=50, null=True, blank=True,
+        verbose_name="City",
+        help_text="New Hire/Rehire only",
+        max_length=50,
+        null=True,
+        blank=True,
     )
     state = models.CharField(
-        verbose_name='State',
+        verbose_name="State",
+        help_text="New Hire/Rehire only",
         choices=STATE_CHOICES,
         max_length=2,
         null=True,
         blank=True,
     )
     postal_code = models.CharField(
-        max_length=10, verbose_name="Zip", null=True, blank=True,
+        verbose_name="Zip",
+        help_text="New Hire/Rehire only",
+        max_length=10,
+        null=True,
+        blank=True,
     )
     phone = models.CharField(
         max_length=12,
@@ -224,6 +237,7 @@ class Operation(models.Model):
     )
     reporting_to = models.CharField(
         verbose_name="To whom will the new hire be reporting?",
+        help_text="Only required for New Hire/Rehire",
         max_length=255,
         null=True,
         blank=True,
