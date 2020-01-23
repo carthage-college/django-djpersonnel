@@ -223,7 +223,10 @@ class Operation(models.Model):
         "Employee Type", max_length=16, choices=EMPLOYEE_TYPE_CHOICES,
     )
     reporting_to = models.CharField(
-        verbose_name="To whom will the new hire be reporting?", max_length=255,
+        verbose_name="To whom will the new hire be reporting?",
+        max_length=255,
+        null=True,
+        blank=True,
     )
     # NOTE: the choices will bring up a set of fields to filled out
     # based on which is checked
