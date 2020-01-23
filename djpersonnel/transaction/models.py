@@ -307,7 +307,7 @@ class Operation(models.Model):
     )
     department_name = models.CharField(
         max_length=128,
-        #choices=departments_all_choices(),
+        choices=departments_all_choices(),
     )
     supervise_others = models.CharField(
         "Does this position supervise others?",
