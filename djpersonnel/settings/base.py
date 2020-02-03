@@ -38,11 +38,11 @@ MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
 MEDIA_URL = '/media/djpersonnel/'
 STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
 STATIC_URL = '/static/djpersonnel/'
-
 UPLOADS_DIR = '{}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{}files/'.format(MEDIA_URL)
 ROOT_URLCONF = 'djpersonnel.urls'
 WSGI_APPLICATION = 'djpersonnel.wsgi.application'
+FILE_UPLOAD_PERMISSIONS=0o644
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
