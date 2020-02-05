@@ -24,9 +24,12 @@ REQUIRED_FIELDS = {
         'postal_code',
     ],
     'department_change': [
-        'new_department', 'old_department',
+        'budget_account',
+        'new_department',
+        'old_department',
     ],
     'compensation_change': [
+        'budget_account',
         'current_compensation',
         'new_compensation',
         'salary_change_reason',
@@ -36,12 +39,15 @@ REQUIRED_FIELDS = {
     'onetime_payment': [
         'amount',
         'amount_reason',
-        'pay_after_date',
+        'budget_account',
         'department_account_number',
         'grant_pay',
+        'pay_after_date',
     ],
     'supervisor_change': [
-        'new_supervisor', 'old_supervisor',
+        'budget_account',
+        'new_supervisor',
+        'old_supervisor',
     ],
     'termination': [
         'termination_type',
@@ -50,20 +56,26 @@ REQUIRED_FIELDS = {
         'eligible_rehire',
     ],
     'status_change': [
-        'status_type', 'status_change_effective_date', 'hours_per_week',
+        'budget_account',
+        'hours_per_week',
+        'status_type',
+        'status_change_effective_date',
     ],
     'position_change': [
+        'budget_account',
         'old_position',
         'new_position',
         'position_effective_date',
         'additional_supervisor_role',
     ],
     'leave_of_absence': [
+        'budget_account',
         'leave_of_absence_date',
         'expected_return_date',
         'leave_of_absence_reason',
     ],
     'sabbatical': [
+        'budget_account',
         'sabbatical_types',
         'sabbatical_academic_years',
     ],
@@ -146,6 +158,7 @@ newhire_rehire = NewhireRehireForm
 class DepartmentChangeForm(forms.Form):
     """Transfer to another department."""
 
+    budget_account = forms.CharField()
     new_department = forms.TypedChoiceField()
     old_department = forms.TypedChoiceField()
 
@@ -157,6 +170,7 @@ department_change = DepartmentChangeForm
 class CompensationChangeForm(forms.Form):
     """Change in the human's compensation."""
 
+    budget_account = forms.CharField()
     current_compensation = forms.CharField()
     new_compensation = forms.CharField()
     salary_change_reason = forms.CharField()
@@ -172,6 +186,7 @@ compensation_change = CompensationChangeForm
 class OnetimePaymentForm(forms.Form):
     """Pay out to a human's one time only."""
 
+    budget_account = forms.CharField()
     amount = forms.DecimalField()
     amount_reason = forms.CharField()
     pay_after_date = forms.DateField()
@@ -187,6 +202,7 @@ onetime_payment = OnetimePaymentForm
 class SupervisorChangeForm(forms.Form):
     """Change of supervisor for the human."""
 
+    budget_account = forms.CharField()
     new_supervisor = forms.CharField()
     old_supervisor = forms.CharField()
 
@@ -226,6 +242,7 @@ status_change = StatusChangeForm
 class PositionChangeForm(forms.Form):
     """Change of position for the human."""
 
+    budget_account = forms.CharField()
     old_position = forms.CharField()
     new_position = forms.CharField()
     position_effective_date = forms.DateField()
@@ -240,6 +257,7 @@ position_change = PositionChangeForm
 class LeaveOfAbsenceForm(forms.Form):
     """Request leave of absence for the human."""
 
+    budget_account = forms.CharField()
     leave_of_absence_date = forms.DateField()
     expected_return_date = forms.DateField()
     leave_of_absence_reason = forms.CharField()
@@ -252,6 +270,7 @@ leave_of_absence = LeaveOfAbsenceForm
 class SabbaticalForm(forms.Form):
     """Request a sabbatical for the human."""
 
+    budget_account = forms.CharField()
     sabbatical_types = forms.TypedChoiceField()
     sabbatical_academic_years = forms.CharField()
 

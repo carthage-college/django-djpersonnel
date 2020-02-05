@@ -1047,9 +1047,9 @@
             </div>
           </div>
           <!--
-          Hidden unless faculty or staff and "newhire_rehire" is checked
+          Hidden unless faculty or staff and anything but "termination"
           -->
-          <div class="col-sm-6 pb-3 facstaff-new">
+          <div class="col-md-6 pb-3">
             <div class="container-fluid">
               <div class="form-group">
                 <label for="{{form.budget_account.id_for_label}}"
@@ -1061,6 +1061,7 @@
                   id="{{form.budget_account.id_for_label}}"
                   value="{{form.budget_account.value|default_if_none:''}}">
                 <small class="text-danger">
+                  {{form.budget_account.help_text}}<br>
                   {{form.budget_account.errors|join:", "}}
                 </small>
               </div>
