@@ -322,9 +322,6 @@ class Operation(models.Model):
     budget_account = models.CharField(
         verbose_name="Budget Account",
         max_length=30,
-        null=True,
-        blank=True,
-        help_text="Required for all Section II actions EXCEPT termination",
     )
     department_name = models.CharField(
         max_length=128,

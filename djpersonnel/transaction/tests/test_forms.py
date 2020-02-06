@@ -33,15 +33,14 @@ class TransactionOperationTestCase(TestCase):
 
     def test_operation_form_valid_data(self):
 
-        data['approver'] = self.level3_approver_id
-        form = OperationForm(data)
-        v = form.is_valid()
+        form = OperationForm(self.data)
+        form.is_valid()
         print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_operation_form_invalid_data(self):
-        data['last_name'] = ''
-        form = OperationForm(data)
+        self.data['last_name'] = ''
+        form = OperationForm(self.data)
         self.assertFalse(form.is_valid())
 
     def test_operation_form_blank_data(self):
