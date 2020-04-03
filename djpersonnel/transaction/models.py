@@ -10,6 +10,7 @@ from djimix.people.departments import department
 from djimix.people.departments import departments_all_choices
 from djpersonnel.core.utils import get_deans
 from djpersonnel.core.utils import get_permissions
+from djpersonnel.core.utils import PROVOST
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import STATE_CHOICES
 
@@ -818,7 +819,7 @@ class Operation(models.Model):
         Provost must approve submissions that are approved by a
         division dean at level 3
         """
-        if self.level3_approver.id in get_deans():
+        if self.level3_approver.id in get_deans() or self.level3_approver.id == PROVOST.id:
             return True
         else:
             return False

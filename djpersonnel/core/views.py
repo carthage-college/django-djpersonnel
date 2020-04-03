@@ -38,22 +38,26 @@ def home(request):
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
-        requisitions = Requisition.objects.all().order_by('-created_at')[:10]
-        transactions = Transaction.objects.all().order_by('-created_at')[:10]
+        requisitions = Requisition.objects.all().order_by('-created_at')[:15]
+        transactions = Transaction.objects.all().order_by('-created_at')[:15]
     elif user.id == PROVOST.id:
-        requisitions = Requisition.objects.filter(
-            level3_approver__pk__in=deans
-        ).order_by('-created_at')[:10]
-        transactions = Transaction.objects.filter(
-            level3_approver__pk__in=deans
-        ).order_by('-created_at')[:10]
+        # PRF
+        reqs1 = Requisition.objects.filter(level3_approver__pk__in=deans)
+        reqs2 = Requisition.objects.filter(level3_approver__pk=PROVOST.id)
+        reqs = reqs1 | reqs2
+        requisitions = reqs.order_by('-created_at')[:15]
+        # PAF
+        trans1 = Transaction.objects.filter(level3_approver__pk__in=deans)
+        trans2 = Transaction.objects.filter(level3_approver__pk=PROVOST.id)
+        trans = trans1 | trans2
+        transactions = trans.order_by('-created_at')[:15]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        ).order_by('-created_at')[:10]
+        ).order_by('-created_at')[:15]
         transactions = Transaction.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        ).order_by('-created_at')[:10]
+        ).order_by('-created_at')[:15]
 
     return render(
         request, 'home.html', {
