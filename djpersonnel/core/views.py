@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
+
 from django.apps import apps
-from django.db.models import Q
-from django.core import serializers
+from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
+from django.core import serializers
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, get_object_or_404
+from djimix.decorators.auth import portal_auth_required
+from djimix.people.utils import get_cid
+from djpersonnel.core.forms import ApproverForm
+from djpersonnel.core.forms import DateCreatedForm
+from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import PROVOST
+from djpersonnel.core.utils import get_deans
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
-from djpersonnel.core.forms import ApproverForm, DateCreatedForm
-from djpersonnel.core.utils import get_deans, LEVEL2, PROVOST
-
-from djimix.decorators.auth import portal_auth_required
 from djtools.utils.convert import str_to_class
-from djtools.utils.users import in_group
 from djtools.utils.mail import send_mail
-from djimix.people.utils import get_cid
-
+from djtools.utils.users import in_group
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
@@ -29,10 +33,7 @@ from openpyxl.writer.excel import save_virtual_workbook
     redirect_url=reverse_lazy('access_denied')
 )
 def home(request):
-    """
-    dashboard home page view
-    """
-
+    """Dashboard home page view."""
     deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
