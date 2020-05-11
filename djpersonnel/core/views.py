@@ -216,22 +216,22 @@ def search(request):
         if form.is_valid():
             data = form.cleaned_data
             objects = Transaction.objects.filter(
-                created_at__gte=data['created_at']
+                created_at__gte=data['created_at'],
             ).all()
     else:
         form = DateCreatedForm()
 
     return render(
         request, 'search.html', {
-            'form':form, 'objects':objects, 'error':error
-        }
+            'form': form, 'objects': objects, 'error': error,
+        },
     )
 
 
 @csrf_exempt
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
+    redirect_url=reverse_lazy('access_denied'),
 )
 def operation_status(request):
     """
@@ -239,7 +239,6 @@ def operation_status(request):
     options:  approve, decline
     method:   AJAX POST
     """
-
     # requires POST request
     if request.POST:
         user = request.user
