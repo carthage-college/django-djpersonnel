@@ -27,9 +27,9 @@ def get_deans():
 
 
 def get_permissions(obj, user):
-
+    """Establish permissions for a user on the object."""
     perms = {
-        'view':False,'approver':False,'provost':False,'level':[]
+        'view': False, 'approver': False, 'provost': False, 'level': [],
     }
 
     # in_group includes an exception for superusers
@@ -60,8 +60,10 @@ def get_permissions(obj, user):
             perms['approver'] = True
             perms['provost'] = True
             perms['level'].append('provost')
-        # provost can also be a level3 approver
+        # provost can also be a level3 approver on both
+        # Transaction and Requisition
         if obj.level3_approver == user:
+            perms['approver'] = True
             perms['level'].append('level3')
     # VPFA might also be a level 3 approver, but does not approve submissions
     # that do not impact the budget

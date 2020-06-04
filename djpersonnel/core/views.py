@@ -125,9 +125,7 @@ def list(request, mod):
     redirect_url=reverse_lazy('access_denied')
 )
 def approver_manager(request):
-    """
-    approver crud
-    """
+    """Add a level 3 approver."""
     user = None
     level3_group = settings.LEVEL3_GROUP
     message = None
