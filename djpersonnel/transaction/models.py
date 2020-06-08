@@ -635,11 +635,11 @@ class Operation(models.Model):
     # the following fields are used when the position_change checkbox
     # is checked
     old_position = models.CharField(
-        verbose_name="Old position/title", max_length=55, null=True, blank=True,
+        verbose_name="Old position/title", max_length=128, null=True, blank=True,
     )
     new_position = models.CharField(
         verbose_name="New position/title",
-        max_length=55,
+        max_length=128,
         null=True,
         blank=True,
     )
