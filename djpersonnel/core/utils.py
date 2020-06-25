@@ -22,7 +22,9 @@ def get_deans():
 
     cids = []
     for tpos in settings.DEANS_TPOS:
-        cids.append(get_position(tpos).id)
+        position = get_position(tpos)
+        if position:
+            cids.append(get_position(tpos).id)
     return cids
 
 
