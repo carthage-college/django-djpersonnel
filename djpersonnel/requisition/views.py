@@ -45,16 +45,21 @@ def form_home(request, rid=None):
             if not settings.DEBUG and not obj:
 
                 # send confirmation email to user who submitted the form
-                to_list = [data.created_by.email,]
-                bcc = [settings.ADMINS[0][1],settings.HR_EMAIL]
+                to_list = [data.created_by.email]
+                bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
                 # subject
-                subject = "[PRF Submission] {}, {}".format(
-                    data.created_by.last_name, data.created_by.first_name
+                subject = "[PRF Submission] {0}, {1}".format(
+                    data.created_by.last_name, data.created_by.first_name,
                 )
                 template = 'requisition/email/created_by.html'
                 send_mail(
-                    request, to_list, subject, settings.HR_EMAIL,
-                    template, data, bcc
+                    request,
+                    to_list,
+                    subject,
+                    settings.HR_EMAIL,
+                    template,
+                    data,
+                    bcc,
                 )
 
                 # send email to level3 approver and Provost, if need be

@@ -44,24 +44,34 @@ def form_home(request):
             if not settings.DEBUG:
 
                 # email distribution list and bcc parameters
-                bcc = [settings.ADMINS[0][1],settings.HR_EMAIL]
+                bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
                 # send confirmation email to user who submitted the form
-                to_list = [data.created_by.email,]
+                to_list = [data.created_by.email]
                 template = 'transaction/email/created_by.html'
                 # subject
-                subject = u"[PAF Submission] {}, {}".format(
-                    data.created_by.last_name, data.created_by.first_name
+                subject = "[PAF Submission] {0}, {1}".format(
+                    data.created_by.last_name, data.created_by.first_name,
                 )
                 send_mail(
-                    request, to_list, subject, settings.HR_EMAIL,
-                    template, data, bcc
+                    request,
+                    to_list,
+                    subject,
+                    settings.HR_EMAIL,
+                    template,
+                    data,
+                    bcc,
                 )
                 # send email to level3 approver
                 template = 'transaction/email/approver.html'
-                to_list = [level3.email,]
+                to_list = [level3.email]
                 send_mail(
-                    request, to_list, subject,
-                    data.created_by.email, template, data, bcc
+                    request,
+                    to_list,
+                    subject,
+                    data.created_by.email,
+                    template,
+                    data,
+                    bcc,
                 )
 
                 return HttpResponseRedirect(

@@ -282,28 +282,28 @@ def operation_status(request):
                 # so that last AND clause in elif will never be True but LEVEL2
                 # might become a LEVEL3 approver in the future
                 if app != 'requisition' and obj.notify_provost() and not obj.provost:
-                    to_approver = [PROVOST.email,]
+                    to_approver = [PROVOST.email]
                 elif obj.notify_level2() and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
-                    to_approver = [LEVEL2.email,]
+                    to_approver = [LEVEL2.email]
                 else:
-                    to_approver = [settings.HR_EMAIL,]
+                    to_approver = [settings.HR_EMAIL, settings.ACCOUNTING_EMAIL]
 
-                bcc = [settings.ADMINS[0][1],]
+                bcc = [settings.ADMINS[0][1]]
                 frum = user.email
-                to_creator = [obj.created_by.email,]
-                subject = "[Personnel {} Form] {}".format(
-                    app.capitalize(), status
+                to_creator = [obj.created_by.email]
+                subject = "[Personnel {0} Form] {1}".format(
+                    app.capitalize(), status,
                 )
 
                 if settings.DEBUG:
                     obj.to_creator = to_creator
-                    to_creator = [settings.MANAGERS[0][1],]
+                    to_creator = [settings.MANAGERS[0][1]]
                     obj.to_approver = to_approver
-                    to_approver = [settings.MANAGERS[0][1],]
+                    to_approver = [settings.MANAGERS[0][1]]
 
                 # notify the creator of current status
                 send_mail(
-                    request, to_creator, subject, frum, template, obj, bcc
+                    request, to_creator, subject, frum, template, obj, bcc,
                 )
 
                 # notify the next approver if it is not completely approved
