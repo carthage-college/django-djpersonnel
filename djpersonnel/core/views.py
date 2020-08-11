@@ -39,26 +39,26 @@ def home(request):
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
-        requisitions = Requisition.objects.all().order_by('-created_at')[:15]
-        transactions = Transaction.objects.all().order_by('-created_at')[:15]
+        requisitions = Requisition.objects.all().order_by('-created_at')[:25]
+        transactions = Transaction.objects.all().order_by('-created_at')[:25]
     elif user.id == PROVOST.id:
         # PRF
         reqs1 = Requisition.objects.filter(level3_approver__pk__in=deans)
         reqs2 = Requisition.objects.filter(level3_approver__pk=PROVOST.id)
         reqs = reqs1 | reqs2
-        requisitions = reqs.order_by('-created_at')[:15]
+        requisitions = reqs.order_by('-created_at')[:25]
         # PAF
         trans1 = Transaction.objects.filter(level3_approver__pk__in=deans)
         trans2 = Transaction.objects.filter(level3_approver__pk=PROVOST.id)
         trans = trans1 | trans2
-        transactions = trans.order_by('-created_at')[:15]
+        transactions = trans.order_by('-created_at')[:25]
     else:
         requisitions = Requisition.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        ).order_by('-created_at')[:15]
+        ).order_by('-created_at')[:25]
         transactions = Transaction.objects.filter(
             Q(created_by=user) | Q(level3_approver=user)
-        ).order_by('-created_at')[:15]
+        ).order_by('-created_at')[:25]
 
     return render(
         request, 'home.html', {
@@ -72,9 +72,7 @@ def home(request):
     redirect_url=reverse_lazy('access_denied')
 )
 def list(request, mod):
-    """
-    complete listing of all objects
-    """
+    """Display a complete list of all objects."""
 
     deans = get_deans()
     user = request.user
@@ -90,13 +88,15 @@ def list(request, mod):
     # Provost can view all objects created by Deans
     elif user.id == PROVOST.id:
         if mod == 'requisition':
-            objects = Requisition.objects.filter(
-                level3_approver__pk__in=deans
-            ).order_by('-created_at')
+            reqs1 = Requisition.objects.filter(level3_approver__pk__in=deans)
+            reqs2 = Requisition.objects.filter(level3_approver__pk=PROVOST.id)
+            reqs = reqs1 | reqs2
+            objects = reqs.order_by('-created_at')
         elif mod == 'transaction':
-            objects = Transaction.objects.filter(
-                level3_approver__pk__in=deans
-            ).order_by('-created_at')
+            trans1 = Transaction.objects.filter(level3_approver__pk__in=deans)
+            trans2 = Transaction.objects.filter(level3_approver__pk=PROVOST.id)
+            trans = trans1 | trans2
+            objects = trans.order_by('-created_at')
         else:
             objects = None
     else:
@@ -112,9 +112,7 @@ def list(request, mod):
             objects = None
 
     return render(
-        request, 'list.html', {
-            'hr': hr, 'objects': objects, 'mod':mod
-        }
+        request, 'list.html', {'hr': hr, 'objects': objects, 'mod': mod},
     )
 
 
