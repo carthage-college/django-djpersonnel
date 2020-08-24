@@ -162,22 +162,22 @@ class Operation(models.Model):
         blank=True,
     )
     level3_date = models.DateField(
-        "Level 3 signed date", null=True, blank=True,
+        "Level 3 approved date", null=True, blank=True,
     )
     # Provost
     provost = models.BooleanField(default=False)
     provost_date = models.DateField(
-        "Provost signed date", null=True, blank=True,
+        "Provost approved date", null=True, blank=True,
     )
     # Vice President of Finance and Administration (VPFA)
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(
-        "Level 2 signed date", null=True, blank=True,
+        "Level 2 approved date", null=True, blank=True,
     )
     # HR
     level1 = models.BooleanField(default=False)
     level1_date = models.DateField(
-        "Level 1 Signed Date", null=True, blank=True,
+        "Level 1 approved Date", null=True, blank=True,
     )
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
@@ -825,9 +825,7 @@ class Operation(models.Model):
             return False
 
     def approved(self):
-        """
-        is the submission approved at relevant all levels?
-        """
+        """Check if the submission is approved at all relevant levels."""
         status = False
         # level 3 and level 1 are minimum requirements for approval
         if self.level3 and self.level1:
@@ -842,9 +840,7 @@ class Operation(models.Model):
         return status
 
     def department(self):
-        """
-        Returns the full department name based on 3 or 4 letter code
-        """
+        """Returns the full department name based on 3 or 4 letter code."""
         return {
             'name': department(self.department_name),
             'old': department(self.old_department),
