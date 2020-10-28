@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.db.models import Q
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -30,7 +31,7 @@ from openpyxl.writer.excel import save_virtual_workbook
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
+    redirect_url=reverse_lazy('access_denied'),
 )
 def home(request):
     """Dashboard home page view."""
@@ -69,7 +70,7 @@ def home(request):
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
+    redirect_url=reverse_lazy('access_denied'),
 )
 def list(request, mod):
     """Display a complete list of all objects."""
@@ -120,7 +121,7 @@ def list(request, mod):
 @portal_auth_required(
     group = settings.HR_GROUP,
     session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
+    redirect_url=reverse_lazy('access_denied'),
 )
 def approver_manager(request):
     """Add a level 3 approver."""
@@ -202,7 +203,7 @@ def approver_manager(request):
 
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
+    redirect_url=reverse_lazy('access_denied'),
 )
 def search(request):
     error = None
@@ -323,35 +324,38 @@ def operation_status(request):
     return HttpResponse(message)
 
 
+@portal_auth_required(
+    group=settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
 def openxml(request, mod):
+    if in_group(request.user, settings.HR_GROUP):
+        wb = Workbook()
+        ws = wb.get_active_sheet()
 
-    wb = Workbook()
-    ws = wb.get_active_sheet()
-
-    model = str_to_class(
-        'djpersonnel.{}.models'.format(mod), 'Operation'
-    )
-
-    data = serializers.serialize('python', model.objects.all() )
-
-    head = False
-    headers = []
-    for d in data:
-        row = []
-        for n,v in d['fields'].items():
-            headers.append(model._meta.get_field(n).verbose_name.title())
-            row.append(v)
-        if not head:
-            ws.append(headers)
-            head = True
-        ws.append(row)
-
-    response = HttpResponse(
-        save_virtual_workbook(wb), content_type='application/ms-excel'
-    )
-
-    response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
-        mod
-    )
+        model = str_to_class(
+            'djpersonnel.{0}.models'.format(mod), 'Operation',
+        )
+        data = serializers.serialize('python', model.objects.all() )
+        head = False
+        headers = []
+        for d in data:
+            row = []
+            for n,v in d['fields'].items():
+                headers.append(model._meta.get_field(n).verbose_name.title())
+                row.append(v)
+            if not head:
+                ws.append(headers)
+                head = True
+            ws.append(row)
+        response = HttpResponse(
+            save_virtual_workbook(wb), content_type='application/ms-excel'
+        )
+        response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
+            mod
+        )
+    else:
+        response = HttpResponseRedirect(reverse_lazy('access_denied'))
 
     return response
