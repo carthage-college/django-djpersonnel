@@ -26,7 +26,7 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "{% url 'approver_manager' %}",
-      data: {"cid":$id,"email":$em,"last_name":$ln,"first_name":$fn},
+      data: {"cid": $id, "email": $em, "last_name": $ln, "first_name": $fn},
       success: function(data) {
         $dis.closest('li').remove();
         $.growlUI("Approver", "Removed");
@@ -84,32 +84,6 @@ $(function() {
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Level 3 Approver Form</h4>
       <form method="post" action=".">
-        <div class="row">
-          <div class="form-group col-md-6 mb-3">
-            <label for="{{form.first_name.id_for_label}}"
-              {% if form.first_name.errors %}class="text-danger"{% endif %}>
-              {{form.first_name.label}}
-            </label>
-            <input type="text" name="{{form.first_name.name}}" placeholder="First Name"
-                   class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
-                   id="{{form.first_name.id_for_label}}" {% if not templates_debug %}required{% endif %}>
-            <div class="invalid-feedback">
-              {{form.first_name.errors|join:", "}}
-            </div>
-          </div>
-          <div class="form-group col-md-6 mb-3">
-            <label for="{{form.last_name.id_for_label}}"
-              {% if form.last_name.errors %}class="text-danger"{% endif %}>
-              {{form.last_name.label}}
-            </label>
-            <input type="text" name="{{form.last_name.name}}" placeholder="Last Name"
-                   class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
-                   id="{{form.last_name.id_for_label}}" {% if not templates_debug %}required{% endif %}>
-            <div class="invalid-feedback">
-              {{form.last_name.errors|join:", "}}
-            </div>
-          </div>
-        </div>
         <div class="form-group mb-3">
           <label for="{{form.email.id_for_label}}"
             {% if form.email.errors %}class="text-danger"{% endif %}>
@@ -123,7 +97,7 @@ $(function() {
           </div>
         </div>
         <div class="form-group mt-4">
-          <div class="col-12 pb-3 text-center">
+          <div class="col-12 pb-3">
             <button class="btn btn-primary btn-lg col-2" type="submit">Submit</button>
           </div>
         </div>

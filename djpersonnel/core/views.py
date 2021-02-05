@@ -13,7 +13,8 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from djimix.decorators.auth import portal_auth_required
+from djauth.decorators import portal_auth_required
+from djauth.managers import LDAPManager
 from djimix.people.utils import get_cid
 from djpersonnel.core.forms import ApproverForm
 from djpersonnel.core.forms import DateCreatedForm
@@ -62,9 +63,9 @@ def home(request):
         ).order_by('-created_at')[:25]
 
     return render(
-        request, 'home.html', {
-            'hr':hr, 'requisitions':requisitions, 'transactions':transactions
-        }
+        request,
+        'home.html',
+        {'hr': hr, 'requisitions': requisitions, 'transactions': transactions},
     )
 
 
@@ -74,7 +75,6 @@ def home(request):
 )
 def list(request, mod):
     """Display a complete list of all objects."""
-
     deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
@@ -133,26 +133,24 @@ def approver_manager(request):
 
     if request.method == 'POST':
         form = ApproverForm(
-            request.POST, use_required_attribute=settings.REQUIRED_ATTRIBUTE
+            request.POST, use_required_attribute=settings.REQUIRED_ATTRIBUTE,
         )
         if form.is_valid():
-            data = form.cleaned_data
+            user_data = form.cleaned_data
+            username = user_data['email'].split('@')[0]
             # fetch user or create one if they do not exist
             try:
-                user = User.objects.get(email=data['email'])
-            except:
-                cid = get_cid(data['email'])
-                if cid:
-                    user = form.save(commit=False)
-                    user.username = user.email.split('@')[0]
-                    user.id = cid
-                    user.set_password(
-                        User.objects.make_random_password(length=24)
-                    )
-                    user.save()
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                # create a new user
+                eldap = LDAPManager()
+                result_data = eldap.search(username, field='cn')
+                if result_data:
+                    groups = eldap.get_groups(result_data)
+                    user = eldap.dj_create(result_data, groups=groups)
                 else:
                     form.add_error(
-                        'email', "There is no user with that email address"
+                        'email', "There is no user with that email address",
                     )
                     message = "There is no user with that email address"
                     banner = messages.ERROR
@@ -166,20 +164,21 @@ def approver_manager(request):
                     group.user_set.remove(user)
                 elif in_group(user, level3_group):
                     form.add_error(
-                        'email', "{}, {} is already in the Approvers group".format(
-                            user.last_name, user.first_name
-                        )
+                        'email',
+                        "{0}, {1} is already in the Approvers group".format(
+                            user.last_name, user.first_name,
+                        ),
                     )
                     message = "User is already in the Approvers group"
                     banner = messages.ERROR
                     tag = 'alert-danger'
                 else:
                     group.user_set.add(user)
-                    message = "{}, {} added to the Approvers group".format(
-                        user.last_name, user.first_name
+                    message = "{0}, {1} added to the Approvers group".format(
+                        user.last_name, user.first_name,
                     )
                     form = ApproverForm(
-                        use_required_attribute=settings.REQUIRED_ATTRIBUTE
+                        use_required_attribute=settings.REQUIRED_ATTRIBUTE,
                     )
                 group.save()
 
@@ -196,7 +195,7 @@ def approver_manager(request):
         objects = User.objects.filter(groups__name=level3_group).order_by('last_name')
         hr = in_group(request.user, settings.HR_GROUP)
         response = render(
-            request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects}
+            request, 'approver.html', {'hr': hr, 'form':form, 'objects':objects},
         )
     return response
 
@@ -219,9 +218,9 @@ def search(request):
         form = DateCreatedForm()
 
     return render(
-        request, 'search.html', {
-            'form': form, 'objects': objects, 'error': error,
-        },
+        request,
+        'search.html',
+        {'form': form, 'objects': objects, 'error': error},
     )
 
 

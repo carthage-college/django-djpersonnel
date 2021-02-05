@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.contrib.auth.models import Group, User
-
 from djimix.people.utils import get_position
 from djtools.utils.users import in_group
 
@@ -9,12 +10,12 @@ PROVOST = get_position(settings.PROVOST_TPOS)
 
 
 def level3_choices():
-
+    """Obtain the folks who will approve the request at level 3."""
     choices = [('','---select---')]
     level3 = settings.LEVEL3_GROUP
-    for u in User.objects.filter(groups__name=level3).order_by('last_name'):
-        name = '{}, {}'.format(u.last_name, u.first_name)
-        choices.append((str(u.id), name))
+    for user in User.objects.filter(groups__name=level3).order_by('last_name'):
+        name = '{0}, {1}'.format(user.last_name, user.first_name)
+        choices.append((str(user.username), name))
     return choices
 
 
@@ -30,10 +31,7 @@ def get_deans():
 
 def get_permissions(obj, user):
     """Establish permissions for a user on the object."""
-    perms = {
-        'view': False, 'approver': False, 'provost': False, 'level': [],
-    }
-
+    perms = {'view': False, 'approver': False, 'provost': False, 'level': []}
     # in_group includes an exception for superusers
     group = in_group(user, settings.HR_GROUP)
     # Level 3 approver might also be in the HR group, in which case
