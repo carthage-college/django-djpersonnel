@@ -102,7 +102,7 @@ def detail(request, tid):
     return render(
         request,
         'transaction/detail.html',
-        {'hr': hr, 'paf': paf, 'perms': perms},
+        {'hr': hr, 'data': paf, 'perms': perms},
     )
 
 
