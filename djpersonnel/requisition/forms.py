@@ -98,7 +98,7 @@ class OperationForm(forms.ModelForm):
         approver = cd.get('level3_approver')
 
         if approver:
-            cd['level3_approver'] = User.objects.get(pk=approver)
+            cd['level3_approver'] = User.objects.get(username=approver)
         else:
             cd['level3_approver'] = None
 

@@ -29,7 +29,7 @@ def form_home(request):
         if form.is_valid():
             paf = form.save(commit=False)
             # deal with level 3 approver
-            level3 = User.objects.get(pk=form.cleaned_data['approver'])
+            level3 = User.objects.get(username=form.cleaned_data['approver'])
             paf.created_by = user
             paf.updated_by = user
             paf.level3_approver = level3
