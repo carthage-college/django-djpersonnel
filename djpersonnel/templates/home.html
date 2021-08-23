@@ -127,7 +127,7 @@ $(function() {
         Personnel Requisition Form (PRF)
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
-          title="The 10 most recent PRF submissions are list below"></i>
+          title="The 30 most recent PRF submissions are list below"></i>
         {% if hr %}
         |
         <a href="{% url 'openxml' 'requisition' %}">
@@ -151,7 +151,7 @@ $(function() {
         Personnel Action Form (PAF)
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
-          title="The 10 most recent PAF submissions are list below"></i>
+          title="The 30 most recent PAF submissions are list below"></i>
         {% if hr %}
         |
         <a href="{% url 'openxml' 'transaction' %}">
