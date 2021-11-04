@@ -8,7 +8,7 @@ from datetime import datetime
 from collections import namedtuple
 
 # Debug
-DEBUG = True
+DEBUG = False
 # include html5 form attributes in input fields
 REQUIRED_ATTRIBUTE = True
 ADMINS = (
@@ -27,19 +27,19 @@ USE_TZ = True
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 SERVER_URL = ''
-API_URL = '{}/{}'.format(SERVER_URL, 'api')
-LIVEWHALE_API_URL = 'https://{}'.format(SERVER_URL)
+API_URL = '{0}/{0}'.format(SERVER_URL, 'api')
+LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = BASE_DIR
+PROJECT_APP = os.path.basename(BASE_DIR)
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 ROOT_URL = '/apps/personnel/'
-MEDIA_ROOT = '{}/assets/'.format(ROOT_DIR)
-#MEDIA_URL = '{}assets/'.format(STATIC_URL)
+MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
 MEDIA_URL = '/media/djpersonnel/'
-STATIC_ROOT = '{}/static/'.format(ROOT_DIR)
+STATIC_ROOT = '{0}/static/'.format(ROOT_DIR)
 STATIC_URL = '/static/djpersonnel/'
-UPLOADS_DIR = '{}files/'.format(MEDIA_ROOT)
-UPLOADS_URL = '{}files/'.format(MEDIA_URL)
+UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
+UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
 ROOT_URLCONF = 'djpersonnel.urls'
 WSGI_APPLICATION = 'djpersonnel.wsgi.application'
 FILE_UPLOAD_PERMISSIONS=0o644
@@ -47,7 +47,6 @@ STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 # sqlserver connection string
 MSSQL_EARL = ''
@@ -64,7 +63,6 @@ DATABASES = {
     },
 }
 INSTALLED_APPS = [
-    #'bootstrap_admin',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -177,8 +175,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-LOGIN_URL = '{}accounts/login/'.format(ROOT_URL)
-LOGOUT_URL = '{}accounts/logout/'.format(ROOT_URL)
+LOGIN_URL = '{0}accounts/login/'.format(ROOT_URL)
+LOGOUT_URL = '{0}accounts/logout/'.format(ROOT_URL)
 LOGIN_REDIRECT_URL = ROOT_URL
 USE_X_FORWARDED_HOST = True
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -356,3 +354,25 @@ LOGGING = {
         },
     }
 }
+
+##################
+# LOCAL SETTINGS #
+##################
+
+# Allow any settings to be defined in local.py which should be
+# ignored in your version control system allowing for settings to be
+# defined per machine.
+
+# Instead of doing "from .local import *", we use exec so that
+# local has full access to everything defined in this module.
+# Also force into sys.modules so it's visible to Django's autoreload.
+
+phile = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'local.py')
+if os.path.exists(phile):
+    import imp
+    import sys
+    module_name = '{0}.settings.local'.format(PROJECT_APP)
+    module = imp.new_module(module_name)
+    module.__file__ = phile
+    sys.modules[module_name] = module
+    exec(open(phile, 'rb').read())
