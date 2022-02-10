@@ -1,6 +1,6 @@
 cryptography>=35.0.0
 bootstrap_admin>=0.4.4
-django==2.2.24
+django==2.2.27
 django-bootstrap4>=21.1
 django-loginas>=0.3.10
 mysqlclient>=2.0.3
