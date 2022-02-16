@@ -284,7 +284,8 @@ def operation_status(request):
                 elif obj.notify_level2() and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
                     to_approver = [LEVEL2.email]
                 else:
-                    to_approver = [settings.HR_EMAIL, settings.ACCOUNTING_EMAIL]
+                    to_approver = settings.ACCOUNTING_EMAIL
+                    to_approver.append(settings.HR_EMAIL)
 
                 bcc = [settings.ADMINS[0][1]]
                 frum = user.email
