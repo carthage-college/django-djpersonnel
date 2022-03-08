@@ -332,8 +332,7 @@ def operation_status(request):
 def openxml(request, mod):
     if in_group(request.user, settings.HR_GROUP):
         wb = Workbook()
-        ws = wb.get_active_sheet()
-
+        ws = wb.active
         model = str_to_class(
             'djpersonnel.{0}.models'.format(mod), 'Operation',
         )
@@ -342,6 +341,8 @@ def openxml(request, mod):
         headers = []
         for d in data:
             row = []
+            d['fields']['created_at'] = d['fields']['created_at'].strftime("%Y-%m-%d %H:%M:%S %z")
+            d['fields']['updated_at'] = d['fields']['updated_at'].strftime("%Y-%m-%d %H:%M:%S %z")
             for n,v in d['fields'].items():
                 headers.append(model._meta.get_field(n).verbose_name.title())
                 row.append(v)
@@ -350,11 +351,10 @@ def openxml(request, mod):
                 head = True
             ws.append(row)
         response = HttpResponse(
-            save_virtual_workbook(wb), content_type='application/ms-excel'
+            save_virtual_workbook(wb),
+            content_type='application/ms-excel',
         )
-        response['Content-Disposition'] = 'attachment;filename={}.xlsx'.format(
-            mod
-        )
+        response['Content-Disposition'] = 'attachment;filename={0}.xlsx'.format(mod)
     else:
         response = HttpResponseRedirect(reverse_lazy('access_denied'))
 
