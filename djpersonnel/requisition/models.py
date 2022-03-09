@@ -8,7 +8,6 @@ from djpersonnel.core.utils import get_deans, get_permissions
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
-#from djtools.fields.validators import MimetypeValidator
 from djimix.people.departments import department, departments_all_choices
 
 SALARY_CHOICES = (
@@ -182,7 +181,6 @@ class Operation(models.Model):
     job_description = models.FileField(
         "Job Description",
         upload_to=upload_to_path,
-        #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
         help_text="""
             All submission must be accompanied by a job description.
@@ -192,7 +190,6 @@ class Operation(models.Model):
     ad_copy = models.FileField(
         "Ad Copy",
         upload_to=upload_to_path,
-        #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
         help_text="PDF or Word format",
         null=True, blank=True
