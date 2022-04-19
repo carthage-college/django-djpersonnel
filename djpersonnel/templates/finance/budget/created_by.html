@@ -1,0 +1,27 @@
+{% load model_helpers %}
+{% block salutation %}
+<p>Hello,</p>
+<p>
+  Thank you submitting your budget modification request.
+</p>
+<p>
+  The approver for this budget is:
+  <a href="mailto:{{data.approver.email}}">
+    {{data.approver.first_name}}
+    {{data.approver.last_name}}
+  </a>
+</p>
+{% endblock salutation %}
+{% block closing %}
+<p>
+  The details of this request can be viewed
+  <a href="{{data.get_absolute_url}}">here</a>.
+</p>
+<p>
+  Thank you.
+</p>
+{% endblock closing %}
+{# debuging #}
+{% if data.to_approver %}
+{{data.to_approver}}
+{% endif %}

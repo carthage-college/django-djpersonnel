@@ -32,13 +32,22 @@ class OperationForm(forms.ModelForm):
         )
 
     class Meta:
+        """Sub-class with settings for the parent class."""
+
         model = Operation
-        # either fields or exclude is required
         exclude = [
-            'created_by','updated_by','created_at','updated_at',
-            'level1,level1_date','level2,level2_date','level3,level3_date',
-            #'level3_approver','decline','email_approved'
-            'decline','email_approved'
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
+            'level1',
+            'level1_date',
+            'level2',
+            'level2_date',
+            'level3',
+            'level3_date',
+            'decline',
+            'email_approved',
         ]
 
     def clean_replacement_name(self):

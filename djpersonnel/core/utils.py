@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 from djimix.people.utils import get_position
 from djtools.utils.users import in_group
+
 
 LEVEL2 = get_position(settings.LEVEL2_TPOS)
 PROVOST = get_position(settings.PROVOST_TPOS)

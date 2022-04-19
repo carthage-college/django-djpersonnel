@@ -1,0 +1,308 @@
+{% extends "home.html" %}
+{% load bootstrap4 %}
+{% load model_helpers %}
+{% block title %}
+    Personnel Requisition Form Detail &mdash;
+    Human Resources &mdash; Carthage College
+{% endblock %}
+{% block extra_javascript %}
+{{block.super}}
+<script src="//www.carthage.edu/static/vendor/js/spin.min.js"
+    type="text/javascript"></script>
+<script src="https://malsup.github.io/min/jquery.blockUI.min.js"
+    type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  /* spinner */
+  var opts = {
+      lines: 13, // The number of lines to draw
+      length: 20, // The length of each line
+      width: 10, // The line thickness
+      radius: 30, // The radius of the inner circle
+      corners: 1, // Corner roundness (0..1)
+      rotate: 0, // The rotation offset
+      direction: 1, // 1: clockwise, -1: counterclockwise
+      color: '#000', // #rgb or #rrggbb or array of colors
+      speed: 1, // Rounds per second
+      trail: 60, // Afterglow percentage
+      shadow: false, // Whether to render a shadow
+      hwaccel: false, // Whether to use hardware acceleration
+      className: 'search-results', // The CSS class to assign to spinner
+      zIndex: 2e9, // The z-index (defaults to 2000000000)
+      top: '50px', // Top position relative to parent in px
+      left: 'auto' // Left position relative to parent in px
+  };
+  var target = document.getElementById("wrapper");
+  var spinner = new Spinner(opts).spin(target);
+  spinner.stop(target);
+
+  $(".operation-status").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'operation_status' %}",
+      data: {'status':$(this).data('status'),'oid':'{{data.id}}','app':'requisition'},
+      cache: false,
+      beforeSend: function(){
+        spinner.spin(target);
+      },
+      success: function(data) {
+        spinner.stop(target);
+        $.growlUI(data);
+        $('#operationStatus').hide();
+      },
+      error: function(data) {
+        spinner.stop(target);
+        $.growlUI('Error', data);
+      }
+    });
+  });
+  $('#print').click(function() {
+    window.print();
+    return false;
+  });
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+<div class="container mb-4">
+  {% if not data.declined %}
+  {% if perms.approver and not data.approved %}
+  <div class="row mb-4" id="operationStatus">
+    <div class="col-lg-12 text-center">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="#" class="btn btn-default btn-success operation-status mr-4"
+            style="width:128px;" data-status="approved">Approve</a>
+          <a href="#" class="btn btn-default btn-danger operation-status mr-4"
+            style="width:128px;" data-status="declined">Decline</a>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  {% endif %}
+  {% if data.approved %}
+    <h1 style="color: #5810d1;">APPROVED</h1>
+  {% endif %}
+  {% else %}
+    <h1 style="color: #5810d1;">DECLINED</h1>
+  {% endif %}
+  <div class="col-md-12 card bg-dark">
+    <div class="card-title">
+      <h3 class="text-white pull-left">
+        Personnel Requisition Form
+      </h3>
+      <h3 class="pull-right text-purple">
+        <a href="#" id="print" class="no-print-icon">
+          <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Print to paper or PDF"></i></a> |
+        <a href="{% url 'requisition_update' data.id %}"
+          data-title="PRF: {{r.position_title}}">
+          <i class="fa fa-pencil text-purple blue-tooltip"  data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update Personnel Requisition: {{r.position_title}}"></i></a>
+      </h3>
+    </div>
+    <div class="card-body bg-light">
+      <div class="form-row">
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'position_title' %}</h6>
+            <p>{{data.position_title}}</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'department_name' %}</h6>
+            <p>{{data.department}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'new_position' %}</h6>
+            <div class="form-check">
+              <p>{{data.new_position}}</p>
+            </div>
+            <!-- Hidden unless "No" is selected -->
+            <div class="form-check {% if data.new_position == 'Yes' %}hyde{% endif %}" id="replacement">
+              <h6>{% field_name data 'replacement_name' %}</h6>
+              <p>{{data.replacement_name}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <div class="col-sm-3">
+          <div class="container-fluid">
+            <h6>{% field_name data 'budgeted_position' %}</h6>
+            <p>{{data.budgeted_position}}</p>
+          </div>
+          <!-- /.form-group -->
+          <!-- Hidden unless "Yes" is selected -->
+          {% if data.budgeted_position == 'Yes' %}
+          <div class="container-fluid">
+            <h6>{% field_name data 'account_number' %}</h6>
+            <p>{{data.account_number}}</p>
+          </div>
+          {% endif %}
+          <!-- /.form-group -->
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-check">
+              <h6>{% field_name data 'position_grant_funded' %}</h6>
+              <p>{{data.position_grant_funded}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- Hidden unless "Yes" is selected -->
+        {% if data.position_grant_funded == 'Yes' %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-check">
+              <h6>{% field_name data 'grant_fund_amount' %}</h6>
+              <p>{{data.grant_fund_amount}}</p>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        {% endif %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'salary_type' %}</h6>
+            <p>{{data.salary_type}}</p>
+          </div>
+        </div>
+        <!-- Hidden unless "Salary" is selected -->
+        {% if data.budgeted_position == 'Yes' %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'hours_per_week' %}</h6>
+            <p>{{data.hours_per_week}}</p>
+          </div>
+        </div>
+        {% endif %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'level3_approver' %}</h6>
+            <p>
+            {{data.level3_approver.last_name}},
+            {{data.level3_approver.first_name}}
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'created_by' %}</h6>
+            <p>
+            <a href="mailto:{{data.created_by.email}}">
+            {{data.created_by.last_name}},
+            {{data.created_by.first_name}}
+            </a>
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Job Salary Range (consult Human Resources)</h6>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'min_salary_range' %}</h6>
+            <p>{{data.min_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'mid_salary_range' %}</h6>
+            <p>{{data.mid_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <h6>{% field_name data 'max_salary_range' %}</h6>
+            <p>{{data.max_salary_range}}</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'publication_date' %}</h6>
+            <p>{{data.publication_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <h6>{% field_name data 'expected_start_date' %}</h6>
+            <p>{{data.expected_start_date}}</p>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <h6>{% field_name data 'applicant_system' %}</h6>
+          <div class="form-check form-check-inline">
+            <p>{{data.applicant_system}}</p>
+          </div>
+          <!-- Hidden unless "Yes" is selected -->
+          {% if data.applicant_system == 'Yes' %}
+          <div class="form-check">
+            <p>{{data.applicant_system_people}}</p>
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-sm-12">
+          <h6>{% field_name data 'speciality_sites' %}</h6>
+          <div class="form-check form-check-inline">
+            <p>{{data.speciality_sites}}</p>
+          </div>
+          <!-- Hidden unless "Yes" is selected -->
+          {% if data.speciality_sites == 'Yes' %}
+          <div class="form-check">
+            <p>{{data.speciality_sites_urls}}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% if data.job_description %}
+        <div class="col-sm-6">
+          <h6>
+            {% field_name data 'job_description' %}
+            <a class="fa-wrap"
+              href="{{media_url}}{{data.job_description}}"
+              target="_blank">
+              <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
+              aria-hidden="true"></i></a>
+          </h6>
+        </div>
+        {% endif %}
+        {% if data.ad_copy %}
+        <div class="col-sm-6">
+          <h6>
+            {% field_name data 'ad_copy' %}
+            <a class="fa-wrap"
+              href="{{media_url}}{{data.ad_copy}}"
+              target="_blank">
+              <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
+              aria-hidden="true"></i></a>
+          </h6>
+        </div>
+        {% endif %}
+        <div class="col-8">
+          <h6>{% field_name data 'plan_timeline' %}</h6>
+          <div class="form-check">
+            <p>{{data.plan_timeline}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- end form row -->
+    </div>
+    <!-- end card body -->
+    <div class="card-footer text-muted"></div>
+  </div>
+  <!-- end card -->
+</div>
+<!-- end container -->
+{% endblock %}

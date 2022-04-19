@@ -1,0 +1,75 @@
+{% load model_helpers %}
+{% block salutation %}
+<p>Hello,</p>
+<p>
+  A new budget form has been submitted
+  and is awaiting your review. This budget was submitted by:
+</p>
+<p>
+  <a href="mailto:{{data.created_by.email}}">
+    {{data.created_by.first_name}}
+    {{data.created_by.last_name}}
+  </a>
+</p>
+{% endblock salutation %}
+<p>
+  The budget details are listed below.
+</p>
+<dl {{dl_detail}}>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'version' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.version}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'cost_center' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.cost_center}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'variation' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.variation}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'amount' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.amount}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'fund' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.fund}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'program' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.program}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'gift' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.gift}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'grant' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.grant}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'grant' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.grant}}</dd>
+  <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+    {% field_name data 'project' %}
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.project}}</dd>
+</dl>
+{% block closing %}
+<p>
+  The details of this request can be viewed and approved
+  <a href="{{data.get_absolute_url}}">here</a>.
+</p>
+<p>
+  Please take a moment to review this submission and approve or deny it.
+</p>
+<p>
+  Thank you.
+</p>
+{% endblock closing %}
+{# debuging #}
+{% if data.to_approver %}
+{{data.to_approver}}
+{% endif %}

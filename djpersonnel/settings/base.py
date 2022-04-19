@@ -27,6 +27,7 @@ USE_L10N = False
 USE_TZ = True
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SERVER_URL = ''
 API_URL = '{0}/{0}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
@@ -64,6 +65,7 @@ DATABASES = {
     },
 }
 INSTALLED_APPS = [
+    'admin_honeypot',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,9 +76,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djpersonnel.core',
+    'djpersonnel.finance.budget',
     'djpersonnel.transaction',
     'djpersonnel.requisition',
-    # needed for template tags
     'djtools',
     'loginas',
 ]
