@@ -9,11 +9,12 @@ from djpersonnel.core.utils import level3_choices
 class BudgetForm(forms.ModelForm):
     """Form class for the budget data model."""
 
-    variation = forms.ChoiceField(
-        label="Is this an increase or decrease in the budget amount?",
-        choices=VARY_CHOICES,
-        widget=forms.RadioSelect(),
-    )
+    #variation = forms.ChoiceField(
+        #label="Is this an increase or decrease in the budget amount?",
+        #choices=VARY_CHOICES,
+        #widget=forms.RadioSelect(),
+        #required=True,
+    #)
 
     def __init__(self, *args, **kwargs):
         super(BudgetForm, self).__init__(*args, **kwargs)
@@ -35,3 +36,10 @@ class BudgetForm(forms.ModelForm):
             'approved_date',
             'decline',
         ]
+
+    #def clean_variation(self):
+        #"""Required field that is not handled properly."""
+        #cd = self.cleaned_data
+        #if not cd['variation']:
+            #self.add_error('variation', "Required field")
+        #return cd
