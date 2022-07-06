@@ -9,6 +9,7 @@
   label { margin-bottom: .25em; }
   label h5 {font-weight:545;font-size: 1.2rem;margin-bottom:0;}
   .form-check-label {font-size: .9em;}
+  form textarea {width:100% !important;}
 </style>
 {% endblock %}
 {% block content %}
@@ -22,12 +23,14 @@
       All fields are required except budget file.
     </div>
     <div class="card-body bg-light">
+      <div class="col-8">
       <form action="." method="post" class="form" enctype="multipart/form-data" role="form">
         {% csrf_token %}
         {% bootstrap_form form %}
         <input class="btn btn-primary btn-lg" type="submit" value="Submit" name="indi-submit">
       </form>
       <!-- end form -->
+      </div>
     </div>
     <!-- end card body -->
     <div class="card-footer text-muted">

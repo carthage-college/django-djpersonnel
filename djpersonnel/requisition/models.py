@@ -220,7 +220,7 @@ class Operation(models.Model):
         """Slug for file uploads."""
         return 'files/requisition/'
 
-    def __unicode__(self):
+    def __str__(self):
         """Default data for display."""
         return "{0}: submitted by {1}, {2}".format(
             self.position_title,

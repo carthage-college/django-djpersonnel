@@ -770,7 +770,7 @@ class Operation(models.Model):
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
 
-    def __unicode__(self):
+    def __str__(self):
         """Default data for display."""
         return "{0}: submitted by {1}, {2}".format(
             self.position_title,
