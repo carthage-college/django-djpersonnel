@@ -12,8 +12,6 @@ VARY_CHOICES = (
     ('Transfer to or from', 'Transfer to or from'),
     ('Increase to budget', 'Increase to budget'),
     ('Decrease to budget', 'Decrease to budget'),
-    ('Elimination', 'Elimination'),
-    ('New budget request', 'New budget request'),
 )
 CHANGE_TYPE = (
     ('Labor', 'Labor'),
@@ -118,7 +116,9 @@ class Budget(models.Model):
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     approved = models.BooleanField(default=False)
+    denied = models.BooleanField(default=False)
     approved_date = models.DateField(null=True, blank=True)
+    denied_date = models.DateField(null=True, blank=True)
     # approver etc
     cost_center = models.ForeignKey(
         CostCenter,
@@ -133,51 +133,6 @@ class Budget(models.Model):
             (versions in Adaptive will be 1.0 or 2.0)
         """,
     )
-    variation = models.CharField(
-        max_length=128,
-        choices=VARY_CHOICES,
-        help_text='What sort of update is being requested?',
-    )
-    # If transfer indicate % allocation by Account and
-    # to/from Account
-    #
-    # if allocation includes movement from or to a Gift
-    # or Grant use the Gift and Grant fields below.
-    transfer_to = models.ForeignKey(
-        Account,
-        verbose_name="Transfer to account",
-        related_name='transfer_to',
-        on_delete=models.CASCADE,
-        editable=settings.DEBUG,
-    )
-    transfer_to_percent = models.IntegerField(
-        "Transfer to account percent",
-        null=True,
-        blank=True,
-        default=0,
-        help_text="A number from 1 to 99, do not include % symbol.",
-    )
-    transfer_from = models.ForeignKey(
-        Account,
-        verbose_name="Transfer from account",
-        related_name='transfer_from',
-        on_delete=models.CASCADE,
-        editable=settings.DEBUG,
-    )
-    transfer_from_percent = models.IntegerField(
-        "Transfer from account percent",
-        null=True,
-        blank=True,
-        default=0,
-        help_text="A number from 1 to 99, do not include % symbol.",
-    )
-    allocation =  models.CharField(
-        max_length=32,
-        help_text="""
-            If allocation includes movement from or to a Gift
-            or Grant you should use the Gift and Grant fields below.
-        """,
-    )
     change_type = models.CharField(
         "Type of Budget change",
         max_length=32,
@@ -185,6 +140,48 @@ class Budget(models.Model):
         help_text="""
             If more than one type of budget request please submit a separate form
             for each change.
+        """,
+    )
+    variation = models.CharField(
+        max_length=128,
+        choices=VARY_CHOICES,
+        help_text='What sort of update is being requested?',
+    )
+    variation_change = models.ForeignKey(
+        Account,
+        verbose_name="Increase or decrease from account",
+        related_name='variation_change',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+        help_text="""
+            If increasing budget please be certain to provide either an offsetting
+            decrease to an existing budget expense/category or an increase to
+            revenue/category and to note this information within the Allocation field.
+        """,
+    )
+    variation_to = models.ForeignKey(
+        Account,
+        verbose_name="Transfer to account",
+        related_name='transfer_to',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+    )
+    variation_from = models.ForeignKey(
+        Account,
+        verbose_name="Transfer from account",
+        related_name='transfer_from',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+    )
+    allocation =  models.TextField(
+        max_length=32,
+        help_text="""
+            Please provide the following: expense and/or revenue by account,
+            cost center and % in order to allocate the $ amount.
+            If increasing budget please provide the % decrease by expense/category
+            or % increase by revenue/category.
+            If allocation includes movement from or to a Gift
+            or Grant you should use the Gift and Grant fields below.
         """,
     )
     amount = models.IntegerField(
@@ -202,28 +199,21 @@ class Budget(models.Model):
         default=0,
         help_text="What is the useful life of the item?",
     )
-    nature_purchase = models.TextField(
-        "What is the nature of the purchase?",
-        help_text="""
-            Is it new equipment, machinery, land, plant, buildings
-            or warehouses, furniture and fixtures, business vehicles,
-            software, or intangible assets such as a patent or license?
-            NOTE: Only the 8XXX series accounts should be utilized
-            for Capital updates. Please contact Kathy Bretl for all
-            capital questions.
-        """,
-    )
     gift = models.CharField(
         max_length=128,
-        choices=GIFT_CHOICES,
+        help_text="Provide the gift number AND % allocation OR $ amount.",
     )
     grant = models.CharField(
         max_length=128,
-        choices=GRANT_CHOICES,
+        help_text="Provide the grant number AND % allocation OR $ amount.",
     )
     project = models.CharField(
         max_length=128,
         choices=PROJECT_CHOICES,
+        help_text="""
+            Provide the project number if known or to indicate that
+            a new project number will be needed/requested.
+        """,
     )
     phile = models.FileField(
         "Attachments",

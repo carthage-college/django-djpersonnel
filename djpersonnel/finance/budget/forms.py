@@ -18,4 +18,6 @@ class BudgetForm(forms.ModelForm):
             'updated_at',
             'approved',
             'approved_date',
+            'denied',
+            'denied_date',
         ]
