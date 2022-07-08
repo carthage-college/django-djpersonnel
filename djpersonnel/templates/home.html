@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     Personnel Form Submissions &mdash;
     Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
+<script src="{% static 'js/main.js' %}?0420" type="text/javascript"></script>
 <script>
 $(function() {
   $("body").toggleClass("sidenav-toggled");

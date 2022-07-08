@@ -3,14 +3,21 @@
 {% block title %}
   Budget Form &mdash; Carthage College
 {% endblock %}
-{% block extra_style %}
+{% block extra_javascript %}
 {{block.super}}
-<style>
-  label { margin-bottom: .25em; }
-  label h5 {font-weight:545;font-size: 1.2rem;margin-bottom:0;}
-  .form-check-label {font-size: .9em;}
-  form textarea {width:100% !important;}
-</style>
+<script type="text/javascript">
+  // global for hide containers
+  var $hyde = '#id_userful_life';
+  // hide all the things
+  $($hyde).parent().hide();
+  {% if form.change_type.value == 'Capital' %}
+    $('#id_userful_life').parent().show();
+  {% endif %}
+  $('#id_change_type').on('change', function() {
+    $flip = $('#id_userful_life').parent();
+    toggle(this.value, 'Capital', $flip, rent=true);
+  });
+</script>
 {% endblock %}
 {% block content %}
 <div class="container mb-4">
@@ -24,7 +31,7 @@
     </div>
     <div class="card-body bg-light">
       <div class="col-8">
-      <form action="." method="post" class="form" enctype="multipart/form-data" role="form">
+      <form action="." method="post" class="form" enctype="multipart/form-data" role="form" id="budget-form">
         {% csrf_token %}
         {% bootstrap_form form %}
         <input class="btn btn-primary btn-lg" type="submit" value="Submit" name="indi-submit">

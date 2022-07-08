@@ -192,12 +192,15 @@ class Budget(models.Model):
     )
     # If the request is for over 5000.00 please trigger the
     # following questions and automatically add Vince Ceja to approval.
-    userful_life = models.IntegerField(
+    useful_life = models.IntegerField(
         "Useful life of the item in years",
         null=True,
         blank=True,
         default=0,
-        help_text="What is the useful life of the item?",
+        help_text="""
+            Useful life is only utilized for Capital expenditures.
+            Please contact Kathy Bretl with all Capital questions.
+        """,
     )
     gift = models.CharField(
         max_length=128,
