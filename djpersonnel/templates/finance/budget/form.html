@@ -13,6 +13,16 @@
   {% if form.change_type.value == 'Capital' %}
     $('#id_userful_life').parent().show();
   {% endif %}
+  {% if 'to budget' in form.variation.value  %}
+    $('#id_variation_change').parent().hide();
+    $('#id_variation_to').parent().show();
+    $('#id_variation_from').parent().show();
+  {% else %}
+  {% if 'Transfer' in form.variation.value %}
+    $('#id_variation_change').parent().hide();
+    $('#id_variation_to').parent().show();
+    $('#id_variation_from').parent().show();
+  {% endif %}{% endif %}
   $('#id_change_type').on('change', function() {
     $flip = $('#id_userful_life').parent();
     toggle(this.value, 'Capital', $flip, rent=true);
