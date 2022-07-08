@@ -149,7 +149,7 @@ class Budget(models.Model):
     )
     variation_change = models.ForeignKey(
         Account,
-        verbose_name="Increase or decrease from account",
+        verbose_name="Increase or decrease account",
         related_name='variation_change',
         on_delete=models.CASCADE,
         editable=settings.DEBUG,
@@ -158,6 +158,8 @@ class Budget(models.Model):
             decrease to an existing budget expense/category or an increase to
             revenue/category and to note this information within the Allocation field.
         """,
+        null=True,
+        blank=True,
     )
     variation_to = models.ForeignKey(
         Account,
@@ -165,6 +167,8 @@ class Budget(models.Model):
         related_name='transfer_to',
         on_delete=models.CASCADE,
         editable=settings.DEBUG,
+        null=True,
+        blank=True,
     )
     variation_from = models.ForeignKey(
         Account,
@@ -172,6 +176,8 @@ class Budget(models.Model):
         related_name='transfer_from',
         on_delete=models.CASCADE,
         editable=settings.DEBUG,
+        null=True,
+        blank=True,
     )
     allocation =  models.TextField(
         max_length=32,

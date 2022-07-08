@@ -35,5 +35,9 @@ class BudgetForm(forms.ModelForm):
         """Form validation."""
         cd = self.cleaned_data
         self.dependent('change_type', 'useful_life', 'Capital')
+        self.dependent('variation', 'variation_from', 'Transfer to or from')
+        self.dependent('variation', 'variation_to', 'Transfer to or from')
+        self.dependent('variation', 'variation_change', 'Increase to budget')
+        self.dependent('variation', 'variation_change', 'Decrease to budget')
 
         return cd

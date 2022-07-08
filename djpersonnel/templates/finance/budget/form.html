@@ -7,7 +7,7 @@
 {{block.super}}
 <script type="text/javascript">
   // global for hide containers
-  var $hyde = '#id_userful_life';
+  var $hyde = '#id_userful_life, #id_variation_change, #id_variation_to, #id_variation_from';
   // hide all the things
   $($hyde).parent().hide();
   {% if form.change_type.value == 'Capital' %}
@@ -16,6 +16,19 @@
   $('#id_change_type').on('change', function() {
     $flip = $('#id_userful_life').parent();
     toggle(this.value, 'Capital', $flip, rent=true);
+  });
+  $('#id_variation').on('change', function() {
+    $dis = $(this);
+      console.log($dis.val());
+    if ($dis.val() == 'Increase to budget' || $dis.val() == 'Decrease to budget') {
+      $('#id_variation_change').parent().show();
+      $('#id_variation_to').parent().hide();
+      $('#id_variation_from').parent().hide();
+    } else {
+      $('#id_variation_change').parent().hide();
+      $('#id_variation_to').parent().show();
+      $('#id_variation_from').parent().show();
+    }
   });
 </script>
 {% endblock %}
