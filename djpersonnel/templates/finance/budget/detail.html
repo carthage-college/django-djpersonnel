@@ -1,8 +1,9 @@
 {% extends "home.html" %}
 {% load bootstrap4 %}
+{% load static %}
 {% load model_helpers %}
 {% block title %}
-    Personnel Requisition Form Detail &mdash;
+    Budget Workflow Detail &mdash;
     Human Resources &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
@@ -66,7 +67,7 @@ $(function() {
 {% endblock %}
 {% block extra_style %}
 {{block.super}}
-<link href="{{static_url}}css/print.css" rel="stylesheet" type="text/css">
+<link href="{% static 'css/print.css' %}?0420" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content %}
 <div class="container mb-4">
@@ -95,205 +96,60 @@ $(function() {
   {% endif %}
   <div class="col-md-12 card bg-dark">
     <div class="card-title">
-      <h3 class="text-white pull-left">
-        Personnel Requisition Form
-      </h3>
+      <h3 class="text-white pull-left">Budget Details</h3>
       <h3 class="pull-right text-purple">
         <a href="#" id="print" class="no-print-icon">
           <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top"
           title="Print to paper or PDF"></i></a> |
-        <a href="{% url 'requisition_update' data.id %}"
-          data-title="PRF: {{r.position_title}}">
+        <a href="{% url 'budget_update' data.id %}">
           <i class="fa fa-pencil text-purple blue-tooltip"  data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="Update Personnel Requisition: {{r.position_title}}"></i></a>
+            title="Update Budget"></i></a>
       </h3>
     </div>
     <div class="card-body bg-light">
       <div class="form-row">
-        <div class="col-sm-6">
+        <div class="col-12">
           <div class="container-fluid">
-            <h6>{% field_name data 'position_title' %}</h6>
-            <p>{{data.position_title}}</p>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'department_name' %}</h6>
-            <p>{{data.department}}</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'new_position' %}</h6>
-            <div class="form-check">
-              <p>{{data.new_position}}</p>
-            </div>
-            <!-- Hidden unless "No" is selected -->
-            <div class="form-check {% if data.new_position == 'Yes' %}hyde{% endif %}" id="replacement">
-              <h6>{% field_name data 'replacement_name' %}</h6>
-              <p>{{data.replacement_name}}</p>
-            </div>
-          </div>
-          <!-- /.form-group -->
-        </div>
-        <div class="col-sm-3">
-          <div class="container-fluid">
-            <h6>{% field_name data 'budgeted_position' %}</h6>
-            <p>{{data.budgeted_position}}</p>
-          </div>
-          <!-- /.form-group -->
-          <!-- Hidden unless "Yes" is selected -->
-          {% if data.budgeted_position == 'Yes' %}
-          <div class="container-fluid">
-            <h6>{% field_name data 'account_number' %}</h6>
-            <p>{{data.account_number}}</p>
-          </div>
-          {% endif %}
-          <!-- /.form-group -->
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-check">
-              <h6>{% field_name data 'position_grant_funded' %}</h6>
-              <p>{{data.position_grant_funded}}</p>
-            </div>
-          </div>
-          <!-- /.form-group -->
-        </div>
-        <!-- Hidden unless "Yes" is selected -->
-        {% if data.position_grant_funded == 'Yes' %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="form-check">
-              <h6>{% field_name data 'grant_fund_amount' %}</h6>
-              <p>{{data.grant_fund_amount}}</p>
-            </div>
-          </div>
-          <!-- /.form-group -->
-        </div>
-        {% endif %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'salary_type' %}</h6>
-            <p>{{data.salary_type}}</p>
-          </div>
-        </div>
-        <!-- Hidden unless "Salary" is selected -->
-        {% if data.budgeted_position == 'Yes' %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'hours_per_week' %}</h6>
-            <p>{{data.hours_per_week}}</p>
-          </div>
-        </div>
-        {% endif %}
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'level3_approver' %}</h6>
-            <p>
-            {{data.level3_approver.last_name}},
-            {{data.level3_approver.first_name}}
-            </p>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'created_by' %}</h6>
-            <p>
-            <a href="mailto:{{data.created_by.email}}">
-            {{data.created_by.last_name}},
-            {{data.created_by.first_name}}
-            </a>
-            </p>
-          </div>
-        </div>
-        <div class="col-sm-12 card-header bg-secondary text-white">
-          <h6>Job Salary Range (consult Human Resources)</h6>
-        </div>
-        <div class="col-sm-4">
-          <div class="container-fluid">
-            <h6>{% field_name data 'min_salary_range' %}</h6>
-            <p>{{data.min_salary_range}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="container-fluid">
-            <h6>{% field_name data 'mid_salary_range' %}</h6>
-            <p>{{data.mid_salary_range}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="container-fluid">
-            <h6>{% field_name data 'max_salary_range' %}</h6>
-            <p>{{data.max_salary_range}}</p>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'publication_date' %}</h6>
-            <p>{{data.publication_date}}</p>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <h6>{% field_name data 'expected_start_date' %}</h6>
-            <p>{{data.expected_start_date}}</p>
-          </div>
-        </div>
-        <div class="col-sm-12">
-          <h6>{% field_name data 'applicant_system' %}</h6>
-          <div class="form-check form-check-inline">
-            <p>{{data.applicant_system}}</p>
-          </div>
-          <!-- Hidden unless "Yes" is selected -->
-          {% if data.applicant_system == 'Yes' %}
-          <div class="form-check">
-            <p>{{data.applicant_system_people}}</p>
-          </div>
-          {% endif %}
-        </div>
-        <div class="col-sm-12">
-          <h6>{% field_name data 'speciality_sites' %}</h6>
-          <div class="form-check form-check-inline">
-            <p>{{data.speciality_sites}}</p>
-          </div>
-          <!-- Hidden unless "Yes" is selected -->
-          {% if data.speciality_sites == 'Yes' %}
-          <div class="form-check">
-            <p>{{data.speciality_sites_urls}}</p>
-          </div>
-          {% endif %}
-        </div>
-        {% if data.job_description %}
-        <div class="col-sm-6">
-          <h6>
-            {% field_name data 'job_description' %}
+            <h6>{% field_name data 'cost_center' %}</h6>
+            <p>{{data.cost_center}}</p>
+            <h6>{% field_name data 'version' %}</h6>
+            <p>{{data.version}}</p>
+            <h6>{% field_name data 'change_type' %}</h6>
+            <p>{{data.change_type}}</p>
+            <h6>{% field_name data 'variation' %}</h6>
+            <p>{{data.variation}}</p>
+            <h6>{% field_name data 'allocation' %}</h6>
+            <div>{{data.allocation|safe}}</div>
+            <h6>{% field_name data 'amount' %}</h6>
+            <p>{{data.amount}}</p>
+            {% if data.useful_life %}
+            <h6>{% field_name data 'useful_life' %}</h6>
+            <p>{{data.useful_life}}</p>
+            {% endif %}
+            {% if data.gift %}
+            <h6>{% field_name data 'gift' %}</h6>
+            <p>{{data.gift}}</p>
+            {% endif %}
+            {% if data.grant %}
+            <h6>{% field_name data 'grant' %}</h6>
+            <p>{{data.grant}}</p>
+            {% endif %}
+            <h6>{% field_name data 'project' %}</h6>
+            <p>{{data.project}}</p>
+            {% if data.phile %}
+            <h6>
+            {% field_name data 'phile' %}
             <a class="fa-wrap"
-              href="{{media_url}}{{data.job_description}}"
+              href="{{media_url}}{{data.phile}}"
               target="_blank">
               <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
               aria-hidden="true"></i></a>
-          </h6>
-        </div>
-        {% endif %}
-        {% if data.ad_copy %}
-        <div class="col-sm-6">
-          <h6>
-            {% field_name data 'ad_copy' %}
-            <a class="fa-wrap"
-              href="{{media_url}}{{data.ad_copy}}"
-              target="_blank">
-              <i class="fa fa-times fa-file-pdf-o blue font-weight-bold"
-              aria-hidden="true"></i></a>
-          </h6>
-        </div>
-        {% endif %}
-        <div class="col-8">
-          <h6>{% field_name data 'plan_timeline' %}</h6>
-          <div class="form-check">
-            <p>{{data.plan_timeline}}</p>
+            </h6>
+            {% endif %}
+            <h6>{% field_name data 'comments' %}</h6>
+            <div>{{data.comments|safe}}</div>
           </div>
         </div>
       </div>

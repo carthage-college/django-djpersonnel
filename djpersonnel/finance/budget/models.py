@@ -4,7 +4,6 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
-from djpersonnel.core.utils import get_permissions
 from djtools.fields.helpers import upload_to_path
 
 
@@ -250,15 +249,15 @@ class Budget(models.Model):
 
     def __str__(self):
         """Default data for display."""
-        return "{0}: submitted by {1}, {2}".format(
-            self.position_title,
+        return "{0}: {1}, {2}".format(
+            self.cost_center,
             self.created_by.last_name,
             self.created_by.first_name,
         )
 
     def permissions(self, user):
         """Return user permissions for the object."""
-        return get_permissions(self, user)
+        return {'view': True}
 
     def get_absolute_url(self):
         """Return the default URL of the detailed view."""

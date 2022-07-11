@@ -132,7 +132,7 @@ def detail(request, bid):
     hr = in_group(user, settings.HR_GROUP)
     return render(
         request,
-        'budget/detail.html',
+        'finance/budget/detail.html',
         {'hr': hr, 'data': data, 'perms': perms},
     )
 
