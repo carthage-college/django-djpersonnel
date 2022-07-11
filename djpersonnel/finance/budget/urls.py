@@ -19,6 +19,8 @@ urlpatterns = [
     path('<int:bid>/detail/', views.detail, name='budget_detail'),
     # budget delete
     path('<int:bid>/delete/', views.delete, name='budget_delete'),
+    # budget dashboard
+    path('dashboard/', views.dashboard, name='budget_dashboard'),
     # budget create
     path('', views.home, name='budget_form'),
 ]

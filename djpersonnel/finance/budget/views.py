@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
+from djpersonnel.core.utils import LEVEL2
 from djpersonnel.finance.budget.forms import BudgetForm
 from djpersonnel.finance.budget.models import Budget
 from djtools.utils.mail import send_mail
@@ -19,7 +20,31 @@ from djtools.utils.users import in_group
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
+def dashboard(request):
+    """Budget workflow dashboard view."""
+    user = request.user
+    hr = in_group(user, settings.HR_GROUP)
+    # HR or VPFA can access all objects
+    if hr or user.id == LEVEL2.id:
+        budgets = Budget.objects.all().order_by('-created_at')[:100]
+    else:
+        budgets = Budget.objects.filter(
+            Q(created_by=user) | Q(cost_center__user=user)
+        ).order_by('-created_at')[:100]
+
+    return render(
+        request,
+        'finance/budget/dashboard.html',
+        {'hr': hr, 'budgets': budgets},
+    )
+
+
+@portal_auth_required(
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
 def home(request, bid=None):
+    """Budget workflow form."""
     user = request.user
     obj = None
     if bid:
@@ -41,12 +66,15 @@ def home(request, bid=None):
             data.created_by = user
             data.updated_by = user
             data.save()
-            # send email to creator and approver or display it for dev,
-            # and do not send it if we are updating the object
+            # send email to creator and approver or display it for dev
             template = 'finance/budget/approver.html'
-            if not settings.DEBUG and not obj:
-                # send email to approver
-                to_list = [data.approver.email]
+            to_list = settings.BUDGET_TO_LIST
+            to_list.append(data.cost_center.officer.email)
+            if data.gift or data.grant:
+                to_list.extend(settings.GRANTS_GIFTS_TO_LIST)
+            bcc = [settings.ADMINS[0][1]]
+            if not settings.DEBUG:
+                # send email to cost center officer and CFO
                 send_mail(
                     request,
                     to_list,
@@ -58,7 +86,6 @@ def home(request, bid=None):
                 )
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email]
-                bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
                 # subject
                 subject = "[Budget Submission] {0}, {1}".format(
                     data.created_by.last_name, data.created_by.first_name,
@@ -73,13 +100,11 @@ def home(request, bid=None):
                     data,
                     bcc,
                 )
-                return HttpResponseRedirect(
-                    reverse_lazy('budget_form_success'),
-                )
+                return HttpResponseRedirect(reverse_lazy('budget_form_success'))
             else:
                 # display the approver email template
                 return render(
-                    request, template, {'data': data, 'form': form},
+                    request, template, {'data': data, 'form': form, 'to_list': to_list},
                 )
     else:
         form = BudgetForm(
@@ -131,6 +156,6 @@ def delete(request, bid):
     # there is no referer in unit tests
     redirect = request.META.get('HTTP_REFERER')
     if not redirect:
-        redirect = reverse_lazy('dashboard_home')
+        redirect = reverse_lazy('budget_dashboard')
 
     return HttpResponseRedirect(redirect)

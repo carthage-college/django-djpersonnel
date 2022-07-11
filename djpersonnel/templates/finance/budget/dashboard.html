@@ -1,0 +1,19 @@
+{% extends "home.html" %}
+{% block content %}
+<div class="row">
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+    <h4>Budget Change Submissions</h4>
+    {% include "finance/budget/data.inc.html" %}
+  </div>
+</div>
+<!-- /.row -->
+{% endblock content %}

@@ -224,6 +224,9 @@ TPOS_DEFAULT = {
     PROVOST_TPOS: TposStruct(id=0, email=''),
     LEVEL2_TPOS: TposStruct(id=0, email=''),
 }
+# budget workflow
+BUDGET_TO_LIST = []
+GRANTS_GIFTS_TO_LIST = []
 # tests
 TEST_USER_USERNAME = ''
 TEST_USER_PASSWORD = ''

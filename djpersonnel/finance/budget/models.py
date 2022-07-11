@@ -19,14 +19,6 @@ CHANGE_TYPE = (
     ('Revenue', 'Revenue'),
     ('Capital', 'Capital'),
 )
-GIFT_CHOICES = (
-    ('Gift #', 'Gift #'),
-    ('$ or %', '$ or %'),
-)
-GRANT_CHOICES = (
-    ('Grant #', 'Grant #'),
-    ('$ or %', '$ or %'),
-)
 PROJECT_CHOICES = (
     ('Capital', 'Capital'),
     ('Non-capital', 'Non-capital'),
@@ -115,9 +107,13 @@ class Budget(models.Model):
     )
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
-    approved = models.BooleanField(default=False)
+    # cost center officer
+    level1 = models.BooleanField(default=False)
+    level1_date = models.DateField(null=True, blank=True)
+    # CFO
+    level2 = models.BooleanField(default=False)
+    level2_date = models.DateField(null=True, blank=True)
     denied = models.BooleanField(default=False)
-    approved_date = models.DateField(null=True, blank=True)
     denied_date = models.DateField(null=True, blank=True)
     # approver etc
     cost_center = models.ForeignKey(
@@ -210,10 +206,14 @@ class Budget(models.Model):
     )
     gift = models.CharField(
         max_length=128,
+        null=True,
+        blank=True,
         help_text="Provide the gift number AND % allocation OR $ amount.",
     )
     grant = models.CharField(
         max_length=128,
+        null=True,
+        blank=True,
         help_text="Provide the grant number AND % allocation OR $ amount.",
     )
     project = models.CharField(

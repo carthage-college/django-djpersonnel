@@ -16,8 +16,10 @@ class BudgetForm(forms.ModelForm):
             'updated_by',
             'created_at',
             'updated_at',
-            'approved',
-            'approved_date',
+            'level1',
+            'level1_date',
+            'level2',
+            'level2_date',
             'denied',
             'denied_date',
         ]
