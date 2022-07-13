@@ -68,10 +68,10 @@ def home(request, bid=None):
             data.save()
             # send email to creator and approver or display it for dev
             template = 'finance/budget/approver.html'
-            to_list = settings.BUDGET_TO_LIST
+            to_list = settings.BUDGET_LIST
             to_list.append(data.cost_center.officer.email)
             if data.gift or data.grant:
-                to_list.extend(settings.GRANTS_GIFTS_TO_LIST)
+                to_list.extend(settings.GRANTS_GIFTS_LIST)
             bcc = [settings.ADMINS[0][1]]
             if not settings.DEBUG:
                 # send email to cost center officer and CFO

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.dispatch import receiver
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from djtools.fields.helpers import upload_to_path
+from djtools.utils.mail import send_mail
 
 
 VARY_CHOICES = (
@@ -243,10 +245,6 @@ class Budget(models.Model):
         get_latest_by = 'created_at'
         verbose_name_plural = "Budget"
 
-    def get_slug(self):
-        """Slug for file uploads."""
-        return 'files/budget/'
-
     def __str__(self):
         """Default data for display."""
         return "{0}: {1}, {2}".format(
@@ -254,6 +252,18 @@ class Budget(models.Model):
             self.created_by.last_name,
             self.created_by.first_name,
         )
+
+    def approved(self):
+        """Check if the submission is approved at all relevant levels."""
+        status = False
+        # level 3 and level 1 are minimum requirements for approval
+        if self.level1 and self.level2:
+            status = True
+        return status
+
+    def get_slug(self):
+        """Slug for file uploads."""
+        return 'files/budget/'
 
     def permissions(self, user):
         """Return user permissions for the object."""
@@ -264,4 +274,23 @@ class Budget(models.Model):
         return 'https://{0}{1}'.format(
             settings.SERVER_URL,
             reverse('budget_detail', args=(self.id,)),
+        )
+
+@receiver(models.signals.post_save, sender=Budget)
+def send_mail_approved(sender, instance, created, **kwargs):
+    """Post-save signal function to notify folks after approved."""
+    if instance.approved():
+        template = 'finance/budget/approved.html'
+        to_list = settings.BUDGET_APPROVED_LIST
+        bcc = [settings.ADMINS[0][1]]
+        if settings.DEBUG:
+            to_list = bcc
+        send_mail(
+            request,
+            to_list,
+            subject,
+            instance.created_by.email,
+            template,
+            instance,
+            bcc,
         )
