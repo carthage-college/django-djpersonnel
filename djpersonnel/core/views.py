@@ -247,77 +247,78 @@ def operation_status(request):
         if not obj.declined:
             # we verify that the user has permission to approve/decline
             # in the permissions method
-            if perms['approver'] and status in ['approved','declined']:
+            if perms['approver'] and status in ['approved', 'declined']:
 
                 from djtools.fields import NOW
                 if status == 'approved':
                     for level in perms['level']:
                         setattr(obj, level, True)
-                        setattr(obj, '{}_date'.format(level), NOW)
+                        setattr(obj, '{0}_date'.format(level), NOW)
 
                 if status == 'declined':
                     obj.declined = True
+                    if app == 'budget':
+                        obj.declined_date = NOW
 
                 obj.save()
+                message = "{0} has been {1}".format(app, status)
 
-                # we will always use the first level in the list unless:
-                # 1. VPFA is a level3 approver; or
-                # 2. provost is a level3 approver and PAF from faculty
-                # 3. HR is a level3 approver and no budget impact
-                try:
-                    level = perms['level'][1]
-                except:
-                    level = perms['level'][0]
-                template = '{}/email/{}_{}.html'.format(app, level, status)
+                if app != 'budget':
+                    # we will always use the first level in the list unless:
+                    # 1. VPFA is a level3 approver; or
+                    # 2. provost is a level3 approver and PAF from faculty
+                    # 3. HR is a level3 approver and no budget impact
+                    try:
+                        level = perms['level'][1]
+                    except:
+                        level = perms['level'][0]
+                    template = '{0}/email/{1}_{2}.html'.format(app, level, status)
+                    # we send an email to Level2 if money is involved
+                    # and then to HR for final decision. if no money, we send an
+                    # email to Provost if need be and then to HR for final approval.
+                    #
+                    # VPFA will be notified only if the submission does not impact
+                    # the budget and she is not the level3 approver.
+                    # at the moment, the VPFA is not a LEVEL3 approver
+                    # so that last AND clause in elif will never be True but LEVEL2
+                    # might become a LEVEL3 approver in the future
+                    if app != 'requisition' and obj.notify_provost() and not obj.provost:
+                        to_approver = [PROVOST.email]
+                    elif obj.notify_level2() and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
+                        to_approver = [LEVEL2.email]
+                    else:
+                        to_approver = settings.ACCOUNTING_EMAIL
+                        to_approver.append(settings.HR_EMAIL)
 
-                # we send an email to Level2 if money is involved
-                # and then to HR for final decision. if no money, we send an
-                # email to Provost if need be and then to HR for final approval.
-                #
-                # VPFA will be notified only if the submission does not impact
-                # the budget and she is not the level3 approver.
-                # at the moment, the VPFA is not a LEVEL3 approver
-                # so that last AND clause in elif will never be True but LEVEL2
-                # might become a LEVEL3 approver in the future
-                if app != 'requisition' and obj.notify_provost() and not obj.provost:
-                    to_approver = [PROVOST.email]
-                elif obj.notify_level2() and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
-                    to_approver = [LEVEL2.email]
-                else:
-                    to_approver = settings.ACCOUNTING_EMAIL
-                    to_approver.append(settings.HR_EMAIL)
-
-                bcc = [settings.ADMINS[0][1]]
-                frum = user.email
-                to_creator = [obj.created_by.email]
-                subject = "[Personnel {0} Form] {1}".format(
-                    app.capitalize(), status,
-                )
-
-                if settings.DEBUG:
-                    obj.to_creator = to_creator
-                    to_creator = [settings.MANAGERS[0][1]]
-                    obj.to_approver = to_approver
-                    to_approver = [settings.MANAGERS[0][1]]
-
-                # notify the creator of current status
-                send_mail(
-                    request, to_creator, subject, frum, template, obj, bcc,
-                )
-
-                # notify the next approver if it is not completely approved
-                # and the submission has not been declined
-                if not obj.approved() and status == 'approved':
-                    send_mail(
-                        request, to_approver, subject, frum,
-                        '{}/email/approver.html'.format(app), obj, bcc
+                    bcc = [settings.ADMINS[0][1]]
+                    frum = user.email
+                    to_creator = [obj.created_by.email]
+                    subject = "[Personnel {0} Form] {1}".format(
+                        app.capitalize(), status,
                     )
 
-                message = "Personnel {} has been {}".format(app, status)
+                    if settings.DEBUG:
+                        obj.to_creator = to_creator
+                        to_creator = [settings.MANAGERS[0][1]]
+                        obj.to_approver = to_approver
+                        to_approver = [settings.MANAGERS[0][1]]
+
+                    # notify the creator of current status
+                    send_mail(
+                        request, to_creator, subject, frum, template, obj, bcc,
+                    )
+
+                    # notify the next approver if it is not completely approved
+                    # and the submission has not been declined
+                    if not obj.approved() and status == 'approved':
+                        send_mail(
+                            request, to_approver, subject, frum,
+                            '{}/email/approver.html'.format(app), obj, bcc
+                        )
             else:
                 message = "Access Denied"
         else:
-            message = "Personnel {} has already been declined".format(app)
+            message = "{0} has already been declined".format(app)
     else:
         message = "Requires HTTP POST"
 

@@ -41,7 +41,7 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "{% url 'operation_status' %}",
-      data: {'status':$(this).data('status'),'oid':'{{data.id}}','app':'requisition'},
+      data: {'status':$(this).data('status'),'oid':'{{data.id}}','app':'budget'},
       cache: false,
       beforeSend: function(){
         spinner.spin(target);
@@ -71,8 +71,10 @@ $(function() {
 {% endblock %}
 {% block content %}
 <div class="container mb-4">
-  {% if not data.declined %}
-  {% if perms.approver and not data.approved %}
+  {% if data.declined %}
+    <h1 style="color: #5810d1;">DECLINED</h1>
+  {% else %}
+  {% if not data.approved %}
   <div class="row mb-4" id="operationStatus">
     <div class="col-lg-12 text-center">
       <div class="panel panel-default">
@@ -87,13 +89,9 @@ $(function() {
     <!-- /.col-lg-12 -->
   </div>
   <!-- /.row -->
-  {% endif %}
-  {% if data.approved %}
-    <h1 style="color: #5810d1;">APPROVED</h1>
-  {% endif %}
   {% else %}
-    <h1 style="color: #5810d1;">DECLINED</h1>
-  {% endif %}
+  <h1 style="color: #5810d1;">APPROVED</h1>
+  {% endif %}{% endif %}
   <div class="col-md-12 card bg-dark">
     <div class="card-title">
       <h3 class="text-white pull-left">Budget Details</h3>

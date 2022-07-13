@@ -7,6 +7,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from djtools.fields.helpers import upload_to_path
 from djtools.utils.mail import send_mail
+from djtools.utils.users import in_group
+from djpersonnel.core.utils import LEVEL2
 
 
 VARY_CHOICES = (
@@ -86,7 +88,7 @@ class CostCenter(models.Model):
         )
 
 
-class Budget(models.Model):
+class Operation(models.Model):
     """Data model for the budget form."""
 
     # meta
@@ -114,8 +116,10 @@ class Budget(models.Model):
     # CFO
     level2 = models.BooleanField(default=False)
     level2_date = models.DateField(null=True, blank=True)
-    denied = models.BooleanField(default=False)
-    denied_date = models.DateField(null=True, blank=True)
+    declined = models.BooleanField(default=False)
+    declined_date = models.DateField(null=True, blank=True)
+    # status of notification email
+    status_mail = models.BooleanField(default=False)
     # approver etc
     cost_center = models.ForeignKey(
         CostCenter,
@@ -240,7 +244,7 @@ class Budget(models.Model):
     class Meta:
         """Sub-class for settings about the parent class."""
 
-        db_table = 'finance_budget'
+        db_table = 'budget_operation'
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
         verbose_name_plural = "Budget"
@@ -267,7 +271,21 @@ class Budget(models.Model):
 
     def permissions(self, user):
         """Return user permissions for the object."""
-        return {'view': True}
+        #perms = {'view': False, 'approver': False, 'level': []}
+        group = in_group(user, settings.HR_GROUP)
+        level = []
+        approver = False
+        view = False
+        if user == self.created_by or group:
+            view = True
+        if user == self.cost_center.officer or group:
+            level.append('level1')
+            approver = True
+        if user.id == LEVEL2.id or group:
+            level.append('level2')
+            approver = True
+        perms = {'view': True, 'approver': approver, 'level': level}
+        return perms
 
     def get_absolute_url(self):
         """Return the default URL of the detailed view."""
@@ -276,17 +294,26 @@ class Budget(models.Model):
             reverse('budget_detail', args=(self.id,)),
         )
 
-@receiver(models.signals.post_save, sender=Budget)
-def send_mail_approved(sender, instance, created, **kwargs):
-    """Post-save signal function to notify folks after approved."""
-    if instance.approved():
-        template = 'finance/budget/approved.html'
-        to_list = settings.BUDGET_APPROVED_LIST
+
+@receiver(models.signals.post_save, sender=Operation)
+def send_mail_status(sender, instance, created, **kwargs):
+    """Post-save signal function to notify folks of budget status."""
+    if instance.declined:
+        action = 'declined'
+    elif instance.approved():
+        action = 'approved'
+    else:
+        action = None
+    if action and not instance.status_mail:
+        subject = '[Budget] modification {0}'.format(action)
+        template = 'finance/budget/{0}.html'.format(action)
+        to_list = settings.BUDGET_STATUS_LIST
         bcc = [settings.ADMINS[0][1]]
+        bcc.append(instance.created_by.email)
         if settings.DEBUG:
             to_list = bcc
         send_mail(
-            request,
+            None,
             to_list,
             subject,
             instance.created_by.email,
@@ -294,3 +321,5 @@ def send_mail_approved(sender, instance, created, **kwargs):
             instance,
             bcc,
         )
+        instance.status_mail = True
+        instance.save()

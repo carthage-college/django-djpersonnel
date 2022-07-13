@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from djpersonnel.finance.budget.models import Account
-from djpersonnel.finance.budget.models import Budget
+from djpersonnel.finance.budget.models import Operation as Budget
 from djpersonnel.finance.budget.models import CostCenter
 
 

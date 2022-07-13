@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from djpersonnel.finance.budget.models import Budget
+from djpersonnel.finance.budget.models import Operation as Budget
 
 
 class BudgetForm(forms.ModelForm):
@@ -20,8 +20,8 @@ class BudgetForm(forms.ModelForm):
             'level1_date',
             'level2',
             'level2_date',
-            'denied',
-            'denied_date',
+            'declined',
+            'declined_date',
         ]
 
     def dependent(self, field1, field2, value=None):

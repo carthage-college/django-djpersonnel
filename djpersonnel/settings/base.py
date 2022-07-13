@@ -225,8 +225,9 @@ TPOS_DEFAULT = {
     LEVEL2_TPOS: TposStruct(id=0, email=''),
 }
 # budget workflow
-BUDGET_TO_LIST = []
-GRANTS_GIFTS_TO_LIST = []
+BUDGET_LIST = []
+BUDGET_STATUS_LIST = []
+BUDGET_GRANTS_GIFTS_LIST = []
 # tests
 TEST_USER_USERNAME = ''
 TEST_USER_PASSWORD = ''

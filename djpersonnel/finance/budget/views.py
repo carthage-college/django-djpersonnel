@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
 from djpersonnel.core.utils import LEVEL2
 from djpersonnel.finance.budget.forms import BudgetForm
-from djpersonnel.finance.budget.models import Budget
+from djpersonnel.finance.budget.models import Operation as Budget
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 
@@ -71,7 +71,7 @@ def home(request, bid=None):
             to_list = settings.BUDGET_LIST
             to_list.append(data.cost_center.officer.email)
             if data.gift or data.grant:
-                to_list.extend(settings.GRANTS_GIFTS_LIST)
+                to_list.extend(settings.BUDGET_GRANTS_GIFTS_LIST)
             bcc = [settings.ADMINS[0][1]]
             if not settings.DEBUG:
                 # send email to cost center officer and CFO
