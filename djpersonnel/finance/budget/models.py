@@ -119,7 +119,7 @@ class Operation(models.Model):
     declined = models.BooleanField(default=False)
     declined_date = models.DateField(null=True, blank=True)
     # status of notification email
-    status_mail = models.BooleanField(default=False)
+    status_email = models.BooleanField(default=False)
     # approver etc
     cost_center = models.ForeignKey(
         CostCenter,
@@ -304,7 +304,7 @@ def send_mail_status(sender, instance, created, **kwargs):
         action = 'approved'
     else:
         action = None
-    if action and not instance.status_mail:
+    if action and not instance.status_email:
         subject = '[Budget] modification {0}'.format(action)
         template = 'finance/budget/{0}.html'.format(action)
         to_list = settings.BUDGET_STATUS_LIST
@@ -321,5 +321,5 @@ def send_mail_status(sender, instance, created, **kwargs):
             instance,
             bcc,
         )
-        instance.status_mail = True
+        instance.status_email = True
         instance.save()
