@@ -22,6 +22,7 @@ class BudgetForm(forms.ModelForm):
             'level2_date',
             'declined',
             'declined_date',
+            'status_email',
         ]
 
     def dependent(self, field1, field2, value=None):
