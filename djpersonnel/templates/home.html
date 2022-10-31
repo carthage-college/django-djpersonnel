@@ -83,12 +83,14 @@ $(function() {
       <span class="nav-link-text">PAF</span>
     </a>
   </li>
+  <!--
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Budget Modification Form">
     <a class="nav-link" href="{% url 'budget_form' %}">
       <i class="fa fa-fw fa fa-money" aria-hidden="true"></i>
       <span class="nav-link-text">Budget Form</span>
     </a>
   </li>
+  -->
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Carthage Home">
     <a class="nav-link" href="https://www.carthage.edu/">
       <i class="fa fa-fw fa fa-home" aria-hidden="true"></i>
@@ -126,6 +128,7 @@ $(function() {
     </div>
     {% endfor %}
   {% endif %}
+    <!--
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
       <h4>
         <a href="{% url 'budget_dashboard' %}">
@@ -138,6 +141,7 @@ $(function() {
           title="Click on the spreadsheet icon to the left to see all budget submissions"></i>
       </h4>
     </div>
+    -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
       <h4>
         <a href="{% url 'dashboard_list' 'requisition' %}">
