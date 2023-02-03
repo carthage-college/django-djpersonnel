@@ -1,6 +1,6 @@
 cryptography>=36.0.1
 bootstrap_admin>=0.4.4
-django==3.2.16
+django==3.2.17
 django-bootstrap4>=21.1
 django-admin-honeypot>=1.1.0
 django-bootstrap5>=21.3
