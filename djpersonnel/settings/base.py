@@ -50,10 +50,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-# sqlserver connection string
-MSSQL_EARL = ''
-# informix connection string
-INFORMIX_ODBC = ''
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
@@ -214,16 +210,11 @@ HR_EMAIL=''
 ACCOUNTING_EMAIL = ''
 HR_GROUP='Human Resources'
 STAFF_GROUP='carthageStaffStatus'
-# approval level positions
-TposStruct = namedtuple('TposStruct', 'id email')
-DEANS_TPOS=(3374, 3375, 3376)
-PROVOST_TPOS=2877
-LEVEL2_TPOS=2760 #VPFA
+# groups
+LEVEL2_GROUP='Level 2'
 LEVEL3_GROUP='Level 3'
-TPOS_DEFAULT = {
-    PROVOST_TPOS: TposStruct(id=0, email=''),
-    LEVEL2_TPOS: TposStruct(id=0, email=''),
-}
+DEANS_GROUP='Deans'
+PROVOST_GROUP='Provost'
 # budget workflow
 BUDGET_LIST = []
 BUDGET_STATUS_LIST = []

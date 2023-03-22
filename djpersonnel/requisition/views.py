@@ -9,9 +9,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
+from djpersonnel.core.utils import get_provost
 from djpersonnel.requisition.models import Operation
 from djpersonnel.requisition.forms import OperationForm
-from djpersonnel.core.utils import PROVOST
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 
@@ -72,7 +72,7 @@ def form_home(request, rid=None):
                 template = 'requisition/email/approver.html'
                 to_list = [data.level3_approver.email]
                 if data.notify_provost():
-                    to_list.append(PROVOST.email)
+                    to_list.append(get_provost().email)
                 send_mail(
                     request,
                     to_list,

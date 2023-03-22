@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
-from django.db import models
-from django.contrib.auth.models import User
+from djpersonnel.core.utils import get_level2
 from djtools.fields.helpers import upload_to_path
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
-from djpersonnel.core.utils import LEVEL2
 
 
 VARY_CHOICES = (
@@ -281,7 +281,7 @@ class Operation(models.Model):
         if user == self.cost_center.officer or group:
             level.append('level1')
             approver = True
-        if user.id == LEVEL2.id or group:
+        if user.id == get_level2().id or group:
             level.append('level2')
             approver = True
         perms = {'view': True, 'approver': approver, 'level': level}

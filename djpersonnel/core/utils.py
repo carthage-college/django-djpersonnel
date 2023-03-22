@@ -7,10 +7,6 @@ from djimix.people.utils import get_position
 from djtools.utils.users import in_group
 
 
-LEVEL2 = get_position(settings.LEVEL2_TPOS)
-PROVOST = get_position(settings.PROVOST_TPOS)
-
-
 def level3_choices():
     """Obtain the folks who will approve the request at level 3."""
     choices = [('','---select---')]
@@ -22,13 +18,21 @@ def level3_choices():
 
 
 def get_deans():
-
+    """Obtain the deans."""
     cids = []
-    for tpos in settings.DEANS_TPOS:
-        position = get_position(tpos)
-        if position:
-            cids.append(get_position(tpos).id)
+    for dean in User.objects.filter(groups__name=settings.DEANS_GROUP):
+        cids.append(dean.id)
     return cids
+
+
+def get_provost():
+    """Obtain the provost."""
+    return User.objects.filter(groups__name=settings.PROVOST_GROUP).first()
+
+
+def get_level2():
+    """Obtain the provost."""
+    return User.objects.filter(groups__name=settings.LEVEL2_GROUP).first()
 
 
 def get_permissions(obj, user):
@@ -56,7 +60,7 @@ def get_permissions(obj, user):
     #   1) approves PAF for faculty submissions only (not PRF...for now)
     #   2) will be an approver for level3 or provost but not both
     #   3) provost level is between levels 3 and 2
-    elif user.id == PROVOST.id:
+    elif user.id == get_provost().id:
         perms['view'] = True
         if obj._meta.verbose_name.title() == "Transaction":
             perms['approver'] = True
@@ -69,7 +73,7 @@ def get_permissions(obj, user):
             perms['level'].append('level3')
     # VPFA might also be a level 3 approver, but does not approve submissions
     # that do not impact the budget
-    elif user.id == LEVEL2.id:
+    elif user.id == get_level2().id:
         perms['view'] = True
         if obj.level3_approver == user:
             perms['level'].append('level3')

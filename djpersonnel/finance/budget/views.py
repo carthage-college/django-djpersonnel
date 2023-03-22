@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
-from djpersonnel.core.utils import LEVEL2
+from djpersonnel.core.utils import get_level2
 from djpersonnel.finance.budget.forms import BudgetForm
 from djpersonnel.finance.budget.models import Operation as Budget
 from djtools.utils.mail import send_mail
@@ -26,7 +26,7 @@ def dashboard(request):
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
-    if hr or user.id == LEVEL2.id:
+    if hr or user.id == get_level2().id:
         budgets = Budget.objects.all().order_by('-created_at')[:100]
     else:
         budgets = Budget.objects.filter(

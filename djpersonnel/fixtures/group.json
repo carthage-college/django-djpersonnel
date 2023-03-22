@@ -23,5 +23,15 @@
         "model": "auth.group", "pk": 5, "fields": {
             "name": "Level 3", "permissions": []
         }
+    },
+    {
+        "model": "auth.group", "pk": 6, "fields": {
+            "name": "Deans", "permissions": []
+        }
+    },
+    {
+        "model": "auth.group", "pk": 7, "fields": {
+            "name": "Provost", "permissions": []
+        }
     }
 ]

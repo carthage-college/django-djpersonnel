@@ -18,9 +18,9 @@ from djauth.managers import LDAPManager
 from djimix.people.utils import get_cid
 from djpersonnel.core.forms import ApproverForm
 from djpersonnel.core.forms import DateCreatedForm
-from djpersonnel.core.utils import LEVEL2
-from djpersonnel.core.utils import PROVOST
+from djpersonnel.core.utils import get_level2
 from djpersonnel.core.utils import get_deans
+from djpersonnel.core.utils import get_provost
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djtools.utils.convert import str_to_class
@@ -28,6 +28,10 @@ from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
+
+
+LEVEL2 = get_level2()
+PROVOST = get_provost()
 
 
 @portal_auth_required(
