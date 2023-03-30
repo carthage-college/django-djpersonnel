@@ -1,10 +1,40 @@
 # -*- coding: utf-8 -*-
 
+import requests
+
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from djimix.people.utils import get_position
 from djtools.utils.users import in_group
+
+
+def get_department(did):
+    """Obtain the department details from API based on department ID."""
+    name = None
+    response = requests.get(
+        '{0}department/{1}/?format=json'.format(
+            settings.DIRECTORY_API_URL,
+            did,
+        ),
+    )
+    if response.json():
+        name = response.json()[0]['name']
+    return name
+
+
+def get_department_choices():
+    """Obtain all departments and return a choices structure for forms."""
+    depts = [('','---select---')]
+    response = requests.get(
+        '{0}department/?format=json'.format(
+            settings.DIRECTORY_API_URL,
+        ),
+    )
+    if response.json():
+        for dept in response.json():
+            depts.append((dept['id'], dept['name']))
+    return depts
 
 
 def level3_choices():

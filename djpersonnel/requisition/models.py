@@ -4,8 +4,10 @@ from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from djimix.people.departments import department as dept_name
-from djimix.people.departments import departments_all_choices
-from djpersonnel.core.utils import get_deans, get_permissions
+
+from djpersonnel.core.utils import get_department_choices
+from djpersonnel.core.utils import get_deans
+from djpersonnel.core.utils import get_permissions
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
 
@@ -82,7 +84,7 @@ class Operation(models.Model):
     department_name = models.CharField(
         "Department Name",
         max_length=128,
-        choices=departments_all_choices(),
+        choices=get_department_choices(),
     )
     new_position = models.CharField(
         "Is this a new position?",

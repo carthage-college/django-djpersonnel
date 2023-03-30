@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from djimix.people.departments import department
-from djimix.people.departments import departments_all_choices
 from djpersonnel.core.utils import get_deans
+from djpersonnel.core.utils import get_department_choices
 from djpersonnel.core.utils import get_permissions
 from djpersonnel.core.utils import get_provost
 from djtools.fields import BINARY_CHOICES
@@ -326,7 +326,7 @@ class Operation(models.Model):
     )
     department_name = models.CharField(
         max_length=128,
-        choices=departments_all_choices(),
+        choices=get_department_choices(),
     )
     supervise_others = models.CharField(
         "Does this position supervise others?",
