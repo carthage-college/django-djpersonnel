@@ -8,6 +8,8 @@ from django.db import models
 from django.urls import reverse
 from djimix.people.departments import department
 from djpersonnel.core.utils import get_deans
+from djpersonnel.core.utils import get_department
+from djpersonnel.core.utils import get_departments
 from djpersonnel.core.utils import get_department_choices
 from djpersonnel.core.utils import get_permissions
 from djpersonnel.core.utils import get_provost
@@ -841,8 +843,4 @@ class Operation(models.Model):
 
     def department(self):
         """Returns the full department name based on 3 or 4 letter code."""
-        return {
-            'name': department(self.department_name),
-            'old': department(self.old_department),
-            'new': department(self.new_department)
-        }
+        return department(self.department_name)

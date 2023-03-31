@@ -11,7 +11,7 @@ from djtools.utils.users import in_group
 
 def get_department(did):
     """Obtain the department details from API based on department ID."""
-    name = None
+    dept = None
     response = requests.get(
         '{0}department/{1}/?format=json'.format(
             settings.DIRECTORY_API_URL,
@@ -19,8 +19,22 @@ def get_department(did):
         ),
     )
     if response.json():
-        name = response.json()[0]['name']
-    return name
+        dept = response.json()[0]
+    return dept
+
+
+def get_departments():
+    """Obtain all departments and return a dictionary."""
+    depts = {}
+    response = requests.get(
+        '{0}department/?format=json'.format(
+            settings.DIRECTORY_API_URL,
+        ),
+    )
+    if response.json():
+        for dept in response.json():
+            depts[dept['name']] = dept['id']
+    return depts
 
 
 def get_department_choices():

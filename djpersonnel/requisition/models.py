@@ -3,8 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
-from djimix.people.departments import department as dept_name
-
+from djpersonnel.core.utils import get_department
 from djpersonnel.core.utils import get_department_choices
 from djpersonnel.core.utils import get_deans
 from djpersonnel.core.utils import get_permissions
