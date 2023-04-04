@@ -68,9 +68,8 @@
             {% endif %}
             </div>
         </td>
-        <td>
-          {{r.department}}
-          {% if r.budgeted_position == "Yes" %}
+        <td nowrap>
+          {{r.department}}{% if r.budgeted_position == "Yes" %}
             <div class="float-right">
               <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
               data-placement="top" aria-hidden="true"

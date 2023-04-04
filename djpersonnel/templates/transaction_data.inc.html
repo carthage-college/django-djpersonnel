@@ -38,6 +38,7 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
+        <th>Department</th>
         <th style="width:30%;">Actions</th>
         {% if hr %}
         <th class="text-center">
@@ -152,6 +153,7 @@
           {% endif %}
         </td>
         {% endif %}{% endif %}
+        <td>{{t.department}}</td>
         <td>
           {% for c in t.change_types %}
             {{c}}{% if not forloop.last %}, {% endif %}
@@ -209,6 +211,7 @@
             data-placement="top" aria-hidden="true"
             title="HR approval"></i>
         </th>
+        <th>Department</th>
         <th style="width:30%;">Actions</th>
         {% if hr %}
         <th class="text-center">

@@ -262,9 +262,5 @@ class Operation(models.Model):
         return status
 
     def department(self):
-        """Returns the full department name based on 3 or 4 letter code."""
-        name = self.department_name
-        dept = dept_name(name)
-        if dept:
-            name = dept[0]
-        return name
+        """Returns the full department name based on ID."""
+        return get_department(self.department_name)['name']
