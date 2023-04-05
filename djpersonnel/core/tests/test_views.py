@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.conf import settings
 from django.test import TestCase
@@ -7,18 +6,11 @@ from django.apps import apps
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import get_deans, LEVEL2
-
 from djtools.utils.users import in_group
-from djimix.people.utils import get_cid
-
-import logging
-
-logger = logging.getLogger('debug_logfile')
 
 
 def _operation_status(user, app, status, oid):
@@ -116,11 +108,6 @@ class CoreViewsTestCase(TestCase):
         )
         self.oid = 7
         self.created_at_date = settings.TEST_CREATED_AT_DATE
-
-    def test_get_cid(self):
-        cid = get_cid(user.email)
-        print("cid for email = {}".format(user.email))
-        print("cid = {}".format(cid))
 
     def test_get_deans(self):
         deans = get_deans()

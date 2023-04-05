@@ -15,7 +15,6 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
 from djauth.managers import LDAPManager
-from djimix.people.utils import get_cid
 from djpersonnel.core.forms import ApproverForm
 from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import get_level2
