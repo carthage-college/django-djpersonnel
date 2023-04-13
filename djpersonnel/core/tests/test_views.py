@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from djpersonnel.transaction.models import Operation as Transaction
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.core.forms import DateCreatedForm
-from djpersonnel.core.utils import get_deans, LEVEL2
+from djpersonnel.core.utils import get_managers, LEVEL2
 from djtools.utils.users import in_group
 
 
@@ -110,7 +110,7 @@ class CoreViewsTestCase(TestCase):
         self.created_at_date = settings.TEST_CREATED_AT_DATE
 
     def test_get_deans(self):
-        deans = get_deans()
+        deans = get_managers('deans')
         print("deans = {}".format(deans))
 
     def test_home(self):

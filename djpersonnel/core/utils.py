@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from djtools.utils.users import in_group
-from djtools.utils.workday import get_deans as deans
+from djtools.utils.workday import get_managers
 
 
 def level3_choices():
@@ -22,7 +22,7 @@ def level3_choices():
 def get_deans():
     """Obtain the deans."""
     cids = []
-    for dean in deans():
+    for dean in get_managers('deans'):
         cids.append(dean['id'])
     return cids
 

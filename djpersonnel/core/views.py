@@ -18,7 +18,7 @@ from djauth.managers import LDAPManager
 from djpersonnel.core.forms import ApproverForm
 from djpersonnel.core.forms import DateCreatedForm
 from djpersonnel.core.utils import get_level2
-from djpersonnel.core.utils import get_deans
+from djpersonnel.core.utils import get_managers
 from djpersonnel.core.utils import get_provost
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
@@ -39,7 +39,7 @@ PROVOST = get_provost()
 )
 def home(request):
     """Dashboard home page view."""
-    deans = get_deans()
+    deans = get_managers('deans')
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
@@ -78,7 +78,7 @@ def home(request):
 )
 def list(request, mod):
     """Display a complete list of all objects."""
-    deans = get_deans()
+    deans = get_managers('deans')
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
