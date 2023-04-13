@@ -29,7 +29,7 @@ DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SERVER_URL = ''
-DIRECTORY_API_URL = '{0}/{0}'.format(SERVER_URL, 'directory/api/')
+DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = BASE_DIR
@@ -205,6 +205,8 @@ BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
 BOOTSTRAP4 = {
     'required_css_class': 'required',
 }
+# REST API AUTHENTICATION TOKEN
+REST_FRAMEWORK_TOKEN = ''
 # apps
 HR_EMAIL=''
 ACCOUNTING_EMAIL = ''

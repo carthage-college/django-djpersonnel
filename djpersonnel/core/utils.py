@@ -6,48 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from djtools.utils.users import in_group
-
-
-def get_department(did):
-    """Obtain the department details from API based on department ID."""
-    dept = None
-    response = requests.get(
-        '{0}department/{1}/?format=json'.format(
-            settings.DIRECTORY_API_URL,
-            did,
-        ),
-    )
-    if response.json():
-        dept = response.json()[0]
-    return dept
-
-
-def get_departments():
-    """Obtain all departments and return a dictionary."""
-    depts = {}
-    response = requests.get(
-        '{0}department/?format=json'.format(
-            settings.DIRECTORY_API_URL,
-        ),
-    )
-    if response.json():
-        for dept in response.json():
-            depts[dept['name']] = dept['id']
-    return depts
-
-
-def get_department_choices():
-    """Obtain all departments and return a choices structure for forms."""
-    depts = [('','---select---')]
-    response = requests.get(
-        '{0}department/?format=json'.format(
-            settings.DIRECTORY_API_URL,
-        ),
-    )
-    if response.json():
-        for dept in response.json():
-            depts.append((dept['id'], dept['name']))
-    return depts
+from djtools.utils.workday import get_deans as deans
 
 
 def level3_choices():
@@ -63,8 +22,8 @@ def level3_choices():
 def get_deans():
     """Obtain the deans."""
     cids = []
-    for dean in User.objects.filter(groups__name=settings.DEANS_GROUP):
-        cids.append(dean.id)
+    for dean in deans():
+        cids.append(dean['id'])
     return cids
 
 

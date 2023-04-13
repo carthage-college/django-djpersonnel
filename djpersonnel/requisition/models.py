@@ -3,13 +3,12 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
-from djpersonnel.core.utils import get_department
-from djpersonnel.core.utils import get_department_choices
 from djpersonnel.core.utils import get_deans
 from djpersonnel.core.utils import get_permissions
 from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
-
+from djtools.utils.workday import department_all
+from djtools.utils.workday import department_detail
 
 SALARY_CHOICES = (
     ('Exempt', 'Exempt (salary)'),
@@ -83,7 +82,7 @@ class Operation(models.Model):
     department_name = models.CharField(
         "Department Name",
         max_length=128,
-        choices=get_department_choices(),
+        choices=department_all(choices=True),
     )
     new_position = models.CharField(
         "Is this a new position?",
@@ -263,4 +262,4 @@ class Operation(models.Model):
 
     def department(self):
         """Returns the full department name based on ID."""
-        return get_department(self.department_name)['name']
+        return department_detail(self.department_name)['name']

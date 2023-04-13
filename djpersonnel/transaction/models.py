@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from djpersonnel.core.utils import get_deans
-from djpersonnel.core.utils import get_department
-from djpersonnel.core.utils import get_department_choices
 from djpersonnel.core.utils import get_permissions
 from djpersonnel.core.utils import get_provost
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import STATE_CHOICES
+from djtools.utils.workday import department_all
+from djtools.utils.workday import department_detail
 
 
 STATUS_CHOICES = (
@@ -326,7 +326,7 @@ class Operation(models.Model):
     )
     department_name = models.CharField(
         max_length=128,
-        choices=get_department_choices(),
+        choices=department_all(choices=True),
     )
     supervise_others = models.CharField(
         "Does this position supervise others?",
@@ -841,4 +841,4 @@ class Operation(models.Model):
 
     def department(self):
         """Returns the full department name based on ID."""
-        return get_department(self.department_name)['name']
+        return department_detail(self.department_name)['name']

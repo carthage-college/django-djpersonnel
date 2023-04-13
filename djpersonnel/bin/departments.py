@@ -11,9 +11,9 @@ import django
 django.setup()
 
 from djimix.people.departments import department as dept_name
-from djpersonnel.core.utils import get_department
 from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
+from djtools.utils.workday import department_detail
 
 # env
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djpersonnel.settings.shell')
@@ -45,7 +45,7 @@ parser.add_argument(
 
 
 def main():
-    """Various reports on database activity."""
+    """Update department field to conform to workday infrastructure."""
     if test:
         print("Model = {0}".format(model))
 
@@ -59,7 +59,7 @@ def main():
 
     for obj in actions:
         code = obj.department_name.strip()
-        dept = get_department(code)
+        dept = department_detail(code)
         if dept:
             if test:
                 print(dept['code'], dept['name'], dept['id'])
