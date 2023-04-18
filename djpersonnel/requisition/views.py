@@ -43,14 +43,15 @@ def form_home(request, rid=None):
             data.updated_by = user
             data.save()
 
-            # send email to creator and approver or display it for dev,
-            # and do not send it if we are updating the object
-            template = 'requisition/email/approver.html'
-            if not settings.DEBUG and not obj:
-
+            # send email to creator and approver if not update
+            if not obj:
+                template = 'requisition/email/approver.html'
                 # send confirmation email to user who submitted the form
                 to_list = [data.created_by.email]
                 bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
+                if settings.DEBUG:
+                    data.to_list = to_list
+                    to_list = bcc
                 # subject
                 subject = "[PRF Submission] {0}, {1}".format(
                     data.created_by.last_name, data.created_by.first_name,
@@ -65,7 +66,6 @@ def form_home(request, rid=None):
                     data,
                     bcc,
                 )
-
                 # send email to level3 approver and Provost, if need be
                 # (the latter of whom just needs notification and
                 # does not approve anything
@@ -73,6 +73,9 @@ def form_home(request, rid=None):
                 to_list = [data.level3_approver.email]
                 if data.notify_provost():
                     to_list.append(get_provost().email)
+                if settings.DEBUG:
+                    data.to_list = to_list
+                    to_list = bcc
                 send_mail(
                     request,
                     to_list,
@@ -82,14 +85,7 @@ def form_home(request, rid=None):
                     data,
                     bcc,
                 )
-                return HttpResponseRedirect(
-                    reverse_lazy('requisition_form_success'),
-                )
-            else:
-                # display the email template
-                return render(
-                    request, template, {'data': data, 'form': form},
-                )
+                return HttpResponseRedirect(reverse_lazy('requisition_form_success'))
     else:
         form = OperationForm(
             instance=obj,

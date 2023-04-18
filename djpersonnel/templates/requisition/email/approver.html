@@ -35,5 +35,8 @@
 </p>
 {# debuging #}
 {% if data.to_approver %}
-{{data.to_approver}}
+to_list = {{data.to_approver}}
+{% endif %}
+{% if data.to_list %}
+to_list = {{data.to_list}}
 {% endif %}

@@ -69,15 +69,9 @@
             </div>
         </td>
         <td nowrap>
-          {{r.department}}{% if r.budgeted_position == "Yes" %}
-            <div class="float-right">
-              <i class="fa fa-usd green blue-tooltip" data-toggle="tooltip"
-              data-placement="top" aria-hidden="true"
-              title="This position is budgeted for account #{{r.account_number}}"></i>
-            </div>
-          {% endif %}
+          {{r.department}}{% if r.budgeted_position == "Yes" %}<i class="fa fa-usd green blue-tooltip float-right" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="This position is budgeted for account #{{r.account_number}}"></i>{% endif %}
         </td>
-        <td title="Created at: {{r.created_at}}">
+        <td title="Created at: {{r.created_at}}" nowrap>
           <a href="mailto:{{r.created_by.email}}">
             {{r.created_by.last_name}}, {{r.created_by.first_name}}
           </a>
@@ -125,8 +119,8 @@
           {% endif %}
         </td>
         {% endif %}{% endif %}
-        <td>{{r.publication_date|date:'Y-m-d'}}</td>
-        <td>{{r.expected_start_date|date:'Y-m-d'}}</td>
+        <td nowrap>{{r.publication_date|date:'Y-m-d'}}</td>
+        <td nowrap>{{r.expected_start_date|date:'Y-m-d'}}</td>
         {% if hr %}
         <td class="text-center">
           <a href="#" data-href="{% url 'requisition_delete' r.id %}"
