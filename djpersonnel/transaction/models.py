@@ -184,7 +184,6 @@ class Operation(models.Model):
     # set to True when levels are completed.
     # post_save signal sends email to Supervisor.
     email_approved = models.BooleanField(default=False)
-
     # form fields
     # required fields in the first part of the form
     last_name = models.CharField(
@@ -765,6 +764,8 @@ class Operation(models.Model):
     )
 
     class Meta:
+        """Subclass with settings for the parent class."""
+
         ordering = ['-created_at']
         get_latest_by = 'created_at'
         verbose_name = "Transaction"
@@ -779,10 +780,12 @@ class Operation(models.Model):
         )
 
     def get_slug(self):
+        """Return the URL slug."""
         return 'files/transaction/'
 
     def get_absolute_url(self):
-        return 'https://{}{}'.format(
+        """Return the full URL."""
+        return 'https://{0}{1}'.format(
             settings.SERVER_URL, reverse('transaction_detail', args=(self.id,))
         )
 
@@ -790,9 +793,7 @@ class Operation(models.Model):
         return get_permissions(self, user)
 
     def change_types(self):
-        """
-        returns a list of change types that the user selected
-        """
+        """Return a list of change types that the user selected."""
         clist = [
             'newhire_rehire','department_change','compensation_change',
             'onetime_payment','supervisor_change','termination',
@@ -806,19 +807,14 @@ class Operation(models.Model):
         return checks
 
     def notify_level2(self):
-        """
-        Level 2 should only be notified if money is involved
-        """
+        """Level 2 should only be notified if money is involved."""
         if self.newhire_rehire or self.compensation_change or self.onetime_payment:
             return True
         else:
             return False
 
     def notify_provost(self):
-        """
-        Provost must approve submissions that are approved by a
-        division dean at level 3
-        """
+        """Provost must approve submissions that for faculty."""
         if self.level3_approver.id in get_deans() or self.level3_approver.id == get_provost().id:
             return True
         else:

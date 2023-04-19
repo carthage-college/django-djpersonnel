@@ -2,6 +2,6 @@
 {% get_lw_content as success blurbs 2888 %}
 {{success.body|safe}}
 {# debuging #}
-{% if to_creator %}
-{{to_creator}}
+{% if data.to_list %}
+{{data.to_list}}
 {% endif %}

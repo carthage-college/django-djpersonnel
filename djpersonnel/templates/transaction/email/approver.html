@@ -1,64 +1,48 @@
 {% load model_helpers %}
-
 <p>Hello,</p>
-
 <p>
   A new personnel action form (PAF) form has been submitted
   and is awaiting your review. This form has been submitted by:
 </p>
-
 <p>
   <a href="mailto:{{data.created_by.email}}">
     {{data.created_by.first_name}}
     {{data.created_by.last_name}}
   </a>
 </p>
-
 <p>
   The requested position title and department are listed below.
 </p>
-
 <dl {{dl_detail}}>
   {% if data.position_title %}
   <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
-    {% field_name data 'position_title' %}
+    Title
   </dt>
   <dd style="margin:2px 0; padding:5px 0;">{{data.position_title}}</dd>
   {% endif %}
   <dt style="background:#3ab0c8; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
-    {% field_name data 'department_name' %}
+    Department
   </dt>
-  <dd style="margin:2px 0; padding:5px 0;">{{data.department.name.0}}</dd>
+  <dd style="margin:2px 0; padding:5px 0;">{{data.department}}</dd>
 </dl>
-
 <p>
   The details of this request can be viewed and approved
   <a href="{{data.get_absolute_url}}">here</a>.
 </p>
-{% if templates_debug %}
-{% if data.to_creator %}
-<p>
-  {{data.get_absolute_url}}
-</p>
-{% endif %}
-{% endif %}
-
 <p>
   Please take a moment to review this submission and approve or deny it.
 </p>
-
 <p>
   Thank you.
 </p>
 {% if data.to_approver %}
-approver = {{data.to_approver}}
+to_approver = {{data.to_approver}}
+<br>
 {% endif %}
-{# debuging #}
-{% if templates_debug %}
-{% if data.to_creator %}
-level 3 approver email = {{data.level3_approver.email}}
-<hr>
-<h2>Created By Email</h2>
-{% include "transaction/email/created_by.html" %}
+{% if data.to_createor %}
+to_creator = {{data.to_creator}}
+<br>
 {% endif %}
+{% if data.to_list %}
+to_list = {{data.to_list}}
 {% endif %}

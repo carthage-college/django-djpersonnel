@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
@@ -78,15 +80,16 @@ def home(request):
 )
 def list(request, mod):
     """Display a complete list of all objects."""
+    last_year = datetime.datetime.now() - datetime.timedelta(days=365)
     deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
         if mod == 'requisition':
-            objects = Requisition.objects.all()
+            objects = Requisition.objects.filter(created_at__gte=last_year)
         elif mod == 'transaction':
-            objects = Transaction.objects.all()
+            objects = Transaction.objects.filter(created_at__gte=last_year)
         else:
             objects = None
     # Provost can view all objects created by Deans
@@ -251,21 +254,17 @@ def operation_status(request):
             # we verify that the user has permission to approve/decline
             # in the permissions method
             if perms['approver'] and status in ['approved', 'declined']:
-
                 from djtools.fields import NOW
                 if status == 'approved':
                     for level in perms['level']:
                         setattr(obj, level, True)
                         setattr(obj, '{0}_date'.format(level), NOW)
-
                 if status == 'declined':
                     obj.declined = True
                     if app == 'budget':
                         obj.declined_date = NOW
-
                 obj.save()
                 message = "{0} has been {1}".format(app, status)
-
                 if app != 'budget':
                     # we will always use the first level in the list unless:
                     # 1. VPFA is a level3 approver; or
@@ -292,31 +291,38 @@ def operation_status(request):
                     else:
                         to_approver = [settings.ACCOUNTING_EMAIL]
                         to_approver.append(settings.HR_EMAIL)
-
                     bcc = [settings.ADMINS[0][1]]
                     frum = user.email
                     to_creator = [obj.created_by.email]
                     subject = "[Personnel {0} Form] {1}".format(
                         app.capitalize(), status,
                     )
-
                     if settings.DEBUG:
                         obj.to_creator = to_creator
                         to_creator = [settings.MANAGERS[0][1]]
                         obj.to_approver = to_approver
                         to_approver = [settings.MANAGERS[0][1]]
-
                     # notify the creator of current status
                     send_mail(
-                        request, to_creator, subject, frum, template, obj, bcc,
+                        request,
+                        to_creator,
+                        subject,
+                        frum,
+                        template,
+                        obj,
+                        bcc,
                     )
-
                     # notify the next approver if it is not completely approved
                     # and the submission has not been declined
                     if not obj.approved() and status == 'approved':
                         send_mail(
-                            request, to_approver, subject, frum,
-                            '{}/email/approver.html'.format(app), obj, bcc
+                            request,
+                            to_approver,
+                            subject,
+                            frum,
+                            '{0}/email/approver.html'.format(app),
+                            obj,
+                            bcc,
                         )
             else:
                 message = "Access Denied"
@@ -324,7 +330,6 @@ def operation_status(request):
             message = "{0} has already been declined".format(app)
     else:
         message = "Requires HTTP POST"
-
     return HttpResponse(message)
 
 

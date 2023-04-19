@@ -28,54 +28,51 @@ def form_home(request):
         form = OperationForm(request.POST, label_suffix='')
         if form.is_valid():
             paf = form.save(commit=False)
-            # deal with level 3 approver
-            level3 = User.objects.get(username=form.cleaned_data['approver'])
             paf.created_by = user
             paf.updated_by = user
+            # deal with level 3 approver
+            level3 = User.objects.get(username=form.cleaned_data['approver'])
             paf.level3_approver = level3
             paf.save()
-
-            # send email or display it for dev
-            if not settings.DEBUG:
-
-                # email distribution list and bcc parameters
-                bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
-                # send confirmation email to user who submitted the form
-                to_list = [paf.created_by.email]
-                template = 'transaction/email/created_by.html'
-                # subject
-                subject = "[PAF Submission] {0}, {1}".format(
-                    paf.created_by.last_name, paf.created_by.first_name,
-                )
-                send_mail(
-                    request,
-                    to_list,
-                    subject,
-                    settings.HR_EMAIL,
-                    template,
-                    paf,
-                    bcc,
-                )
-                # send email to level3 approver
-                template = 'transaction/email/approver.html'
-                to_list = [level3.email]
-                send_mail(
-                    request,
-                    to_list,
-                    subject,
-                    paf.created_by.email,
-                    template,
-                    paf,
-                    bcc,
-                )
-
-                return HttpResponseRedirect(
-                    reverse_lazy('transaction_form_success'),
-                )
-            else:
-                # display the email template
-                template = 'transaction/email/approver.html'
-                return render(request, template, {'paf': paf, 'form': form})
+            # email distribution list and bcc parameters
+            bcc = [settings.ADMINS[0][1], settings.HR_EMAIL]
+            # send confirmation email to user who submitted the form
+            to_list = [paf.created_by.email]
+            template = 'transaction/email/created_by.html'
+            # subject
+            subject = "[PAF Submission] {0}, {1}".format(
+                paf.created_by.last_name, paf.created_by.first_name,
+            )
+            if settings.DEBUG:
+                paf.to_list = to_list
+                to_list = bcc
+            send_mail(
+                request,
+                to_list,
+                subject,
+                settings.HR_EMAIL,
+                template,
+                paf,
+                bcc,
+            )
+            # send email to level3 approver
+            template = 'transaction/email/approver.html'
+            to_list = [paf.level3_approver.email]
+            if settings.DEBUG:
+                paf.to_list = to_list
+                to_list = bcc
+            send_mail(
+                request,
+                to_list,
+                subject,
+                paf.created_by.email,
+                template,
+                paf,
+                bcc,
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('transaction_form_success'),
+            )
     else:
         form = OperationForm(label_suffix='')
 
