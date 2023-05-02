@@ -100,11 +100,11 @@
           {% if t.level3 %}
             <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Dean approved this PAF on {{t.level3_date}}"></i>
+            title="{{t.level3_approver.first_name}} {{t.level3_approver.last_name}} approved this PAF on {{t.level3_date}}"></i>
           {% else %}
             <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Dean has NOT approved this PAF"></i>
+            title="{{t.level3_approver.first_name}} {{t.level3_approver.last_name}} has NOT approved this PAF"></i>
           {% endif %}
         </td>
         <td class="text-center">

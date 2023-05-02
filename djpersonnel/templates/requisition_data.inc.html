@@ -89,11 +89,11 @@
           {% if r.level3 %}
             <i class="fa fa-check green blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Dean approved this PRF on {{r.level3_date}}"></i>
+            title="{{r.level3_approver.first_name}} {{r.level3_approver.last_name}} approved this PRF on {{r.level3_date}}"></i>
           {% else %}
             <i class="fa fa-times red blue-tooltip"
             data-toggle="tooltip" data-placement="top" aria-hidden="true"
-            title="VP or Dean has NOT approved this PRF"></i>
+            title="{{r.level3_approver.first_name}} {{r.level3_approver.last_name}} has NOT approved this PRF"></i>
           {% endif %}
         </td>
         <td class="text-center">
