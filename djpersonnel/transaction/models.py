@@ -181,6 +181,8 @@ class Operation(models.Model):
     )
     # anyone in the workflow can decline the operation
     declined = models.BooleanField(default=False)
+    # status for approved
+    status = models.BooleanField(default=False)
     # set to True when levels are completed.
     # post_save signal sends email to Supervisor.
     email_approved = models.BooleanField(default=False)
@@ -823,16 +825,21 @@ class Operation(models.Model):
     def approved(self):
         """Check if the submission is approved at all relevant levels."""
         status = False
-        # level 3 and level 1 are minimum requirements for approval
-        if self.level3 and self.level1:
+        if self.status == True:
             status = True
-            if self.notify_provost():
-                if not self.provost:
-                    status = False
-            if self.notify_level2():
-                if not self.level2:
-                    status = False
-
+        else:
+            # level 3 and level 1 are minimum requirements for approval
+            if self.level3 and self.level1:
+                status = True
+                if self.notify_provost():
+                    if not self.provost:
+                        status = False
+                if self.notify_level2():
+                    if not self.level2:
+                        status = False
+            if status:
+                self.status = True
+                self.save()
         return status
 
     def department(self):
