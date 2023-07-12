@@ -46,8 +46,8 @@ def home(request):
     hr = in_group(user, settings.HR_GROUP)
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
-        requisitions = Requisition.objects.all().order_by('-created_at')[:30]
-        transactions = Transaction.objects.all().order_by('-created_at')[:30]
+        requisitions = Requisition.objects.all().select_related('level3_approver').select_related('created_by').select_related('updated_by').order_by('-created_at')[:30]
+        transactions = Transaction.objects.all().select_related('level3_approver').select_related('created_by').select_related('updated_by').order_by('-created_at')[:30]
     elif user.id == PROVOST.id:
         # PRF
         reqs1 = Requisition.objects.filter(level3_approver__pk__in=deans)
@@ -87,9 +87,9 @@ def list(request, mod):
     # HR or VPFA can access all objects
     if hr or user.id == LEVEL2.id:
         if mod == 'requisition':
-            objects = Requisition.objects.filter(created_at__gte=last_year)
+            objects = Requisition.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         elif mod == 'transaction':
-            objects = Transaction.objects.filter(created_at__gte=last_year)
+            objects = Transaction.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         else:
             objects = None
     # Provost can view all objects created by Deans
