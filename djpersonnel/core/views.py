@@ -35,6 +35,10 @@ LEVEL2 = get_level2()
 PROVOST = get_provost()
 
 
+import logging
+logger = logging.getLogger('debug_logfile')
+
+
 @portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied'),
@@ -89,7 +93,7 @@ def list(request, mod):
         if mod == 'requisition':
             objects = Requisition.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         elif mod == 'transaction':
-            objects = Transaction.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
+            objects = Transaction.objects.filter(created_at__gte=last_year).filter(status=False).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         else:
             objects = None
     # Provost can view all objects created by Deans
@@ -291,6 +295,7 @@ def operation_status(request):
                     else:
                         to_approver = settings.ACCOUNTING_EMAIL
                         to_approver.append(settings.HR_EMAIL)
+                    logger.debug('to_approver = {0}'.format(to_approver))
                     bcc = [settings.ADMINS[0][1]]
                     frum = user.email
                     to_creator = [obj.created_by.email]
@@ -301,9 +306,9 @@ def operation_status(request):
                         obj.to_creator = to_creator
                         to_creator = [settings.MANAGERS[0][1]]
                         obj.to_approver = to_approver
-                        to_approver = [settings.MANAGERS[0][1]]
+                        to_approver = [settings.MANAGERS[0][1], 'skirk@carthage.edu']
                     # notify the creator of current status
-                    send_mail(
+                    sent = send_mail(
                         request,
                         to_creator,
                         subject,
@@ -315,7 +320,7 @@ def operation_status(request):
                     # notify the next approver if it is not completely approved
                     # and the submission has not been declined
                     if not obj.approved() and status == 'approved':
-                        send_mail(
+                        sent = send_mail(
                             request,
                             to_approver,
                             subject,
@@ -324,6 +329,7 @@ def operation_status(request):
                             obj,
                             bcc,
                         )
+                    logger.debug('send_mail = {0}'.format(sent))
             else:
                 message = "Access Denied"
         else:

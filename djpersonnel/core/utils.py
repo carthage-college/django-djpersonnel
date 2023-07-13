@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import requests
-
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
