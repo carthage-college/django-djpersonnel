@@ -93,7 +93,7 @@ def list(request, mod):
         if mod == 'requisition':
             objects = Requisition.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         elif mod == 'transaction':
-            objects = Transaction.objects.filter(created_at__gte=last_year).filter(status=False).select_related('level3_approver').select_related('created_by').select_related('updated_by')
+            objects = Transaction.objects.filter(created_at__gte=last_year).select_related('level3_approver').select_related('created_by').select_related('updated_by')
         else:
             objects = None
     # Provost can view all objects created by Deans
