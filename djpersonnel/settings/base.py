@@ -122,16 +122,16 @@ TEMPLATES = [
 '''
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        #'LOCATION': '127.0.0.1:11211',
-        #'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        #'LOCATION': '/var/tmp/django_djpersonnel_cache',
-        #'TIMEOUT': 60*20,
-        #'KEY_PREFIX': 'djpersonnel_',
-        #'OPTIONS': {
-        #    'MAX_ENTRIES': 80000,
-        #}
+        #'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_djpersonnel_cache',
+        'TIMEOUT': 60*60*24,
+        'KEY_PREFIX': 'djpersonnel_',
+        'OPTIONS': {
+            'MAX_ENTRIES': 80000,
+        }
     }
 }
 '''

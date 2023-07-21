@@ -4,6 +4,7 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.db import models
 from django.urls import reverse
 from djpersonnel.core.utils import get_deans
@@ -801,11 +802,15 @@ class Operation(models.Model):
             'onetime_payment','supervisor_change','termination',
             'status_change','position_change','leave_of_absence'
         ]
-        checks = []
-        for c in clist:
-            if getattr(self, c):
-                checks.append(self._meta.get_field(c).verbose_name.title())
-
+        cache_key = 'change_type_{0}'.format(self.id)
+        checks = cache.get(cache_key)
+        if not checks:
+            checks = []
+            for c in clist:
+                if getattr(self, c):
+                    checks.append(self._meta.get_field(c).verbose_name.title())
+            checks = ', '.join(checks)
+            cache.set(checks, cache_key)
         return checks
 
     def notify_level2(self):

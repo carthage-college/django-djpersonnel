@@ -84,7 +84,8 @@ def home(request):
 )
 def list(request, mod):
     """Display a complete list of all objects."""
-    last_year = datetime.datetime.now() - datetime.timedelta(days=365)
+    #last_year = datetime.datetime.now() - datetime.timedelta(days=365)
+    last_year = datetime.datetime.now() - datetime.timedelta(days=180)
     deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
