@@ -849,4 +849,8 @@ class Operation(models.Model):
 
     def department(self):
         """Returns the full department name based on ID."""
-        return department_detail(self.department_name)['name']
+        try:
+            dept = department_detail(self.department_name)['name']
+        except Exception:
+            dept = ''
+        return dept
