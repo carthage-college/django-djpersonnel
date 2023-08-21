@@ -11,7 +11,9 @@
     {% endfor %}
   {% endif %}
   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-    <h4>
+    <form action="{% url 'paf_print' %}" method="post" class="form" role="form">
+    {% csrf_token %}
+    <h4 class="float-left">
       Personnel
       {% if mod == 'transaction' %}
         Action
@@ -21,6 +23,7 @@
       Form Submissions
     </h4>
     {% if mod == 'transaction' %}
+      <button class="btn btn-primary col-2 float-right" id="paf_print" type="submit">Print selected PAF</button>
       {% with transactions=objects %}
         {% if transactions %}
           {% include "transaction_data.inc.html" %}
@@ -38,6 +41,7 @@
         {% endif %}
       {% endwith %}
     {% endif %}
+    </form>
   </div>
 </div>
 <!-- /.row -->
