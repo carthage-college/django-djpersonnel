@@ -1,0 +1,1012 @@
+{% load model_helpers %}
+  <div class="col-md-12 card card bg-dark">
+    <div class="card-title paf-header">
+      <h3 class="text-white pull-left">
+        Personnel Action Form
+      </h3>
+      <h3 class="pull-right">
+        <a href="#" id="print" class="no-print-icon">
+          <i class="fa fa-print text-purple blue-tooltip" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Print to paper or PDF"></i></a>
+      </h3>
+    </div>
+    <div class="card-body bg-light">
+      <div class="form-row">
+        <!-- Section I -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section I</h6>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'last_name' %}</h6>
+              <p>{{data.last_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'first_name' %}</h6>
+              <p>{{data.first_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'middle_name' %}</h6>
+              <p>{{data.middle_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'home_address' %}</h6>
+              <p>{{data.home_address}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'city' %}</h6>
+              <p>{{data.city}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="container-fluid-group">
+            <div class="form-group">
+              <h6>{% field_name data 'state' %}</h6>
+              <p>{{data.state}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'postal_code' %}</h6>
+              <p>{{data.postal_code}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'phone' %}</h6>
+              <p>{{data.phone}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'email' %}</h6>
+              <p>{{data.email}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'department_name' %}</h6>
+              <p>{{data.department}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'employee_type' %}</h6>
+              <p>{{data.employee_type}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'level3_approver' %}</h6>
+              <p> {{data.level3_approver.first_name}} {{data.level3_approver.last_name}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'reporting_to' %}</h6>
+              <p>{{data.reporting_to}}</p>
+            </div>
+          </div>
+        </div>
+      </div><!-- end form row -->
+      <div class="form-row">
+        <!-- Section II -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>
+            Section II
+          </h6>
+        </div>
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.newhire_rehire == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'newhire_rehire' %}
+            </div>
+            <div class="form-check">
+              {% if data.department_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'department_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.compensation_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'compensation_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.onetime_payment == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'onetime_payment' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.supervisor_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'supervisor_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.termination == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'termination' %}
+            </div>
+            <div class="form-check">
+              {% if data.status_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'status_change' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4 mt-3 pb-3">
+          <div class="container-fluid">
+            <div class="form-check">
+              {% if data.position_change == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'position_change' %}
+            </div>
+            <div class="form-check">
+              {% if data.leave_of_absence == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                  <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'leave_of_absence' %}
+            </div>
+            <div class="form-check">
+              {% if data.sabbatical == True %}
+                <i class="fa fa-check-square-o green" data-placement="top"></i>
+              {% else %}
+                <i class="fa fa-square-o" data-placement="top"></i>
+              {% endif %}
+              {% field_name data 'sabbatical' %}
+            </div>
+          </div><!-- /.container-fluid -->
+        </div><!-- /.col-md-4 -->
+      </div>
+      <div class="form-row">
+        <!-- Section III -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>Section III</h6>
+        </div>
+        {% if data.position_title %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_title' %}</h6>
+              <p>{{data.position_title}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.status_type %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'status_type' %}</h6>
+              <p>{{data.status_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.status_change_effective_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'status_change_effective_date' %}</h6>
+              <p>{{data.status_change_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.hire_type %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'hire_type' %}</h6>
+              <p>{{data.hire_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.pay_type %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'pay_type' %}</h6>
+              <p>{{data.pay_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.hours_per_week %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'hours_per_week' %}</h6>
+              <p>{{data.hours_per_week}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.offered_compensation %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'offered_compensation' %}</h6>
+              <p>{{data.offered_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.expected_start_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_start_date' %}</h6>
+              <p>{{data.expected_start_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.budget_account %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'budget_account' %}</h6>
+              <p>{{data.budget_account}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.supervise_others %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'supervise_others' %}</h6>
+              <p>{{data.supervise_others}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.standard_vacation_package %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'standard_vacation_package' %}</h6>
+              <p>{{data.standard_vacation_package}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.vacation_days %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'vacation_days' %}</h6>
+              <p>{{data.vacation_days}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.position_grant_funded %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_grant_funded' %}</h6>
+              <p>{{data.position_grant_funded}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_fund_number %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_fund_number' %}</h6>
+              <p>{{data.grant_fund_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_fund_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_fund_amount' %}</h6>
+              <p>{{data.grant_fund_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.moving_expenses %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'moving_expenses' %}</h6>
+              <p>{{data.moving_expenses}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.moving_expenses_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'moving_expenses_amount' %}</h6>
+              <p>{{data.moving_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.startup_expenses %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses' %}</h6>
+              <p>{{data.startup_expenses}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.startup_expenses_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses_amount' %}</h6>
+              <p>{{data.startup_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.shift %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'shift' %}</h6>
+              <p>{{data.shift}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.startup_expenses_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'startup_expenses_amount' %}</h6>
+              <p>{{data.startup_expenses_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.other_arrangements %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'other_arrangements' %}</h6>
+              <p>{{data.other_arrangements}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.employment_type %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'employment_type' %}</h6>
+              <p>{{data.employment_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.contract_years %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'contract_years' %}</h6>
+              <p>{{data.contract_years}}</p>
+            </div>
+          </div>
+        </div>
+         {% endif %}
+        {% if data.music %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'music' %}</h6>
+              <p>{{data.music}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.courses_teaching %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'courses_teaching' %}</h6>
+              <p>{{data.courses_teaching}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.number_of_credits %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'number_of_credits' %}</h6>
+              <p>{{data.number_of_credits}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.teaching_appointment %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'teaching_appointment' %}</h6>
+              <p>{{data.teaching_appointment}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.teaching_appointment_arrangements %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'teaching_appointment_arrangements' %}</h6>
+              <p>{{data.teaching_appointment_arrangements}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.program_types %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'program_types' %}</h6>
+              <p>{{data.program_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.expected_end_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_end_date' %}</h6>
+              <p>{{data.expected_end_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.seven_week_appointment %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'seven_week_appointment' %}</h6>
+              <p>{{data.seven_week_appointment}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.seven_week_amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'seven_week_amount' %}</h6>
+              <p>{{data.seven_week_amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.food_allowance %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'food_allowance' %}</h6>
+              <p>{{data.food_allowance}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.academic_term %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'academic_term' %}</h6>
+              <p>{{data.academic_term}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.leave_of_absence_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'leave_of_absence_date' %}</h6>
+              <p>{{data.leave_of_absence_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.expected_return_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'expected_return_date' %}</h6>
+              <p>{{data.expected_return_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.leave_of_absence_reason %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'leave_of_absence_reason' %}</h6>
+              <p>{{data.leave_of_absence_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.new_department %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_department' %}</h6>
+              <p>{{data.department.new.0}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.old_department %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_department' %}</h6>
+              <p>{{data.department.old.0}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.new_supervisor %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_supervisor' %}</h6>
+              <p>{{data.new_supervisor}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if data.old_supervisor %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_supervisor' %}</h6>
+              <p>{{data.old_supervisor}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if data.termination_type %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'termination_type' %}</h6>
+              <p>{{data.termination_type}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+         {% if data.termination_voluntary %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'termination_voluntary' %}</h6>
+              <p>{{data.termination_voluntary}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.termination_involuntary %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'termination_involuntary' %}</h6>
+              <p>{{data.termination_involuntary}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.last_day_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'last_day_date' %}</h6>
+              <p>{{data.last_day_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.returned_property %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'returned_property' %}</h6>
+              <p>{{data.returned_property}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.eligible_rehire %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'eligible_rehire' %}</h6>
+              <p>{{data.eligible_rehire}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.vacation_days_accrued %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'vacation_days_accrued' %}</h6>
+              <p>{{data.vacation_days_accrued}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.new_compensation %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_compensation' %}</h6>
+              <p>{{data.new_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.current_compensation %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'current_compensation' %}</h6>
+              <p>{{data.current_compensation}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.salary_change_reason %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'salary_change_reason' %}</h6>
+              <p>{{data.salary_change_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.compensation_effective_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'compensation_effective_date' %}</h6>
+              <p>{{data.compensation_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.temporary_interim_pay %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'temporary_interim_pay' %}</h6>
+              <p>{{data.temporary_interim_pay}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.end_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'end_date' %}</h6>
+              <p>{{data.end_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.amount %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'amount' %}</h6>
+              <p>{{data.amount}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.amount_reason %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'amount_reason' %}</h6>
+              <p>{{data.amount_reason}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.pay_after_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'pay_after_date' %}</h6>
+              <p>{{data.pay_after_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.department_account_number %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'department_account_number' %}</h6>
+              <p>{{data.department_account_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_pay %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_pay' %}</h6>
+              <p>{{data.grant_pay}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.grant_pay_account_number %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'grant_pay_account_number' %}</h6>
+              <p>{{data.grant_pay_account_number}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.sabbatical_types %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'sabbatical_types' %}</h6>
+              <p>{{data.sabbatical_types}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.sabbatical_academic_years %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'sabbatical_academic_years' %}</h6>
+              <p>{{data.sabbatical_academic_years}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.old_position %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'old_position' %}</h6>
+              <p>{{data.old_position}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.new_position %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'new_position' %}</h6>
+              <p>{{data.new_position}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.position_effective_date %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'position_effective_date' %}</h6>
+              <p>{{data.position_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.additional_supervisor_role %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'additional_supervisor_role' %}</h6>
+              <p>{{data.additional_supervisor_role}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.direct_reports %}
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'direct_reports' %}</h6>
+              <p>{{data.direct_reports}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if data.comments %}
+        <div class="col-sm-12">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>{% field_name data 'comments' %}</h6>
+              <p>{{data.comments}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div><!-- end form row -->
+      <div class="form-row">
+        <!-- Section V -->
+        <div class="col-sm-12 card-header bg-secondary text-white">
+          <h6>
+            Section V - Benefit Change
+            (To be completed by Human Resources)
+          </h6>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Benefit change effective date</h6>
+              <p>{{data.benefit_change_effective_date}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Supplement Life Policy Amount</h6>
+              <p>{{data.supplement_life_policy_amount}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Supplement Life PPP Contribution</h6>
+              <p>{{data.supplement_life_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>Health Insurance Plan and Tier</h6>
+              <p>{{data.health_insurance_plan_tier}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>
+                CC Health Insurance Compensation Contribution
+              </h6>
+              <p>
+                {{data.cc_health_insurance_compensation_contribution}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>HSA Annual PPP Contribution</h6>
+              <p>{{data.hsa_annual_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>HSA Carthage Contribution</h6>
+              <p>{{data.hsa_carthage_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>FSA Medical Annual PPP Contribution</h6>
+              <p>{{data.fsa_medical_annual_ppp_contribution}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="form-group">
+              <h6>FSA Dependent Care Annual PPP Contribution</h6>
+              <p>
+                {{data.fsa_dependent_care_annual_ppp_contribution}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div><!-- end form row -->
+    </div>
+    <!-- end card body -->
+    <div class="card-footer text-muted"></div>
+  </div>
+  <!-- end card -->

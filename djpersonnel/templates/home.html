@@ -161,7 +161,9 @@ $(function() {
       {% endif %}
     </div>
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-      <h4>
+      <form action="{% url 'paf_print' %}" method="post" class="form" role="form">
+      {% csrf_token %}
+      <h4 class="float-left">
         <a href="{% url 'dashboard_list' 'transaction' %}">
           <i class="fa fa-list-alt blue-tooltip" aria-hidden="true"
             data-toggle="tooltip" data-placement="top"
@@ -178,11 +180,13 @@ $(function() {
             title="Download PAF data as a Spreadsheet"></i></a>
         {% endif %}
       </h4>
+      <button class="btn btn-primary col-2 float-right" id="paf_print" type="submit">Print selected PAF</button>
       {% if transactions %}
         {% include "transaction_data.inc.html" %}
       {% else %}
         <h5>No submissions</h5>
       {% endif %}
+      </form>
     </div>
 </div>
 <!-- /.row -->

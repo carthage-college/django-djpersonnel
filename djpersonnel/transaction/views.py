@@ -83,6 +83,18 @@ def form_home(request):
 
 
 @portal_auth_required(
+    group = settings.HR_GROUP,
+    session_var='DJPERSONNEL_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def paf_print(request):
+    """Print a bunch of PAF."""
+    pids = request.POST.getlist('paf_print')
+    pafs = Operation.objects.filter(id__in=pids)
+    return render(request, 'transaction/print.html', {'pafs': pafs, 'pids': pids})
+
+
+@portal_auth_required(
     session_var='DJPERSONNEL_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )

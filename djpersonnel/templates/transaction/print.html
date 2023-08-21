@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Dashboard &mdash; Carthage College{% endblock %}
+{% block extra_style %}
+<style>
+#mainNav,.paf-header{display:none;}
+hr {
+  position: relative;
+  top: 20px;
+  border: none;
+  height: 12px;
+  background: black;
+  margin-bottom: 50px;
+  width: 100% !important;
+  border-top: solid 12px #000 !important;
+}
+</style>
+{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+  $('#print').click(function() {
+    window.print();
+    return false;
+  });
+});
+</script>
+{% endblock %}
+{% block content %}
+  <a href="#" id="print" class="no-print-icon">
+    <i class="fa fa-print fa-3x float-right mb-3 text-purple blue-tooltip" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print to paper or PDF"></i></a>
+  {% for paf in pafs %}
+    {% with paf as data %}
+      {% include "transaction/detail.inc.html" %}
+    {% endwith %}
+    {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %}
+{% endblock %}

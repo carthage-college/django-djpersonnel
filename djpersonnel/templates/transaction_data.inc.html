@@ -4,6 +4,10 @@
     <thead>
       <tr>
         {% cache 86400 datatable_head %}
+        <th>
+          <i class="fa fa-print green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Print Personnel Action Form"></i></th>
         <th nowrap>
           Last Name
           <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
@@ -58,6 +62,7 @@
       {% for t in transactions %}
       <tr>
         {% cache 86400 paf_name  t.id %}
+        <td><input type="checkbox" value="{{t.id}}" name="paf_print"></td>
         <td nowrap>
           <a href="{% url 'transaction_detail' t.id %}" data-toggle="tooltip"
           data-placement="top" class="blue-tooltip"
@@ -181,6 +186,10 @@
     <tfoot>
       <tr>
         {% cache 86400 datatable_head %}
+        <th>
+          <i class="fa fa-print green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Print Personnel Action Form"></i></th>
         <th nowrap>
           Last Name
           <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"

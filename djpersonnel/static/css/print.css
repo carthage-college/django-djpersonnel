@@ -108,16 +108,20 @@
   .noprint,
   div.alert,
   header,
+  .paf-header,
+  #print,
+  .scroll-to-top,
+  #mainNav,
   .group-media,
   .btn,
   .footer,
   form,
   #comments,
-  .nav, .navbar,
+  .nav,
+  .navbar,
   ul.links.list-inline,
   ul.action-links {
     display:none !important;
   }
-
 
 }
