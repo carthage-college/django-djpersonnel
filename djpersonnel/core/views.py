@@ -303,6 +303,9 @@ def operation_status(request):
                     subject = "[Personnel {0} Form] {1}".format(
                         app.capitalize(), status,
                     )
+                    # add HR email if approved
+                    if obj.approved() and status == 'approved':
+                        to_creator.append(settings.HR_EMAIL)
                     if settings.DEBUG:
                         obj.to_creator = to_creator
                         to_creator = [settings.MANAGERS[0][1]]
