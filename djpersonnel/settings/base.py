@@ -61,7 +61,6 @@ DATABASES = {
     },
 }
 INSTALLED_APPS = [
-    'admin_honeypot',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,16 +121,10 @@ TEMPLATES = [
 '''
 CACHES = {
     'default': {
-        #'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': '127.0.0.1:11211',
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_djpersonnel_cache',
         'TIMEOUT': 60*60*24,
-        'KEY_PREFIX': 'djpersonnel_',
-        'OPTIONS': {
-            'MAX_ENTRIES': 80000,
-        }
+        'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
     }
 }
 '''
