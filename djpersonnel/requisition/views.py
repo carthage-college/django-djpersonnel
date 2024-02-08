@@ -2,24 +2,22 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.decorators import portal_auth_required
 from djpersonnel.core.utils import get_provost
 from djpersonnel.requisition.models import Operation
 from djpersonnel.requisition.forms import OperationForm
 from djtools.utils.mail import send_mail
+from djtools.decorators.auth import group_required
 from djtools.utils.users import in_group
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def form_home(request, rid=None):
     user = request.user
     obj = None
@@ -97,10 +95,7 @@ def form_home(request, rid=None):
     return render(request, 'requisition/form.html', {'hr': hr, 'form': form})
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def detail(request, rid):
     """Display the detailed data set for this requisition."""
     data = get_object_or_404(Operation, pk=rid)
@@ -117,11 +112,7 @@ def detail(request, rid):
     )
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def delete(request, rid):
     """Delete an instance of the Requistion object class."""
     obj = get_object_or_404(Operation, pk=rid)

@@ -1,10 +1,10 @@
 cryptography
 bootstrap_admin
-django==4.2.7
+django==4.2.10
 django-bootstrap4
 django-loginas
 mysqlclient
-openpyxl
+openpyxl==3.0.10
 pymemcache
 pyodbc
 python-ldap
