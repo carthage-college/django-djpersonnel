@@ -1,6 +1,6 @@
 cryptography
 bootstrap_admin
-django==4.2.10
+django==4.2.11
 django-bootstrap4
 django-loginas
 mysqlclient
