@@ -5,6 +5,7 @@ import datetime
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -15,7 +16,6 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from djauth.decorators import portal_auth_required
 from djauth.managers import LDAPManager
 from djpersonnel.core.forms import ApproverForm
 from djpersonnel.core.forms import DateCreatedForm
@@ -26,6 +26,7 @@ from djpersonnel.requisition.models import Operation as Requisition
 from djpersonnel.transaction.models import Operation as Transaction
 from djtools.utils.convert import str_to_class
 from djtools.utils.mail import send_mail
+from djtools.decorators.auth import group_required
 from djtools.utils.users import in_group
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
@@ -39,10 +40,7 @@ import logging
 logger = logging.getLogger('debug_logfile')
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def home(request):
     """Dashboard home page view."""
     deans = get_deans()
@@ -78,10 +76,7 @@ def home(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def list(request, mod):
     """Display a complete list of all objects."""
     #last_year = datetime.datetime.now() - datetime.timedelta(days=365)
@@ -129,11 +124,7 @@ def list(request, mod):
 
 
 @csrf_exempt
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def approver_manager(request):
     """Add a level 3 approver."""
     user = None
@@ -211,10 +202,7 @@ def approver_manager(request):
     return response
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def search(request):
     error = None
     objects = None
@@ -236,10 +224,7 @@ def search(request):
 
 
 @csrf_exempt
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def operation_status(request):
     """
     scope:    set the status on a operation
@@ -343,11 +328,7 @@ def operation_status(request):
     return HttpResponse(message)
 
 
-@portal_auth_required(
-    group=settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def openxml(request, mod):
     if in_group(request.user, settings.HR_GROUP):
         wb = Workbook()

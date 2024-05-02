@@ -2,23 +2,21 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.decorators import portal_auth_required
 from djpersonnel.transaction.models import Operation
 from djpersonnel.transaction.forms import OperationForm
+from djtools.decorators.auth import group_required
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def form_home(request):
     """Submit a PAF."""
     user = request.user
@@ -82,11 +80,7 @@ def form_home(request):
     )
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def paf_print(request):
     """Print a bunch of PAF."""
     pids = request.POST.getlist('paf_print')
@@ -94,10 +88,7 @@ def paf_print(request):
     return render(request, 'transaction/print.html', {'pafs': pafs, 'pids': pids})
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def detail(request, tid):
     """Display a PAF."""
     paf = get_object_or_404(Operation, pk=tid)
@@ -115,11 +106,7 @@ def detail(request, tid):
     )
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def delete(request, tid):
     """Delete a PAF."""
     paf = get_object_or_404(Operation, pk=tid)
@@ -134,20 +121,13 @@ def delete(request, tid):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
-)
+@login_required
 def update(request, tid):
     """Update a PAF."""
     return render(request, 'transaction/update.html', {})
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied')
-)
+@group_required(settings.HR_GROUP)
 def appointment_letter(request, tid):
     """Display the appointment letter."""
     paf = get_object_or_404(Operation, pk=tid)
@@ -156,11 +136,7 @@ def appointment_letter(request, tid):
     )
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def graduate_assistant_letter(request, tid):
     """Display the graduate assistant letter."""
     paf = get_object_or_404(Operation, pk=tid)

@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -9,18 +10,15 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.decorators import portal_auth_required
 from djpersonnel.core.utils import get_level2
 from djpersonnel.finance.budget.forms import BudgetForm
 from djpersonnel.finance.budget.models import Operation as Budget
 from djtools.utils.mail import send_mail
+from djtools.decorators.auth import group_required
 from djtools.utils.users import in_group
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def dashboard(request):
     """Budget workflow dashboard view."""
     user = request.user
@@ -40,10 +38,7 @@ def dashboard(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def home(request, bid=None):
     """Budget workflow form."""
     user = request.user
@@ -118,10 +113,7 @@ def home(request, bid=None):
     return render(request, 'finance/budget/form.html', {'hr': hr, 'form': form})
 
 
-@portal_auth_required(
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def detail(request, bid):
     """Display the detailed data set for this budget."""
     data = get_object_or_404(Budget, pk=bid)
@@ -138,11 +130,7 @@ def detail(request, bid):
     )
 
 
-@portal_auth_required(
-    group = settings.HR_GROUP,
-    session_var='DJPERSONNEL_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.HR_GROUP)
 def delete(request, bid):
     """Delete an instance of the Budget object class."""
     obj = get_object_or_404(Budget, pk=bid)
