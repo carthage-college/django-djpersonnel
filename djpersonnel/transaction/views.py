@@ -44,14 +44,17 @@ def form_home(request):
             if settings.DEBUG:
                 paf.to_list = to_list
                 to_list = bcc
+
+            frum = settings.HR_EMAIL
             send_mail(
                 request,
                 to_list,
                 subject,
-                settings.HR_EMAIL,
+                frum,
                 template,
                 paf,
-                bcc,
+                reply_to=[frum,],
+                bcc=bcc,
             )
             # send email to level3 approver
             template = 'transaction/email/approver.html'
@@ -59,14 +62,17 @@ def form_home(request):
             if settings.DEBUG:
                 paf.to_list = to_list
                 to_list = bcc
+            frum = paf.created_by.email
             send_mail(
                 request,
                 to_list,
                 subject,
+                frum,
                 paf.created_by.email,
                 template,
                 paf,
-                bcc,
+                reply_to=[frum,],
+                bcc=bcc,
             )
             return HttpResponseRedirect(
                 reverse_lazy('transaction_form_success'),

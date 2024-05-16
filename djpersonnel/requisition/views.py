@@ -55,14 +55,17 @@ def form_home(request, rid=None):
                     data.created_by.last_name, data.created_by.first_name,
                 )
                 template = 'requisition/email/created_by.html'
+
+                frum = settings.HR_EMAIL
                 send_mail(
                     request,
                     to_list,
                     subject,
-                    settings.HR_EMAIL,
+                    frum,
                     template,
                     data,
-                    bcc,
+                    reply_to=[frum,],
+                    bcc=bcc,
                 )
                 # send email to level3 approver and Provost, if need be
                 # (the latter of whom just needs notification and
@@ -74,14 +77,16 @@ def form_home(request, rid=None):
                 if settings.DEBUG:
                     data.to_list = to_list
                     to_list = bcc
+                frum = data.created_by.email
                 send_mail(
                     request,
                     to_list,
                     subject,
-                    data.created_by.email,
+                    frum,
                     template,
                     data,
-                    bcc,
+                    reply_to=[frum,],
+                    bcc=bcc,
                 )
                 return HttpResponseRedirect(reverse_lazy('requisition_form_success'))
     else:

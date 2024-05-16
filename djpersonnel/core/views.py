@@ -304,21 +304,22 @@ def operation_status(request):
                         frum,
                         template,
                         obj,
-                        bcc,
+                        reply_to=[frum,],
+                        bcc=bcc,
                     )
                     # notify the next approver if it is not completely approved
                     # and the submission has not been declined
                     if not obj.approved() and status == 'approved':
-                        sent = send_mail(
+                        send_mail(
                             request,
                             to_approver,
                             subject,
                             frum,
                             '{0}/email/approver.html'.format(app),
                             obj,
-                            bcc,
+                            reply_to=[frum,],
+                            bcc=bcc,
                         )
-                    logger.debug('send_mail = {0}'.format(sent))
             else:
                 message = "Access Denied"
         else:

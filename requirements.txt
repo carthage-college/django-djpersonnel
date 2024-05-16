@@ -2,6 +2,7 @@ cryptography
 bootstrap_admin
 django==4.2.11
 django-bootstrap4
+django-gmailapi-json-backend
 django-loginas
 mysqlclient
 openpyxl==3.0.10
