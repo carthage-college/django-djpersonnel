@@ -1,0 +1,86 @@
+li.ctrlHolder div ul li {display:inline;}
+.form .blockLabels label.error {font-weight:bold; border:0; background-color:#fff;color:#B94A48}
+label[for=id_results_file] {color: #337ab7;}
+.placeholder {color:#800;}
+h1,h2,h3 {font-weight:normal;}
+.form li {
+list-style-type: none !important;
+list-style: none !important;
+list-style-image: none !important;
+}
+#page-content-wrap .content .form h3 {
+    margin: 9px 0;
+    padding-top: 9px;
+}
+.slider-container { display:none; width: 795px; }
+.form fieldset.btnHolder {background-color:#fff; }
+form textarea {width: 300px !important;height:90px !important;}
+.help {margin-top:-2px;}
+.form select {width:200px;}
+.form .bootstrap-select { width: 350px; }
+.form ul li.error { display:none !important;}
+input[type="radio"]{
+    -webkit-appearance: radio;
+}
+/* .ui-datepicker-calendar { display: none; } */
+.red, .red .glyphicon {color:#800;}
+.yellow, .yellow .glyphicon-ok {color:#c5b32f;}
+.green, .green .glyphicon-ok {color:#008000;}
+.white, .white .glyphicon-ok {color:#fff;}
+.grey, .grey .glyphicon-ok {color:#cacaca;}
+.blue, .blue .glyphicon-ok {color:#085ab1;}
+div.growlUI { position:relative;margin-top:60px; }
+div.growlUI:before { color:green; font-size: 4em;position: absolute; font-family: 'FontAwesome'; top: 0; left: 10px; content: "\f0f3"; }
+div.growlUI h1, div.growlUI h2 {
+color: white; padding: 5px 5px 5px 75px; text-align: left;font-size:2em;}
+div.growlUI h2 { font-size:1.4em;}
+.adult, .minor {text-align:center;}
+.minor {background-color:#ccf;}
+.hidden {display:none;}
+#id_sports{background:none;}
+#primary-form{margin-right:20px;}
+.error-message { padding:3px; font-weight:900; background: #fbe3e4; border: 2px solid #fbc2c4 ; color: #8a1f11; }
+#student table {width:50%;}
+#athlete table {width:60%;}
+table.dataTable > tbody > tr:hover > td.minor { background-color: #ccf; }
+table.dataTable > tbody > tr:nth-child(2n+1) > td.minor { background-color: #ccf; }
+table.dataTable > tbody tr.selected { background-color: #b0bed9 !important; }
+table.dataTable > tbody tr:nth-child(even):hover td{ background-color: #fae7b5 !important; }
+table.dataTable > tbody tr:nth-child(odd):hover td { background-color: #fae7b5 !important; }
+table.dataTable tbody th, table.dataTable tbody td { padding: 1px 4px; }
+table.dataTable thead th, table.dataTable thead td { border-bottom: 2px solid #111; padding: 6px 4px 2px 4px; }
+table.dataTable tfoot th, table.dataTable tfoot td { padding: 6px 4px 2px 4px; }
+table.dataTable thead th, table.dataTable tfoot th { text-align: center; }
+.editable-pre-wrapped { white-space: normal; }
+.editable-input textarea {width:375px !important;}
+.editable-container.editable-popup { left: 0 !important; }
+.editable-click, a.editable-click, a.editable-click:hover {border-bottom: 0; text-decoration: none; }
+.navbar-default {z-index:100;}
+address { margin-bottom: 0; }
+.center{text-align:center;}
+.fa-stethoscope{font-weight:900;}
+div.DTTT {
+float: right;
+margin-bottom: 1em;
+position: relative;
+}
+li.form-group h3 { font-size: 14px; }
+.form fieldset {
+background-color: #fcffff;
+border: 2px solid #ddf3f3;
+border-radius: 3px;
+margin-bottom: 10px;
+margin-top: 10px;
+padding: 6px;
+}
+blockquote { padding: 10px 0; margin: 0px 0px 20px; font-size: inherit; border-left: 0; }
+@media (min-width: 768px) {
+    .navbar-static-side { width: 150px; }
+    #page-wrapper { margin: 0 0 0 150px; }
+}
+/* home */
+.althlete-header: {margin-bottom:-10px;margin-left:9px;}
+#page-content-wrap .content p, #page-content-wrap .content ul, #page-content-wrap .content ol { margin-bottom: .7em;}
+#djforms #athlete h2, #djforms #athlete h3 {margin-top:19px !important;}
+#djforms #page-content-wrap .content .big-arrow-bullets{margin:1em 0;}
+.table thead {background-color:#00556a;color:#fff;font-size:1.3em;}
