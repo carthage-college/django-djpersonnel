@@ -68,7 +68,6 @@ def form_home(request):
                 to_list,
                 subject,
                 frum,
-                paf.created_by.email,
                 template,
                 paf,
                 reply_to=[frum,],
