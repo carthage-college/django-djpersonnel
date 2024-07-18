@@ -244,15 +244,15 @@ def operation_status(request):
             # we verify that the user has permission to approve/decline
             # in the permissions method
             if perms['approver'] and status in ['approved', 'declined']:
-                from djtools.fields import NOW
+                now = datetime.datetime.now()
                 if status == 'approved':
                     for level in perms['level']:
                         setattr(obj, level, True)
-                        setattr(obj, '{0}_date'.format(level), NOW)
+                        setattr(obj, '{0}_date'.format(level), now)
                 if status == 'declined':
                     obj.declined = True
                     if app == 'budget':
-                        obj.declined_date = NOW
+                        obj.declined_date = now
                 obj.save()
                 message = "{0} has been {1}".format(app, status)
                 if app != 'budget':
