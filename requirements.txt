@@ -1,6 +1,6 @@
 cryptography
 bootstrap_admin
-django==4.2.11
+django==4.2.14
 django-bootstrap4
 django-gmailapi-json-backend
 django-loginas
