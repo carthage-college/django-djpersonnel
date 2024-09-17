@@ -39,23 +39,26 @@ def get_permissions(obj, user):
     """Establish permissions for a user on the object."""
     perms = {'view': False, 'approver': False, 'provost': False, 'level': []}
     # in_group includes an exception for superusers
-    group = in_group(user, settings.HR_GROUP)
+    hr = in_group(user, settings.HR_GROUP)
+    manager = in_group(user, settings.MANAGER_GROUP)
     # Level 3 approver might also be in the HR group, in which case
     # she will approve at level 3 first, then VPFA approves, then she will
     # approve once again as HR, unless the request does not involve the
     # VPFA (no budget impact), then she will approve level3 and level1
     # all in one go.
-    if group and obj.level3_approver == user and not obj.level3:
+    if hr and obj.level3_approver == user and not obj.level3:
         perms['view'] = True
         perms['approver'] = True
         perms['level'].append('level3')
         if not obj.notify_level2():
             perms['level'].append('level1')
     # the rest of HR
-    elif group:
+    elif hr:
         perms['view'] = True
         perms['approver'] = True
         perms['level'].append('level1')
+    elif manager:
+        perms['view'] = True
     # Provost:
     #   1) approves PAF for faculty submissions only (not PRF...for now)
     #   2) will be an approver for level3 or provost but not both

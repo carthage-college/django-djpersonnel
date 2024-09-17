@@ -207,6 +207,7 @@ REST_FRAMEWORK_TOKEN = ''
 HR_EMAIL=''
 ACCOUNTING_EMAIL = ''
 HR_GROUP='Human Resources'
+MANAGER_GROUP = 'Managers'  # View all PAF, no approval
 STAFF_GROUP='carthageStaffStatus'
 # groups
 LEVEL2_GROUP='Level 2'

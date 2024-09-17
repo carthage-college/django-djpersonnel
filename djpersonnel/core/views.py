@@ -46,8 +46,9 @@ def home(request):
     deans = get_deans()
     user = request.user
     hr = in_group(user, settings.HR_GROUP)
+    manager = in_group(user, settings.MANAGER_GROUP)
     # HR or VPFA can access all objects
-    if hr or user.id == LEVEL2.id:
+    if hr or manager or user.id == LEVEL2.id:
         requisitions = Requisition.objects.all().select_related('level3_approver').select_related('created_by').select_related('updated_by').order_by('-created_at')[:30]
         transactions = Transaction.objects.all().select_related('level3_approver').select_related('created_by').select_related('updated_by').order_by('-created_at')[:30]
     elif user.id == PROVOST.id:
