@@ -174,10 +174,10 @@ LOGOUT_URL = '{0}accounts/logout/'.format(ROOT_URL)
 LOGIN_REDIRECT_URL = ROOT_URL
 USE_X_FORWARDED_HOST = True
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_DOMAIN='.carthage.edu'
 SESSION_COOKIE_NAME ='django_djpersonnel_cookie'
-SESSION_COOKIE_AGE = 86400
+SESSION_COOKIE_AGE = 43200
 # gmail API settings
 EMAIL_FROM = ''
 GMAIL_USER = ''
