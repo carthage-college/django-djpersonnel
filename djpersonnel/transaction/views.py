@@ -85,7 +85,7 @@ def form_home(request):
     )
 
 
-@group_required(settings.HR_GROUP)
+@group_required(settings.HR_GROUP, settings.MANAGER_GROUP)
 def paf_print(request):
     """Print a bunch of PAF."""
     pids = request.POST.getlist('paf_print')
