@@ -331,34 +331,31 @@ def operation_status(request):
     return HttpResponse(message)
 
 
-@group_required(settings.HR_GROUP)
+@group_required(settings.HR_GROUP, settings.MANAGER_GROUP)
 def openxml(request, mod):
-    if in_group(request.user, settings.HR_GROUP):
-        wb = Workbook()
-        ws = wb.active
-        model = str_to_class(
-            'djpersonnel.{0}.models'.format(mod), 'Operation',
-        )
-        data = serializers.serialize('python', model.objects.all() )
-        head = False
-        headers = []
-        for d in data:
-            row = []
-            d['fields']['created_at'] = d['fields']['created_at'].strftime("%Y-%m-%d %H:%M:%S %z")
-            d['fields']['updated_at'] = d['fields']['updated_at'].strftime("%Y-%m-%d %H:%M:%S %z")
-            for n,v in d['fields'].items():
-                headers.append(model._meta.get_field(n).verbose_name.title())
-                row.append(v)
-            if not head:
-                ws.append(headers)
-                head = True
-            ws.append(row)
-        response = HttpResponse(
-            save_virtual_workbook(wb),
-            content_type='application/ms-excel',
-        )
-        response['Content-Disposition'] = 'attachment;filename={0}.xlsx'.format(mod)
-    else:
-        response = HttpResponseRedirect(reverse_lazy('access_denied'))
+    wb = Workbook()
+    ws = wb.active
+    model = str_to_class(
+        'djpersonnel.{0}.models'.format(mod), 'Operation',
+    )
+    data = serializers.serialize('python', model.objects.all() )
+    head = False
+    headers = []
+    for d in data:
+        row = []
+        d['fields']['created_at'] = d['fields']['created_at'].strftime("%Y-%m-%d %H:%M:%S %z")
+        d['fields']['updated_at'] = d['fields']['updated_at'].strftime("%Y-%m-%d %H:%M:%S %z")
+        for n,v in d['fields'].items():
+            headers.append(model._meta.get_field(n).verbose_name.title())
+            row.append(v)
+        if not head:
+            ws.append(headers)
+            head = True
+        ws.append(row)
+    response = HttpResponse(
+        save_virtual_workbook(wb),
+        content_type='application/ms-excel',
+    )
+    response['Content-Disposition'] = 'attachment;filename={0}.xlsx'.format(mod)
 
     return response

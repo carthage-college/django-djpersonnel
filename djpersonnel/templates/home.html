@@ -146,13 +146,11 @@ $(function() {
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
           title="The 30 most recent PRF submissions are list below"></i>
-        {% if hr %}
         |
         <a href="{% url 'openxml' 'requisition' %}">
           <i class="fa fa-file-excel-o blue-tooltip" aria-hidden="true"
             data-toggle="tooltip" data-placement="top"
             title="Download PRF data as a Spreadsheet"></i></a>
-        {% endif %}
       </h4>
       {% if requisitions %}
         {% include "requisition_data.inc.html" %}
@@ -172,13 +170,11 @@ $(function() {
         <i class="fa fa-leaf green blue-tooltip" aria-hidden="true"
           data-toggle="tooltip" data-placement="top" aria-hidden="true"
           title="The 30 most recent PAF submissions are list below"></i>
-        {% if hr %}
         |
         <a href="{% url 'openxml' 'transaction' %}">
           <i class="fa fa-file-excel-o blue-tooltip" aria-hidden="true"
             data-toggle="tooltip" data-placement="top"
             title="Download PAF data as a Spreadsheet"></i></a>
-        {% endif %}
       </h4>
       <button class="btn btn-primary col-2 float-right" id="paf_print" type="submit">Print selected PAF</button>
       {% if transactions %}
