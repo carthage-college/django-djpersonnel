@@ -279,7 +279,8 @@ def operation_status(request):
                     if app != 'requisition' and obj.notify_provost() and not obj.provost:
                         to_approver = [PROVOST.email]
                     elif obj.notify_level2() and not obj.level2 and obj.level3_approver.id != LEVEL2.id:
-                        to_approver = [LEVEL2.email]
+                        to_approver = settings.ACCOUNTING_EMAIL
+                        to_approver.append(LEVEL2.email)
                     else:
                         to_approver = settings.ACCOUNTING_EMAIL
                         to_approver.append(settings.HR_EMAIL)

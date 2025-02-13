@@ -205,7 +205,7 @@ BOOTSTRAP4 = {
 REST_FRAMEWORK_TOKEN = ''
 # apps
 HR_EMAIL=''
-ACCOUNTING_EMAIL = ''
+ACCOUNTING_EMAIL = []
 HR_GROUP='Human Resources'
 MANAGER_GROUP = 'Managers'  # View all PAF, no approval
 STAFF_GROUP='carthageStaffStatus'
